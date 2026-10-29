@@ -1,0 +1,15 @@
+# Git normalizes text line endings; the repository checker verifies UTF-8 and BOM.
+* text=auto eol=lf
+*.svg text
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.tar binary
+*.woff binary
+*.woff2 binary

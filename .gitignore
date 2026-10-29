@@ -1,0 +1,41 @@
+# OS and personal editor state
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local credentials and agent state; never a substitute for staged-file review
+.env
+.env.*
+!.env.example
+!.env.*.example
+/.local/
+/.codex/
+/.claude/
+/.aws/
+*.key
+*.p12
+*.pfx
+
+# Go / TypeScript build and test outputs (keep source and dependency lockfiles)
+/bin/
+/dist/
+/build/
+node_modules/
+.vite/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
+*.test
+*.prof
+*.log
+__pycache__/
+*.pyc
+
+# Runtime data belongs outside the source tree
+/runtime/
+/backups/
+/tmp/
