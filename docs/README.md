@@ -39,3 +39,4 @@
 - [2026-10-29 规划建立记录](records/2026-10-29-planning-bootstrap.md)
 - [2026-10-29 治理基础记录](records/2026-10-29-governance-foundation.md)
 - [2026-10-29 本地 Git 初始化与协作复核](records/2026-10-29-local-git-bootstrap.md)
+- [2026-10-29 远端推送与基础保护](records/2026-10-29-remote-governance.md)
