@@ -2,6 +2,10 @@
 
 更新日期：2026-11-01（Asia/Shanghai）。
 
+规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
+
+本批只统一规划规则与映射，验证通过后用户已授权分别本地提交，不推送；下文此前批次的外部执行授权仅描述其历史范围。M0 与治理线的现有产品顺位保持。
+
 ## 当前事实
 
 - 项目名为 RadishForge（萝卜锻坊），P0 规划与治理基础已落地。

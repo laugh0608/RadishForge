@@ -22,7 +22,7 @@
 - [Rulesets 与远端设置](governance/rulesets.md)
 - [本地治理检查](../scripts/README.md)
 - [安全报告](../SECURITY.md)与[协作行为](../CODE_OF_CONDUCT.md)
-- [文档治理](governance/documentation.md)
+- [文档治理](governance/documentation.md)：三级规划职责、专题最小内容、单一状态来源与分期验收口径。
 - [上游与许可](governance/upstream-and-licensing.md)
 - [产品版本与发行标识](governance/versioning.md)
 
@@ -47,3 +47,4 @@
 - [2026-11-01 规划层级与近期子专题整合](records/2026-11-01-planning-integration.md)
 - [2026-11-01 M0-S01 官方来源核查](records/2026-11-01-m0-s01-review.md)
 - [2026-11-01 本机 Docker 与身份 / 权限 / Issue API 验证](records/2026-11-01-m0-local-validation.md)
+- [2026-11-01 三级规划规则统一](records/2026-11-01-planning-rules-alignment.md)
