@@ -50,3 +50,4 @@
 - [2026-11-01 本机 Docker 与身份 / 权限 / Issue API 验证](records/2026-11-01-m0-local-validation.md)
 - [2026-11-01 scope 组合收敛与身份生命周期验证](records/2026-11-01-m0-auth-profile-validation.md)
 - [2026-11-01 三级规划规则统一](records/2026-11-01-planning-rules-alignment.md)
+- [2026-11-01 提交回顾与收工交接](records/2026-11-01-day-review.md)

@@ -16,7 +16,7 @@ OIDC 登录成功只建立工作台身份。访问私有仓库之前，用户还
 
 默认使用用户 Token 调用 Issue、仓库与 Release API。具体 Scope 必须根据精确版本验证；不能假定 `openid email profile` 天然只有身份权限。若部署版本只能提供较宽授权，必须明确展示范围并记录取舍，不能使用管理员 Token 隐藏缺口。
 
-2026-11-01 的 Gitea 28.2.0 本机验证确认：`openid email profile` 及带未知 scope 的样例均可读私有仓库；`openid public-only email profile` 的签名 ID Token 有效但 UserInfo 为 403，增加显式 `read:user` 后 UserInfo 200 且私有仓库仍为 403。此为当前组合的配置差异，不是所有 OIDC 发行方规则。后续客户端须固定并校验已验证的 scope 白名单，拒绝未知输入；M0-S04 再收口 Gitea profile，不能把宽授权回落宣传为兼容通过。
+2026-11-01 的 Gitea 28.2.0 本机验证确认：`openid email profile` 及带未知 scope 的样例均可读私有仓库；`openid public-only email profile` 的签名 ID Token 有效但 UserInfo 为 403，增加显式 `read:user` 后 UserInfo 200 且私有仓库仍为 403。此为当前组合的配置差异，不是所有 OIDC 发行方规则。M0-S02 已形成下述受控组合与白名单；M0-S04 仍须汇总兼容范围和缺口决定，不能把宽授权回落宣传为兼容通过。
 
 ### Gitea 受控授权组合
 

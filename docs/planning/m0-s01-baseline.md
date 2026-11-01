@@ -46,11 +46,11 @@ Runner 5.x 文档要求 Gitea 1.21+、Git 2.34.1+，JavaScript Action 的 Node �
 
 本轮读取[Gitea 固定提交 OpenAPI](https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/templates/swagger/v1-openapi3.generated.json)，SHA-256 为 `c797dc2a94e070c19ea823cb4396829f234a745a7a8c90b4a686b91cbc4d278e`，与 2026-10-29 静态记录一致。共 342 个路径，Issue / Actions / Release 相关筛选命中 70 个；筛选不代表覆盖所有首版操作。`info.version` 仍为构建占位值，版本以固定来源确认。OCI 的 `/v2/` 属独立协议，不能从此 OpenAPI 推导其可用。
 
-[OAuth2 官方文档](https://docs.gitea.com/development/oauth2-provider/)列出 Discovery、授权码、PKCE、UserInfo、JWKS 与细粒度 scope，并警示常见 OIDC scope 的默认资源权限较宽、未知 scope 可能回落到全权限。此为滚动文档静态结论，精确 28.2.0 的实际授予与拒绝仍须 M0-S02 验证。
+[OAuth2 官方文档](https://docs.gitea.com/development/oauth2-provider/)列出 Discovery、授权码、PKCE、UserInfo、JWKS 与细粒度 scope，并警示常见 OIDC scope 的默认资源权限较宽、未知 scope 可能回落到全权限。初始静态核查后，精确 28.2.0 的[本机证据](../records/2026-11-01-m0-auth-profile-validation.md)已复现三项原始 scope 差异，并验证受控组合；完整生命周期和其他发行方仍待取证。
 
 验证方案选择第二个独立 Gitea 实例作为标准 OIDC 测试发行方，复用同一镜像但使用独立 issuer、库、账号和密钥；资源 Gitea 另注册用户 OAuth 客户端。另用资源 Gitea 的 OIDC 端点构成第二 issuer，同邮箱样例只用于确认身份键不合并。该方案不增加 Radish 运行依赖，也不证明其他 IdP 实现兼容。
 
-登录客户端先验证 `openid` 与 `public-only` 等限制的实际效果；资源客户端分别验证 `read:repository`、`write:issue` 等最小 scope 与普通用户对象权限，具体请求以接口实测收敛。只用隔离账号进行“仅 OIDC / 未知 scope”负例，观察是否意外扩大权限；不能将未知 scope 回退视为成功。协议测试客户端不能代替工作台绑定 / 会话实现，完整 IAM-01 / IAM-02 仍在 M1 验收。
+已验证的登录 / 资源三种完整组合以[授权 JSON](../../tests/contracts/m0/gitea-auth-profile.json)为单一来源，决定见[ADR 0003](../adr/0003-gitea-authorization-profiles.md)；不能仅凭单个 scope 名称推定权限。只用隔离账号进行“仅 OIDC / 未知 scope”负例，保留意外扩大权限的原始结果；不能将未知 scope 回退视为成功。协议测试客户端不能代替工作台绑定 / 会话实现，完整 IAM-01 / IAM-02 仍在 M1 验收。
 
 ## 本机隔离配置
 
@@ -73,7 +73,7 @@ Runner 5.x 文档要求 Gitea 1.21+、Git 2.34.1+，JavaScript Action 的 Node �
 
 PostgreSQL 18 镜像卷挂在 `/var/lib/postgresql`，使用上游空卷初始化机制创建两套应用库和非超级用户；不接触 Gitea 业务表。上游自身 schema 初始化由 Gitea 负责，不建立自有迁移。
 
-本机所有测试对象使用合成账号、邮箱、私有仓库和 Issue。管理员只建测试普通账号；资源创建、读取、写入、授权和撤权使用真实普通用户身份。初始化命令让 Gitea 自行生成随机管理员密码，工具仅在内存接收并写入本批私密目录，不将密码传为 CLI 参数。
+本机所有测试对象使用合成账号、邮箱、私有仓库和 Issue。管理员仅用于普通账号准备及禁用账号负例；资源创建、读取、写入、用户 OAuth 授权和仓库撤权使用真实普通用户身份。初始化命令让 Gitea 自行生成随机管理员密码，工具仅在内存接收并写入本批私密目录，不将密码传为 CLI 参数。
 
 ### 执行与清理
 
@@ -90,7 +90,7 @@ python3 scripts/m0_local.py cleanup
 
 `prepare` 先拒绝既有运行目录或非 arm64 daemon，探测端口后生成归属、CA 和私密配置，执行 `compose config --quiet`。`pull` 只拉三个平台服务所需的两个固定镜像；`up` 拒绝复用已有任务容器 / 卷，先初始化专用卷，再启动并用受信任 TLS 的 `/api/healthz` 和容器 CLI 精确版本检查就绪。
 
-后续 scope 收敛使用[单一授权配置](../../tests/contracts/m0/gitea-auth-profile.json)与默认 `profiles` 模式，`--auth-profile` 仅为本批新实例开启短 Token / refresh rotation 验证参数。原始差异通过显式 `--mode discovery` 保留；具体命令、已验证与未通过范围见[授权组合记录](../records/2026-11-01-m0-auth-profile-validation.md)，不能以受控组合结果替代原始上游兼容结论。
+scope 收敛已使用[单一授权配置](../../tests/contracts/m0/gitea-auth-profile.json)与默认 `profiles` 模式，`--auth-profile` 仅为本批新实例开启短 Token / refresh rotation 验证参数。原始差异通过显式 `--mode discovery` 保留；具体命令、已验证与未通过范围见[授权组合记录](../records/2026-11-01-m0-auth-profile-validation.md)，不能以受控组合结果替代原始上游兼容结论。
 
 协议探针只访问登记的两个本机 origin，拦截 loopback OAuth 回调，无需额外回调服务器；通过公开 API 和原生登录 / 同意页表单验证协议，不依赖底座数据库或内部 Go 包。授权码、cookie、密码、Token 均不打印；写操作失败 / 未知时保留进度并拒绝直接整批重跑，先对账或确认本批合成数据后建立新批次。
 
