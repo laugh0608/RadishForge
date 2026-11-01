@@ -1,0 +1,347 @@
+{
+  "review_date": "2026-11-01",
+  "timezone": "Asia/Shanghai",
+  "evidence_level": "static official metadata; no image layers or executable artifacts downloaded",
+  "sources": [
+    {
+      "name": "go_downloads",
+      "url": "https://go.dev/dl/?mode=json",
+      "bytes": 22898,
+      "sha256": "e0324e8717deaa8ba77ec05b672086e755e57d816c052d3b25d36d5533c3160e",
+      "selected": {
+        "version": "go1.27.3",
+        "stable": true,
+        "files": [
+          {
+            "filename": "go1.27.3.darwin-arm64.tar.gz",
+            "os": "darwin",
+            "arch": "arm64",
+            "version": "go1.27.3",
+            "sha256": "dd3908cf20959d798c1e06ebe5b72213f0505ce01373b40ce3110975a6cd99c2",
+            "size": 68196737,
+            "kind": "archive"
+          },
+          {
+            "filename": "go1.27.3.linux-amd64.tar.gz",
+            "os": "linux",
+            "arch": "amd64",
+            "version": "go1.27.3",
+            "sha256": "65efbc80fdc1fa2cd2631cad5b481777a68e8725f34e89f50fc6ac714e379b40",
+            "size": 70588678,
+            "kind": "archive"
+          },
+          {
+            "filename": "go1.27.3.linux-arm64.tar.gz",
+            "os": "linux",
+            "arch": "arm64",
+            "version": "go1.27.3",
+            "sha256": "a06e99309dbcbdca1a8ccd2282c3ee146e55930886e26b4f1193269587165f49",
+            "size": 67076044,
+            "kind": "archive"
+          }
+        ]
+      },
+      "resolved_host": "go.dev",
+      "redirect_query_omitted": true
+    },
+    {
+      "name": "node_checksums",
+      "url": "https://nodejs.org/dist/v24.22.2/SHASUMS256.txt",
+      "bytes": 3171,
+      "sha256": "aec92ae945293821c22aed4c37b97741688254bac353b861fc9fb25b81ce4567",
+      "selected": {
+        "node-v24.22.2-darwin-arm64.tar.gz": "aa9549349e47dffaa42dcf95d6e06ade8c4bdafc980979883b88767670df385a",
+        "node-v24.22.2-linux-arm64.tar.xz": "eb187837a2230d4047161ac0be008584e16b46f726e9c9490ee35dc6b17d9ba8",
+        "node-v24.22.2-linux-x64.tar.xz": "48cc0e21e048790e54c0cf5749c2725005313d652651c40b7a21feb9697aaf75"
+      },
+      "resolved_host": "nodejs.org",
+      "redirect_query_omitted": false
+    },
+    {
+      "name": "compose_checksums",
+      "url": "https://github.com/docker/compose/releases/download/v5.6.1/checksums.txt",
+      "bytes": 4616,
+      "sha256": "71a925494d98575a801f4332f372d41a83badaffa7755ccf42d841c1d8b38aa8",
+      "selected": {
+        "docker-compose-darwin-aarch64": "fcce41226abd2b7b2936094e688bbd61284673dddafea542e08cb9a3b4423a8b",
+        "docker-compose-linux-aarch64": "42cfa75f51ad0ccf290bad37899e0038a8c10a0069e85233ecc1d53e3ff1347d",
+        "docker-compose-linux-x86_64": "47737f4236e6d3ccea7291995203f8f018058783b4c3a9469119811a0b5db8c0"
+      },
+      "resolved_host": "release-assets.githubusercontent.com",
+      "redirect_query_omitted": true
+    },
+    {
+      "name": "runner_dockerfile",
+      "url": "https://gitea.com/gitea/runner/raw/commit/ffd80101a317d6c3ef922dfb4856b629b3d60064/Dockerfile",
+      "bytes": 1903,
+      "sha256": "383602acecfb3ade743a2642b4bd38d26b0460b89b20d62cb70f8556eef3bea7",
+      "selected": {
+        "base_images": [
+          "golang:1.27-alpine AS builder",
+          "docker:29.9.1-dind AS dind",
+          "docker:29.9.1-dind-rootless AS dind-rootless",
+          "alpine:3.24 AS basic"
+        ]
+      },
+      "resolved_host": "gitea.com",
+      "redirect_query_omitted": false
+    },
+    {
+      "name": "gitea_openapi",
+      "url": "https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/templates/swagger/v1-openapi3.generated.json",
+      "bytes": 1041091,
+      "sha256": "c797dc2a94e070c19ea823cb4396829f234a745a7a8c90b4a686b91cbc4d278e",
+      "selected": {
+        "info_version": "0.0.0+GITEA-API-APP-VERSION",
+        "path_count": 342,
+        "paths": [
+          "/admin/actions/runs",
+          "/orgs/{org}/actions/runs",
+          "/orgs/{org}/projects/{id}/columns/{column_id}/issues",
+          "/orgs/{org}/projects/{id}/columns/{column_id}/issues/{issue_id}",
+          "/orgs/{org}/projects/{id}/issues/{issue_id}/move",
+          "/repos/issues/search",
+          "/repos/{owner}/{repo}/actions/runs",
+          "/repos/{owner}/{repo}/actions/runs/{run}",
+          "/repos/{owner}/{repo}/actions/runs/{run}/approve",
+          "/repos/{owner}/{repo}/actions/runs/{run}/artifacts",
+          "/repos/{owner}/{repo}/actions/runs/{run}/attempts/{attempt}",
+          "/repos/{owner}/{repo}/actions/runs/{run}/attempts/{attempt}/jobs",
+          "/repos/{owner}/{repo}/actions/runs/{run}/cancel",
+          "/repos/{owner}/{repo}/actions/runs/{run}/force-cancel",
+          "/repos/{owner}/{repo}/actions/runs/{run}/jobs",
+          "/repos/{owner}/{repo}/actions/runs/{run}/jobs/{job_id}/rerun",
+          "/repos/{owner}/{repo}/actions/runs/{run}/logs",
+          "/repos/{owner}/{repo}/actions/runs/{run}/rerun",
+          "/repos/{owner}/{repo}/actions/runs/{run}/rerun-failed-jobs",
+          "/repos/{owner}/{repo}/actions/workflows",
+          "/repos/{owner}/{repo}/actions/workflows/{workflow_id}",
+          "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/disable",
+          "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches",
+          "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/enable",
+          "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs",
+          "/repos/{owner}/{repo}/issues",
+          "/repos/{owner}/{repo}/issues/comments",
+          "/repos/{owner}/{repo}/issues/comments/{id}",
+          "/repos/{owner}/{repo}/issues/comments/{id}/assets",
+          "/repos/{owner}/{repo}/issues/comments/{id}/assets/{attachment_id}",
+          "/repos/{owner}/{repo}/issues/comments/{id}/reactions",
+          "/repos/{owner}/{repo}/issues/pinned",
+          "/repos/{owner}/{repo}/issues/{index}",
+          "/repos/{owner}/{repo}/issues/{index}/assets",
+          "/repos/{owner}/{repo}/issues/{index}/assets/{attachment_id}",
+          "/repos/{owner}/{repo}/issues/{index}/assignees",
+          "/repos/{owner}/{repo}/issues/{index}/assignees/{assignee}",
+          "/repos/{owner}/{repo}/issues/{index}/blocks",
+          "/repos/{owner}/{repo}/issues/{index}/comments",
+          "/repos/{owner}/{repo}/issues/{index}/comments/{id}",
+          "/repos/{owner}/{repo}/issues/{index}/deadline",
+          "/repos/{owner}/{repo}/issues/{index}/dependencies",
+          "/repos/{owner}/{repo}/issues/{index}/labels",
+          "/repos/{owner}/{repo}/issues/{index}/labels/{id}",
+          "/repos/{owner}/{repo}/issues/{index}/lock",
+          "/repos/{owner}/{repo}/issues/{index}/pin",
+          "/repos/{owner}/{repo}/issues/{index}/pin/{position}",
+          "/repos/{owner}/{repo}/issues/{index}/reactions",
+          "/repos/{owner}/{repo}/issues/{index}/stopwatch/delete",
+          "/repos/{owner}/{repo}/issues/{index}/stopwatch/start",
+          "/repos/{owner}/{repo}/issues/{index}/stopwatch/stop",
+          "/repos/{owner}/{repo}/issues/{index}/subscriptions",
+          "/repos/{owner}/{repo}/issues/{index}/subscriptions/check",
+          "/repos/{owner}/{repo}/issues/{index}/subscriptions/{user}",
+          "/repos/{owner}/{repo}/issues/{index}/timeline",
+          "/repos/{owner}/{repo}/issues/{index}/times",
+          "/repos/{owner}/{repo}/issues/{index}/times/{id}",
+          "/repos/{owner}/{repo}/projects/{id}/columns/{column_id}/issues",
+          "/repos/{owner}/{repo}/projects/{id}/columns/{column_id}/issues/{issue_id}",
+          "/repos/{owner}/{repo}/projects/{id}/issues/{issue_id}/move",
+          "/repos/{owner}/{repo}/releases",
+          "/repos/{owner}/{repo}/releases/latest",
+          "/repos/{owner}/{repo}/releases/tags/{tag}",
+          "/repos/{owner}/{repo}/releases/{id}",
+          "/repos/{owner}/{repo}/releases/{id}/assets",
+          "/repos/{owner}/{repo}/releases/{id}/assets/{attachment_id}",
+          "/user/actions/runs",
+          "/user/projects/{id}/columns/{column_id}/issues",
+          "/user/projects/{id}/columns/{column_id}/issues/{issue_id}",
+          "/user/projects/{id}/issues/{issue_id}/move"
+        ]
+      },
+      "resolved_host": "raw.githubusercontent.com",
+      "redirect_query_omitted": false
+    },
+    {
+      "name": "runner_release",
+      "url": "https://gitea.com/api/v1/repos/gitea/runner/releases/tags/v5.2.4",
+      "bytes": 12502,
+      "sha256": "993b7142467f4b335397ca483531b8551c4129fb78b46b1677b99d3c007891ab",
+      "selected": {
+        "tag_name": "v5.2.4",
+        "target_commitish": "ffd80101a317d6c3ef922dfb4856b629b3d60064",
+        "published_at": "2026-10-28T06:04:10Z",
+        "prerelease": false,
+        "draft": false,
+        "html_url": "https://gitea.com/gitea/runner/releases/tag/v5.2.4"
+      },
+      "resolved_host": "gitea.com",
+      "redirect_query_omitted": false
+    }
+  ],
+  "source_refs": {
+    "gitea": {
+      "tag": "v28.2.0",
+      "tag_object": "1dc1ecdddcdc60ab14ec14e30e7bb4d84242f21f",
+      "commit": "829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1",
+      "tag_url": "https://api.github.com/repos/go-gitea/gitea/git/tags/1dc1ecdddcdc60ab14ec14e30e7bb4d84242f21f",
+      "tag_response_sha256": "b6de0f3220513119c999e7c2a5d7d947f6284c9a8d06c1ee8f7a28e320f8b6a8"
+    },
+    "runner": {
+      "tag": "v5.2.4",
+      "commit": "ffd80101a317d6c3ef922dfb4856b629b3d60064",
+      "ref_url": "https://gitea.com/api/v1/repos/gitea/runner/git/refs/tags/v5.2.4",
+      "ref_response_sha256": "80fbf15f1b7f0b85dd3d4b5f5121656f7d58a6dfe8f045218d11134a8e7ead69"
+    },
+    "node": {
+      "version": "v24.22.2",
+      "npm": "11.19.1",
+      "lts": "Krypton",
+      "index_date": "2026-10-27",
+      "index_url": "https://nodejs.org/dist/index.json",
+      "index_sha256": "6b27fe5766e87929d16ccdde05c516cbdd12200eab62b28d4b2f31d34e21481a",
+      "alternative_reviewed": "v26.13.0 (Lithium LTS); not selected for first candidate"
+    },
+    "docker_engine": {
+      "version": "29.9.2",
+      "release_notes": "https://docs.docker.com/engine/release-notes/29/#2992"
+    },
+    "compose": {
+      "version": "5.6.1",
+      "release_url": "https://github.com/docker/compose/releases/tag/v5.6.1",
+      "published_at": "2026-10-21T07:54:18Z"
+    },
+    "postgres": {
+      "version": "18.6",
+      "release_url": "https://www.postgresql.org/docs/18/release-18-6.html",
+      "image_build_commit": "e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc",
+      "image_source": "https://github.com/docker-library/postgres/blob/e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc/18/bookworm/Dockerfile"
+    }
+  },
+  "images": [
+    {
+      "reference": "docker.gitea.com/gitea:28.2.0-rootless",
+      "manifest_url": "https://docker.gitea.com/v2/gitea/manifests/28.2.0-rootless",
+      "media_type": "application/vnd.oci.image.index.v1+json",
+      "index_digest": "sha256:94807314454f6525994a3b76286ba12bc7e7f8cd14f61d9e67431767f8103306",
+      "response_body_hash_equals_registry_digest": true,
+      "platform_manifest_digests": {
+        "linux/amd64": "sha256:dbfe22e3478e391f0b3bd2eac8df024657aa3c52da2af23ea77530e73caf5f7d",
+        "linux/arm64": "sha256:c372a4b5059cae65d148e150eb633327bf0ce19450cead8ff8d7a21ca8b7db2e"
+      },
+      "platform_descriptors_only": true,
+      "image_layers_downloaded": false
+    },
+    {
+      "reference": "docker.io/gitea/runner:5.2.4",
+      "manifest_url": "https://registry-1.docker.io/v2/gitea/runner/manifests/5.2.4",
+      "media_type": "application/vnd.oci.image.index.v1+json",
+      "index_digest": "sha256:e8b3c7a5ed435fec38d1faf730cb784606cdd1c02e8543b6b96525b53281e60a",
+      "response_body_hash_equals_registry_digest": true,
+      "platform_manifest_digests": {
+        "linux/amd64": "sha256:7ca211c42399fc372f18d46940ac9f3876ff5f506e5f920378f0b864740e0f8b",
+        "linux/arm64": "sha256:039b467de76f4d344f6de21e42e00271a776559d304dd30caaf49ffed3ffb351"
+      },
+      "platform_descriptors_only": true,
+      "image_layers_downloaded": false
+    },
+    {
+      "reference": "docker.io/library/postgres:18.6-bookworm",
+      "manifest_url": "https://registry-1.docker.io/v2/library/postgres/manifests/18.6-bookworm",
+      "media_type": "application/vnd.oci.image.index.v1+json",
+      "index_digest": "sha256:5c4783a8cc3f0074912164f94dfa1be4e043438f0f707cf968d7af9a0d31a2c8",
+      "response_body_hash_equals_registry_digest": true,
+      "platform_manifest_digests": {
+        "linux/amd64": "sha256:41a369edc91d9bdd7a58be6bc71ea0f8f7a3f49e82818a9f0829021ea7840b7c",
+        "linux/arm64": "sha256:a1ece8fa15f7b526a51ef47a22fb1f373d33de794dc26bf7bff99e61dcb52690"
+      },
+      "platform_descriptors_only": true,
+      "image_layers_downloaded": false
+    }
+  ],
+  "reviewed_not_selected": [
+    {
+      "reference": "docker.io/gitea/runner:5.2.4-dind",
+      "index_digest": "sha256:e12b6b4a626b7b580e9ecda3dc84779a72019b5ac4c8c563c7d3931631ce34be",
+      "reason": "Pinned source Dockerfile names docker:29.9.1-dind; choose basic runner with separately managed 29.9.2 engine on dedicated worker VM. Image runtime itself not executed."
+    }
+  ],
+  "licenses": [
+    {
+      "component": "Gitea",
+      "license": "MIT",
+      "url": "https://raw.githubusercontent.com/go-gitea/gitea/v28.2.0/LICENSE",
+      "sha256": "ed2f10a9d78b8c6c9ef33f1420d0eb266981891caf2f15d630553f02dc60d3ae"
+    },
+    {
+      "component": "Gitea Runner",
+      "license": "MIT",
+      "url": "https://gitea.com/gitea/runner/raw/tag/v5.2.4/LICENSE",
+      "sha256": "9a785a6826eaeab1f4961761070b40cf46696b958e8abc6c4d53dd93824be0de"
+    },
+    {
+      "component": "Go",
+      "license": "BSD-3-Clause",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.3/LICENSE",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+    },
+    {
+      "component": "Node.js",
+      "license": "MIT plus bundled third-party notices",
+      "url": "https://raw.githubusercontent.com/nodejs/node/v24.22.2/LICENSE",
+      "sha256": "5888dbb9a1d2b18f2c3e6c5f6af1b39de658372b402a0577b002777f14c62ace"
+    },
+    {
+      "component": "npm CLI",
+      "license": "Artistic-2.0",
+      "url": "https://raw.githubusercontent.com/npm/cli/v11.19.1/LICENSE",
+      "sha256": "7610d223851f421d315df5e77974f1c68a04b97e02060e5bbbcf13d95e3ca257"
+    },
+    {
+      "component": "PostgreSQL",
+      "license": "PostgreSQL",
+      "url": "https://www.postgresql.org/about/licence/"
+    },
+    {
+      "component": "Docker CLI",
+      "license": "Apache-2.0",
+      "url": "https://raw.githubusercontent.com/docker/cli/v29.9.2/LICENSE",
+      "sha256": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0"
+    },
+    {
+      "component": "Docker Compose",
+      "license": "Apache-2.0",
+      "url": "https://raw.githubusercontent.com/docker/compose/v5.6.1/LICENSE",
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+    }
+  ],
+  "host_observed": {
+    "os": "Darwin",
+    "os_release": "27.0.0",
+    "architecture": "arm64",
+    "docker_cli": "29.8.2",
+    "compose_cli": "5.5.0",
+    "go": "1.26.3",
+    "node": "24.16.0",
+    "npm": "11.13.0",
+    "psql_available": false,
+    "docker_daemon_contacted": false,
+    "settings_changed": false
+  },
+  "limitations": [
+    "Registry index hashes checked; platform child digests read from index descriptors, not child images executed.",
+    "Source license review does not replace image or dependency SBOM and distribution obligations.",
+    "No installed toolchain upgrade, package dependency install, Docker context change, image pull or running service.",
+    "No source-to-image provenance signature verification or product contract test.",
+    "Browser fetch could not open runner release page; official release API and tag ref were accessible.",
+    "Node blog dates 24.22.2 as October 28 while dist/index.json dates it October 27; identify artifact by exact version and checksum."
+  ]
+}

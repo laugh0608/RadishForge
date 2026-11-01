@@ -13,7 +13,7 @@
 | 测试部署 | 拉预构建固定镜像，外部反代 TLS、容器内受限 HTTP，与生产拓扑接近 |
 | 生产部署 | 拉正式镜像和 Digest，维护窗口、持久化数据、明确迁移及恢复流程 |
 
-建议首版验收 Linux x86_64 + Docker Compose v2；arm64 作为需要实际构建与恢复验证的第二目标，不凭多架构标签宣称可用。Docker / Compose / PostgreSQL / Go / Node 精确版本在 M0 冻结。
+建议首版验收 Linux x86_64 + Docker Compose plugin，以 `docker compose` 命令及精确版本行为验收；不把旧的 v2 主版本建议当作永久限制。2026-11-01 的[M0-S01 候选](../planning/m0-s01-baseline.md)为 Engine 29.9.2 / Compose 5.6.1，尚未安装或运行。arm64 作为需要实际构建与恢复验证的第二目标，不凭多架构标签宣称可用。Docker / Compose / PostgreSQL / Go / Node 的支持组合依据 M0 证据最终冻结。
 
 ## 容器与配置
 

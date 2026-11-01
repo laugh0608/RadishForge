@@ -37,7 +37,7 @@ M0—M6 是时间与依赖维度，专题是能力维度，两者不是同一棵
 
 | 子专题 | 牵头 / 协同专题 | 任务 / 验收 | 交付边界 |
 | --- | --- | --- | --- |
-| M0-S01 底座组合与隔离验证准备 | TOP-BASE；TOP-OPS、TOP-GOV | M0-01 / BASE-01 的版本、来源与环境部分 | 候选版本、Digest、来源许可、最小工具链和隔离执行方案；全阶段取证后才能最终冻结支持组合 |
+| [M0-S01 底座组合与隔离验证准备](m0-s01-baseline.md) | TOP-BASE；TOP-OPS、TOP-GOV | M0-01 / BASE-01 的版本、来源与环境部分 | 候选版本、Digest、来源许可、最小工具链和隔离执行方案；全阶段取证后才能最终冻结支持组合 |
 | M0-S02 身份与私有权限可行性 | TOP-IAM；TOP-BASE | M0-02 / IAM-01、IAM-02 的上游部分 | OIDC / OAuth、账号标识与绑定前提、scope、普通用户权限及撤权证据；不冒充工作台会话验收 |
 | M0-S03 Issue 与交付接口最小验证 | TOP-BASE；TOP-WORKBENCH、TOP-COMPAT、TOP-DELIVERY | M0-03 / BASE-01 | 真实 Issue、Actions、OCI、Release 最小操作及失败结果；不冒充完整产品或 CD |
 | M0-S04 首批兼容范围与缺口决策 | TOP-COMPAT；TOP-IAM、TOP-DELIVERY | M0-04 / COMP-01 的样例和差异基线 | 固定样例、版本、预期和差异处理；未运行项保持待验证，M3 完成兼容验收 |
