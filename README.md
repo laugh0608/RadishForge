@@ -28,6 +28,7 @@ RadishForge 计划以 Gitea 为首选底座，使用 Go 业务服务与 TypeScri
 | GitHub 工作流及 API 兼容 | [兼容策略](docs/architecture/github-compatibility.md) |
 | 构建、镜像、版本与环境 | [交付链路](docs/architecture/delivery-flow.md) |
 | 安装、升级与恢复 | [部署方案](docs/deployment/strategy.md) |
+| 整体规划如何拆分到近期工作 | [专题与子专题](docs/planning/topics.md)、[M0 子专题计划](docs/planning/m0-validation.md) |
 | 先做什么、怎样算完成 | [路线图](docs/planning/roadmap.md)、[任务清单](docs/planning/tasks.md)、[验收矩阵](docs/planning/acceptance.md) |
 | 开发与协作 | [AGENTS.md](AGENTS.md)、[开发原则](docs/development/principles.md)、[仓库治理](docs/governance/repository-governance.md) |
 | PR、分支保护与本地检查 | [Rulesets 策略](docs/governance/rulesets.md)、[检查入口](scripts/README.md)、[治理决定](docs/adr/0002-repository-governance.md) |

@@ -29,6 +29,8 @@
 ## 推进与证据
 
 - [路线图](planning/roadmap.md)
+- [专题与子专题索引](planning/topics.md)
+- [M0 底座可行性子专题计划](planning/m0-validation.md)
 - [阶段任务](planning/tasks.md)
 - [验收矩阵](planning/acceptance.md)
 - [当前状态](status/current.md)
@@ -40,3 +42,4 @@
 - [2026-10-29 治理基础记录](records/2026-10-29-governance-foundation.md)
 - [2026-10-29 本地 Git 初始化与协作复核](records/2026-10-29-local-git-bootstrap.md)
 - [2026-10-29 远端推送与基础保护](records/2026-10-29-remote-governance.md)
+- [2026-11-01 规划层级与近期子专题整合](records/2026-11-01-planning-integration.md)
