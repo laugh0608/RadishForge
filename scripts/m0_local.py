@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Local upstream contract environment; Python standard library, explicit Docker context."""
 import argparse
+import hashlib
 import io
 import json
 from pathlib import Path
@@ -12,6 +13,8 @@ import subprocess
 import tarfile
 import time
 import urllib.request
+
+from m0_scope import PROFILE_PATH, load_contract
 
 ROOT = Path(__file__).resolve().parent.parent
 COMPOSE = ROOT / 'tests/contracts/m0/compose.yaml'
@@ -54,7 +57,7 @@ def write_private(path, content):
     path.chmod(0o600)
 
 
-def prepare(context):
+def prepare(context, auth_profile=False):
     if RUNTIME.exists():
         raise RuntimeError('Runtime directory already exists; inspect ownership before continuing')
     server = command(['docker', '--context', context, 'version', '--format', '{{json .Server}}'])
@@ -68,7 +71,9 @@ def prepare(context):
     RUNTIME.chmod(0o700)
     data = {'repository': str(ROOT), 'context': context,
             'project': 'rf-m0-local-' + secrets.token_hex(4),
-            'server': {k: version[k] for k in ('Version', 'Os', 'Arch', 'KernelVersion')}}
+            'server': {k: version[k] for k in ('Version', 'Os', 'Arch', 'KernelVersion')},
+            'auth_profile': auth_profile,
+            'auth_profile_sha256': hashlib.sha256(PROFILE_PATH.read_bytes()).hexdigest() if auth_profile else None}
     write_private(MARKER, json.dumps(data, indent=2) + '\n')
     write_private(RUNTIME / 'compose.env', '# Explicit empty environment; no automatic .env loading.\n')
     command(['openssl', 'req', '-x509', '-newkey', 'rsa:2048', '-noenc',
@@ -95,6 +100,11 @@ def prepare(context):
         if p.is_file():
             p.chmod(0o600)
     passwords = {name: secrets.token_hex(24) for name in ('bootstrap', 'forge', 'idp')}
+    oauth_settings = ''
+    if auth_profile:
+        settings = load_contract()['test_provider_settings']
+        oauth_settings = ''.join(f'{key} = {str(value).lower() if type(value) is bool else value}\n'
+                                 for key, value in settings.items())
     seed = {}
     for name, port in (('forge', 18443), ('idp', 19443)):
         seed[f'{name}/app.ini'] = f'''APP_NAME = RadishForge M0 {name}
@@ -129,7 +139,7 @@ ENABLED = false
 [oauth2]
 ENABLED = true
 JWT_SIGNING_ALGORITHM = RS256
-[log]
+{oauth_settings}[log]
 MODE = console
 LEVEL = Warn
 '''.encode()
@@ -202,11 +212,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('action', choices=['prepare', 'pull', 'up', 'status', 'cleanup'])
     parser.add_argument('--context', default='orbstack')
+    parser.add_argument('--auth-profile', action='store_true',
+                        help='prepare reviewed scope profiles with short-lived tokens and refresh rotation')
     args = parser.parse_args()
     try:
         if args.action == 'prepare':
-            prepare(args.context)
+            prepare(args.context, args.auth_profile)
         else:
+            if args.auth_profile:
+                raise RuntimeError('--auth-profile applies only to prepare')
             data = state()
             if args.action == 'pull':
                 pull(data)

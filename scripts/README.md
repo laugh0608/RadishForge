@@ -30,3 +30,5 @@ Windows 可用 `py -3` 替代 `python3`，不额外维护仅转发命令的 shel
 [m0_local.py](m0_local.py)管理明确归属的本机 Docker 验证批次，[m0_contracts.py](m0_contracts.py)验证真实 Gitea OIDC / OAuth、普通用户权限及 Issue API；两者不是默认治理检查的一部分。配置、命令、资源、退出码、秘密和清理边界见[M0 契约说明](../tests/contracts/m0/README.md)。
 
 `prepare` 生成本批私密文件，`pull` 下载固定镜像，`up` 初始化新卷并启动三个平台服务，协议探针写入合成账号 / 仓库 / Issue / OAuth 授权，`cleanup` 删除本批测试资源。仅在对应授权下执行，不因本地治理通过自动启动；当前配置没有 Runner，也不挂 Docker socket。
+
+授权组合配置位于 [gitea-auth-profile.json](../tests/contracts/m0/gitea-auth-profile.json)，[m0_scope.py](m0_scope.py)校验完整用途组合与 issuer；对应纯本地负例测试包含在现有 unittest 入口内。真实组合验证使用 `prepare --auth-profile` 和探针 `--mode profiles`；原始上游差异只能通过显式 `--mode discovery` 复现，不能以组合验证取代原始兼容结论。

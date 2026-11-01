@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "provider": "gitea",
+  "provider_version": "28.2.0",
+  "client_registration": {
+    "confidential_client": true,
+    "skip_secondary_authorization": false,
+    "redirect_uris": ["http://127.0.0.1:18555/callback"]
+  },
+  "test_provider_settings": {
+    "INVALIDATE_REFRESH_TOKENS": true,
+    "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+    "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+    "DEFAULT_APPLICATIONS": ""
+  },
+  "profiles": {
+    "identity": {
+      "issuer": "https://localhost:19443",
+      "scopes": ["openid", "public-only", "email", "profile", "read:user"]
+    },
+    "resource_read": {
+      "issuer": "https://localhost:18443",
+      "scopes": ["openid", "read:user", "read:repository", "read:issue"]
+    },
+    "issue_write": {
+      "issuer": "https://localhost:18443",
+      "scopes": ["openid", "read:user", "read:repository", "write:issue"]
+    }
+  }
+}

@@ -38,6 +38,7 @@
 - [当前状态](status/current.md)
 - [ADR 0001：底座与扩展边界](adr/0001-foundation.md)
 - [ADR 0002：分支、PR 与分阶段保护](adr/0002-repository-governance.md)
+- [ADR 0003：Gitea 授权组合与在线复核](adr/0003-gitea-authorization-profiles.md)
 - [来源核查](references/source-review.md)
 - [五个兄弟项目治理提炼](references/governance-review.md)
 - [2026-10-29 规划建立记录](records/2026-10-29-planning-bootstrap.md)
@@ -47,4 +48,5 @@
 - [2026-11-01 规划层级与近期子专题整合](records/2026-11-01-planning-integration.md)
 - [2026-11-01 M0-S01 官方来源核查](records/2026-11-01-m0-s01-review.md)
 - [2026-11-01 本机 Docker 与身份 / 权限 / Issue API 验证](records/2026-11-01-m0-local-validation.md)
+- [2026-11-01 scope 组合收敛与身份生命周期验证](records/2026-11-01-m0-auth-profile-validation.md)
 - [2026-11-01 三级规划规则统一](records/2026-11-01-planning-rules-alignment.md)

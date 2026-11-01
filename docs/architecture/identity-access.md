@@ -18,6 +18,20 @@ OIDC 登录成功只建立工作台身份。访问私有仓库之前，用户还
 
 2026-11-01 的 Gitea 28.2.0 本机验证确认：`openid email profile` 及带未知 scope 的样例均可读私有仓库；`openid public-only email profile` 的签名 ID Token 有效但 UserInfo 为 403，增加显式 `read:user` 后 UserInfo 200 且私有仓库仍为 403。此为当前组合的配置差异，不是所有 OIDC 发行方规则。后续客户端须固定并校验已验证的 scope 白名单，拒绝未知输入；M0-S04 再收口 Gitea profile，不能把宽授权回落宣传为兼容通过。
 
+### Gitea 受控授权组合
+
+[ADR 0003](../adr/0003-gitea-authorization-profiles.md)记录本批决定，[JSON](../../tests/contracts/m0/gitea-auth-profile.json)承载 M0 单一配置；实际结果见[授权组合验证](../records/2026-11-01-m0-auth-profile-validation.md)。三种用途分别注册 confidential client，以授权码 + PKCE S256、精确 callback 和首次用户同意执行；不同用途不共用凭据。
+
+| 用途 | 本批能力与限制 |
+| --- | --- |
+| `identity` | 显式 public-only / read:user 组合，取得 UserInfo，私有仓库 / Issue 拒绝；不作为 Gitea 资源授权 |
+| `resource_read` | 当前用户仓库与 Issue 读取，Issue 写入拒绝 |
+| `issue_write` | 当前用户仓库读取与 Issue 路由组写入，不能创建仓库；仍需对象权限 |
+
+校验完整组合而非仅校验单个名称：缺少 public-only 的合法名称组合也必须拒绝；创建应用、授权和刷新前均拒绝未知 / 缺失 / 额外 / 重复 scope 或错误 issuer。授权后核对实际 grant scope、签名身份和在线账号；刷新成功或 introspection HTTP 200 不代表凭据可用，缺失 / 非对象 / inactive 元数据、账号不符、拒绝或无法核实均停止。资源访问继续按实际上游对象权限判断，刷新不得恢复已撤销权限。
+
+该边界目前在 M0 验证工具落地，尚未进入 M1 Go 服务；不能据此声称产品已阻止任意客户端构造宽 scope 请求，或把上游差异改成原生兼容成功。30 秒 Token 等参数仅用于隔离生命周期测试，正式会话 / Token 生命周期另定。
+
 Token 仅在服务端加密保存，密钥独立于数据库、可轮换和备份。处理过期、刷新竞争、撤销、解绑、上游禁用账号与密钥丢失；解绑终止可撤销的后续作业授权，不改变已完成历史。
 
 ## 权限模型

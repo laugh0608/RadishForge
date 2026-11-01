@@ -80,15 +80,17 @@ PostgreSQL 18 镜像卷挂在 `/var/lib/postgresql`，使用上游空卷初始�
 先只读确认 daemon 归属、实际版本 / 架构、任务名称与端口。用户本轮授权覆盖本机隔离配置及身份、权限、API 真实验证，下载 / 启动前已说明用途与资源影响；这一授权不扩大到 Runner、工具升级、全局设置、提交 / 推送、发布或部署。
 
 ```bash
-python3 scripts/m0_local.py prepare --context orbstack
+python3 scripts/m0_local.py prepare --context orbstack --auth-profile
 python3 scripts/m0_local.py pull
 python3 scripts/m0_local.py up
-python3 -B scripts/m0_contracts.py
+python3 -u -B scripts/m0_contracts.py --mode profiles
 python3 scripts/m0_local.py status
 python3 scripts/m0_local.py cleanup
 ```
 
 `prepare` 先拒绝既有运行目录或非 arm64 daemon，探测端口后生成归属、CA 和私密配置，执行 `compose config --quiet`。`pull` 只拉三个平台服务所需的两个固定镜像；`up` 拒绝复用已有任务容器 / 卷，先初始化专用卷，再启动并用受信任 TLS 的 `/api/healthz` 和容器 CLI 精确版本检查就绪。
+
+后续 scope 收敛使用[单一授权配置](../../tests/contracts/m0/gitea-auth-profile.json)与默认 `profiles` 模式，`--auth-profile` 仅为本批新实例开启短 Token / refresh rotation 验证参数。原始差异通过显式 `--mode discovery` 保留；具体命令、已验证与未通过范围见[授权组合记录](../records/2026-11-01-m0-auth-profile-validation.md)，不能以受控组合结果替代原始上游兼容结论。
 
 协议探针只访问登记的两个本机 origin，拦截 loopback OAuth 回调，无需额外回调服务器；通过公开 API 和原生登录 / 同意页表单验证协议，不依赖底座数据库或内部 Go 包。授权码、cookie、密码、Token 均不打印；写操作失败 / 未知时保留进度并拒绝直接整批重跑，先对账或确认本批合成数据后建立新批次。
 

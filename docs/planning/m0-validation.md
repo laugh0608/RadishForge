@@ -51,6 +51,7 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 - 对应：M0-02；IAM-01、IAM-02 的上游协议与授权证据。
 - 依赖：M0-S01 已固定可复现候选，隔离实例 / IdP / 账号及具体操作已获授权。
 - 设计依据：[身份与访问](../architecture/identity-access.md)。
+- 本批切片：按[ADR 0003](../adr/0003-gitea-authorization-profiles.md)收敛 Gitea 三种用途组合与联网前白名单，继续 confidential client、刷新 / 撤销 / 过期验证；[实际结果](../records/2026-11-01-m0-auth-profile-validation.md)保留原始 scope 及新生命周期差异，不另建子专题或关闭全项 IAM 验收。
 
 **场景与输入。** 用户通过标准 IdP 认证，再以自己的 Gitea OAuth 授权访问私有资源。使用至少两个普通用户、隔离组织 / 私有仓库及撤权前后状态；管理员仅用于配置，不作为访问能力的唯一证据。Radish 可作为候选 IdP，但不能成为自部署硬依赖。
 

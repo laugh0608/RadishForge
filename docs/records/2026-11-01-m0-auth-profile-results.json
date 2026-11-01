@@ -1,0 +1,1513 @@
+{
+  "project": "rf-m0-local-4763d2fc",
+  "platform": "linux/arm64",
+  "context": "orbstack",
+  "runner_started": false,
+  "system_trust_changed": false,
+  "results": [
+    {
+      "name": "local_tls_requires_explicit_task_ca",
+      "status": "pass"
+    },
+    {
+      "name": "ordinary_users_and_independent_idp_created",
+      "status": "pass"
+    },
+    {
+      "name": "ordinary_user_private_repository",
+      "status": "pass",
+      "repository_id": 1
+    },
+    {
+      "name": "scope_guard_rejects_before_network",
+      "status": "pass",
+      "rejected": [
+        "default_oidc",
+        "unknown_scope",
+        "all_scope",
+        "missing_public_only",
+        "admin_scope",
+        "read_to_write",
+        "wrong_issuer",
+        "empty_scope"
+      ],
+      "network_requests": 0
+    },
+    {
+      "name": "identity_profile_userinfo_without_private_access",
+      "status": "pass",
+      "scopes": "openid public-only email profile read:user",
+      "issuer": "https://localhost:19443",
+      "userinfo_status": 200,
+      "private_status": 403
+    },
+    {
+      "name": "separate_confidential_clients_and_exact_granted_scopes",
+      "status": "pass",
+      "profiles": [
+        "identity",
+        "resource_read",
+        "issue_write"
+      ]
+    },
+    {
+      "name": "read_and_issue_write_profiles_have_distinct_permissions",
+      "status": "pass",
+      "issue_number": 1
+    },
+    {
+      "name": "consent_denial_returns_no_code_or_token",
+      "status": "pass"
+    },
+    {
+      "name": "confidential_client_secret_required",
+      "status": "pass"
+    },
+    {
+      "name": "unregistered_redirect_rejected",
+      "status": "pass"
+    },
+    {
+      "name": "refresh_token_bound_to_client",
+      "status": "pass"
+    },
+    {
+      "name": "refresh_scope_widening_rejected_before_network",
+      "status": "pass"
+    },
+    {
+      "name": "refresh_rotation_replay_rejection_and_scope_preservation",
+      "status": "pass"
+    },
+    {
+      "name": "refresh_does_not_restore_revoked_repository_permission",
+      "status": "pass"
+    },
+    {
+      "name": "deleted_resource_client_invalidates_access_and_refresh_without_identity_logout",
+      "status": "pass"
+    },
+    {
+      "name": "disabled_user_refresh",
+      "status": "gap",
+      "refresh_status": 200,
+      "resource_status": 403,
+      "local_receipt_rejected": true,
+      "local_rejection_http_status": 200,
+      "local_rejection_reason": "invalid_introspection_metadata",
+      "introspection_metadata_type": "str",
+      "detail": "Upstream refresh still issues a token; online credential verification rejects it locally"
+    },
+    {
+      "name": "disabled_account_not_accepted_after_refresh",
+      "status": "pass",
+      "http_status": 200,
+      "reason": "invalid_introspection_metadata"
+    },
+    {
+      "name": "waiting_for_real_access_token_expiry",
+      "status": "pass",
+      "lifetime_seconds": 30
+    },
+    {
+      "name": "expired_token_introspection",
+      "status": "gap",
+      "expired_status": 401,
+      "fresh_status": 200,
+      "fresh_active": true,
+      "detail": "Expired token gets 401 instead of 200 inactive metadata; not a client-auth failure"
+    },
+    {
+      "name": "real_access_expiry_and_scoped_refresh",
+      "status": "pass"
+    },
+    {
+      "name": "controlled_profile_probe_completed",
+      "status": "pass",
+      "scope": "Reviewed client combinations only; original upstream scope differences remain"
+    }
+  ],
+  "requests": [
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/admin/users",
+      "status": 201
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/admin/users",
+      "status": 201
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "POST",
+      "path": "/api/v1/admin/users",
+      "status": 201
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/user/repos",
+      "status": 201
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "POST",
+      "path": "/api/v1/user/applications/oauth2",
+      "status": 201
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "GET",
+      "path": "/api/v1/user/applications/oauth2/1",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "GET",
+      "path": "/login/oauth/authorize",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "POST",
+      "path": "/user/login",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "POST",
+      "path": "/login/oauth/grant",
+      "status": 303
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "GET",
+      "path": "/.well-known/openid-configuration",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "GET",
+      "path": "/login/oauth/keys",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "GET",
+      "path": "/login/oauth/userinfo",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "POST",
+      "path": "/login/oauth/introspect",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "GET",
+      "path": "/api/v1/user",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "POST",
+      "path": "/api/v1/user/repos",
+      "status": 201
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/identity-private-fixture",
+      "status": 403
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "POST",
+      "path": "/api/v1/repos/alice/identity-private-fixture/issues",
+      "status": 403
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture",
+      "status": 401
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/user/applications/oauth2",
+      "status": 201
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user/applications/oauth2/1",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/authorize",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/user/login",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/grant",
+      "status": 303
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/.well-known/openid-configuration",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/keys",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/userinfo",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/introspect",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/user/applications/oauth2",
+      "status": 201
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user/applications/oauth2/2",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/authorize",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/user/login",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/grant",
+      "status": 303
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/.well-known/openid-configuration",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/keys",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/userinfo",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/introspect",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/repos/alice/private-fixture/issues",
+      "status": 403
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/repos/alice/private-fixture/issues",
+      "status": 201
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/user/repos",
+      "status": 403
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/user/applications/oauth2",
+      "status": 201
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user/applications/oauth2/3",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/authorize",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/user/login",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/grant",
+      "status": 303
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/authorize",
+      "status": 303
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 400
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/authorize",
+      "status": 400
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 400
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/introspect",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 400
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/repos/alice/private-fixture/issues",
+      "status": 403
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/user/applications/oauth2",
+      "status": 201
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user/applications/oauth2/4",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/authorize",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/user/login",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/grant",
+      "status": 303
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/.well-known/openid-configuration",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/keys",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/userinfo",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/introspect",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture",
+      "status": 404
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "PUT",
+      "path": "/api/v1/repos/alice/private-fixture/collaborators/bob",
+      "status": 204
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "DELETE",
+      "path": "/api/v1/repos/alice/private-fixture/collaborators/bob",
+      "status": 204
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture",
+      "status": 404
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/repos/alice/private-fixture/issues",
+      "status": 404
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "DELETE",
+      "path": "/api/v1/user/applications/oauth2/2",
+      "status": 204
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture",
+      "status": 401
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 400
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "GET",
+      "path": "/login/oauth/userinfo",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/user/repos",
+      "status": 201
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/bob/bob-private-fixture",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "PATCH",
+      "path": "/api/v1/admin/users/bob",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/bob/bob-private-fixture",
+      "status": 403
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/bob/bob-private-fixture",
+      "status": 403
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/introspect",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/user/applications/oauth2",
+      "status": 201
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user/applications/oauth2/5",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/authorize",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/user/login",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/grant",
+      "status": 303
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/.well-known/openid-configuration",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/keys",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/userinfo",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/introspect",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/introspect",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture",
+      "status": 401
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/introspect",
+      "status": 401
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/introspect",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture",
+      "status": 200
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/repos/alice/private-fixture/issues",
+      "status": 403
+    }
+  ],
+  "mode": "profiles",
+  "http_transport": "stateless API credentials; isolated browser cookie jars for login/consent only",
+  "completed": true,
+  "passed_product_acceptance": false,
+  "upstream_scope_differences_fixed": false,
+  "review_date": "2026-11-01",
+  "timezone": "Asia/Shanghai",
+  "source_commit": "fa3ffe8",
+  "docker_server": {
+    "Version": "29.8.2",
+    "Os": "linux",
+    "Arch": "arm64",
+    "KernelVersion": "7.2.12-orbstack-00394-gbecdd6130068"
+  },
+  "docker_compose_version": "5.5.0",
+  "python": "3.14.5",
+  "openssl": "4.0.3",
+  "auth_profile_sha256": "6b0ac9161973f86a8916ed1b7581d96757b57ad6036220a9feb084a8f62ee415",
+  "tool_files_sha256": {
+    "scripts/m0_contracts.py": "1621cc4adf47640e4ce1bdb0c83ef7ccee03167f41e0a657ada518658e1c9322",
+    "scripts/m0_local.py": "0e015dcc35107fcbaae4d89cd8d0fbc2a05fb9ca172d580c6b3a57eaf63f1513",
+    "scripts/m0_scope.py": "5bbedd2e339ccb8e1ca99c4ac5575d98629fd64b4b38cdc1807538eebbb1ad04",
+    "tests/contracts/m0/compose.yaml": "e31d0948c6e7d7dae36ce0014c9820f0096964e48bee0917be6aa22c82e5075d",
+    "tests/contracts/m0/init-db.sh": "79ff909cfca9efce919828192af788ab6cef8d1b23c8ade7b50f5ffb9f19d3f3",
+    "tests/contracts/m0/gitea-auth-profile.json": "6b0ac9161973f86a8916ed1b7581d96757b57ad6036220a9feb084a8f62ee415"
+  },
+  "containers": [
+    {
+      "service": "forge",
+      "id": "5c0677b78513d2c1dac55cd488ec672c0e232cea80886fe08efe8618a719bc03",
+      "image": "docker.gitea.com/gitea@sha256:94807314454f6525994a3b76286ba12bc7e7f8cd14f61d9e67431767f8103306",
+      "state": "running",
+      "privileged": false,
+      "ports": {
+        "2222/tcp": null,
+        "3000/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "18443"
+          }
+        ]
+      },
+      "mount_destinations": [
+        "/etc/gitea",
+        "/var/lib/gitea"
+      ],
+      "version": "gitea version 28.2.0 built with go1.27.2 : bindata, timetzdata,"
+    },
+    {
+      "service": "idp",
+      "id": "29b0c7027eaea3afc78527c56dcd288d61199f754445cdc3e4f1a1fce0c52a48",
+      "image": "docker.gitea.com/gitea@sha256:94807314454f6525994a3b76286ba12bc7e7f8cd14f61d9e67431767f8103306",
+      "state": "running",
+      "privileged": false,
+      "ports": {
+        "2222/tcp": null,
+        "3000/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "19443"
+          }
+        ]
+      },
+      "mount_destinations": [
+        "/etc/gitea",
+        "/var/lib/gitea"
+      ],
+      "version": "gitea version 28.2.0 built with go1.27.2 : bindata, timetzdata,"
+    },
+    {
+      "service": "postgres",
+      "id": "84ff2aafba733664b4a0b139c5c9027499ba7040af609237d8699bbfbec35abc",
+      "image": "docker.io/library/postgres@sha256:5c4783a8cc3f0074912164f94dfa1be4e043438f0f707cf968d7af9a0d31a2c8",
+      "state": "running",
+      "privileged": false,
+      "ports": {
+        "5432/tcp": null
+      },
+      "mount_destinations": [
+        "/docker-entrypoint-initdb.d/10-m0-databases.sh",
+        "/run/m0-db",
+        "/var/lib/postgresql"
+      ],
+      "version": "postgres (PostgreSQL) 18.6 (Debian 18.6-1.pgdg12+2)"
+    }
+  ],
+  "cleanup": {
+    "task_containers_remaining": 0,
+    "task_volumes_remaining": 0,
+    "task_networks_remaining": 0,
+    "runtime_credentials_removed": true,
+    "shared_image_cache_preserved": true,
+    "runner_started": false
+  },
+  "upstream_regression": {
+    "project": "rf-m0-local-6debce31",
+    "mode": "discovery",
+    "profile_provider_settings_enabled": false,
+    "completed": true,
+    "http_transport": "stateless API credentials; isolated browser cookie jars for login/consent only",
+    "results": [
+      {
+        "name": "local_tls_requires_explicit_task_ca",
+        "status": "pass"
+      },
+      {
+        "name": "ordinary_users_and_independent_idp_created",
+        "status": "pass"
+      },
+      {
+        "name": "ordinary_user_private_repository",
+        "status": "pass",
+        "repository_id": 1
+      },
+      {
+        "name": "oauth_pkce_rs256_and_claims",
+        "status": "pass",
+        "claims": {
+          "iss": "https://localhost:18443",
+          "sub": "2",
+          "aud": [
+            "e5461e45-675f-412f-bc3c-98dc385d5b62"
+          ],
+          "email": "alice@example.test"
+        }
+      },
+      {
+        "name": "authorization_code_replay_rejected",
+        "status": "pass"
+      },
+      {
+        "name": "wrong_pkce_verifier_rejected",
+        "status": "pass"
+      },
+      {
+        "name": "issue_create_comment_close_readback",
+        "status": "pass"
+      },
+      {
+        "name": "read_only_oauth_scope_rejects_write",
+        "status": "pass"
+      },
+      {
+        "name": "cross_user_private_read_write_rejected",
+        "status": "pass"
+      },
+      {
+        "name": "repository_permission_revocation_effective_for_existing_oauth_token",
+        "status": "pass"
+      },
+      {
+        "name": "identity_only_scope_userinfo",
+        "status": "gap",
+        "http_status": 403,
+        "detail": "Signed ID token succeeds; standard UserInfo is denied with openid public-only email profile"
+      },
+      {
+        "name": "same_email_independent_issuer_subjects",
+        "status": "pass",
+        "identities": [
+          {
+            "issuer": "https://localhost:18443",
+            "subject": "2"
+          },
+          {
+            "issuer": "https://localhost:19443",
+            "subject": "2"
+          }
+        ],
+        "scope": "upstream identity inputs only; app account binding is not implemented"
+      },
+      {
+        "name": "identity_scope_explicit_read_user_variant",
+        "status": "pass",
+        "scope": "openid public-only email profile read:user",
+        "userinfo_status": 200,
+        "private_resource_status": 403
+      },
+      {
+        "name": "oidc_only_scope_private_resource_access",
+        "status": "gap",
+        "http_status": 200,
+        "expected_boundary": "identity-only must not imply private-resource authorization"
+      },
+      {
+        "name": "unknown_scope_private_resource_access",
+        "status": "gap",
+        "http_status": 200,
+        "expected_boundary": "unknown scope must not expand private-resource authorization"
+      },
+      {
+        "name": "deleted_oauth_application_token",
+        "status": "pass",
+        "http_status": 401
+      },
+      {
+        "name": "upstream_probe_completed",
+        "status": "pass",
+        "scope": "partial IAM and Issue API only; no Runner, app UI, OCI, Release or production evidence"
+      }
+    ],
+    "requests": [
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/api/v1/admin/users",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/api/v1/admin/users",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "POST",
+        "path": "/api/v1/admin/users",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/api/v1/user/repos",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/api/v1/user/applications/oauth2",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/authorize",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/user/login",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/login/oauth/grant",
+        "status": 303
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/login/oauth/access_token",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/.well-known/openid-configuration",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/keys",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/userinfo",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/login/oauth/access_token",
+        "status": 400
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/api/v1/user/applications/oauth2",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/authorize",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/user/login",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/login/oauth/grant",
+        "status": 303
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/login/oauth/access_token",
+        "status": 400
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/api/v1/repos/alice/private-fixture",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/api/v1/repos/alice/private-fixture/issues",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/api/v1/repos/alice/private-fixture/issues/1/comments",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "PATCH",
+        "path": "/api/v1/repos/alice/private-fixture/issues/1",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/api/v1/repos/alice/private-fixture/issues/1",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/api/v1/user/applications/oauth2",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/authorize",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/user/login",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/login/oauth/grant",
+        "status": 303
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/login/oauth/access_token",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/.well-known/openid-configuration",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/keys",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/userinfo",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/api/v1/repos/alice/private-fixture/issues/1",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/api/v1/repos/alice/private-fixture/issues",
+        "status": 403
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/api/v1/user/applications/oauth2",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/authorize",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/user/login",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/login/oauth/grant",
+        "status": 303
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/login/oauth/access_token",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/.well-known/openid-configuration",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/keys",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/userinfo",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/api/v1/repos/alice/private-fixture",
+        "status": 404
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/api/v1/repos/alice/private-fixture/issues",
+        "status": 404
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "PUT",
+        "path": "/api/v1/repos/alice/private-fixture/collaborators/bob",
+        "status": 204
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/api/v1/repos/alice/private-fixture",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "DELETE",
+        "path": "/api/v1/repos/alice/private-fixture/collaborators/bob",
+        "status": 204
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/api/v1/repos/alice/private-fixture",
+        "status": 404
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/api/v1/repos/alice/private-fixture/issues",
+        "status": 404
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "POST",
+        "path": "/api/v1/user/applications/oauth2",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "GET",
+        "path": "/login/oauth/authorize",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "POST",
+        "path": "/user/login",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "POST",
+        "path": "/login/oauth/grant",
+        "status": 303
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "POST",
+        "path": "/login/oauth/access_token",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "GET",
+        "path": "/.well-known/openid-configuration",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "GET",
+        "path": "/login/oauth/keys",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "GET",
+        "path": "/login/oauth/userinfo",
+        "status": 403
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "POST",
+        "path": "/api/v1/user/applications/oauth2",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "GET",
+        "path": "/login/oauth/authorize",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "POST",
+        "path": "/user/login",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "POST",
+        "path": "/login/oauth/grant",
+        "status": 303
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "POST",
+        "path": "/login/oauth/access_token",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "GET",
+        "path": "/.well-known/openid-configuration",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "GET",
+        "path": "/login/oauth/keys",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "GET",
+        "path": "/login/oauth/userinfo",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "POST",
+        "path": "/api/v1/user/repos",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:19443",
+        "method": "GET",
+        "path": "/api/v1/repos/alice/identity-private-fixture",
+        "status": 403
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/api/v1/user/applications/oauth2",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/authorize",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/user/login",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/login/oauth/grant",
+        "status": 303
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/login/oauth/access_token",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/.well-known/openid-configuration",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/keys",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/userinfo",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/api/v1/repos/alice/private-fixture",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/api/v1/user/applications/oauth2",
+        "status": 201
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/authorize",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/user/login",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/login/oauth/grant",
+        "status": 303
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "POST",
+        "path": "/login/oauth/access_token",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/.well-known/openid-configuration",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/keys",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/login/oauth/userinfo",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/api/v1/repos/alice/private-fixture",
+        "status": 200
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "DELETE",
+        "path": "/api/v1/user/applications/oauth2/6",
+        "status": 204
+      },
+      {
+        "origin": "https://localhost:18443",
+        "method": "GET",
+        "path": "/api/v1/repos/alice/private-fixture",
+        "status": 401
+      }
+    ],
+    "process_exit_code": 2,
+    "cleanup": {
+      "task_resources_remaining": 0,
+      "runtime_credentials_removed": true,
+      "runner_started": false
+    }
+  },
+  "process_exit_code": 2
+}
