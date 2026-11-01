@@ -1,6 +1,6 @@
 # OIDC、账号绑定与访问控制
 
-状态：设计；OIDC 是首版要求，尚未联测。外部身份认证与 Gitea API 授权分别建模。
+状态：产品设计；OIDC 是首版要求。已取得[本机 Gitea 上游协议与权限部分证据](../records/2026-11-01-m0-local-validation.md)，自有会话 / 绑定尚未实现。外部身份认证与 Gitea API 授权分别建模。
 
 ## 登录流程
 
@@ -15,6 +15,8 @@ Radish OIDC 是首个家族联测对象，但不成为部署硬依赖。没有�
 OIDC 登录成功只建立工作台身份。访问私有仓库之前，用户还须完成 Gitea OAuth 授权；首次绑定要求当前工作台会话和目标 Gitea 账号共同确认。键使用底座实例 + 上游用户 ID，禁止按用户名或同邮箱静默合并。
 
 默认使用用户 Token 调用 Issue、仓库与 Release API。具体 Scope 必须根据精确版本验证；不能假定 `openid email profile` 天然只有身份权限。若部署版本只能提供较宽授权，必须明确展示范围并记录取舍，不能使用管理员 Token 隐藏缺口。
+
+2026-11-01 的 Gitea 28.2.0 本机验证确认：`openid email profile` 及带未知 scope 的样例均可读私有仓库；`openid public-only email profile` 的签名 ID Token 有效但 UserInfo 为 403，增加显式 `read:user` 后 UserInfo 200 且私有仓库仍为 403。此为当前组合的配置差异，不是所有 OIDC 发行方规则。后续客户端须固定并校验已验证的 scope 白名单，拒绝未知输入；M0-S04 再收口 Gitea profile，不能把宽授权回落宣传为兼容通过。
 
 Token 仅在服务端加密保存，密钥独立于数据库、可轮换和备份。处理过期、刷新竞争、撤销、解绑、上游禁用账号与密钥丢失；解绑终止可撤销的后续作业授权，不改变已完成历史。
 

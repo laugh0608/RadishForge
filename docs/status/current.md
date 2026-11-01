@@ -9,8 +9,11 @@
 - 原有产品、架构与阶段规划之外，已补齐协作 / 安全 / 贡献规则、Git 基础文件、PR / Issue 模板、仓库设置、分阶段 Rulesets 模板及 ADR 0002。
 - 已专项复核五个兄弟项目的十份 AGENTS / CLAUDE，根协作入口由 88 行细化至 133 行，补齐通用执行条件和专题细则；除首行标题外保持一致。
 - 本地治理检查工具使用 Python 3.9+ 标准库，产品栈不变；检查器和故障回归结果见[治理记录](../records/2026-10-29-governance-foundation.md)。
-- M0-S01 已核查官方来源，选择[首个候选组合](../planning/m0-s01-baseline.md)：Gitea 28.2.0-rootless、Runner 5.2.4 基础镜像、PostgreSQL 18.6-bookworm，以及 Go 1.27.3、Node 24.22.2 / npm 11.19.1、Docker Engine 29.9.2、Compose plugin 5.6.1；三个镜像的 index / 平台 Digest、源码引用和 OpenAPI 摘要已有静态证据，尚未拉取 / 执行或最终冻结支持范围。
-- 尚无业务代码、产品依赖、自有数据库或容器编排配置、运行服务、活动 workflow 或真实功能验收。本机已有工具的版本探测不代表验证环境已建立，见[M0-S01 记录](../records/2026-11-01-m0-s01-review.md)。
+- M0-S01 已选择[首个候选组合](../planning/m0-s01-baseline.md)：Gitea 28.2.0-rootless、PostgreSQL 18.6-bookworm 已在本机原生 Linux arm64 镜像运行并取得部分真实证据；Runner 5.2.4 仅为后续候选，本批未下载 / 注册 / 启动。Go 1.27.3、Node 24.22.2 / npm 11.19.1、Engine 29.9.2 / Compose 5.6.1 的发行组合仍未最终冻结。
+- 本机实际 context 为已运行的 OrbStack `orbstack`，daemon Engine 29.8.2 / Compose 5.5.0；保留现有版本，不改全局 context。已新增[M0 隔离配置与探针](../../tests/contracts/m0/README.md)，仅回环端口、独立项目 / 网络 / 卷、任务专用 CA，无 Runner / socket / privileged。不是专用 VM 或 amd64 / 发行组合通过证据。
+- [本机验证](../records/2026-11-01-m0-local-validation.md)已覆盖 TLS、PKCE / ID Token 签名与声明、普通用户私有资源、Issue 创建 / 评论 / 关闭 / 回读、只读 scope、跨用户隔离、资源撤权及删除 OAuth 应用后的 Token 拒绝。两发行方同邮箱身份输入可区分，但自有绑定 / 会话没有实现。
+- 保留三个 scope 差异：`openid public-only email profile` 的 UserInfo 为 403；常见 OIDC scope 和未知 scope 样例均能读私有仓库。显式增加 `read:user` 的 public-only 变体已验证 UserInfo 200 / 私有仓库 403。探针完整执行后退出 2，不能标整项 IAM / BASE / COMP 通过。
+- 本批容器、网络、卷和 `.local/m0` 凭据 / 证书已清理并读回；共享镜像缓存保留，未触碰其他项目资源。尚无自有业务工程、产品依赖、自有数据库、产品容器发行配置或活动 CI；当前无本任务运行服务。
 - 本地初始共同基线为 `c2764aa278cbed9aab3faf6f43a0556e80e623f4`，已推送 master / dev；当前在 dev，后续远端配置记录提交沿 dev 推进，master 保持初始基线。见[初始化记录](../records/2026-10-29-local-git-bootstrap.md)与[远端记录](../records/2026-10-29-remote-governance.md)。
 - origin 为 `https://github.com/laugh0608/RadishForge.git`，保持用户创建的 public 可见性；本地 master / dev 分别跟踪 origin/master / origin/dev。没有 PR、Tag、镜像或 Release，候选域名未配置。
 - 远端默认分支为 master，基础 Ruleset `26129324` 已 active 并读回：只保护 master，禁止删除 / force push、要求 PR 与会话解决、0 个额外审批、无 bypass；允许 merge / rebase、禁 squash，关闭自动合并和自动删源分支。dev 无有效 Ruleset。
@@ -27,9 +30,11 @@
 
 2026-10-29 用户已创建指定 GitHub 空仓库，并授权推送提交、按本项目规则设置远端 Rulesets，可使用本机 gh；当时暂不创建远端或推送的限制已由该轮明确要求更新。授权覆盖该次 origin、分支推送、配套仓库设置、基础保护及相应记录提交。
 
-2026-11-01 用户先要求整合规划，随后明确授权提交该批工作区改动，再推进 M0-S01 官方来源核查、候选组合和隔离验证方案。规划已提交 `bac115e`，未推送；M0-S01 静态准备交付后，用户再次明确要求提交该批工作区改动。本次提交覆盖 M0-S01 文档、来源快照及对应状态同步，不包含推送或环境启动；具体提交回执以 Git 记录为准。
+2026-11-01 用户先要求整合规划并提交，再推进 M0-S01 静态准备并提交，分别形成 `bac115e`、`9c1e481`。本轮开始时本地 dev 与 origin/dev 引用一致、工作区干净；未 fetch，不据此宣称本轮核对了服务端实时状态。
 
-保持“暂不写业务代码”的边界。本次静态核查不包含依赖安装、工具升级、镜像层下载、环境 / VM 启动、测试 PR、远端设置、发布或部署；未修改系统、Git 或默认 Docker context。后续按[隔离方案](../planning/m0-s01-baseline.md)落实实际实例、宿主版本、HTTPS 地址 / 证书、命令与资源影响，再核对对应授权，不重复请求已覆盖的静态准备或已完成提交。
+随后用户明确授权本机 Docker 优先，调整文档、核查环境、准备隔离配置并推进身份、权限和 API 验证，暂不启动 Runner。本轮已在说明用途、固定版本、回环端口、资源与清理影响后，执行本机隔离镜像拉取、启动、合成数据 / 授权验证和清理；该授权更新原先仅静态准备的停止线，不重复审批同范围步骤。
+
+保持“暂不写业务代码”的边界；新增的是 M0 验证工具，没有产品会话 / 绑定实现。本轮不包含 Runner、安装 / 升级宿主工具、新 VM、全局设置 / 系统信任、真实仓库或生产凭据、测试 PR、远端设置、发布或部署。验证交付后用户已明确授权提交本批工作区改动，覆盖隔离配置、探针、脱敏结果与文档同步，具体提交回执以 Git 记录为准；不包含推送。后续改变服务、权限或外部目标时再核对实际授权。
 
 ## 当前验证入口
 
@@ -38,13 +43,13 @@ python3 scripts/check-repo.py
 python3 -B -m unittest discover -s scripts/tests -v
 ```
 
-仅验证本地治理；现在已包含工作树与暂存区 Git 空白检查，回归中的无 Git 场景使用临时副本。范围与限制见[检查说明](../../scripts/README.md)。
+以上仅验证本地治理，包含工作树 / 暂存区空白检查；上游协议另用[M0 契约入口](../../tests/contracts/m0/README.md)，有 Docker / 网络 / 合成数据写入副作用，仅在对应授权下执行。结果层级不能混用。
 
 ## 下一步
 
-当前活跃子专题为[M0-S01：候选组合与隔离验证准备](../planning/m0-s01-baseline.md)，官方来源静态核查、候选和环境方案已交付，M0-01 保持进行中。下一批落实专用 Linux 验证环境、宿主与地址 / 证书，生成隔离配置并先验证，再按授权分阶段下载和启动；当前没有运行实例。
+当前活跃子专题为 M0-S02 身份 / 权限可行性，并已推进 M0-S03 的 Issue API 部分。M0-S01 的本机配置可复现，M0-01 仍待最终支持冻结；当前无需另建专用 VM 或外部 HTTPS 主机。下一步根据真实 scope 差异收敛客户端白名单与 Gitea profile，补身份生命周期和 Issue 其他失败边界；方案见[M0 计划](../planning/m0-validation.md)，证据见[本机记录](../records/2026-11-01-m0-local-validation.md)。
 
-首个真实执行批次收敛到候选组合与 M0-S02 的一条普通用户私有资源权限链路；随后由 M0-S03 验证 Issue / Actions / OCI / Release，M0-S04 固定首批兼容范围及缺口决策。准备完成不等于阶段验收通过，组合依据真实证据最终冻结；关键权限或接口语义不满足时先决策，再进入 M1 业务工程初始化。
+Runner 持续暂停，当前配置明确关闭 Actions。M0-S03 的 Actions / OCI / Release 和 M0-S04 的兼容样例 / 缺口决定仍未完成；scope 差异先处理，不因本批部分证据进入 M1 业务工程初始化。
 
 治理线：G0-01 已完成；G0-02 的推送、配套设置和基础 Ruleset 已完成配置读回，安全报告渠道与独立权限 / PR 行为验收待补，不能关闭完整 GOV-02。G0-03 尚未开始，按 G0-02 依赖推进，真实 CI 经过成功与故障传播验证后再升级同一规则。治理收尾不替代 M0 产品证据，也不阻塞 M0 只读准备。
 

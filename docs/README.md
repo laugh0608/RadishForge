@@ -32,6 +32,7 @@
 - [专题与子专题索引](planning/topics.md)
 - [M0 底座可行性子专题计划](planning/m0-validation.md)
 - [M0-S01 候选组合与隔离验证方案](planning/m0-s01-baseline.md)
+- [M0 本机上游配置与操作](../tests/contracts/m0/README.md)
 - [阶段任务](planning/tasks.md)
 - [验收矩阵](planning/acceptance.md)
 - [当前状态](status/current.md)
@@ -45,3 +46,4 @@
 - [2026-10-29 远端推送与基础保护](records/2026-10-29-remote-governance.md)
 - [2026-11-01 规划层级与近期子专题整合](records/2026-11-01-planning-integration.md)
 - [2026-11-01 M0-S01 官方来源核查](records/2026-11-01-m0-s01-review.md)
+- [2026-11-01 本机 Docker 与身份 / 权限 / Issue API 验证](records/2026-11-01-m0-local-validation.md)

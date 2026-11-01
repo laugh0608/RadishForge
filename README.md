@@ -4,7 +4,7 @@
 
 RadishForge 计划以 Gitea 为首选底座，使用 Go 业务服务与 TypeScript / React 工作台，连接 Git、Issue、PR、Actions、镜像、Release 和环境部署。优先通过公开协议与接口扩展，首版目标为不修改 Gitea 核心；Forgejo 保留为后续独立验证的适配目标。
 
-当前已有规划文档、仓库治理基础文件、PR / Issue 与 Rulesets 模板、本地治理检查工具，尚无业务代码、产品依赖、数据库、容器配置或可运行应用。本地 Git 与 GitHub 远端已建立，日常分支为 dev，远端默认分支 master 已启用基础保护。实际状态、下一步与当前授权边界见[当前状态](docs/status/current.md)。
+当前已有规划文档、仓库治理基础文件、PR / Issue 与 Rulesets 模板、本地治理检查，以及本机 Gitea / PostgreSQL 隔离配置和真实协议探针。已取得部分身份、普通用户权限与 Issue API 证据并记录 scope 差异；尚无自有业务工程、产品依赖或可运行的 RadishForge 应用。本地 Git 与 GitHub 远端已建立，日常分支为 dev，远端默认分支 master 已启用基础保护。实际状态、下一步与当前授权边界见[当前状态](docs/status/current.md)。
 
 ## 已确认方向
 
@@ -31,6 +31,7 @@ RadishForge 计划以 Gitea 为首选底座，使用 Go 业务服务与 TypeScri
 | 整体规划如何拆分到近期工作 | [专题与子专题](docs/planning/topics.md)、[M0 子专题计划](docs/planning/m0-validation.md) |
 | 先做什么、怎样算完成 | [路线图](docs/planning/roadmap.md)、[任务清单](docs/planning/tasks.md)、[验收矩阵](docs/planning/acceptance.md) |
 | 开发与协作 | [AGENTS.md](AGENTS.md)、[开发原则](docs/development/principles.md)、[仓库治理](docs/governance/repository-governance.md) |
+| 本机上游隔离验证 | [M0 契约配置与命令](tests/contracts/m0/README.md)、[真实结果与限制](docs/records/2026-11-01-m0-local-validation.md) |
 | PR、分支保护与本地检查 | [Rulesets 策略](docs/governance/rulesets.md)、[检查入口](scripts/README.md)、[治理决定](docs/adr/0002-repository-governance.md) |
 | 来源与决策 | [参考核查](docs/references/source-review.md)、[架构决策](docs/adr/0001-foundation.md) |
 

@@ -14,9 +14,9 @@
 | G0-01 | TOP-GOV | Git 共同基线、master / dev 与首个提交 | 对应操作授权、P0-05 | GOV-04 | 已完成，见[初始化记录](../records/2026-10-29-local-git-bootstrap.md) |
 | G0-02 | TOP-GOV | 远端目标与可见性、安全报告渠道、基础保护启用 | G0-01、对应远端授权 | GOV-02 | 进行中：推送、基础保护与设置读回已完成；行为验收与安全渠道待补，见[远端记录](../records/2026-10-29-remote-governance.md) |
 | G0-03 | TOP-GOV | 接入真实 CI、验证聚合失败传播、升级同一主线规则 | G0-02、真实检查与对应授权 | GOV-03 | 待开始 |
-| M0-01 | TOP-BASE / M0-S01 | 选择 Gitea / Runner / 工具链 / 镜像 Digest 组合，记录许可 | 静态核查可先行；下载 / 环境等需对应授权 | BASE-01 | 进行中：官方来源静态核查、候选与隔离方案已交付；环境与最终冻结待验证，见[记录](../records/2026-11-01-m0-s01-review.md) |
-| M0-02 | TOP-IAM / M0-S02 | 隔离环境验证 OIDC、OAuth scope、绑定与私有权限 | M0-01 的候选 / 隔离准备部分 | IAM-01、IAM-02 | 待开始 |
-| M0-03 | TOP-BASE / M0-S03 | 真实 Issue / Actions / OCI / Release API 最小验证 | M0-01 的候选 / 隔离准备；M0-02 的用户授权部分 | BASE-01 | 待开始 |
+| M0-01 | TOP-BASE / M0-S01 | 选择 Gitea / Runner / 工具链 / 镜像 Digest 组合，记录许可 | 静态核查可先行；下载 / 环境等需对应授权 | BASE-01 | 进行中：候选、本机隔离配置与平台基础验证已交付，最终支持冻结待阶段取证；见[本机记录](../records/2026-11-01-m0-local-validation.md) |
+| M0-02 | TOP-IAM / M0-S02 | 隔离环境验证 OIDC、OAuth scope、绑定与私有权限 | M0-01 的候选 / 隔离准备部分 | IAM-01、IAM-02 | 进行中：PKCE / 签名、普通用户权限及撤权取得部分证据，三项 scope 差异待收口，产品绑定等未验；见[本机记录](../records/2026-11-01-m0-local-validation.md) |
+| M0-03 | TOP-BASE / M0-S03 | 真实 Issue / Actions / OCI / Release API 最小验证 | M0-01 的候选 / 隔离准备；M0-02 的用户授权部分 | BASE-01 | 进行中：Issue 创建 / 评论 / 关闭 / 回读与权限部分通过；其他 Issue 边界、Actions / OCI / Release 未验；见[本机记录](../records/2026-11-01-m0-local-validation.md) |
 | M0-04 | TOP-COMPAT / M0-S04 | 冻结首批 GitHub API / Action 样例及缺口决策 | M0-02、M0-03 | COMP-01 | 待开始 |
 | M1-01 | TOP-BASE | 最小 Go / React / OpenAPI / PostgreSQL / 工具链基础 | M0 | BASE-02 | 待开始 |
 | M1-02 | TOP-IAM | OIDC 会话、显式账号绑定、Token 保护与撤销 | M1-01 | IAM-01、IAM-02 | 待开始 |
@@ -40,4 +40,4 @@
 
 每项实际执行后在 records 保存证据并在本表添加链接。P0 的记录见[规划建立记录](../records/2026-10-29-planning-bootstrap.md)。当前下一步与授权停止线见[current](../status/current.md)。
 
-2026-11-01 已细化 M0-S01—M0-S04 的执行计划，随后推进 M0-S01 静态准备；详细状态以上表为准。候选与计划不等于真实验证通过，P0-07 文档整合不关闭任何产品验收。
+2026-11-01 已细化 M0-S01—M0-S04，并从静态准备推进至本机真实上游部分取证；详细状态以上表为准。部分协议证据不等于整项产品验收通过，Runner 暂不启动，M0 不因本批完成而晋级。

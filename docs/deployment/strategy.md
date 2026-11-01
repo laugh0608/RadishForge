@@ -1,6 +1,6 @@
 # 部署、升级与恢复
 
-状态：规划；当前没有 Dockerfile、Compose、启动脚本、镜像、端口占用或部署实例。
+状态：产品部署规划；已有[M0 本机契约验证 Compose](../../tests/contracts/m0/README.md)及操作工具，真实上游测试资源按批次清理。尚无产品 Dockerfile、发行镜像、安装 / 部署实例；不能把验证配置当成发行配置。
 
 ## 参考与适配
 
@@ -14,6 +14,8 @@
 | 生产部署 | 拉正式镜像和 Digest，维护窗口、持久化数据、明确迁移及恢复流程 |
 
 建议首版验收 Linux x86_64 + Docker Compose plugin，以 `docker compose` 命令及精确版本行为验收；不把旧的 v2 主版本建议当作永久限制。2026-11-01 的[M0-S01 候选](../planning/m0-s01-baseline.md)为 Engine 29.9.2 / Compose 5.6.1，尚未安装或运行。arm64 作为需要实际构建与恢复验证的第二目标，不凭多架构标签宣称可用。Docker / Compose / PostgreSQL / Go / Node 的支持组合依据 M0 证据最终冻结。
+
+本轮身份 / API 验证按用户要求优先复用本机 OrbStack：原生 Linux arm64、Engine 29.8.2 / Compose 5.5.0，独立项目 / 网络 / 卷、仅回环端口、不启动 Runner。专用 VM 与外部 HTTPS 主机不作为当前平台验证前置；本地任务 CA 只给测试客户端显式使用。该环境不代替发行候选、amd64 或不可信 Runner 的隔离验收。
 
 ## 容器与配置
 

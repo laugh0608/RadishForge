@@ -12,7 +12,7 @@
 
 M0 确认精确 Gitea / Runner 版本、提交、镜像 Digest、OpenAPI 摘要、许可证与已验证兼容范围。2026-10-29 静态参考版本为 Gitea v28.2.0，不是已部署版本；Runner 版本尚未冻结，不能由 Gitea 版本推断。
 
-2026-11-01 已形成[M0-S01 首个候选组合](../planning/m0-s01-baseline.md)及[来源快照](../records/2026-11-01-m0-s01-sources.json)：Gitea / Runner 分别核对发行和完整提交，镜像 index / 平台 Digest 与 OpenAPI 摘要可定位。候选未运行、未验签镜像来源证明、支持组合未最终冻结；根许可核查不代替镜像、依赖与 Action 的完整声明。工具链仅选择候选，不自动安装或升级。
+2026-11-01 已形成[M0-S01 首个候选组合](../planning/m0-s01-baseline.md)及[来源快照](../records/2026-11-01-m0-s01-sources.json)：Gitea / Runner 分别核对发行和完整提交，镜像 index / 平台 Digest 与 OpenAPI 摘要可定位。随后 Gitea / PostgreSQL 按固定 Digest 进入[本机 arm64 部分取证](../records/2026-11-01-m0-local-validation.md)，Runner 未启动，宿主工具未升级。未验签镜像来源证明，支持组合未最终冻结；根许可核查不代替镜像、依赖与 Action 的完整声明。
 
 RadishForge 自有源码与上游运行镜像分离维护，不复制整个上游仓库。若未来确需补丁，再建立单独的底座维护分支或仓库，保留原始历史、上游 remote、补丁目的、测试、负责人和退出条件。
 

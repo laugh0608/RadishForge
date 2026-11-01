@@ -1,6 +1,6 @@
 # 本地治理检查
 
-本目录是仓库维护工具，不是业务服务。使用 Python 3.9+ 标准库，无第三方依赖，不安装包、不联网、不启动服务、不写 Git。产品技术栈仍为 Go + TypeScript + React。
+本目录包含仓库维护及 M0 上游验证工具，不是业务服务。Python 工具使用标准库，无第三方包依赖；产品技术栈仍为 Go + TypeScript + React。下列治理检查不安装包、不联网、不启动服务、不写 Git；M0 工具的 Docker / 网络副作用单列说明。
 
 ```bash
 python3 scripts/check-repo.py
@@ -24,3 +24,9 @@ Windows 可用 `py -3` 替代 `python3`，不额外维护仅转发命令的 shel
 ## 维护方式
 
 新增真实约束时同步治理专题与检查器，补充能揭露错误放行的负例。后续建立 CI 时复用这个入口，先运行成功和故障传播验收，再将真实 job 纳入 Candidate Quality；当前没有活动 workflow。
+
+## M0 本机验证工具
+
+[m0_local.py](m0_local.py)管理明确归属的本机 Docker 验证批次，[m0_contracts.py](m0_contracts.py)验证真实 Gitea OIDC / OAuth、普通用户权限及 Issue API；两者不是默认治理检查的一部分。配置、命令、资源、退出码、秘密和清理边界见[M0 契约说明](../tests/contracts/m0/README.md)。
+
+`prepare` 生成本批私密文件，`pull` 下载固定镜像，`up` 初始化新卷并启动三个平台服务，协议探针写入合成账号 / 仓库 / Issue / OAuth 授权，`cleanup` 删除本批测试资源。仅在对应授权下执行，不因本地治理通过自动启动；当前配置没有 Runner，也不挂 Docker socket。

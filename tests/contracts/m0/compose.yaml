@@ -1,0 +1,91 @@
+# Local upstream validation only. No Runner, host socket, public ports or app code.
+services:
+  postgres:
+    image: docker.io/library/postgres@sha256:5c4783a8cc3f0074912164f94dfa1be4e043438f0f707cf968d7af9a0d31a2c8
+    platform: linux/arm64
+    environment:
+      POSTGRES_USER: m0_bootstrap
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD_FILE: /run/m0-db/bootstrap-password
+    volumes:
+      - postgres-data:/var/lib/postgresql
+      - database-secrets:/run/m0-db:ro
+      - ./init-db.sh:/docker-entrypoint-initdb.d/10-m0-databases.sh:ro
+    networks: [database]
+    healthcheck:
+      test: [CMD, pg_isready, -h, 127.0.0.1, -U, m0_bootstrap, -d, postgres]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    mem_limit: 768m
+    cpus: 1.0
+    pids_limit: 128
+    restart: "no"
+  forge:
+    image: &gitea docker.gitea.com/gitea@sha256:94807314454f6525994a3b76286ba12bc7e7f8cd14f61d9e67431767f8103306
+    platform: linux/arm64
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports: ["127.0.0.1:18443:3000"]
+    volumes:
+      - forge-data:/var/lib/gitea
+      - forge-config:/etc/gitea
+    networks: [database, frontend]
+    mem_limit: 1024m
+    cpus: 1.0
+    pids_limit: 256
+    restart: "no"
+  idp:
+    image: *gitea
+    platform: linux/arm64
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports: ["127.0.0.1:19443:3000"]
+    volumes:
+      - idp-data:/var/lib/gitea
+      - idp-config:/etc/gitea
+    networks: [database, frontend]
+    mem_limit: 1024m
+    cpus: 1.0
+    pids_limit: 256
+    restart: "no"
+  seed:
+    image: *gitea
+    platform: linux/arm64
+    profiles: [prepare]
+    user: "0:0"
+    entrypoint: [/bin/sh, -eu, -c]
+    command:
+      - >-
+        tar -xf - -C /out;
+        chmod 700 /out/forge /out/idp;
+        chmod 700 /out/database;
+        chown 1000:1000 /out/forge/* /out/idp/*;
+        chown 1000:1000 /out/forge /out/idp;
+        chown 999:999 /out/database/*;
+        chown 999:999 /out/database
+    stdin_open: true
+    read_only: true
+    network_mode: none
+    cap_drop: [ALL]
+    cap_add: [CHOWN]
+    volumes:
+      - forge-config:/out/forge
+      - idp-config:/out/idp
+      - database-secrets:/out/database
+    mem_limit: 128m
+    pids_limit: 32
+    restart: "no"
+networks:
+  database:
+    internal: true
+  frontend:
+volumes:
+  postgres-data:
+  database-secrets:
+  forge-data:
+  forge-config:
+  idp-data:
+  idp-config:
