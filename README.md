@@ -31,7 +31,7 @@ RadishForge 计划以 Gitea 为首选底座，使用 Go 业务服务与 TypeScri
 | 整体规划如何拆分到近期工作 | [专题与子专题](docs/planning/topics.md)、[M0 子专题计划](docs/planning/m0-validation.md) |
 | 先做什么、怎样算完成 | [路线图](docs/planning/roadmap.md)、[任务清单](docs/planning/tasks.md)、[验收矩阵](docs/planning/acceptance.md) |
 | 开发与协作 | [AGENTS.md](AGENTS.md)、[开发原则](docs/development/principles.md)、[仓库治理](docs/governance/repository-governance.md) |
-| 本机上游隔离验证 | [M0 契约配置与命令](tests/contracts/m0/README.md)、[首轮结果](docs/records/2026-11-01-m0-local-validation.md)、[授权组合与生命周期结果](docs/records/2026-11-01-m0-auth-profile-validation.md) |
+| 本机上游隔离验证 | [M0 契约配置与命令](tests/contracts/m0/README.md)、[首轮结果](docs/records/2026-11-01-m0-local-validation.md)、[授权组合结果](docs/records/2026-11-01-m0-auth-profile-validation.md)、[生命周期差异与负例](docs/records/2026-11-04-m0-lifecycle-validation.md) |
 | PR、分支保护与本地检查 | [Rulesets 策略](docs/governance/rulesets.md)、[检查入口](scripts/README.md)、[治理决定](docs/adr/0002-repository-governance.md) |
 | 来源与决策 | [参考核查](docs/references/source-review.md)、[架构决策](docs/adr/0001-foundation.md) |
 

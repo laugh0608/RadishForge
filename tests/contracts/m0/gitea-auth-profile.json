@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "provider": "gitea",
   "provider_version": "28.2.0",
   "client_registration": {
@@ -12,6 +12,9 @@
     "ACCESS_TOKEN_EXPIRATION_TIME": 30,
     "REFRESH_TOKEN_EXPIRATION_TIME": 1,
     "DEFAULT_APPLICATIONS": ""
+  },
+  "test_security_settings": {
+    "DISABLE_QUERY_AUTH_TOKEN": true
   },
   "profiles": {
     "identity": {

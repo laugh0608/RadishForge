@@ -1,0 +1,4374 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-04",
+  "date_timezone": "Asia/Shanghai",
+  "repository_head": "2d10a65e55c2d60f67298689ee492c132472e87f",
+  "scope": "M0-S02 upstream lifecycle slice only; Runner paused, no M1 or complete IAM acceptance",
+  "runs": {
+    "baseline": {
+      "project": "rf-m0-local-d9f32888",
+      "platform": "linux/arm64",
+      "context": "orbstack",
+      "runner_started": false,
+      "system_trust_changed": false,
+      "results": [
+        {
+          "name": "local_tls_requires_explicit_task_ca",
+          "status": "pass"
+        },
+        {
+          "name": "ordinary_users_and_independent_idp_created",
+          "status": "pass"
+        },
+        {
+          "name": "ordinary_user_private_repository",
+          "status": "pass",
+          "repository_id": 1
+        },
+        {
+          "name": "disabled_account_refresh_diagnostic",
+          "status": "gap",
+          "refresh_status": 200,
+          "introspection_status": 200,
+          "metadata_type": "str",
+          "final_path": "/login/oauth/introspect",
+          "resource_status": 403,
+          "local_rejection": {
+            "status": 200,
+            "reason": "invalid_introspection_metadata",
+            "metadata_type": "str"
+          }
+        },
+        {
+          "name": "waiting_for_access_expiry",
+          "status": "pass",
+          "seconds": 32
+        },
+        {
+          "name": "expired_access_introspection_diagnostic",
+          "status": "gap",
+          "expired_status": 401,
+          "expired_metadata_type": "str",
+          "wrong_secret_status": 401,
+          "fresh_status": 200,
+          "fresh_active": true,
+          "local_rejection": {
+            "status": 401,
+            "reason": "introspection_unauthorized_unattributed",
+            "metadata_type": null
+          }
+        },
+        {
+          "name": "lifecycle_probe_completed",
+          "status": "pass",
+          "scope": "M0 upstream lifecycle only; no product session or Runner"
+        }
+      ],
+      "requests": [
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/repos",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/repos"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/repos",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/repos"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PATCH",
+          "path": "/api/v1/admin/users/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/bob/bob-private-fixture",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/bob/bob-private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/private-fixture",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "str",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "str",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "str",
+          "final_path": "/login/oauth/introspect"
+        }
+      ],
+      "mode": "lifecycle-baseline",
+      "http_transport": "stateless API credentials; isolated browser cookie jars for login/consent only",
+      "completed": true,
+      "passed_product_acceptance": false,
+      "upstream_scope_differences_fixed": false,
+      "owner": {
+        "context": "orbstack",
+        "project": "rf-m0-local-d9f32888",
+        "server": {
+          "Version": "29.8.2",
+          "Os": "linux",
+          "Arch": "arm64",
+          "KernelVersion": "7.2.12-orbstack-00394-gbecdd6130068"
+        },
+        "auth_profile": true,
+        "auth_profile_sha256": "6b0ac9161973f86a8916ed1b7581d96757b57ad6036220a9feb084a8f62ee415"
+      },
+      "sha256": {
+        "scripts/m0_contracts.py": "9627a2a6afd48d8a1c93ac6a047ee35a7acec6c6eb8dc67a04fc68dc1d869624",
+        "scripts/m0_oauth.py": "930c018502500a258b8ec3d65a82d8c126c1490dffc293add6be29ab8250854b",
+        "scripts/m0_lifecycle.py": "3e6d54e9d3e745bce1ecab2ee0c49af0aa34873dd1123b5b64e2fd5352d83226",
+        "scripts/m0_local.py": "0e015dcc35107fcbaae4d89cd8d0fbc2a05fb9ca172d580c6b3a57eaf63f1513",
+        "scripts/m0_scope.py": "5bbedd2e339ccb8e1ca99c4ac5575d98629fd64b4b38cdc1807538eebbb1ad04",
+        "tests/contracts/m0/gitea-auth-profile.json": "6b0ac9161973f86a8916ed1b7581d96757b57ad6036220a9feb084a8f62ee415",
+        "tests/contracts/m0/compose.yaml": "e31d0948c6e7d7dae36ce0014c9820f0096964e48bee0917be6aa22c82e5075d"
+      },
+      "containers": [
+        "32aa84da2860 rf-m0-local-d9f32888-forge-1 94807314454f",
+        "30c253c91231 rf-m0-local-d9f32888-idp-1 94807314454f",
+        "88b9998dfff9 rf-m0-local-d9f32888-postgres-1 5c4783a8cc3f"
+      ],
+      "exit_code": 2
+    },
+    "lifecycle": {
+      "project": "rf-m0-local-21f2d445",
+      "platform": "linux/arm64",
+      "context": "orbstack",
+      "runner_started": false,
+      "system_trust_changed": false,
+      "results": [
+        {
+          "name": "local_tls_requires_explicit_task_ca",
+          "status": "pass"
+        },
+        {
+          "name": "ordinary_users_and_independent_idp_created",
+          "status": "pass"
+        },
+        {
+          "name": "ordinary_user_private_repository",
+          "status": "pass",
+          "repository_id": 1
+        },
+        {
+          "name": "real_refresh_expiry_fixture_started",
+          "status": "pass",
+          "lifetime_seconds": 3600,
+          "scope": "This token remains unused until after real expiry; no clock manipulation"
+        },
+        {
+          "name": "disabled_account_refresh_diagnostic",
+          "status": "gap",
+          "refresh_status": 200,
+          "introspection_status": 200,
+          "metadata_type": "dict",
+          "final_path": "/login/oauth/introspect",
+          "resource_status": 403,
+          "local_rejection": {
+            "status": 403,
+            "reason": "account_access_denied",
+            "metadata_type": null
+          },
+          "resolution": "reject_with_online_account_check"
+        },
+        {
+          "name": "account_restoration_reactivates_existing_grant",
+          "status": "pass",
+          "scope": "Gitea grant persists; RadishForge must require fresh explicit authorization after local unbind"
+        },
+        {
+          "name": "waiting_for_access_expiry",
+          "status": "pass",
+          "seconds": 31
+        },
+        {
+          "name": "expired_access_introspection_diagnostic",
+          "status": "pass",
+          "expired_status": 200,
+          "expired_metadata_type": "dict",
+          "wrong_secret_status": 401,
+          "fresh_status": 200,
+          "fresh_active": true,
+          "local_rejection": {
+            "status": 200,
+            "reason": "token_not_active",
+            "metadata_type": null
+          }
+        },
+        {
+          "name": "introspection_invalid_foreign_and_client_auth_controls",
+          "status": "pass",
+          "invalid_status": 200,
+          "foreign_status": 200,
+          "wrong_secret_status": 401,
+          "valid_status": 200
+        },
+        {
+          "name": "concurrent_refresh_single_winner_and_replay",
+          "status": "pass",
+          "statuses": [
+            400,
+            200
+          ],
+          "private_read_status": 200,
+          "private_write_status": 403,
+          "next_refresh_status": 200
+        },
+        {
+          "name": "awaiting_native_consent_revocation",
+          "status": "pass",
+          "instruction": "Use native Gitea settings UI as bob; no private frontend endpoint is called by this probe"
+        },
+        {
+          "name": "single_user_consent_revocation_isolated_and_reconsent",
+          "status": "pass",
+          "access_status": 401,
+          "refresh_status": 400,
+          "introspection_active": false,
+          "observed_before_expiry_seconds": 0.931,
+          "other_user_same_app_valid": true,
+          "same_user_other_app_valid": true,
+          "independent_identity_valid": true,
+          "application_preserved": true
+        },
+        {
+          "name": "waiting_for_real_refresh_expiry",
+          "status": "pass",
+          "remaining_seconds": 3300
+        },
+        {
+          "name": "real_refresh_token_expiry_rejected",
+          "status": "pass",
+          "elapsed_seconds": 3602.849,
+          "expired_refresh_status": 400,
+          "same_client_reauthorization_valid": true,
+          "expired_token_still_rejected": true
+        },
+        {
+          "name": "lifecycle_probe_completed",
+          "status": "pass",
+          "scope": "M0 upstream lifecycle only; no product session or Runner"
+        }
+      ],
+      "requests": [
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/repos",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/repos"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/3",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/3"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/repos",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/repos"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PATCH",
+          "path": "/api/v1/admin/users/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/bob/bob-private-fixture",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/bob/bob-private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PATCH",
+          "path": "/api/v1/admin/users/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/bob/bob-private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/bob/bob-private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/private-fixture",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "str",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/4",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/4"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/5",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/5"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 400,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/alice/private-fixture/issues",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture/issues"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 400,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 400,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/6",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/6"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/7",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/7"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/1"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/bob/bob-private-fixture",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/bob/bob-private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/bob/bob-private-fixture/issues",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/bob/bob-private-fixture/issues"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 400,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/6",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/6"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/bob/bob-private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/bob/bob-private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 400,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/8",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/8"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 400,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/private-fixture",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 303,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 400,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        }
+      ],
+      "mode": "lifecycle",
+      "http_transport": "stateless API credentials; isolated browser cookie jars for login/consent only",
+      "completed": true,
+      "passed_product_acceptance": false,
+      "upstream_scope_differences_fixed": false,
+      "owner": {
+        "context": "orbstack",
+        "project": "rf-m0-local-21f2d445",
+        "server": {
+          "Version": "29.8.2",
+          "Os": "linux",
+          "Arch": "arm64",
+          "KernelVersion": "7.2.12-orbstack-00394-gbecdd6130068"
+        },
+        "auth_profile": true,
+        "legacy_query_auth": false,
+        "auth_profile_sha256": "519fe3922c0e9e2a436677acb38cefa1846c82220642c68693b70448c07a1636",
+        "effective_provider_settings": {
+          "forge": {
+            "oauth2": {
+              "INVALIDATE_REFRESH_TOKENS": true,
+              "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+              "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+              "DEFAULT_APPLICATIONS": ""
+            },
+            "security": {
+              "DISABLE_QUERY_AUTH_TOKEN": true
+            },
+            "actions_enabled": false,
+            "config_sha256": "260e86e925eadeac8b8efced23ec0d24bd7e4635526e692c71792297a7135849"
+          },
+          "idp": {
+            "oauth2": {
+              "INVALIDATE_REFRESH_TOKENS": true,
+              "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+              "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+              "DEFAULT_APPLICATIONS": ""
+            },
+            "security": {
+              "DISABLE_QUERY_AUTH_TOKEN": true
+            },
+            "actions_enabled": false,
+            "config_sha256": "650b9e300dc29cb2659c8ac05b58fd1cee66e9618a88eb3ef3a80cf2f46e0351"
+          }
+        }
+      },
+      "exit_code": 2,
+      "exported_at_utc": "2026-11-04T11:44:21.508412+00:00",
+      "executed_source_snapshot": {
+        "provenance": "Snapshot reconstructed from the two explicit local type-hardening patches made after probe start; no provider config or protocol steps changed.",
+        "sha256": {
+          "scripts/m0_contracts.py": "9627a2a6afd48d8a1c93ac6a047ee35a7acec6c6eb8dc67a04fc68dc1d869624",
+          "scripts/m0_oauth.py": "6c3770e1dbc6f6a2ac5a292e2e7f37c0f3520dcc72038812cc184d2509ab3f94",
+          "scripts/m0_lifecycle.py": "2144ae7ff23fd501187c18944793d8dd555f82ba8246fbd5837b568eade894e5",
+          "scripts/m0_local.py": "a4433ce826e8ec28d9735cea595b20cddb13f46224c024fba513c8cf301b6336",
+          "scripts/m0_scope.py": "cfceba8151a3b6cbde7a06c0f5d2ed91a0822b81f177d7b73c13db76f8bcf04a",
+          "tests/contracts/m0/gitea-auth-profile.json": "519fe3922c0e9e2a436677acb38cefa1846c82220642c68693b70448c07a1636",
+          "tests/contracts/m0/compose.yaml": "e31d0948c6e7d7dae36ce0014c9820f0096964e48bee0917be6aa22c82e5075d"
+        },
+        "reproduce_from_final_source_patch": "--- a/scripts/m0_contracts.py\n+++ b/scripts/m0_contracts.py\n@@ -1,21 +1,20 @@\n #!/usr/bin/env python3\n \"\"\"Real local Gitea protocol probes. No app implementation or third-party packages.\"\"\"\n import argparse\n-from datetime import datetime, timezone\n import hashlib\n import json\n import re\n import secrets\n-import ssl\n import time\n import urllib.error\n import urllib.parse\n import urllib.request\n+import ssl\n \n from m0_local import RUNTIME, command, compose, state, write_private\n from m0_scope import PROFILE_PATH, ProfileError, load_contract, scope_for\n from m0_oauth import (CALLBACK, REQUESTS, AuthorizationRejected, GrantRejected, Client,\n-                     expect, issue_code, exchange, jwt_claims, register, receipt, authorize, refresh, introspect)\n+                      expect, issue_code, exchange, jwt_claims, register, receipt, authorize, refresh)\n \n \n def profile_checks(owner, forge, idp, credentials, record):\n@@ -160,7 +159,6 @@\n     if disabled_refresh[0] == 200:\n         disabled_tokens = disabled_refresh[1]\n         expect(forge.request('GET', bob_path, token=disabled_tokens['access_token']), {401, 403}, 'disabled refreshed access')\n-        disabled_inspection = introspect(forge, bob_app, disabled_tokens['access_token'])\n         try:\n             receipt('issue_write', forge, bob_app, disabled_tokens)\n         except GrantRejected as exc:\n@@ -174,9 +172,6 @@\n                local_receipt_rejected=True, local_rejection_http_status=local_status,\n                local_rejection_reason=local_reason,\n                introspection_metadata_type=metadata_type,\n-               introspection_status=disabled_inspection[0],\n-               introspection_active=(disabled_inspection[1].get('active')\n-                                     if isinstance(disabled_inspection[1], dict) else None),\n                detail='Upstream refresh still issues a token; online credential verification rejects it locally')\n         record('disabled_account_not_accepted_after_refresh', http_status=local_status, reason=local_reason)\n     else:\n@@ -217,10 +212,6 @@\n     if mode != 'discovery' and (not owner.get('auth_profile') or\n                               owner.get('auth_profile_sha256') != hashlib.sha256(PROFILE_PATH.read_bytes()).hexdigest()):\n         raise RuntimeError('Prepare a fresh environment with --auth-profile matching the reviewed contract')\n-    if mode == 'lifecycle-baseline' and not owner.get('legacy_query_auth'):\n-        raise RuntimeError('Historical diagnosis requires a fresh --legacy-query-auth environment')\n-    if mode in ('profiles', 'lifecycle') and owner.get('legacy_query_auth'):\n-        raise RuntimeError('Controlled probes refuse the historical form-token authentication setting')\n     marker = RUNTIME / 'contract-started.json'\n     if marker.exists():\n         raise RuntimeError('Probe already started; reconcile prior writes before a new run')\n@@ -230,17 +221,9 @@\n               'runner_started': False, 'system_trust_changed': False, 'results': results,\n               'requests': REQUESTS, 'mode': mode,\n               'http_transport': 'stateless API credentials; isolated browser cookie jars for login/consent only'}\n-    report['started_at_utc'] = datetime.now(timezone.utc).isoformat()\n-    report['repository_head'] = command(['git', '-C', str(RUNTIME.parent.parent), 'rev-parse', 'HEAD']).stdout.decode().strip()\n-    report['source_sha256'] = {name: hashlib.sha256((RUNTIME.parent.parent / name).read_bytes()).hexdigest()\n-                               for name in ('scripts/m0_contracts.py', 'scripts/m0_oauth.py',\n-                                            'scripts/m0_lifecycle.py', 'scripts/m0_local.py',\n-                                            'scripts/m0_scope.py', 'tests/contracts/m0/gitea-auth-profile.json',\n-                                            'tests/contracts/m0/compose.yaml')}\n-    report['effective_provider_settings'] = owner.get('effective_provider_settings')\n \n     def record(name, status='pass', **details):\n-        results.append({'name': name, 'status': status, 'observed_at_utc': datetime.now(timezone.utc).isoformat(), **details})\n+        results.append({'name': name, 'status': status, **details})\n         write_private(RUNTIME / 'results.json', json.dumps(report, ensure_ascii=False, indent=2) + '\\n')\n         print(json.dumps(results[-1], ensure_ascii=False))\n \n@@ -411,6 +394,5 @@\n if __name__ == '__main__':\n     parser = argparse.ArgumentParser(description=__doc__)\n     parser.add_argument('--mode', choices=['profiles', 'discovery', 'lifecycle', 'lifecycle-baseline'], default='profiles',\n-                        help='profiles: reviewed grants; discovery: raw scopes; lifecycle: long expiry/native consent; '\n-                             'lifecycle-baseline: historical form-token diagnosis')\n+                        help='profiles validates reviewed combinations; discovery reproduces raw upstream differences')\n     raise SystemExit(main(parser.parse_args().mode))\n--- a/scripts/m0_oauth.py\n+++ b/scripts/m0_oauth.py\n@@ -249,8 +249,7 @@\n         raise GrantRejected(status, 'invalid_active_metadata')\n     if info['active'] is not True:\n         raise GrantRejected(status, 'token_not_active')\n-    if (not isinstance(info.get('sub'), str) or not info['sub'].isascii()\n-            or not info['sub'].isdecimal() or int(info['sub']) <= 0):\n+    if not isinstance(info.get('sub'), str) or not info['sub']:\n         raise GrantRejected(status, 'invalid_subject_metadata')\n     if not isinstance(info.get('scope'), str) or not info['scope']:\n         raise GrantRejected(status, 'invalid_scope_metadata')\n@@ -265,12 +264,10 @@\n \n def receipt(purpose, client, app, tokens, *, subject=None):\n     contract = load_contract()\n-    if (not isinstance(tokens, dict) or not isinstance(tokens.get('token_type'), str)\n-            or tokens['token_type'].lower() != 'bearer'\n-            or type(tokens.get('expires_in')) is not int\n-            or tokens['expires_in'] != contract['test_provider_settings']['ACCESS_TOKEN_EXPIRATION_TIME']\n-            or not isinstance(tokens.get('access_token'), str) or not tokens['access_token']\n-            or not isinstance(tokens.get('refresh_token'), str) or not tokens['refresh_token']):\n+    if (tokens.get('token_type', '').lower() != 'bearer'\n+            or tokens.get('expires_in') != contract['test_provider_settings']['ACCESS_TOKEN_EXPIRATION_TIME']\n+            or not isinstance(tokens.get('access_token'), str)\n+            or not isinstance(tokens.get('refresh_token'), str)):\n         raise RuntimeError('Token response differs from configured test lifetime or grant type')\n     try:\n         info = introspection_metadata(introspect(client, app, tokens['access_token']))\n@@ -278,15 +275,14 @@\n         account_result = client.request('GET', '/api/v1/user', token=tokens['access_token'])\n     except (OSError, urllib.error.URLError):\n         raise GrantRejected(None, 'verification_result_unknown') from None\n-    except ValueError:\n+    except (ValueError, json.JSONDecodeError):\n         raise GrantRejected(None, 'invalid_verification_response') from None\n     if account_result[0] in (401, 403):\n         raise GrantRejected(account_result[0], 'account_access_denied')\n     if account_result[0] != 200:\n         raise GrantRejected(account_result[0], 'account_verification_unavailable')\n     account = account_result[1]\n-    if (not isinstance(account, dict) or type(account.get('id')) is not int\n-            or account['id'] <= 0 or str(account['id']) != info['sub']\n+    if (not isinstance(account, dict) or str(account.get('id')) != info['sub']\n             or (subject is not None and info['sub'] != subject)):\n         raise GrantRejected(200, 'invalid_or_mismatched_account')\n     return info\n--- a/scripts/m0_lifecycle.py\n+++ b/scripts/m0_lifecycle.py\n@@ -48,7 +48,6 @@\n             raise RuntimeError('Disabled credentials were not rejected by online account verification')\n     record('disabled_account_refresh_diagnostic', 'gap', refresh_status=200,\n            introspection_status=inspected[0], metadata_type=type(inspected[1]).__name__,\n-           introspection_active=inspected[1].get('active') if isinstance(inspected[1], dict) else None,\n            final_path=inspected[3].split('?', 1)[0].removeprefix(forge.base),\n            resource_status=resource[0], local_rejection=stopped,\n            resolution='historical_reproduction' if legacy else 'reject_with_online_account_check')\n@@ -60,7 +59,7 @@\n            scope='Gitea grant persists; RadishForge must require fresh explicit authorization after local unbind')\n     record('waiting_for_access_expiry', seconds=max(0, round(deadline-time.monotonic())))\n     while time.monotonic() < deadline:\n-        time.sleep(min(1, max(0, deadline-time.monotonic())))\n+        time.sleep(min(1, deadline-time.monotonic()))\n     expect(forge.request('GET', path, token=tokens['access_token']), {401}, 'expired resource access')\n     expired = introspect(forge, app, tokens['access_token'])\n     wrong = introspect(forge, app, tokens['access_token'], client_secret='wrong-isolated-client-secret')\n@@ -147,8 +146,6 @@\n             raise RuntimeError('Revocation was not observed before access-token expiry; evidence would be ambiguous')\n         time.sleep(0.1)\n     event = json.loads((RUNTIME / 'consent-ui-revoked.json').read_text())\n-    if time.monotonic() - issued >= 25:\n-        raise RuntimeError('Revocation receipt arrived too late to distinguish revocation from token expiry')\n     if event != {'project': owner['project'], 'user': 'bob', 'application_id': app['id'], 'revoked': True}:\n         raise RuntimeError('Native consent revocation receipt does not match this fixture')\n     path = '/api/v1/repos/bob/bob-private-fixture'\n@@ -195,8 +192,8 @@\n     consent_revocation(owner, forge, idp, credentials, record)\n     record('waiting_for_real_refresh_expiry', remaining_seconds=max(0, round(expiry_deadline-time.monotonic())))\n     while time.monotonic() < expiry_deadline:\n-        time.sleep(min(1, max(0, expiry_deadline-time.monotonic())))\n-    # A fresh grant controls provider health; the original client is checked below.\n+        time.sleep(min(1, expiry_deadline-time.monotonic()))\n+    # Same client + fresh valid grant controls caller errors and provider health.\n     control_app, control, _, _ = authorize('resource_read', forge, alice, 'm0-refresh-expiry-control')\n     expect(refresh('resource_read', forge, control_app, control['refresh_token']), {200}, 'live refresh control')\n     expired = refresh('resource_read', forge, expiry_app, expiry_tokens['refresh_token'])\n--- a/scripts/m0_local.py\n+++ b/scripts/m0_local.py\n@@ -1,7 +1,6 @@\n #!/usr/bin/env python3\n \"\"\"Local upstream contract environment; Python standard library, explicit Docker context.\"\"\"\n import argparse\n-import configparser\n import hashlib\n import io\n import json\n@@ -203,55 +202,7 @@\n                 time.sleep(1)\n         else:\n             raise RuntimeError(f'HTTPS readiness failed on port {port}: {last}')\n-    if data['auth_profile']:\n-        verify_provider_settings(data)\n     print('Both Gitea instances ready over verified local TLS; no system CA changed.')\n-\n-\n-def verify_provider_settings(data):\n-    \"\"\"Read only reviewed keys; never expose app.ini secrets in errors or evidence.\"\"\"\n-    contract = load_contract()\n-    settings = {}\n-    for service in ('forge', 'idp'):\n-        raw = compose(data, 'exec', '-T', service, 'cat', '/etc/gitea/app.ini').stdout\n-        ini = configparser.ConfigParser(interpolation=None)\n-        try:\n-            ini.read_string('[DEFAULT]\\n' + raw.decode())\n-            oauth = {key: (ini.getboolean('oauth2', key) if type(expected) is bool else\n-                           ini.getint('oauth2', key) if type(expected) is int else ini.get('oauth2', key))\n-                     for key, expected in contract['test_provider_settings'].items()}\n-            security = {'DISABLE_QUERY_AUTH_TOKEN': ini.getboolean('security', 'DISABLE_QUERY_AUTH_TOKEN')}\n-            actions = ini.getboolean('actions', 'ENABLED')\n-        except (configparser.Error, UnicodeError, ValueError):\n-            raise RuntimeError('Cannot read back reviewed provider settings; raw configuration withheld') from None\n-        expected_security = {'DISABLE_QUERY_AUTH_TOKEN': not data.get('legacy_query_auth', False)}\n-        if oauth != contract['test_provider_settings'] or security != expected_security or actions:\n-            raise RuntimeError('Effective provider settings differ from this isolated test contract')\n-        settings[service] = {'oauth2': oauth, 'security': security, 'actions_enabled': actions,\n-                             'config_sha256': hashlib.sha256(raw).hexdigest()}\n-    data['effective_provider_settings'] = settings\n-    write_private(MARKER, json.dumps(data, indent=2) + '\\n')\n-\n-\n-def consent_marker(data, revoked=False):\n-    \"\"\"Coordinate a real native UI click; the protocol probe verifies its effects.\"\"\"\n-    target = json.loads((RUNTIME / 'consent-target.json').read_text())\n-    if (target.get('project') != data['project'] or target.get('user') != 'bob'\n-            or type(target.get('application_id')) is not int):\n-        raise RuntimeError('Consent target does not belong to this fixture')\n-    if revoked:\n-        if not (RUNTIME / 'consent-click-ready.json').exists():\n-            raise RuntimeError('Wait for the fresh-credential marker before confirming the native click')\n-        path = RUNTIME / 'consent-ui-revoked.json'\n-        value = {key: target[key] for key in ('project', 'user', 'application_id')}\n-        value['revoked'] = True\n-    else:\n-        path = RUNTIME / 'consent-ui-ready.json'\n-        value = {'project': data['project'], 'ready': True}\n-    if path.exists():\n-        raise RuntimeError('Consent marker already exists; reconcile the current run rather than replaying it')\n-    write_private(path, json.dumps(value) + '\\n')\n-    print('Native consent stage recorded; only subsequent real API checks establish revocation.')\n \n \n def cleanup(data):\n@@ -268,8 +219,7 @@\n \n def main():\n     parser = argparse.ArgumentParser(description=__doc__)\n-    parser.add_argument('action', choices=['prepare', 'pull', 'up', 'status', 'cleanup',\n-                                          'consent-ready', 'consent-revoked'])\n+    parser.add_argument('action', choices=['prepare', 'pull', 'up', 'status', 'cleanup'])\n     parser.add_argument('--context', default='orbstack')\n     parser.add_argument('--auth-profile', action='store_true',\n                         help='prepare reviewed scope profiles with short-lived tokens and refresh rotation')\n@@ -289,8 +239,6 @@\n                 up(data)\n             elif args.action == 'cleanup':\n                 cleanup(data)\n-            elif args.action in ('consent-ready', 'consent-revoked'):\n-                consent_marker(data, args.action == 'consent-revoked')\n             else:\n                 print(compose(data, 'ps', '--format', 'json').stdout.decode())\n         return 0\n--- a/scripts/m0_scope.py\n+++ b/scripts/m0_scope.py\n@@ -38,8 +38,7 @@\n             or settings['REFRESH_TOKEN_EXPIRATION_TIME'] != 1\n             or settings['DEFAULT_APPLICATIONS'] != ''):\n         raise ProfileError('Invalid short-lived M0 provider settings')\n-    security = data['test_security_settings']\n-    if set(security) != {'DISABLE_QUERY_AUTH_TOKEN'} or security['DISABLE_QUERY_AUTH_TOKEN'] is not True:\n+    if data['test_security_settings'] != {'DISABLE_QUERY_AUTH_TOKEN': True}:\n         raise ProfileError('Reviewed profiles require header-only resource authentication')\n     if set(data['profiles']) != {'identity', 'resource_read', 'issue_write'}:\n         raise ProfileError('Unexpected M0 authorization purpose')\n",
+        "patch_direction": "Apply to the final-source hashes in this evidence to reconstruct the loaded revision; snapshot was reconstructed from known post-start input-type edits.",
+        "reconstruction_verified": true
+      },
+      "source_snapshot_note": "Loaded revision reconstructed from the two explicit post-start local type-hardening patches; later final-code regressions are recorded separately.",
+      "containers": [
+        {
+          "ID": "b61dbc382e00",
+          "Name": "rf-m0-local-21f2d445-forge-1",
+          "Service": "forge",
+          "Image": "docker.gitea.com/gitea@sha256:94807314454f6525994a3b76286ba12bc7e7f8cd14f61d9e67431767f8103306",
+          "State": "running",
+          "Ports": "2222/tcp, 127.0.0.1:18443->3000/tcp",
+          "Health": "",
+          "Project": "rf-m0-local-21f2d445"
+        },
+        {
+          "ID": "522edbb4df42",
+          "Name": "rf-m0-local-21f2d445-idp-1",
+          "Service": "idp",
+          "Image": "docker.gitea.com/gitea@sha256:94807314454f6525994a3b76286ba12bc7e7f8cd14f61d9e67431767f8103306",
+          "State": "running",
+          "Ports": "2222/tcp, 127.0.0.1:19443->3000/tcp",
+          "Health": "",
+          "Project": "rf-m0-local-21f2d445"
+        },
+        {
+          "ID": "e58391acfebc",
+          "Name": "rf-m0-local-21f2d445-postgres-1",
+          "Service": "postgres",
+          "Image": "docker.io/library/postgres@sha256:5c4783a8cc3f0074912164f94dfa1be4e043438f0f707cf968d7af9a0d31a2c8",
+          "State": "running",
+          "Ports": "5432/tcp",
+          "Health": "healthy",
+          "Project": "rf-m0-local-21f2d445"
+        }
+      ]
+    },
+    "profiles-final": {
+      "project": "rf-m0-local-a3fa0d3b",
+      "platform": "linux/arm64",
+      "context": "orbstack",
+      "runner_started": false,
+      "system_trust_changed": false,
+      "results": [
+        {
+          "name": "local_tls_requires_explicit_task_ca",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:32.321533+00:00"
+        },
+        {
+          "name": "ordinary_users_and_independent_idp_created",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:32.794337+00:00"
+        },
+        {
+          "name": "ordinary_user_private_repository",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:32.990532+00:00",
+          "repository_id": 1
+        },
+        {
+          "name": "scope_guard_rejects_before_network",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:32.991852+00:00",
+          "rejected": [
+            "default_oidc",
+            "unknown_scope",
+            "all_scope",
+            "missing_public_only",
+            "admin_scope",
+            "read_to_write",
+            "wrong_issuer",
+            "empty_scope"
+          ],
+          "network_requests": 0
+        },
+        {
+          "name": "identity_profile_userinfo_without_private_access",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:33.429803+00:00",
+          "scopes": "openid public-only email profile read:user",
+          "issuer": "https://localhost:19443",
+          "userinfo_status": 200,
+          "private_status": 403
+        },
+        {
+          "name": "separate_confidential_clients_and_exact_granted_scopes",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:33.939079+00:00",
+          "profiles": [
+            "identity",
+            "resource_read",
+            "issue_write"
+          ]
+        },
+        {
+          "name": "read_and_issue_write_profiles_have_distinct_permissions",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:33.994721+00:00",
+          "issue_number": 1
+        },
+        {
+          "name": "consent_denial_returns_no_code_or_token",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:34.117764+00:00"
+        },
+        {
+          "name": "confidential_client_secret_required",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:34.174187+00:00"
+        },
+        {
+          "name": "unregistered_redirect_rejected",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:34.180604+00:00"
+        },
+        {
+          "name": "refresh_token_bound_to_client",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:34.232762+00:00"
+        },
+        {
+          "name": "refresh_scope_widening_rejected_before_network",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:34.233755+00:00"
+        },
+        {
+          "name": "refresh_rotation_replay_rejection_and_scope_preservation",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:34.416156+00:00"
+        },
+        {
+          "name": "refresh_does_not_restore_revoked_repository_permission",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:34.845823+00:00"
+        },
+        {
+          "name": "deleted_resource_client_invalidates_access_and_refresh_without_identity_logout",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:34.872334+00:00"
+        },
+        {
+          "name": "disabled_user_refresh",
+          "status": "gap",
+          "observed_at_utc": "2026-11-04T11:44:35.208015+00:00",
+          "refresh_status": 200,
+          "resource_status": 403,
+          "local_receipt_rejected": true,
+          "local_rejection_http_status": 403,
+          "local_rejection_reason": "account_access_denied",
+          "introspection_metadata_type": null,
+          "introspection_status": 200,
+          "introspection_active": true,
+          "detail": "Upstream refresh still issues a token; online credential verification rejects it locally"
+        },
+        {
+          "name": "disabled_account_not_accepted_after_refresh",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:35.208681+00:00",
+          "http_status": 403,
+          "reason": "account_access_denied"
+        },
+        {
+          "name": "waiting_for_real_access_token_expiry",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:44:35.560590+00:00",
+          "lifetime_seconds": 30
+        },
+        {
+          "name": "real_access_expiry_and_scoped_refresh",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:45:06.802149+00:00"
+        },
+        {
+          "name": "controlled_profile_probe_completed",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:45:06.802839+00:00",
+          "scope": "Reviewed client combinations only; original upstream scope differences remain"
+        }
+      ],
+      "requests": [
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/repos",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/repos"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/1"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/api/v1/user/repos",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/repos"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/identity-private-fixture",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/identity-private-fixture"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/api/v1/repos/alice/identity-private-fixture/issues",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/identity-private-fixture/issues"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/private-fixture",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/alice/private-fixture/issues",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture/issues"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/alice/private-fixture/issues",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture/issues"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/repos",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/repos"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/3",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/3"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 303,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 400,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 400,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 400,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 400,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/alice/private-fixture/issues",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture/issues"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/4",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/4"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/private-fixture",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/repos/alice/private-fixture/collaborators/bob",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/repos/alice/private-fixture/collaborators/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "DELETE",
+          "path": "/api/v1/repos/alice/private-fixture/collaborators/bob",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/repos/alice/private-fixture/collaborators/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/private-fixture",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/alice/private-fixture/issues",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture/issues"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "DELETE",
+          "path": "/api/v1/user/applications/oauth2/2",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/user/applications/oauth2/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/private-fixture",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 400,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/repos",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/repos"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/bob/bob-private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/bob/bob-private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PATCH",
+          "path": "/api/v1/admin/users/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/bob/bob-private-fixture",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/bob/bob-private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/bob/bob-private-fixture",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/bob/bob-private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/5",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/5"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/private-fixture",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/alice/private-fixture/issues",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture/issues"
+        }
+      ],
+      "mode": "profiles",
+      "http_transport": "stateless API credentials; isolated browser cookie jars for login/consent only",
+      "started_at_utc": "2026-11-04T11:44:32.305928+00:00",
+      "repository_head": "2d10a65e55c2d60f67298689ee492c132472e87f",
+      "source_sha256": {
+        "scripts/m0_contracts.py": "e94703e97210de16dd6ab372c907608400194adf52e4c8c7d4e0bff91863cb88",
+        "scripts/m0_oauth.py": "ef3ca6801d1610f6ce70235b170832c8ed4454443f324b6d662fa67d5d9fb567",
+        "scripts/m0_lifecycle.py": "19c87fcac7b343e64ce6e005936d196f5f4d794b721d50508227fbc920a69609",
+        "scripts/m0_local.py": "2253c3e36f3d8fb408d7fa9c225bacd841ccb48b448a409dce64a4eafa988ca3",
+        "scripts/m0_scope.py": "f5cc9dfbddc8fb0372b1b5beca5e89fafe798b0b46bb9885923b16e121113f9d",
+        "tests/contracts/m0/gitea-auth-profile.json": "519fe3922c0e9e2a436677acb38cefa1846c82220642c68693b70448c07a1636",
+        "tests/contracts/m0/compose.yaml": "e31d0948c6e7d7dae36ce0014c9820f0096964e48bee0917be6aa22c82e5075d"
+      },
+      "effective_provider_settings": {
+        "forge": {
+          "oauth2": {
+            "INVALIDATE_REFRESH_TOKENS": true,
+            "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+            "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+            "DEFAULT_APPLICATIONS": ""
+          },
+          "security": {
+            "DISABLE_QUERY_AUTH_TOKEN": true
+          },
+          "actions_enabled": false,
+          "config_sha256": "5af11bcea64845644290846e47d6fd73b8a38f098521a7a0b69ce5275f2bbccf"
+        },
+        "idp": {
+          "oauth2": {
+            "INVALIDATE_REFRESH_TOKENS": true,
+            "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+            "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+            "DEFAULT_APPLICATIONS": ""
+          },
+          "security": {
+            "DISABLE_QUERY_AUTH_TOKEN": true
+          },
+          "actions_enabled": false,
+          "config_sha256": "b84b46648f58ae63b569cf8778737d99c4972f9accd54cdceaeb708a2dbfc721"
+        }
+      },
+      "completed": true,
+      "passed_product_acceptance": false,
+      "upstream_scope_differences_fixed": false,
+      "owner": {
+        "context": "orbstack",
+        "project": "rf-m0-local-a3fa0d3b",
+        "server": {
+          "Version": "29.8.2",
+          "Os": "linux",
+          "Arch": "arm64",
+          "KernelVersion": "7.2.12-orbstack-00394-gbecdd6130068"
+        },
+        "auth_profile": true,
+        "legacy_query_auth": false,
+        "auth_profile_sha256": "519fe3922c0e9e2a436677acb38cefa1846c82220642c68693b70448c07a1636",
+        "effective_provider_settings": {
+          "forge": {
+            "oauth2": {
+              "INVALIDATE_REFRESH_TOKENS": true,
+              "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+              "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+              "DEFAULT_APPLICATIONS": ""
+            },
+            "security": {
+              "DISABLE_QUERY_AUTH_TOKEN": true
+            },
+            "actions_enabled": false,
+            "config_sha256": "5af11bcea64845644290846e47d6fd73b8a38f098521a7a0b69ce5275f2bbccf"
+          },
+          "idp": {
+            "oauth2": {
+              "INVALIDATE_REFRESH_TOKENS": true,
+              "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+              "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+              "DEFAULT_APPLICATIONS": ""
+            },
+            "security": {
+              "DISABLE_QUERY_AUTH_TOKEN": true
+            },
+            "actions_enabled": false,
+            "config_sha256": "b84b46648f58ae63b569cf8778737d99c4972f9accd54cdceaeb708a2dbfc721"
+          }
+        }
+      },
+      "exit_code": 2,
+      "exported_at_utc": "2026-11-04T11:45:06.833473+00:00",
+      "containers": [
+        {
+          "ID": "11041640f016",
+          "Name": "rf-m0-local-a3fa0d3b-forge-1",
+          "Service": "forge",
+          "Image": "docker.gitea.com/gitea@sha256:94807314454f6525994a3b76286ba12bc7e7f8cd14f61d9e67431767f8103306",
+          "State": "running",
+          "Ports": "2222/tcp, 127.0.0.1:18443->3000/tcp",
+          "Health": "",
+          "Project": "rf-m0-local-a3fa0d3b"
+        },
+        {
+          "ID": "a962d187b7a7",
+          "Name": "rf-m0-local-a3fa0d3b-idp-1",
+          "Service": "idp",
+          "Image": "docker.gitea.com/gitea@sha256:94807314454f6525994a3b76286ba12bc7e7f8cd14f61d9e67431767f8103306",
+          "State": "running",
+          "Ports": "2222/tcp, 127.0.0.1:19443->3000/tcp",
+          "Health": "",
+          "Project": "rf-m0-local-a3fa0d3b"
+        },
+        {
+          "ID": "770f8ef411a9",
+          "Name": "rf-m0-local-a3fa0d3b-postgres-1",
+          "Service": "postgres",
+          "Image": "docker.io/library/postgres@sha256:5c4783a8cc3f0074912164f94dfa1be4e043438f0f707cf968d7af9a0d31a2c8",
+          "State": "running",
+          "Ports": "5432/tcp",
+          "Health": "healthy",
+          "Project": "rf-m0-local-a3fa0d3b"
+        }
+      ]
+    },
+    "baseline-final": {
+      "project": "rf-m0-local-ba2ee998",
+      "platform": "linux/arm64",
+      "context": "orbstack",
+      "runner_started": false,
+      "system_trust_changed": false,
+      "results": [
+        {
+          "name": "local_tls_requires_explicit_task_ca",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:45:15.049274+00:00"
+        },
+        {
+          "name": "ordinary_users_and_independent_idp_created",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:45:15.373199+00:00"
+        },
+        {
+          "name": "ordinary_user_private_repository",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:45:15.501773+00:00",
+          "repository_id": 1
+        },
+        {
+          "name": "disabled_account_refresh_diagnostic",
+          "status": "gap",
+          "observed_at_utc": "2026-11-04T11:45:16.338456+00:00",
+          "refresh_status": 200,
+          "introspection_status": 200,
+          "metadata_type": "str",
+          "introspection_active": null,
+          "final_path": "/login/oauth/introspect",
+          "resource_status": 403,
+          "local_rejection": {
+            "status": 200,
+            "reason": "invalid_introspection_metadata",
+            "metadata_type": "str"
+          },
+          "resolution": "historical_reproduction"
+        },
+        {
+          "name": "account_restoration_reactivates_existing_grant",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:45:16.418343+00:00",
+          "scope": "Gitea grant persists; RadishForge must require fresh explicit authorization after local unbind"
+        },
+        {
+          "name": "waiting_for_access_expiry",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:45:16.418799+00:00",
+          "seconds": 31
+        },
+        {
+          "name": "expired_access_introspection_diagnostic",
+          "status": "gap",
+          "observed_at_utc": "2026-11-04T11:45:48.049194+00:00",
+          "expired_status": 401,
+          "expired_metadata_type": "str",
+          "wrong_secret_status": 401,
+          "fresh_status": 200,
+          "fresh_active": true,
+          "local_rejection": {
+            "status": 401,
+            "reason": "introspection_unauthorized_unattributed",
+            "metadata_type": null
+          }
+        },
+        {
+          "name": "lifecycle_probe_completed",
+          "status": "pass",
+          "observed_at_utc": "2026-11-04T11:45:48.049848+00:00",
+          "scope": "M0 upstream lifecycle only; no product session or Runner"
+        }
+      ],
+      "requests": [
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/repos",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/repos"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/repos",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/repos"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PATCH",
+          "path": "/api/v1/admin/users/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/bob/bob-private-fixture",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/bob/bob-private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PATCH",
+          "path": "/api/v1/admin/users/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/bob/bob-private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/bob/bob-private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/alice/private-fixture",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/alice/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "str",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "str",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "str",
+          "final_path": "/login/oauth/introspect"
+        }
+      ],
+      "mode": "lifecycle-baseline",
+      "http_transport": "stateless API credentials; isolated browser cookie jars for login/consent only",
+      "started_at_utc": "2026-11-04T11:45:15.035622+00:00",
+      "repository_head": "2d10a65e55c2d60f67298689ee492c132472e87f",
+      "source_sha256": {
+        "scripts/m0_contracts.py": "e94703e97210de16dd6ab372c907608400194adf52e4c8c7d4e0bff91863cb88",
+        "scripts/m0_oauth.py": "ef3ca6801d1610f6ce70235b170832c8ed4454443f324b6d662fa67d5d9fb567",
+        "scripts/m0_lifecycle.py": "19c87fcac7b343e64ce6e005936d196f5f4d794b721d50508227fbc920a69609",
+        "scripts/m0_local.py": "2253c3e36f3d8fb408d7fa9c225bacd841ccb48b448a409dce64a4eafa988ca3",
+        "scripts/m0_scope.py": "f5cc9dfbddc8fb0372b1b5beca5e89fafe798b0b46bb9885923b16e121113f9d",
+        "tests/contracts/m0/gitea-auth-profile.json": "519fe3922c0e9e2a436677acb38cefa1846c82220642c68693b70448c07a1636",
+        "tests/contracts/m0/compose.yaml": "e31d0948c6e7d7dae36ce0014c9820f0096964e48bee0917be6aa22c82e5075d"
+      },
+      "effective_provider_settings": {
+        "forge": {
+          "oauth2": {
+            "INVALIDATE_REFRESH_TOKENS": true,
+            "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+            "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+            "DEFAULT_APPLICATIONS": ""
+          },
+          "security": {
+            "DISABLE_QUERY_AUTH_TOKEN": false
+          },
+          "actions_enabled": false,
+          "config_sha256": "36fa1b40bd63a3f12f3c5a384bc8555731ce381bdbe1d1faeab4f4d188b5bd34"
+        },
+        "idp": {
+          "oauth2": {
+            "INVALIDATE_REFRESH_TOKENS": true,
+            "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+            "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+            "DEFAULT_APPLICATIONS": ""
+          },
+          "security": {
+            "DISABLE_QUERY_AUTH_TOKEN": false
+          },
+          "actions_enabled": false,
+          "config_sha256": "20a1a94c0325e11f42f7f6725318f3d73ac4ac464f57ea7343d4b9e3b14f0400"
+        }
+      },
+      "completed": true,
+      "passed_product_acceptance": false,
+      "upstream_scope_differences_fixed": false,
+      "owner": {
+        "context": "orbstack",
+        "project": "rf-m0-local-ba2ee998",
+        "server": {
+          "Version": "29.8.2",
+          "Os": "linux",
+          "Arch": "arm64",
+          "KernelVersion": "7.2.12-orbstack-00394-gbecdd6130068"
+        },
+        "auth_profile": true,
+        "legacy_query_auth": true,
+        "auth_profile_sha256": "519fe3922c0e9e2a436677acb38cefa1846c82220642c68693b70448c07a1636",
+        "effective_provider_settings": {
+          "forge": {
+            "oauth2": {
+              "INVALIDATE_REFRESH_TOKENS": true,
+              "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+              "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+              "DEFAULT_APPLICATIONS": ""
+            },
+            "security": {
+              "DISABLE_QUERY_AUTH_TOKEN": false
+            },
+            "actions_enabled": false,
+            "config_sha256": "36fa1b40bd63a3f12f3c5a384bc8555731ce381bdbe1d1faeab4f4d188b5bd34"
+          },
+          "idp": {
+            "oauth2": {
+              "INVALIDATE_REFRESH_TOKENS": true,
+              "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+              "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+              "DEFAULT_APPLICATIONS": ""
+            },
+            "security": {
+              "DISABLE_QUERY_AUTH_TOKEN": false
+            },
+            "actions_enabled": false,
+            "config_sha256": "20a1a94c0325e11f42f7f6725318f3d73ac4ac464f57ea7343d4b9e3b14f0400"
+          }
+        }
+      },
+      "exit_code": 2,
+      "exported_at_utc": "2026-11-04T11:45:48.096272+00:00",
+      "containers": [
+        {
+          "ID": "96dcd6b8479e",
+          "Name": "rf-m0-local-ba2ee998-forge-1",
+          "Service": "forge",
+          "Image": "docker.gitea.com/gitea@sha256:94807314454f6525994a3b76286ba12bc7e7f8cd14f61d9e67431767f8103306",
+          "State": "running",
+          "Ports": "2222/tcp, 127.0.0.1:18443->3000/tcp",
+          "Health": "",
+          "Project": "rf-m0-local-ba2ee998"
+        },
+        {
+          "ID": "128399deb637",
+          "Name": "rf-m0-local-ba2ee998-idp-1",
+          "Service": "idp",
+          "Image": "docker.gitea.com/gitea@sha256:94807314454f6525994a3b76286ba12bc7e7f8cd14f61d9e67431767f8103306",
+          "State": "running",
+          "Ports": "2222/tcp, 127.0.0.1:19443->3000/tcp",
+          "Health": "",
+          "Project": "rf-m0-local-ba2ee998"
+        },
+        {
+          "ID": "2cd8ce81f89b",
+          "Name": "rf-m0-local-ba2ee998-postgres-1",
+          "Service": "postgres",
+          "Image": "docker.io/library/postgres@sha256:5c4783a8cc3f0074912164f94dfa1be4e043438f0f707cf968d7af9a0d31a2c8",
+          "State": "running",
+          "Ports": "5432/tcp",
+          "Health": "healthy",
+          "Project": "rf-m0-local-ba2ee998"
+        }
+      ]
+    }
+  },
+  "fixed_source_commit": "829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1",
+  "source_review_sha256": {
+    "services/auth/oauth2.go": "8ac2d51178267e540bdbf12f5aefce9ab41b76c2630dbb5490805b0270fcba86",
+    "services/auth/oauth2_test.go": "6142b9fc238e396cedb4933b5c04535d34496cd2902f98a1c466c8ca88984dc0",
+    "services/oauth2_provider/token.go": "3546f9ae7b89d71d57fd96acd6dd524994f894c80696e43e9c647e8a7b851a3f",
+    "custom/conf/app.example.ini": "80538c45a359ff58b075a2a68f3ac8b91053393bac0adfa92f561b710cf333ac",
+    "modules/setting/security.go": "60ae36f0f50328efc8c7d970d9ec37a2f288386a1fc6ef6df62cdfc689d5588e",
+    "modules/setting/oauth2.go": "314e7203f85284240e33c12e90ffde6af8d8edd48082bba4858a09d104b1a544",
+    "templates/user/settings/applications_oauth2.tmpl": "82da1ade20b176d2c9c80d7b957b51ce2919a0ddb643b42cd562aef7f5aa21c9",
+    "templates/user/settings/applications.tmpl": "099914c6db2989c6686d38c4f7d74dd9d973e8571c964529c55270ef30277950",
+    "models/auth/oauth2.go": "c8c1c437d0104669adfc7dc043059801e8ce3f4cd4d9c11afa08147174e0dcc2",
+    "routers/web/web.go": "e6885482f1d290737f8323549008ef12f0e2891022dbdab582a46b137fcd1eaf",
+    "routers/api/v1/user/app.go": "51c0260cc24515816c1131da3e42704dc911e26339bdb2934a2efe76785b3f26",
+    "routers/web/auth/oauth_signin_sync.go": "77356095d526a6ba1dd5e54acd0c51c5c6209fe166f05bb874b94cf23fcb8c6b",
+    "routers/web/auth/oauth_test.go": "10b902ab26b01bc4d7b62433b36600f89b1f0a454d749e99cf8a73b34f851bd2",
+    "routers/web/auth/oauth2_provider.go": "ec365fef54267f040cefa57bc455009ff71d72f79d8158f1280afa36e7da3ec9",
+    "routers/web/auth/oauth.go": "e7889e58fa1a3f7c5d943e8d39cec8158795c4411a836102930d07018cad5b71",
+    "routers/web/auth/oauth2_wellknown.go": "33b00295fb46fd0159d795c9ed810da3c957e859f3ebee9a09d206482af76382",
+    "routers/web/user/setting/oauth2_common.go": "c512a86ceeb944cb04f0cd96b6a270d1ed5c3dea549e6808f5f45e5d2ed87a1a",
+    "routers/web/user/setting/applications.go": "bccf909062ff3e86af98aefd592ec12d22da8cc31f72e67b8899a4710f12a19a",
+    "routers/web/user/setting/oauth2.go": "a2d65c03ceb6f060a2a77b300480938c854c541304fba7757110502cb57d05d8"
+  },
+  "openapi_review": {
+    "url": "https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/templates/swagger/v1-openapi3.generated.json",
+    "sha256": "c797dc2a94e070c19ea823cb4396829f234a745a7a8c90b4a686b91cbc4d278e",
+    "path_count": 342,
+    "matched_paths": [
+      "/user/applications/oauth2",
+      "/user/applications/oauth2/{id}"
+    ]
+  },
+  "actual_discovery_review": {
+    "https://localhost:18443": {
+      "authorization_endpoint": "https://localhost:18443/login/oauth/authorize",
+      "token_endpoint": "https://localhost:18443/login/oauth/access_token",
+      "userinfo_endpoint": "https://localhost:18443/login/oauth/userinfo",
+      "introspection_endpoint": "https://localhost:18443/login/oauth/introspect",
+      "grant_types_supported": [
+        "authorization_code",
+        "refresh_token"
+      ],
+      "issuer": "https://localhost:18443"
+    },
+    "https://localhost:19443": {
+      "introspection_endpoint": "https://localhost:19443/login/oauth/introspect",
+      "grant_types_supported": [
+        "authorization_code",
+        "refresh_token"
+      ],
+      "authorization_endpoint": "https://localhost:19443/login/oauth/authorize",
+      "userinfo_endpoint": "https://localhost:19443/login/oauth/userinfo",
+      "issuer": "https://localhost:19443",
+      "token_endpoint": "https://localhost:19443/login/oauth/access_token"
+    }
+  },
+  "final_source_and_browser_tools": {
+    "sha256": {
+      "scripts/m0_contracts.py": "e94703e97210de16dd6ab372c907608400194adf52e4c8c7d4e0bff91863cb88",
+      "scripts/m0_oauth.py": "ef3ca6801d1610f6ce70235b170832c8ed4454443f324b6d662fa67d5d9fb567",
+      "scripts/m0_lifecycle.py": "19c87fcac7b343e64ce6e005936d196f5f4d794b721d50508227fbc920a69609",
+      "scripts/m0_local.py": "2253c3e36f3d8fb408d7fa9c225bacd841ccb48b448a409dce64a4eafa988ca3",
+      "scripts/m0_scope.py": "f5cc9dfbddc8fb0372b1b5beca5e89fafe798b0b46bb9885923b16e121113f9d",
+      "tests/contracts/m0/gitea-auth-profile.json": "519fe3922c0e9e2a436677acb38cefa1846c82220642c68693b70448c07a1636",
+      "tests/contracts/m0/compose.yaml": "e31d0948c6e7d7dae36ce0014c9820f0096964e48bee0917be6aa22c82e5075d"
+    },
+    "browser_tools": [
+      {
+        "name": "playwright",
+        "version": "1.64.0-alpha-1790635538000",
+        "license": "Apache-2.0",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/microsoft/playwright.git"
+        }
+      },
+      {
+        "name": "@playwright/cli",
+        "version": "0.1.22",
+        "license": "Apache-2.0",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/microsoft/playwright-cli.git"
+        }
+      },
+      {
+        "name": "Google Chrome",
+        "version": "156.0.8078.80",
+        "source": "existing local application; not installed by this task"
+      }
+    ]
+  },
+  "local_regression": {
+    "command": "python3 -B -m unittest discover -s scripts/tests -v",
+    "exit_code": 0,
+    "test_count": 25,
+    "scope": "Local governance, scope, credential and environment failure boundaries only"
+  },
+  "final_cleanup_readback": {
+    "baseline": {
+      "project": "rf-m0-local-d9f32888",
+      "remaining": {
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0
+      }
+    },
+    "lifecycle": {
+      "project": "rf-m0-local-21f2d445",
+      "remaining": {
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0
+      }
+    },
+    "profiles-final": {
+      "project": "rf-m0-local-a3fa0d3b",
+      "remaining": {
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0
+      }
+    },
+    "baseline-final": {
+      "project": "rf-m0-local-ba2ee998",
+      "remaining": {
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0
+      }
+    }
+  },
+  "private_runtime_removed": true,
+  "shared_image_cache_preserved": true,
+  "runner_started": false,
+  "system_trust_changed": false,
+  "committed": false,
+  "pushed": false,
+  "generated_at_utc": "2026-11-04T11:46:08.425066+00:00",
+  "browser_cleanup": {
+    "tracked_cli_daemon_pids": {
+      "19056": "not_running",
+      "19057": "not_running",
+      "19797": "not_running",
+      "20408": "not_running"
+    },
+    "native_driver_context_close_exit_code": 0,
+    "process_enumeration": "ps denied by sandbox; used known-PID signal-0 checks and explicit session-close receipts"
+  },
+  "temporary_task_directories_removed": [
+    "/private/tmp/radishforge-m0-source-20261104",
+    "/private/tmp/radishforge-m0-evidence-20261104",
+    "/private/tmp/radishforge-m0-playwright-20261104"
+  ],
+  "post_validation_format_cleanup": {
+    "path": "scripts/m0_oauth.py",
+    "validated_sha256": "ef3ca6801d1610f6ce70235b170832c8ed4454443f324b6d662fa67d5d9fb567",
+    "committed_source_sha256": "ef3a14d164e979b7c30e69a1609213257e2dfd387572894ca10906fc899a0a28",
+    "change": "Remove one extra blank line at EOF found by staged git diff --check; no executable statements changed.",
+    "python_ast_unchanged": true,
+    "restore_validated_source_patch": "--- a/scripts/m0_oauth.py\n+++ b/scripts/m0_oauth.py\n@@ -316,3 +316,4 @@\n     return client.request('POST', '/login/oauth/access_token', form={\n         'grant_type': 'refresh_token', 'client_id': app['client_id'],\n         'client_secret': app['client_secret'], 'refresh_token': token})\n+\n",
+    "reconstruction_order": "Restore the validated source with this patch, then apply runs.lifecycle.executed_source_snapshot.reproduce_from_final_source_patch when reconstructing the long-running loaded revision."
+  }
+}

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Local upstream contract environment; Python standard library, explicit Docker context."""
 import argparse
+import configparser
 import hashlib
 import io
 import json
@@ -57,7 +58,9 @@ def write_private(path, content):
     path.chmod(0o600)
 
 
-def prepare(context, auth_profile=False):
+def prepare(context, auth_profile=False, legacy_query_auth=False):
+    if legacy_query_auth and not auth_profile:
+        raise RuntimeError('--legacy-query-auth requires --auth-profile')
     if RUNTIME.exists():
         raise RuntimeError('Runtime directory already exists; inspect ownership before continuing')
     server = command(['docker', '--context', context, 'version', '--format', '{{json .Server}}'])
@@ -73,6 +76,7 @@ def prepare(context, auth_profile=False):
             'project': 'rf-m0-local-' + secrets.token_hex(4),
             'server': {k: version[k] for k in ('Version', 'Os', 'Arch', 'KernelVersion')},
             'auth_profile': auth_profile,
+            'legacy_query_auth': legacy_query_auth,
             'auth_profile_sha256': hashlib.sha256(PROFILE_PATH.read_bytes()).hexdigest() if auth_profile else None}
     write_private(MARKER, json.dumps(data, indent=2) + '\n')
     write_private(RUNTIME / 'compose.env', '# Explicit empty environment; no automatic .env loading.\n')
@@ -101,10 +105,14 @@ def prepare(context, auth_profile=False):
             p.chmod(0o600)
     passwords = {name: secrets.token_hex(24) for name in ('bootstrap', 'forge', 'idp')}
     oauth_settings = ''
+    security_settings = ''
     if auth_profile:
-        settings = load_contract()['test_provider_settings']
+        contract = load_contract()
+        settings = contract['test_provider_settings']
         oauth_settings = ''.join(f'{key} = {str(value).lower() if type(value) is bool else value}\n'
                                  for key, value in settings.items())
+        security_settings = 'DISABLE_QUERY_AUTH_TOKEN = ' + ('false' if legacy_query_auth else
+                            str(contract['test_security_settings']['DISABLE_QUERY_AUTH_TOKEN']).lower()) + '\n'
     seed = {}
     for name, port in (('forge', 18443), ('idp', 19443)):
         seed[f'{name}/app.ini'] = f'''APP_NAME = RadishForge M0 {name}
@@ -131,7 +139,7 @@ SSL_MODE = disable
 INSTALL_LOCK = true
 SECRET_KEY = {secrets.token_hex(32)}
 INTERNAL_TOKEN = {secrets.token_hex(48)}
-[service]
+{security_settings}[service]
 DISABLE_REGISTRATION = true
 REQUIRE_SIGNIN_VIEW = true
 [actions]
@@ -195,7 +203,55 @@ def up(data):
                 time.sleep(1)
         else:
             raise RuntimeError(f'HTTPS readiness failed on port {port}: {last}')
+    if data['auth_profile']:
+        verify_provider_settings(data)
     print('Both Gitea instances ready over verified local TLS; no system CA changed.')
+
+
+def verify_provider_settings(data):
+    """Read only reviewed keys; never expose app.ini secrets in errors or evidence."""
+    contract = load_contract()
+    settings = {}
+    for service in ('forge', 'idp'):
+        raw = compose(data, 'exec', '-T', service, 'cat', '/etc/gitea/app.ini').stdout
+        ini = configparser.ConfigParser(interpolation=None)
+        try:
+            ini.read_string('[DEFAULT]\n' + raw.decode())
+            oauth = {key: (ini.getboolean('oauth2', key) if type(expected) is bool else
+                           ini.getint('oauth2', key) if type(expected) is int else ini.get('oauth2', key))
+                     for key, expected in contract['test_provider_settings'].items()}
+            security = {'DISABLE_QUERY_AUTH_TOKEN': ini.getboolean('security', 'DISABLE_QUERY_AUTH_TOKEN')}
+            actions = ini.getboolean('actions', 'ENABLED')
+        except (configparser.Error, UnicodeError, ValueError):
+            raise RuntimeError('Cannot read back reviewed provider settings; raw configuration withheld') from None
+        expected_security = {'DISABLE_QUERY_AUTH_TOKEN': not data.get('legacy_query_auth', False)}
+        if oauth != contract['test_provider_settings'] or security != expected_security or actions:
+            raise RuntimeError('Effective provider settings differ from this isolated test contract')
+        settings[service] = {'oauth2': oauth, 'security': security, 'actions_enabled': actions,
+                             'config_sha256': hashlib.sha256(raw).hexdigest()}
+    data['effective_provider_settings'] = settings
+    write_private(MARKER, json.dumps(data, indent=2) + '\n')
+
+
+def consent_marker(data, revoked=False):
+    """Coordinate a real native UI click; the protocol probe verifies its effects."""
+    target = json.loads((RUNTIME / 'consent-target.json').read_text())
+    if (target.get('project') != data['project'] or target.get('user') != 'bob'
+            or type(target.get('application_id')) is not int):
+        raise RuntimeError('Consent target does not belong to this fixture')
+    if revoked:
+        if not (RUNTIME / 'consent-click-ready.json').exists():
+            raise RuntimeError('Wait for the fresh-credential marker before confirming the native click')
+        path = RUNTIME / 'consent-ui-revoked.json'
+        value = {key: target[key] for key in ('project', 'user', 'application_id')}
+        value['revoked'] = True
+    else:
+        path = RUNTIME / 'consent-ui-ready.json'
+        value = {'project': data['project'], 'ready': True}
+    if path.exists():
+        raise RuntimeError('Consent marker already exists; reconcile the current run rather than replaying it')
+    write_private(path, json.dumps(value) + '\n')
+    print('Native consent stage recorded; only subsequent real API checks establish revocation.')
 
 
 def cleanup(data):
@@ -204,23 +260,28 @@ def cleanup(data):
         raise RuntimeError('Task containers remain; refusing to remove runtime marker')
     if docker(data, 'volume', 'ls', '-q', '--filter', f'label=com.docker.compose.project={data["project"]}').stdout.strip():
         raise RuntimeError('Task volumes remain; refusing to remove runtime marker')
+    if docker(data, 'network', 'ls', '-q', '--filter', f'label=com.docker.compose.project={data["project"]}').stdout.strip():
+        raise RuntimeError('Task networks remain; refusing to remove runtime marker')
     shutil.rmtree(RUNTIME)
     print('Task containers, volumes, network and local credentials removed; shared image cache preserved.')
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=['prepare', 'pull', 'up', 'status', 'cleanup'])
+    parser.add_argument('action', choices=['prepare', 'pull', 'up', 'status', 'cleanup',
+                                          'consent-ready', 'consent-revoked'])
     parser.add_argument('--context', default='orbstack')
     parser.add_argument('--auth-profile', action='store_true',
                         help='prepare reviewed scope profiles with short-lived tokens and refresh rotation')
+    parser.add_argument('--legacy-query-auth', action='store_true',
+                        help='baseline diagnosis only: explicitly retain the historical form-token authentication')
     args = parser.parse_args()
     try:
         if args.action == 'prepare':
-            prepare(args.context, args.auth_profile)
+            prepare(args.context, args.auth_profile, args.legacy_query_auth)
         else:
-            if args.auth_profile:
-                raise RuntimeError('--auth-profile applies only to prepare')
+            if args.auth_profile or args.legacy_query_auth:
+                raise RuntimeError('Preparation flags apply only to prepare')
             data = state()
             if args.action == 'pull':
                 pull(data)
@@ -228,6 +289,8 @@ def main():
                 up(data)
             elif args.action == 'cleanup':
                 cleanup(data)
+            elif args.action in ('consent-ready', 'consent-revoked'):
+                consent_marker(data, args.action == 'consent-revoked')
             else:
                 print(compose(data, 'ps', '--format', 'json').stdout.decode())
         return 0

@@ -37,3 +37,17 @@
 - 为这三项差异修改 Gitea 核心或更换底座：当前公开接口与受控配置已有可验证切片，暂不扩大为补丁或迁移；不能强制关键账号 / 资源边界时再决定。
 
 上游版本、scope 语义、客户端类型、支持操作或配置改变时重跑相应契约；权限 / 刷新 / 过期的新差异须保留证据并单独处置，不以本 ADR 提前关闭阶段出口。官方参考：[Gitea OAuth2](https://docs.gitea.com/development/oauth2-provider/)、[OAuth2 配置](https://docs.gitea.com/administration/config-cheat-sheet/#oauth2-oauth2)、[RFC 9700](https://www.rfc-editor.org/rfc/rfc9700.html)。
+
+## 2026-11-04 生命周期补充决定
+
+本节延续同一精确版本、公开协议和零核心补丁边界；[本批证据](../records/2026-11-04-m0-lifecycle-validation.md)分别保留旧配置复现和受控配置结果，不改写 11 月 1 日的差异。
+
+1. 受控组合要求 `[security] DISABLE_QUERY_AUTH_TOKEN=true`，由授权 JSON 的 `test_security_settings` 单一维护；`up` 回读两套实例的相关配置、短 TTL、轮换及 Actions 关闭状态。通用 OAuth 中间件会从表单读取 `token`，与 introspection 的目标 Token 参数重名；原配置下目标凭据的账号 / 过期状态可在 introspection 处理器之前被处理。禁用表单 / 查询串资源鉴权后，introspection 仍按协议从正文读取待查询 Token，并以独立客户端凭据认证调用者；资源 API 使用 Bearer Header。
+2. 旧配置的禁用账号 introspection 为 HTTP 200 HTML，最终路径没有变化；不再把“发生了登录重定向”作为其原因。受控配置下可取得对象 metadata，但禁用账号仍可能刷新成功、introspection active；必须再用该凭据在线读取 `/api/v1/user`，账号被拒绝即停止。恢复上游账号会重新启用原 grant，不能据此恢复已终止的本地授权或会话。
+3. 受控配置下，过期 / 无效 / 不属于调用客户端的 Token 返回 `200 active:false`；错误 client secret 返回 401。历史过期 Token 的 401 保留为原配置差异。运行时孤立的 401 不足以推断具体原因，记录为原因未归属的拒绝；不能重试密钥或默认判为 inactive 成功。网络 / 超时为结果未知，非对象、非布尔 active、缺失或不匹配的主体 / scope 为无效响应；这些结果均不建立可用授权。
+4. 同一授权的并发刷新须在 M1 按授权记录串行化；不能依赖一次并发样例证明所有调度均正确。刷新写入超时或响应丢失时不重放旧 Token，不因失败再并发请求；先停止该授权的依赖操作并走明确的恢复 / 重新授权流程。M0 保留实际竞争、后继凭据资源权限及旧值重放结果，真实等待刷新 Token 到期，不改系统时钟。
+5. 单用户撤销同意、删除整个 OAuth 应用、撤销仓库权限和工作台解绑是不同操作。本版本固定 OpenAPI 未提供单用户 grant 撤销 REST 接口，实际 Discovery 未公布 `revocation_endpoint`；M0 通过原生设置页的真实用户操作取证，不把其私有页面请求封装成产品 API。M1 解绑的本地后续授权停止与凭据处理沿用现有设计；目前上游单用户撤销只有原生 UI 路径证据，不能承诺自动远端撤销。若要将其列为自动功能，须在 M0-S04 另行确认公开接口方案 / 范围；未收到真实结果不能宣称远端撤销成功，也不删除共享客户端来代替。
+
+旧配置诊断必须显式使用 `prepare --auth-profile --legacy-query-auth` 和 `--mode lifecycle-baseline`，不能作为受控组合默认值。该开关仅用于本任务隔离实例的历史行为复现，不授权变更共享或生产配置。原始三项 scope 差异与禁用账号仍可刷新继续保留为上游差异；上述决定不等于 Gitea 原生行为已修复，也不代表 M1 或完整 IAM 验收通过。
+
+原因定位依据固定提交的 [OAuth 中间件](https://github.com/go-gitea/gitea/blob/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/services/auth/oauth2.go)、[Web 鉴权与路由](https://github.com/go-gitea/gitea/blob/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/web/web.go)、[OAuth 处理器](https://github.com/go-gitea/gitea/blob/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/web/auth/oauth2_provider.go)，以及 [RFC 7662](https://www.rfc-editor.org/rfc/rfc7662.html#section-2.2)；实际行为和来源摘要以本批记录为准。

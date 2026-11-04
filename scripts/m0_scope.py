@@ -13,8 +13,8 @@ class ProfileError(ValueError):
 def load_contract(path=PROFILE_PATH):
     data = json.loads(Path(path).read_text())
     if (set(data) != {'schema_version', 'provider', 'provider_version', 'client_registration',
-                     'test_provider_settings', 'profiles'}
-            or data['schema_version'] != 1 or data['provider'] != 'gitea'
+                     'test_provider_settings', 'test_security_settings', 'profiles'}
+            or data['schema_version'] != 2 or data['provider'] != 'gitea'
             or data['provider_version'] != '28.2.0'):
         raise ProfileError('Unsupported M0 authorization contract')
     registration = data['client_registration']
@@ -38,6 +38,9 @@ def load_contract(path=PROFILE_PATH):
             or settings['REFRESH_TOKEN_EXPIRATION_TIME'] != 1
             or settings['DEFAULT_APPLICATIONS'] != ''):
         raise ProfileError('Invalid short-lived M0 provider settings')
+    security = data['test_security_settings']
+    if set(security) != {'DISABLE_QUERY_AUTH_TOKEN'} or security['DISABLE_QUERY_AUTH_TOKEN'] is not True:
+        raise ProfileError('Reviewed profiles require header-only resource authentication')
     if set(data['profiles']) != {'identity', 'resource_read', 'issue_write'}:
         raise ProfileError('Unexpected M0 authorization purpose')
     for profile in data['profiles'].values():

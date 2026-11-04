@@ -1,7 +1,9 @@
 """Security policy examples for complete scope combinations; no Docker or network."""
 import importlib.util
+import json
 from pathlib import Path
 import unittest
+import tempfile
 
 SOURCE = Path(__file__).resolve().parents[2]
 SPEC = importlib.util.spec_from_file_location('m0_scope', SOURCE / 'scripts/m0_scope.py')
@@ -10,6 +12,16 @@ SPEC.loader.exec_module(SCOPE)
 
 
 class ScopePolicy(unittest.TestCase):
+    def test_header_only_setting_cannot_be_disabled_or_coerced(self):
+        for value in (False, 1, 'true'):
+            contract = SCOPE.load_contract()
+            contract['test_security_settings']['DISABLE_QUERY_AUTH_TOKEN'] = value
+            with tempfile.TemporaryDirectory() as directory:
+                path = Path(directory) / 'profile.json'
+                path.write_text(json.dumps(contract))
+                with self.subTest(value=value), self.assertRaises(SCOPE.ProfileError):
+                    SCOPE.load_contract(path)
+
     def test_reviewed_profiles_are_distinct_and_canonical(self):
         identity = SCOPE.scope_for('identity')
         self.assertEqual(SCOPE.scope_for('identity', identity.split()[::-1]), identity)

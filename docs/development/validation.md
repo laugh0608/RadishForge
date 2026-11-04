@@ -29,4 +29,6 @@ Mock 用于确定性失败注入，但不证明真实底座协议；构建通过
 
 后续[授权组合记录](../records/2026-11-01-m0-auth-profile-validation.md)分别保存 `profiles` 的两项生命周期差异和 `discovery` 回归的三项原始 scope 差异，两者均退出 2。受控客户端约束通过不等于原始上游差异已修复；API 的无 cookie 传输与独立登录会话亦不能替代真实浏览器验收。
 
+[2026-11-04 生命周期切片](../records/2026-11-04-m0-lifecycle-validation.md)对照旧配置 `lifecycle-baseline` 与受控 `lifecycle`，区分 introspection 参数被通用鉴权提前处理、客户端错误和账号拒绝。新批次包含实际配置回读、真实长时到期、一次并发 / 后继权限及原生单用户撤销，逐项按实际结果登记。原生页面只用于真实撤销取证，文件标记只协调时点，不作私有接口适配或模拟成功；25 秒内核对刚刷新 Token，避免把自然过期当成撤销。共享协议代码提取后回归原 `profiles`；本地 metadata / 网络未知拒绝负例与真实上游证据分别报告。
+
 证据见[规划建立记录](../records/2026-10-29-planning-bootstrap.md)和[治理基础记录](../records/2026-10-29-governance-foundation.md)；功能验收见[矩阵](../planning/acceptance.md)。
