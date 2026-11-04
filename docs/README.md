@@ -54,3 +54,4 @@
 - [2026-11-01 提交回顾与收工交接](records/2026-11-01-day-review.md)
 - [2026-11-04 身份生命周期边界与负例](records/2026-11-04-m0-lifecycle-validation.md)
 - [2026-11-04 Issue 契约与响应丢失验证](records/2026-11-04-m0-issue-validation.md)
+- [2026-11-04 M0 差异基线与 Release / OCI 静态准备](records/2026-11-04-m0-gap-and-delivery-preparation.md)

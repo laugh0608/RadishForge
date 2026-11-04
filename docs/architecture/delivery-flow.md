@@ -2,6 +2,52 @@
 
 状态：设计。发布和部署分别建模，每个外部操作有意图、实际结果和恢复路径。
 
+## M0 Release / OCI 契约准备
+
+归属 M0-S03 / M0-03，给 M0-S04 提供原生接口证据；本节是下一次隔离验证的输入，尚未执行 Release / OCI 写入，也不是 REL / ART / BASE 验收通过。2026-11-04 已核对 Gitea 28.2.0 固定源码和同版 OpenAPI，来源摘要与静态发现见[准备记录](../records/2026-11-04-m0-gap-and-delivery-preparation.md)。不增加产品工程、Runner、真实仓库发布或部署。
+
+### 认证、角色与资源
+
+- 沿用本机隔离方案的 context、固定镜像、合成账号、回环端口、任务 CA 与串行 cleanup。现有三种 OAuth 组合不变；`issue_write` 没有 Release 写入或 package 权限，不把它扩为通用发布凭据。
+- Release 新用途组合以独立 `write:repository`、账号复核所需 `read:user` / `openid` 为待验证候选；对应只读与错误用途凭据作负例。它可能允许其他仓库写操作，须如实记录 grant，不能命名成仅 Release 按钮权限。注册 / 授权、写后结果和草稿可见性均需真实验证，不能仅由源码推导通过。
+- OCI 单独验证 Registry challenge → 固定同源 `/v2/token` → Registry Bearer；路由没有使用普通 OAuth Bearer 校验链。候选 package 只读 / 写入权限为 `read:package` / `write:package`，凭据类型和作用域保持独立，未验证前不透传 OAuth Token 或用管理员 / 无限制 PAT 兜底。Registry Token 的有效期、账号禁用 / 包权限撤销后行为另测，不能继承 OAuth refresh 证据。
+- 普通所有者准备合成仓库 / 私有组织，写者、读者及非成员分别验证。Release 单元读写权限、仓库角色和 Token scope 分开；OCI 按所有者可见性、组织成员 / team package 权限验证，关联私有仓库不等于 package 私有。
+- 现有 HTTP 客户端仅提供 JSON / form 请求与文本读取。上传 / 下载前按实际需要补原始 bytes、严格大小限额和响应头白名单，沿用固定 origin、任务 CA、禁止带凭据跨域 / 自动跟随重定向及不自动重试；不以损失字节的文本解码验证附件或镜像 Digest。
+
+### Release 最小执行切片
+
+令 `R=/api/v1/repos/{owner}/{repo}`，全部指向本批隔离仓库。表中状态码是固定 OpenAPI 声明的正向值，权限拒绝、无效输入和部分失败须保留实际响应及回读；不是放宽断言的候选集合。
+
+| 操作 | 公开入口 / 正向值 | 必须核对的结果 |
+| --- | --- | --- |
+| 固定源码与 Tag | `GET R/git/commits/{sha}`、`GET R/tags/{tag}`；Tag 创建为 `POST R/tags` / 200 | 使用完整 commit SHA；Tag 的 `commit.sha` 独立核实，不把 Tag object ID 或 Release 的 `target_commitish` 字符串当最终提交 |
+| 创建与定位草稿 | `POST R/releases` / 201；`GET R/releases/{id}`、`GET R/releases/tags/{tag}` / 200 | 唯一 tag、正文关联标记、作者、draft、源 SHA；草稿创建不一定生成 Git Tag，不能在尚未发布时假设已存在 |
+| 列表与可见性 | `GET R/releases?draft=...&page=...&limit=...` / 200 | 分页不重不漏；草稿需要 Release 单元写权限且具备仓库写 scope，普通读者 / 只读 scope 看不到草稿不是“创建未执行”证明 |
+| 说明 / 发布 | `PATCH R/releases/{id}` / 200 | 说明与 draft / prerelease 分别回读；已有 Tag 必须仍指向预期 SHA。空说明清除、错误 target、Tag 漂移、重复同 tag 创建分别保留结果 |
+| 附件上传 / 定位 | `POST R/releases/{id}/assets?name=...` / 201，multipart 字段 `attachment` 或原始 bytes；列表 / 单项 GET 为 200 | 名称、ID / UUID、size、所属仓库 / Release；同名不当作幂等键。Attachment DTO 未提供内容 Digest，必须实际下载计算 SHA-256 |
+| 附件改名 / 删除 | `PATCH R/releases/{id}/assets/{attachment_id}` / 201，DELETE / 204 | 跨 Release / 仓库 ID 拒绝；删除后元数据和下载均失效，拒绝 / 超时后回查 |
+| 草稿 / Release 删除 | `DELETE R/releases/{id}` / 204 | 回读已删除、关联附件与 Tag 的真实存续；不假设删 Release 等于删 Tag，也不用于自动补偿未知结果 |
+
+执行顺序：先准备两条可区分提交和唯一 Tag 名 → 独立授权与角色负例 → 草稿 / 分页 → 小型合成附件上传 / 字节校验 → 固定 SHA 后发布 / 回读 → 重复、失权、非法关联及故障 → 删除与 cleanup。只在隔离 Gitea 发布合成 Release，不对当前 GitHub 仓库打 Tag 或创建 Release。
+
+至少覆盖：已提交但响应丢失、请求未转发、重复同 tag、同名附件重复 / 部分上传、下载损坏、跨用户 / 撤权、被删除资源、Tag 与 target 不一致。创建未知后先按固定仓库 + tag 查询再回读 ID / 标记；附件未知后列出候选并逐个校验内容。零匹配、多匹配、无权限或查询失败都保持 unknown，不重新 POST、不选 latest、不删除归属未确认的对象。发布前后分别核对 Tag SHA；检查与写入仍存在竞态，不宣称跨系统原子性。
+
+### OCI 最小执行切片
+
+协议对照固定 OCI Distribution v1.1.1，仅选择本表基础推拉操作；不据此宣称全规范符合。`N={owner}/{image}`，Registry 是同一隔离 Gitea 的根 `/v2`，不是 OpenAPI 的 `/api/v1/packages`。REST Packages 列表 / 版本 / 文件 / link 接口只作关联回读，不能替代直接 Registry 权限负例。
+
+| 操作 | 公开入口 | 验证与未知结果处理 |
+| --- | --- | --- |
+| 准入 / 凭据 | `GET /v2/`、`GET /v2/token` | challenge 的 realm / service 和 origin 白名单、账号身份、read / write package 区分；不向未知 realm 发送秘密 |
+| Blob 上传与状态 | `POST /v2/N/blobs/uploads/`，返回 Location；随后 PATCH / PUT，GET 查询该 upload；HEAD / GET blob Digest | 按返回 Location / UUID 和 Range 回查，限制同源与目标路径；校验完整长度和 SHA-256。POST 回执丢失而 UUID 未知时停止，不新建另一上传冒充恢复 |
+| Manifest 与固定拉取 | `PUT /v2/N/manifests/{tag}`，HEAD / GET `{tag}` 与 `{digest}`，GET blobs | 核对 Content-Type、原始 manifest / config / layer 的 size 与 Digest；服务器确认值和实收 bytes 一致，按 Digest 拉取，不从 tag 名猜 Digest |
+| 私有包与撤权 | 同一组 Registry URL 由普通成员、仓库协作者但无包权限者、组织非成员及匿名直接访问 | 私有组织 / team package 权限独立验证；包链接私有仓库后的权限仍须直拉核对，撤权后缓存凭据不能绕过 |
+| 关联与删除 | `/api/v1/packages/{owner}/...`、Registry manifest / blob / upload 删除 | link 只是关联事实；删除 / 失联 / 摘要不符阻止后续发布。只清理本批已确认归属的上传与镜像 |
+
+先用任务 CA 的有界协议客户端证明基础推拉，再按所选真实 OCI 客户端验证一个最小镜像的构建、推送和固定 Digest 拉取。CLI / daemon 的任务证书信任、可达地址、客户端精确版本、镜像和磁盘清理方案须在启动前明确；不得为此更改宿主 / daemon 全局信任或下载未经说明的大型工具镜像。协议样例不能冒充 Docker CLI 或完整构建通过。
+
+Runner 暂停时没有真实 workflow run / attempt，证据须明确为缺失，不能填 0、占位 ID 或借最新 run 补齐；源码 SHA、制品 Digest 的原生协议证据可独立取得，完整源码 / run / 制品链路仍未通过。M0 的最小镜像样例不关闭五组件 ART / REL、部署或恢复验收。
+
 ## 完整链路
 
 1. Push / Tag 由底座触发构建；Webhook 只同步已发生事件，不重复触发同一次 CI。

@@ -4,6 +4,8 @@
 
 同日新增[M0-S03 Issue 主路径、权限及响应丢失证据](../records/2026-11-04-m0-issue-validation.md)，形成[受控输入与对账边界](../adr/0004-issue-validation-and-reconciliation.md)；非法输入 / 筛选 / 部分写入差异保留并进入后续缺口评审。Actions / OCI / Release 未完成，Runner 暂停，不因 Issue 切片晋级 M1。
 
+接续启动 M0-S04 的[已有差异基线汇总](../architecture/github-compatibility.md#m0-现有差异基线)，并完成 Release / OCI [公开契约静态准备](../records/2026-11-04-m0-gap-and-delivery-preparation.md)；仅整理已取证输入和下一轮执行条件，没有新增真实联调或完成完整兼容范围冻结。
+
 | 阶段 | 目标与可展示结果 | 依赖 / 出口 |
 | --- | --- | --- |
 | P0 | 建立规划、治理文件、模板与本地检查 | 已完成本地验收，不代表产品或远端可用 |
