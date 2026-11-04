@@ -39,6 +39,7 @@
 - [ADR 0001：底座与扩展边界](adr/0001-foundation.md)
 - [ADR 0002：分支、PR 与分阶段保护](adr/0002-repository-governance.md)
 - [ADR 0003：Gitea 授权组合与在线复核](adr/0003-gitea-authorization-profiles.md)
+- [ADR 0004：Issue 输入校验与写入结果对账](adr/0004-issue-validation-and-reconciliation.md)
 - [来源核查](references/source-review.md)
 - [五个兄弟项目治理提炼](references/governance-review.md)
 - [2026-10-29 规划建立记录](records/2026-10-29-planning-bootstrap.md)
@@ -51,3 +52,5 @@
 - [2026-11-01 scope 组合收敛与身份生命周期验证](records/2026-11-01-m0-auth-profile-validation.md)
 - [2026-11-01 三级规划规则统一](records/2026-11-01-planning-rules-alignment.md)
 - [2026-11-01 提交回顾与收工交接](records/2026-11-01-day-review.md)
+- [2026-11-04 身份生命周期边界与负例](records/2026-11-04-m0-lifecycle-validation.md)
+- [2026-11-04 Issue 契约与响应丢失验证](records/2026-11-04-m0-issue-validation.md)

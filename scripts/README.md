@@ -36,3 +36,5 @@ Windows 可用 `py -3` 替代 `python3`，不额外维护仅转发命令的 shel
 [m0_oauth.py](m0_oauth.py)由既有探针提取，统一 HTTP / 浏览器会话分离、授权码 / PKCE、凭据 metadata 与在线账号复核；[m0_lifecycle.py](m0_lifecycle.py)使用同一实现验证生命周期，没有新增产品会话或第二套 scope 规则。纯本地凭据拒绝测试也在 unittest 入口内，覆盖 HTML / 非对象 metadata、401 原因未归属、主体不符、账号拒绝、网络未知及不重试；不替代真实上游证据。
 
 `--mode lifecycle` 使用受控配置，含真实一小时 refresh token 到期和一次原生页面单用户撤销，需要单独预算长时窗口。`consent-ready` / `consent-revoked` 仅协调页面点击前后的取证时点，真实失效仍由 API 断言验证。历史两项差异使用新隔离批次 `prepare --auth-profile --legacy-query-auth` 与 `--mode lifecycle-baseline` 复现。步骤、浏览器秘密边界和清理要求见[M0 契约说明](../tests/contracts/m0/README.md)。
+
+`--mode issues` 调用 [m0_issues.py](m0_issues.py) 验证 Issue 列表 / 筛选 / 分页、正文版本与状态、元数据 / 分配、真实权限、非法输入和删除。[m0_issue_faults.py](m0_issue_faults.py)仅在超时用例中临时监听回环 18543，固定一个合成 Issue POST 的路径 / 凭据 / 请求体，不是通用代理或产品服务。共享 HTTP 默认超时仍为 15 秒，故障用例单次显式 1 秒；网络错误记录 unknown，不自动重试。新增纯本地前检、分页、对账和传输负例同样从 unittest 入口运行；不启动 Docker 或监听端口。

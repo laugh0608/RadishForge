@@ -68,10 +68,26 @@ python3 -B scripts/m0_local.py up
 python3 -u -B scripts/m0_contracts.py --mode lifecycle-baseline
 ```
 
-这是显式历史诊断，保留表单 / 查询串资源 Token 鉴权；受控 `profiles` / `lifecycle` 模式拒绝该设置，不能作为默认运行方案。新结果不覆盖旧差异，见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)和[ADR 0003](../../../docs/adr/0003-gitea-authorization-profiles.md)。
+这是显式历史诊断，保留表单 / 查询串资源 Token 鉴权；受控 `profiles` / `lifecycle` / `issues` 模式拒绝该设置，不能作为默认运行方案。新结果不覆盖旧差异，见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)和[ADR 0003](../../../docs/adr/0003-gitea-authorization-profiles.md)。
+
+### Issue 契约与响应丢失
+
+使用新批次 `prepare --auth-profile` / `up`，执行：
+
+```bash
+python3 -u -B scripts/m0_contracts.py --mode issues
+```
+
+该模式创建 Alice、Bob、Carol 三个普通合成账号，验证列表 / 筛选 / 分页、正文版本冲突、编辑 / 关闭 / 重开及标签 / 负责人 / 里程碑操作，并覆盖只读 scope、实际仓库角色、跨用户 / 撤权、非法关联及资源删除。普通所有者通过公开 API 准备本机分支 / 文件 / PR 夹具，以证明 `type=issues` 排除真实 PR；不在 GitHub 创建 PR。管理员仅准备账号，不用于测试资源访问。
+
+`m0_issues.py` 使用当前仓库目录校验关联对象、限制分页并只读对账；目录成员资格不代表操作权限。合成原始负例刻意绕过前检，保留非法字段被忽略、无效筛选变宽、500 后部分字段已写入等 gap；不以 HTTP 2xx 代替逐项回读，也不将 `content_version` 外推为整个 PATCH 的原子版本。具体证据与边界见[Issue 记录](../../../docs/records/2026-11-04-m0-issue-validation.md)和[ADR 0004](../../../docs/adr/0004-issue-validation-and-reconciliation.md)。
+
+`m0_issue_faults.py` 在同一前台探针内临时绑定 `127.0.0.1:18543`，使用本批服务器证书 / CA，客户端仍验证 TLS；原有 issuer 与默认 15 秒请求超时不变。仅接收精确路径、Bearer 与请求体匹配的一次合成 Issue POST，分别测试上游已提交但响应被扣住、完全未转发两种 1 秒调用超时。不提供通用代理、授权或 Token 端点，监听随场景退出而停止。执行前须确认该端口归本任务且空闲；本批总窗口约 15–25 分钟，结束仍执行 `status`、脱敏导出与 `cleanup`。
+
+超时后仅分页 GET 与详情回读；唯一匹配可观察到本批结果，零 / 多匹配保持 unknown，不自动再 POST。合成标记不是生产幂等键；失败 / 超时先查结果文件和资源状态，不能删除开始标记重放。本地 35 项测试不启动 Docker / 监听，也不替代真实协议和响应丢失取证。
 
 ## 清理与未覆盖
 
 无论探针成功、发现缺口或中断，交接前执行 `cleanup`。它按归属删除本批容器 / 网络 / 六个卷和 `.local/m0` 凭据，不触碰其他项目资源；下载镜像保留在共享缓存，不全局 prune。需要保留运行环境时先有用户明确要求，再交接项目名、容器 ID、端口和停止命令。
 
-完整产品会话 / 账号绑定 / 加密存储、浏览器 Cookie / CSRF、产品解绑与后台任务停止、其他 IdP / 版本、Actions / Runner、OCI、Release、多组件清单、amd64 安装 / 恢复和生产仍未覆盖。刷新到期 / 并发与原生撤销按实际批次记录，不从本地测试或模式存在推导通过。首轮结果见[本机记录](../../../docs/records/2026-11-01-m0-local-validation.md)，历史组合与生命周期见[授权组合记录](../../../docs/records/2026-11-01-m0-auth-profile-validation.md)，本批结果见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)。
+完整产品会话 / 账号绑定 / 加密存储、浏览器 Cookie / CSRF、产品解绑与后台任务停止、Issue 工作台 / 草稿 / XSS、生产请求关联、组织继承标签 / 自定义单元权限、其他 IdP / 版本、Actions / Runner、OCI、Release、多组件清单、amd64 安装 / 恢复和生产仍未覆盖。刷新到期 / 并发与原生撤销按实际批次记录，不从本地测试或模式存在推导通过。首轮结果见[本机记录](../../../docs/records/2026-11-01-m0-local-validation.md)，历史组合见[授权组合记录](../../../docs/records/2026-11-01-m0-auth-profile-validation.md)，当日结果见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)与[Issue 记录](../../../docs/records/2026-11-04-m0-issue-validation.md)。

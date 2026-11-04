@@ -219,7 +219,7 @@ def main(mode):
         raise RuntimeError('Prepare a fresh environment with --auth-profile matching the reviewed contract')
     if mode == 'lifecycle-baseline' and not owner.get('legacy_query_auth'):
         raise RuntimeError('Historical diagnosis requires a fresh --legacy-query-auth environment')
-    if mode in ('profiles', 'lifecycle') and owner.get('legacy_query_auth'):
+    if mode in ('profiles', 'lifecycle', 'issues') and owner.get('legacy_query_auth'):
         raise RuntimeError('Controlled probes refuse the historical form-token authentication setting')
     marker = RUNTIME / 'contract-started.json'
     if marker.exists():
@@ -235,7 +235,8 @@ def main(mode):
     report['source_sha256'] = {name: hashlib.sha256((RUNTIME.parent.parent / name).read_bytes()).hexdigest()
                                for name in ('scripts/m0_contracts.py', 'scripts/m0_oauth.py',
                                             'scripts/m0_lifecycle.py', 'scripts/m0_local.py',
-                                            'scripts/m0_scope.py', 'tests/contracts/m0/gitea-auth-profile.json',
+                                            'scripts/m0_scope.py', 'scripts/m0_issues.py', 'scripts/m0_issue_faults.py',
+                                            'tests/contracts/m0/gitea-auth-profile.json',
                                             'tests/contracts/m0/compose.yaml')}
     report['effective_provider_settings'] = owner.get('effective_provider_settings')
 
@@ -290,7 +291,8 @@ def main(mode):
                 raise RuntimeError('Could not capture generated bootstrap password; output withheld')
             admin = ('m0-admin', match.group(1))
             credentials[service] = {'admin': admin}
-            for username in (('alice', 'bob') if service == 'forge' else ('alice',)):
+            users = ('alice', 'bob', 'carol') if mode == 'issues' else ('alice', 'bob')
+            for username in (users if service == 'forge' else ('alice',)):
                 password = secrets.token_urlsafe(32)
                 user = expect(client.request('POST', '/api/v1/admin/users', basic=admin, payload={
                     'username': username, 'email': f'{username}@example.test', 'password': password,
@@ -306,6 +308,13 @@ def main(mode):
                       {201}, 'ordinary user creates private repo')
         path = '/api/v1/repos/alice/private-fixture'
         record('ordinary_user_private_repository', repository_id=repo['id'])
+        if mode == 'issues':
+            from m0_issues import issue_checks
+            issue_checks(owner, forge, credentials, record)
+            report['completed'] = True
+            report['passed_product_acceptance'] = False
+            record('issue_probe_completed', scope='M0 Issue upstream contracts only; Runner paused, no workbench/M1')
+            return 2 if any(r['status'] == 'gap' for r in results) else 0
         if mode in ('lifecycle', 'lifecycle-baseline'):
             from m0_lifecycle import lifecycle_checks
             lifecycle_checks(owner, forge, idp, credentials, record, baseline=mode.endswith('-baseline'))
@@ -410,7 +419,7 @@ def main(mode):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--mode', choices=['profiles', 'discovery', 'lifecycle', 'lifecycle-baseline'], default='profiles',
+    parser.add_argument('--mode', choices=['profiles', 'discovery', 'lifecycle', 'lifecycle-baseline', 'issues'], default='profiles',
                         help='profiles: reviewed grants; discovery: raw scopes; lifecycle: long expiry/native consent; '
-                             'lifecycle-baseline: historical form-token diagnosis')
+                             'lifecycle-baseline: historical form-token diagnosis; issues: Issue contracts and real response loss')
     raise SystemExit(main(parser.parse_args().mode))

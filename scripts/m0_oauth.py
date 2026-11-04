@@ -87,7 +87,9 @@ class Client:
             handlers.append(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
         self.opener = urllib.request.build_opener(*handlers)
 
-    def request(self, method, path, *, payload=None, form=None, token=None, basic=None):
+    def request(self, method, path, *, payload=None, form=None, token=None, basic=None, timeout=15):
+        if type(timeout) not in (int, float) or not 0 < timeout <= 15:
+            raise ValueError('Probe timeout must be positive and at most 15 seconds')
         url = urllib.parse.urljoin(self.base + '/', path)
         origin = urllib.parse.urlsplit(url)
         if f'{origin.scheme}://{origin.netloc}' != self.base:
@@ -106,20 +108,26 @@ class Client:
             headers['Authorization'] = 'Basic ' + base64.b64encode(':'.join(basic).encode()).decode()
         req = urllib.request.Request(url, data=body, headers=headers, method=method)
         try:
-            result = self.opener.open(req, timeout=15)
-        except urllib.error.HTTPError as exc:
-            result = exc
-        with result:
-            raw = result.read(2_000_001)
-            if len(raw) > 2_000_000:
-                raise RuntimeError('Response exceeds probe size limit')
-            kind = result.headers.get('Content-Type', '')
-            content = json.loads(raw) if raw and 'json' in kind else raw.decode(errors='replace')
+            try:
+                result = self.opener.open(req, timeout=timeout)
+            except urllib.error.HTTPError as exc:
+                result = exc
+            with result:
+                raw = result.read(2_000_001)
+                if len(raw) > 2_000_000:
+                    raise RuntimeError('Response exceeds probe size limit')
+                kind = result.headers.get('Content-Type', '')
+                content = json.loads(raw) if raw and 'json' in kind else raw.decode(errors='replace')
+                REQUESTS.append({'origin': self.base, 'method': method,
+                                 'path': urllib.parse.urlsplit(url).path, 'status': result.code,
+                                 'content_type': kind.split(';')[0], 'body_type': type(content).__name__,
+                                 'final_path': urllib.parse.urlsplit(result.url).path})
+                return result.code, content, result.headers.get('Location'), result.url
+        except (OSError, urllib.error.URLError) as exc:
             REQUESTS.append({'origin': self.base, 'method': method,
-                             'path': urllib.parse.urlsplit(url).path, 'status': result.code,
-                             'content_type': kind.split(';')[0], 'body_type': type(content).__name__,
-                             'final_path': urllib.parse.urlsplit(result.url).path})
-            return result.code, content, result.headers.get('Location'), result.url
+                             'path': urllib.parse.urlsplit(url).path, 'status': None,
+                             'outcome': 'unknown', 'error_type': type(exc).__name__})
+            raise
 
 
 def expect(result, statuses, label):

@@ -2,6 +2,8 @@
 
 当前已完成 P0 规划与治理基础及 G0-01 本地 Git 初始化。2026-11-01 补齐规划层级、完成 M0-S01 候选静态核查与[本机隔离配置](m0-s01-baseline.md)，并取得 M0-S02 / S03 身份、权限与 Issue 的部分[真实上游证据](../records/2026-11-01-m0-local-validation.md)。随后按[ADR 0003](../adr/0003-gitea-authorization-profiles.md)收敛 scope 组合，保留[历史生命周期结果](../records/2026-11-01-m0-auth-profile-validation.md)；2026-11-04 继续[两项差异定位与刷新 / 撤销负例](../records/2026-11-04-m0-lifecycle-validation.md)。原始 scope、上游签发差异与未覆盖能力仍保留，受控处理不等于上游修复，M0 尚未通过出口。G0 基础保护已有配置读回，行为验收未完成；M1—M6 均未开始，没有业务工程初始化。
 
+同日新增[M0-S03 Issue 主路径、权限及响应丢失证据](../records/2026-11-04-m0-issue-validation.md)，形成[受控输入与对账边界](../adr/0004-issue-validation-and-reconciliation.md)；非法输入 / 筛选 / 部分写入差异保留并进入后续缺口评审。Actions / OCI / Release 未完成，Runner 暂停，不因 Issue 切片晋级 M1。
+
 | 阶段 | 目标与可展示结果 | 依赖 / 出口 |
 | --- | --- | --- |
 | P0 | 建立规划、治理文件、模板与本地检查 | 已完成本地验收，不代表产品或远端可用 |

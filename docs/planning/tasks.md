@@ -16,7 +16,7 @@
 | G0-03 | TOP-GOV | 接入真实 CI、验证聚合失败传播、升级同一主线规则 | G0-02、真实检查与对应授权 | GOV-03 | 待开始 |
 | M0-01 | TOP-BASE / M0-S01 | 选择 Gitea / Runner / 工具链 / 镜像 Digest 组合，记录许可 | 静态核查可先行；下载 / 环境等需对应授权 | BASE-01 | 进行中：候选、本机隔离配置与平台基础验证已交付，最终支持冻结待阶段取证；见[本机记录](../records/2026-11-01-m0-local-validation.md) |
 | M0-02 | TOP-IAM / M0-S02 | 隔离环境验证 OIDC、OAuth scope、绑定与私有权限 | M0-01 的候选 / 隔离准备部分 | IAM-01、IAM-02 | 进行中：本批生命周期切片已交付；两项差异已定位并形成受控配置 / 在线账号拒绝边界，真实刷新到期、并发 / 重放、单用户撤销 / 范围隔离和账号恢复均取得证据，最终源码回归及清理通过。公开单用户撤销接口缺口与原始差异纳入 M0-S04 评审，不关闭完整 IAM；产品会话 / 绑定实现验收在 M1，见[本批记录](../records/2026-11-04-m0-lifecycle-validation.md)与[M0-S02](m0-validation.md#m0-s02身份与私有权限可行性) |
-| M0-03 | TOP-BASE / M0-S03 | 真实 Issue / Actions / OCI / Release API 最小验证 | M0-01 的候选 / 隔离准备；M0-02 的用户授权部分 | BASE-01 | 进行中：Issue 创建 / 评论 / 关闭 / 回读与权限部分通过；其他 Issue 边界、Actions / OCI / Release 未验；见[本机记录](../records/2026-11-01-m0-local-validation.md) |
+| M0-03 | TOP-BASE / M0-S03 | 真实 Issue / Actions / OCI / Release API 最小验证 | M0-01 的候选 / 隔离准备；M0-02 的用户授权部分 | BASE-01 | 进行中：本批 Issue 上游切片完成列表 / 筛选 / 分页、版本编辑 / 重开、分类 / 分配、角色 / 撤权 / 删除和真实超时对账取证；最终批次保留 12 条原始 gap，受控处理见 ADR 0004，纳入 M0-S04 评审；Actions / OCI / Release 仍未验，不关闭完整 ISSUE / BASE，见[本批记录](../records/2026-11-04-m0-issue-validation.md) |
 | M0-04 | TOP-COMPAT / M0-S04 | 冻结首批 GitHub API / Action 样例及缺口决策 | M0-02、M0-03 | COMP-01 | 待开始 |
 | M1-01 | TOP-BASE | 最小 Go / React / OpenAPI / PostgreSQL / 工具链基础 | M0 | BASE-02 | 待开始 |
 | M1-02 | TOP-IAM | OIDC 会话、显式账号绑定、Token 保护与撤销 | M1-01 | IAM-01、IAM-02 | 待开始 |
