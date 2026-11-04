@@ -1,6 +1,6 @@
 # M0 底座可行性子专题计划
 
-状态：近期执行范围已细化；M0-S01 已取得官方来源证据并形成[本机 Docker 优先方案](m0-s01-baseline.md)，M0-S02 / S03 已开始身份、权限与 Issue 的部分真实验证，见[本机记录](../records/2026-11-01-m0-local-validation.md)。任务状态见[tasks](tasks.md)，当前授权见[current](../status/current.md)。候选不是已支持组合，本计划本身不构成环境或远端动作授权。
+状态：近期执行范围已细化；M0-S01 已取得官方来源证据并形成[本机 Docker 优先方案](m0-s01-baseline.md)，M0-S02 / S03 已取得身份生命周期、Issue、Release 与 OCI 的受控切片证据，见[当日回顾](../records/2026-11-04-day-review.md)。接续重点为 M0-S04 的支持范围与关键缺口决定，Actions 仍受 Runner 暂停约束。任务状态见[tasks](tasks.md)，当前授权见[current](../status/current.md)。候选不是已支持组合，本计划本身不构成环境或远端动作授权。
 
 目标：在 Go / React 工程初始化前，取得独立 Gitea 与 Runner 公开接口、身份授权和最小交付能力的证据，明确首批 GitHub 兼容范围。阶段预算沿用[路线图](roadmap.md)的 6—10 人日，不把整个 M0 作为一天的承诺。
 
@@ -99,7 +99,7 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 
 **Issue 切片（2026-11-04）。** 已新增[Issue / 失败边界证据](../records/2026-11-04-m0-issue-validation.md)与[ADR 0004](../adr/0004-issue-validation-and-reconciliation.md)：覆盖本表的个人仓库 Issue 主路径、普通用户权限、真实 PR 排除及响应丢失，原始非法输入 / 筛选 / 部分写入差异继续保留。前检与对账属于受控验证，不表示上游已修复、完整 ISSUE-01 已通过或已建立产品幂等。该批未包含 Actions / OCI / Release；Release 最新证据见下文，不得以部分切片关闭整个 BASE-01 / M0-03。
 
-**Release / OCI 接续（同日）。** 先按固定公开来源完成[角色、端点、字节校验与失败恢复准备](../architecture/delivery-flow.md#m0-release--oci-契约准备)，见[静态记录](../records/2026-11-04-m0-gap-and-delivery-preparation.md)；随后[Release 隔离切片](../records/2026-11-04-m0-release-validation.md)完整取证，新增第四种独立用途且原三种不变。最终 Release / Issue / profiles 回归分别保留 5 / 12 / 1 条差异退出 2，六批清理通过；[ADR 0005](../adr/0005-release-authorization-and-reconciliation.md)约束草稿、固定引用和附件对账，不表示原生差异已修复。OCI 协议 / 真实客户端及 Actions 仍待取证，Runner 不启动，不关闭完整 BASE / REL。
+**Release / OCI 接续（同日）。** 先按固定公开来源完成[角色、端点、字节校验与失败恢复准备](../architecture/delivery-flow.md#m0-release--oci-契约准备)，见[静态记录](../records/2026-11-04-m0-gap-and-delivery-preparation.md)；随后[Release 隔离切片](../records/2026-11-04-m0-release-validation.md)完整取证，新增第四种独立用途且原三种不变。最终 Release / Issue / profiles 回归分别保留 5 / 12 / 1 条差异退出 2，六批清理通过；[ADR 0005](../adr/0005-release-authorization-and-reconciliation.md)约束草稿、固定引用和附件对账，不表示原生差异已修复。该 Release 批次未包含 OCI，接续证据见下文；Actions 仍待取证，Runner 不启动，不关闭完整 BASE / REL。
 
 **OCI 切片（同日后续）。** [协议与客户端取证](../records/2026-11-04-m0-oci-validation.md)已覆盖私有组织 / team、scoped PAT 与 Registry Bearer、原始 Blob / Manifest Digest、Docker scratch 构建 / regctl 推拉 / Docker load、权限撤销、删除与九个真实超时 / 半包场景。原四种 OAuth 组合未变；四条差异及关键边界见[ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)。OCI 原生切片不关闭完整 ART / BASE，强制 Digest 保留 / 远端即时 Registry JWT 撤销与真实 run 关联仍未证明；Actions 继续受 Runner 暂停约束。
 
@@ -121,6 +121,19 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 **成功与失败边界。** 每项使用既有状态：待验证、直接兼容、需配置、需适配、不支持。只有取得对应行为证据才能离开待验证；只固定样例而未运行时仍为待验证。静默忽略关键安全字段判失败，受控模板的补偿不等于任意工作流兼容。
 
 **交付与证据。** 在既有兼容专题维护首批范围，records 保存原样例、diff、预期 / 实际与限制；影响公开协议、权限、零核心补丁目标或明显成本的缺口形成 ADR / 所有者决定。证据不足不宣传兼容，不为了进入 M1 静默缩减权限要求。
+
+### 接续事项
+
+2026-11-04 收工后的下一批先以现有 27 条差异、ADR 0003—0006 和固定版本源码 / 公开契约为输入，整理支持范围与缺口决定；本节是后续工作安排，今晚不再启动环境。沿用原兼容专题、M0-04 和既有验收，不新建平行状态表。
+
+| 顺序 | 缺少的证据 / 决定 | 下一批交付与完成标准 |
+| --- | --- | --- |
+| 1 · M0-G26 | 已证明固定 Digest 内容身份，但覆盖最后 Tag 后旧 Manifest 404；缺少强制保留能力证据 | 核查同版公开保护 / 保留机制及其作用范围，列出可用方案、无法阻止的删除 / 覆盖与成本。若需真实补证，使用新隔离批次验证引用存续；没有可靠方案时保留缺口并提交取舍，不把“约定不覆盖”写成服务器强制保留 |
+| 2 · M0-G27 | 删除 PAT 后已签发 JWT 仍可读写；没有单凭据远端即时失效证据 | 核查公开撤销机制及已复制 Token 的边界，分别描述本地后续操作停止与原生远端失效。24 小时 metadata 不算真实到期；长时取证另预算，不用禁用整个账号 / 改全局密钥代替单凭据撤销 |
+| 3 · M0-G06 / G19 / G20 / G24 / G25 | 自动单用户 grant 撤销、草稿读取 / 空字段清除及包所有者 / scope 的承诺仍未收敛 | 在原专题逐项给出已有证据、可承诺的受控操作、尚缺的公开路径和需要所有者决定的影响。没有证据的能力保持待验证，不用私有接口、宽凭据或隐藏副作用补齐 |
+| 4 · COMP-01 首批样例 | 原生切片不是精确 GitHub REST / 客户端 / Action 双端对照 | 先整理最小原始调用 / workflow、对照版本、客户端 / Action commit 候选、预期与失败用例；实际取证时复核官方支持状态。未运行样例仍为待验证，不冻结 Action 运行时支持 |
+
+下一批可交付结果是有来源的范围 / 缺口决定及定向补证清单；涉及产品承诺、底座变更或独立 Registry 的实质取舍先说明影响并确认。上述事项未收口前保持 M0，Runner / Actions 继续暂停，不进入 M1；真实 run / attempt、完整发行 / 恢复及产品实现验收继续保留。
 
 ## 阶段出口与交接
 

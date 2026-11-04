@@ -4,7 +4,7 @@
 
 RadishForge 计划以 Gitea 为首选底座，使用 Go 业务服务与 TypeScript / React 工作台，连接 Git、Issue、PR、Actions、镜像、Release 和环境部署。优先通过公开协议与接口扩展，首版目标为不修改 Gitea 核心；Forgejo 保留为后续独立验证的适配目标。
 
-当前已有规划文档、仓库治理基础文件、PR / Issue 与 Rulesets 模板、本地治理检查，以及本机 Gitea / PostgreSQL 隔离配置和真实协议探针。已取得部分身份、普通用户权限与 Issue API 证据，形成受控 scope 组合并保留上游及生命周期差异；尚无自有业务工程、产品依赖或可运行的 RadishForge 应用。本地 Git 与 GitHub 远端已建立，日常分支为 dev，远端默认分支 master 已启用基础保护。实际状态、下一步与当前授权边界见[当前状态](docs/status/current.md)。
+当前已有规划文档、仓库治理基础文件、PR / Issue 与 Rulesets 模板、本地治理检查，以及本机 Gitea / PostgreSQL 隔离配置和真实协议探针。已取得身份生命周期、普通用户权限、Issue、Release 与 OCI 的部分上游证据，形成受控授权配置并保留原始差异；尚无自有业务工程、产品依赖或可运行的 RadishForge 应用。本地 Git 与 GitHub 远端已建立，日常分支为 dev，远端默认分支 master 已启用基础保护。实际状态、下一步与当前授权边界见[当前状态](docs/status/current.md)。
 
 ## 已确认方向
 

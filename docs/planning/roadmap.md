@@ -1,14 +1,8 @@
 # 阶段路线图
 
-当前已完成 P0 规划与治理基础及 G0-01 本地 Git 初始化。2026-11-01 补齐规划层级、完成 M0-S01 候选静态核查与[本机隔离配置](m0-s01-baseline.md)，并取得 M0-S02 / S03 身份、权限与 Issue 的部分[真实上游证据](../records/2026-11-01-m0-local-validation.md)。随后按[ADR 0003](../adr/0003-gitea-authorization-profiles.md)收敛 scope 组合，保留[历史生命周期结果](../records/2026-11-01-m0-auth-profile-validation.md)；2026-11-04 继续[两项差异定位与刷新 / 撤销负例](../records/2026-11-04-m0-lifecycle-validation.md)。原始 scope、上游签发差异与未覆盖能力仍保留，受控处理不等于上游修复，M0 尚未通过出口。G0 基础保护已有配置读回，行为验收未完成；M1—M6 均未开始，没有业务工程初始化。
+当前已完成 P0 规划与治理基础及 G0-01 本地 Git 初始化；M0-S01 已有候选静态核查与[本机隔离配置](m0-s01-baseline.md)，M0-S02 / S03 已取得身份生命周期、Issue、Release 与 OCI 的受控切片证据。当日五个提交、实际范围与文档复核见[2026-11-04 收工回顾](../records/2026-11-04-day-review.md)，既有证据保留各批原始差异与非零退出码。
 
-同日新增[M0-S03 Issue 主路径、权限及响应丢失证据](../records/2026-11-04-m0-issue-validation.md)，形成[受控输入与对账边界](../adr/0004-issue-validation-and-reconciliation.md)；非法输入 / 筛选 / 部分写入差异保留并进入后续缺口评审。Actions / OCI / Release 未完成，Runner 暂停，不因 Issue 切片晋级 M1。
-
-接续启动 M0-S04 的[已有差异基线汇总](../architecture/github-compatibility.md#m0-现有差异基线)，并完成 Release / OCI [公开契约静态准备](../records/2026-11-04-m0-gap-and-delivery-preparation.md)；仅整理已取证输入和下一轮执行条件，没有新增真实联调或完成完整兼容范围冻结。
-
-随后完成[Release 隔离切片](../records/2026-11-04-m0-release-validation.md)与共享 Issue / OAuth 回归，新增独立 Release 用途，保留五项差异并进入同一 M0-S04 基线，见[ADR 0005](../adr/0005-release-authorization-and-reconciliation.md)。OCI / Actions、完整发布器与兼容范围仍未完成；Runner 继续暂停，M1 不启动。
-
-接续已完成[OCI 私有组织 / 固定 Digest / 撤权与超时取证](../records/2026-11-04-m0-oci-validation.md)，四项原始差异纳入同一基线，见[ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)。原生协议与 regctl 客户端样例不替代强制制品保留、即时 JWT 撤销、完整工作流 / 发行链路；Actions 仍暂停，M0 尚未通过出口。
+下一批优先推进 M0-S04 的支持范围与关键缺口决定，以[27 条差异基线](../architecture/github-compatibility.md#m0-现有差异基线)及 ADR 0003—0006 为输入，先收敛 Digest 保留和已复制 Registry JWT 的远端即时失效；交付标准见[M0-S04 接续事项](m0-validation.md#接续事项)。受控处理不等于上游修复，原生切片不替代完整工作流 / 发行链路。Runner / Actions 继续暂停，M0 尚未通过出口；M1—M6 未开始。G0 基础保护已有配置读回，行为验收与真实 CI 仍待。
 
 | 阶段 | 目标与可展示结果 | 依赖 / 出口 |
 | --- | --- | --- |

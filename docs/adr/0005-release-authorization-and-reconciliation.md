@@ -22,6 +22,6 @@
 
 ## 停止线
 
-保留五项原始差异、早期中断批次及非零退出码，进入[既有差异基线](../architecture/github-compatibility.md#m0-现有差异基线)；不以本 ADR 关闭 REL / BASE / COMP、降低权限或原子性标准。OCI、Actions / Runner、真实 workflow run / attempt、完整客户端兼容及生产尚未验证，Runner 继续暂停，不进入 M1。
+保留五项原始差异、早期中断批次及非零退出码，进入[既有差异基线](../architecture/github-compatibility.md#m0-现有差异基线)；不以本 ADR 关闭 REL / BASE / COMP、降低权限或原子性标准。本 Release 批次未包含 OCI；同日后续的 OCI 协议 / 客户端证据及限制见[ADR 0006](0006-oci-authorization-and-digest-retention.md)，不回写本批原始结果。Actions / Runner、真实 workflow run / attempt、完整客户端兼容及生产仍未验证，Runner 继续暂停，不进入 M1。
 
 来源：固定提交的[Release API](https://github.com/go-gitea/gitea/blob/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/api/v1/repo/release.go)、[Release / Tag 服务](https://github.com/go-gitea/gitea/blob/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/services/release/release.go)、[Tag API](https://github.com/go-gitea/gitea/blob/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/api/v1/repo/tag.go)、[附件下载与 scope 检查](https://github.com/go-gitea/gitea/blob/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/web/repo/attachment.go)；来源摘要与实际证据见验证记录。

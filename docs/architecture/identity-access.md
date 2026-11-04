@@ -20,13 +20,16 @@ OIDC 登录成功只建立工作台身份。访问私有仓库之前，用户还
 
 ### Gitea 受控授权组合
 
-[ADR 0003](../adr/0003-gitea-authorization-profiles.md)记录本批决定，[JSON](../../tests/contracts/m0/gitea-auth-profile.json)承载 M0 单一配置；实际结果见[授权组合验证](../records/2026-11-01-m0-auth-profile-validation.md)。三种用途分别注册 confidential client，以授权码 + PKCE S256、精确 callback 和首次用户同意执行；不同用途不共用凭据。
+[ADR 0003](../adr/0003-gitea-authorization-profiles.md)记录受控组合与生命周期决定，[JSON](../../tests/contracts/m0/gitea-auth-profile.json)承载 M0 OAuth 单一配置。11 月 1 日的[授权组合验证](../records/2026-11-01-m0-auth-profile-validation.md)覆盖最初三种用途；11 月 4 日的[Release 切片](../records/2026-11-04-m0-release-validation.md)增加第四种独立用途，原三种组合保持不变。四种用途分别注册 confidential client，以授权码 + PKCE S256、精确 callback 和首次用户同意执行；不同用途不共用凭据。
 
 | 用途 | 本批能力与限制 |
 | --- | --- |
 | `identity` | 显式 public-only / read:user 组合，取得 UserInfo，私有仓库 / Issue 拒绝；不作为 Gitea 资源授权 |
 | `resource_read` | 当前用户仓库与 Issue 读取，Issue 写入拒绝 |
 | `issue_write` | 当前用户仓库读取与 Issue 路由组写入，不能创建仓库；仍需对象权限 |
+| `release_write` | `openid read:user write:repository`，用于已验证的 Release / 附件操作；仓库写 scope 宽于 Release 按钮，仍需 Release 单元与对象权限，不授权 package / OCI |
+
+Release 草稿的只读 scope 元数据与直接下载权限不一致；受控草稿操作要求独立 Release 用途与当前 Release 单元写权限，不能只凭列表可见性或下载 URL 推断授权。原始差异及未实现边界见[ADR 0005](../adr/0005-release-authorization-and-reconciliation.md)。
 
 校验完整组合而非仅校验单个名称：缺少 public-only 的合法名称组合也必须拒绝；创建应用、授权和刷新前均拒绝未知 / 缺失 / 额外 / 重复 scope 或错误 issuer。授权后核对实际 grant scope、签名身份和在线账号；刷新成功或 introspection HTTP 200 不代表凭据可用，缺失 / 非对象 / inactive 元数据、账号不符、拒绝或无法核实均停止。资源访问继续按实际上游对象权限判断，刷新不得恢复已撤销权限。
 
@@ -50,6 +53,10 @@ Token 仅在服务端加密保存，密钥独立于数据库、可轮换和备�
 | 后台同步 | 明确范围的机器人授权，审计其来源及撤销 |
 
 包与仓库关联不改变包权限。首版以组织作为制品隔离边界，需要项目间严格隔离时分组织或使用后续独立 Registry；验收直接 pull 的权限，不能只看网页隐藏。
+
+2026-11-04 的[OCI 切片](../records/2026-11-04-m0-oci-validation.md)使用独立的[Registry 契约](../../tests/contracts/m0/gitea-registry-profile.json)：普通用户 `read:package` / `write:package` PAT 经固定同源 `/v2/token` 交换 Registry Bearer，不复用 OAuth 凭据。私有组织非成员及只有仓库协作权的用户直接拉取被拒绝；组织成员的读取基线与 team package 写权限分别判断，缺少 package 单元不等于没有读取权。公开个人包关联私有仓库仍可读，Registry 的 pull 请求参数也不能收窄 write PAT，不能承诺逐仓库包隔离或仅凭 query 得到只读凭据。
+
+团队降权、移出私有组织和禁用账号已对旧 Registry Token 的相应操作生效；删除 PAT 仅证明新交换被拒绝，旧 Registry JWT 在观察时仍可读写。声明的 24 小时有效期未真实等待，不将其等同 OAuth 刷新 / 撤销结论。本地停止与已复制 Token 的远端即时失效分别报告；单凭据即时撤销承诺仍待 M0-S04 决策，见[ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)。这些仍为上游证据与后续实现契约。
 
 排队到实际执行之间重新检查授权。生产 Runner 只消费已授权、固定清单和固定工作流的部署意图，不能接受普通 PR 任意指定目标、命令或秘密。用户失权时新操作拒绝，正在运行的外部任务记录已发生副作用与可取消范围。
 

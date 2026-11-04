@@ -1,6 +1,6 @@
 # M0-S01 候选组合与隔离验证方案
 
-核查日期：2026-11-01（Asia/Shanghai）。任务 M0-01 进行中；本页维护官方来源、候选和隔离方案；已按用户要求调整为本机 Docker 优先，支持组合仍需按实际证据最终冻结。范围沿用[M0 子专题计划](m0-validation.md)；初始静态取证见[来源记录](../records/2026-11-01-m0-s01-review.md)和[元数据](../records/2026-11-01-m0-s01-sources.json)，本机准备与协议结果见[本机验证记录](../records/2026-11-01-m0-local-validation.md)。
+初始核查日期：2026-11-01（Asia/Shanghai）；2026-11-04 同步后续取证入口，不表示重新核查全部候选来源。任务 M0-01 进行中；本页维护官方来源、候选和隔离方案；已按用户要求调整为本机 Docker 优先，支持组合仍需按实际证据最终冻结。范围沿用[M0 子专题计划](m0-validation.md)；初始静态取证见[来源记录](../records/2026-11-01-m0-s01-review.md)和[元数据](../records/2026-11-01-m0-s01-sources.json)，本机准备与协议结果见[本机验证记录](../records/2026-11-01-m0-local-validation.md)，后续身份 / Issue / Release / OCI 范围见[当日回顾](../records/2026-11-04-day-review.md)。
 
 ## 候选选择
 
@@ -46,11 +46,11 @@ Runner 5.x 文档要求 Gitea 1.21+、Git 2.34.1+，JavaScript Action 的 Node �
 
 本轮读取[Gitea 固定提交 OpenAPI](https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/templates/swagger/v1-openapi3.generated.json)，SHA-256 为 `c797dc2a94e070c19ea823cb4396829f234a745a7a8c90b4a686b91cbc4d278e`，与 2026-10-29 静态记录一致。共 342 个路径，Issue / Actions / Release 相关筛选命中 70 个；筛选不代表覆盖所有首版操作。`info.version` 仍为构建占位值，版本以固定来源确认。OCI 的 `/v2/` 属独立协议，不能从此 OpenAPI 推导其可用。
 
-[OAuth2 官方文档](https://docs.gitea.com/development/oauth2-provider/)列出 Discovery、授权码、PKCE、UserInfo、JWKS 与细粒度 scope，并警示常见 OIDC scope 的默认资源权限较宽、未知 scope 可能回落到全权限。初始静态核查后，精确 28.2.0 的[本机证据](../records/2026-11-01-m0-auth-profile-validation.md)已复现三项原始 scope 差异，并验证受控组合；完整生命周期和其他发行方仍待取证。
+[OAuth2 官方文档](https://docs.gitea.com/development/oauth2-provider/)列出 Discovery、授权码、PKCE、UserInfo、JWKS 与细粒度 scope，并警示常见 OIDC scope 的默认资源权限较宽、未知 scope 可能回落到全权限。初始静态核查后，精确 28.2.0 的[本机证据](../records/2026-11-01-m0-auth-profile-validation.md)已复现三项原始 scope 差异，并验证受控组合；后续[生命周期切片](../records/2026-11-04-m0-lifecycle-validation.md)取得真实刷新到期、并发与原生单用户撤销证据，保留上游差异。产品会话 / 绑定和其他发行方仍待取证。
 
 验证方案选择第二个独立 Gitea 实例作为标准 OIDC 测试发行方，复用同一镜像但使用独立 issuer、库、账号和密钥；资源 Gitea 另注册用户 OAuth 客户端。另用资源 Gitea 的 OIDC 端点构成第二 issuer，同邮箱样例只用于确认身份键不合并。该方案不增加 Radish 运行依赖，也不证明其他 IdP 实现兼容。
 
-已验证的登录 / 资源三种完整组合以[授权 JSON](../../tests/contracts/m0/gitea-auth-profile.json)为单一来源，决定见[ADR 0003](../adr/0003-gitea-authorization-profiles.md)；不能仅凭单个 scope 名称推定权限。只用隔离账号进行“仅 OIDC / 未知 scope”负例，保留意外扩大权限的原始结果；不能将未知 scope 回退视为成功。协议测试客户端不能代替工作台绑定 / 会话实现，完整 IAM-01 / IAM-02 仍在 M1 验收。
+已验证的四种 OAuth 完整组合以[授权 JSON](../../tests/contracts/m0/gitea-auth-profile.json)为单一来源：原登录 / 资源三种用途及后续独立 Release 用途，决定见[ADR 0003](../adr/0003-gitea-authorization-profiles.md)和[ADR 0005](../adr/0005-release-authorization-and-reconciliation.md)。OCI 的 package PAT / Registry Bearer 沿用[独立契约](../../tests/contracts/m0/gitea-registry-profile.json)与[ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)，不扩充 OAuth scope。不能仅凭单个 scope 名称推定权限；只用隔离账号进行“仅 OIDC / 未知 scope”负例，保留意外扩大权限的原始结果，不能将未知 scope 回退视为成功。协议测试客户端不能代替工作台绑定 / 会话实现，完整 IAM-01 / IAM-02 仍在 M1 验收。
 
 ## 本机隔离配置
 

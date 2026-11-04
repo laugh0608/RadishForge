@@ -37,7 +37,7 @@ Windows 可用 `py -3` 替代 `python3`，不额外维护仅转发命令的 shel
 
 `--mode lifecycle` 使用受控配置，含真实一小时 refresh token 到期和一次原生页面单用户撤销，需要单独预算长时窗口。`consent-ready` / `consent-revoked` 仅协调页面点击前后的取证时点，真实失效仍由 API 断言验证。历史两项差异使用新隔离批次 `prepare --auth-profile --legacy-query-auth` 与 `--mode lifecycle-baseline` 复现。步骤、浏览器秘密边界和清理要求见[M0 契约说明](../tests/contracts/m0/README.md)。
 
-`--mode issues` 调用 [m0_issues.py](m0_issues.py) 验证 Issue 列表 / 筛选 / 分页、正文版本与状态、元数据 / 分配、真实权限、非法输入和删除。[m0_response_loss.py](m0_response_loss.py)由原 Issue 注入模块提取，供 Issue / Release 共用；仅在超时用例中临时监听回环 18543，按明确操作固定合成路径 / 凭据 / 请求体，不是通用代理或产品服务。共享 HTTP 默认超时仍为 15 秒，故障用例单次显式 1 秒；网络错误记录 unknown，不自动重试。新增纯本地前检、分页、对账和传输负例同样从 unittest 入口运行；不启动 Docker 或监听端口。
+`--mode issues` 调用 [m0_issues.py](m0_issues.py) 验证 Issue 列表 / 筛选 / 分页、正文版本与状态、元数据 / 分配、真实权限、非法输入和删除。[m0_response_loss.py](m0_response_loss.py)由原 Issue 注入模块提取，供 Issue / Release / OCI 共用；仅在超时用例中临时监听回环 18543，按明确操作固定合成路径 / 凭据 / 请求体，不是通用代理或产品服务。共享 HTTP 默认超时仍为 15 秒，故障用例单次显式 1 秒；网络错误记录 unknown，不自动重试。新增纯本地前检、分页、对账和传输负例同样从 unittest 入口运行；不启动 Docker 或监听端口。
 
 `--mode releases` 调用 [m0_releases.py](m0_releases.py)，使用第四种独立 `release_write` 用途，覆盖草稿 / 分页、编辑 / 发布、Tag SHA、raw / multipart 附件与字节摘要、角色 / 越权 / 撤权 / 删除及重复请求。字节响应为显式 `BinaryBody`，不经文本解码，最大读取 2 MB，附件用例限 64 KiB；只暴露白名单响应头。响应丢失测试包含 Release 创建、发布 PATCH、附件 POST 和真实半包断开，未知结果不重放。其余用途及默认 JSON / form 行为保持原边界；具体命令、资源及证据见契约入口。
 
