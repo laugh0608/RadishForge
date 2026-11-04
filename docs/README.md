@@ -41,6 +41,7 @@
 - [ADR 0003：Gitea 授权组合与在线复核](adr/0003-gitea-authorization-profiles.md)
 - [ADR 0004：Issue 输入校验与写入结果对账](adr/0004-issue-validation-and-reconciliation.md)
 - [ADR 0005：Release 授权、固定引用与附件对账](adr/0005-release-authorization-and-reconciliation.md)
+- [ADR 0006：OCI 授权、Digest 保留与未知上传](adr/0006-oci-authorization-and-digest-retention.md)
 - [来源核查](references/source-review.md)
 - [五个兄弟项目治理提炼](references/governance-review.md)
 - [2026-10-29 规划建立记录](records/2026-10-29-planning-bootstrap.md)
@@ -57,3 +58,4 @@
 - [2026-11-04 Issue 契约与响应丢失验证](records/2026-11-04-m0-issue-validation.md)
 - [2026-11-04 M0 差异基线与 Release / OCI 静态准备](records/2026-11-04-m0-gap-and-delivery-preparation.md)
 - [2026-11-04 Release 隔离取证](records/2026-11-04-m0-release-validation.md)
+- [2026-11-04 OCI 隔离取证](records/2026-11-04-m0-oci-validation.md)

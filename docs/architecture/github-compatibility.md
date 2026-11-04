@@ -49,9 +49,9 @@ Webhook 另验收 event 名、action、payload、投递 ID、HMAC、重放与重
 
 ## M0 现有差异基线
 
-本节是 M0-S04 的已取证输入，不是新的兼容状态矩阵或阶段放行。`M0-G01`—`M0-G23` 仅为差异引用编号，不增加任务 / 验收项；执行状态仍由 [tasks](../planning/tasks.md)维护。前三项 scope、两项生命周期、一个公开撤销接口缺口及十二项 Issue 差异的原始输入见[基线记录](../records/2026-11-04-m0-gap-and-delivery-preparation.md)；接续新增五项 Release 差异见[Release 记录](../records/2026-11-04-m0-release-validation.md)。原始来源和命名记录可定位，不按复现批次数重复计数；先前 18 项的导出快照不回写。
+本节是 M0-S04 的已取证输入，不是新的兼容状态矩阵或阶段放行。`M0-G01`—`M0-G27` 仅为差异引用编号，不增加任务 / 验收项；执行状态仍由 [tasks](../planning/tasks.md)维护。前三项 scope、两项生命周期、一个公开撤销接口缺口及十二项 Issue 差异的原始输入见[基线记录](../records/2026-11-04-m0-gap-and-delivery-preparation.md)；接续五项 Release 与四项 OCI 差异分别见[Release 记录](../records/2026-11-04-m0-release-validation.md)和[OCI 记录](../records/2026-11-04-m0-oci-validation.md)。原始来源和命名记录可定位，不按复现批次数重复计数；先前导出快照不回写。
 
-表中处理沿用 [ADR 0003](../adr/0003-gitea-authorization-profiles.md) / [ADR 0004](../adr/0004-issue-validation-and-reconciliation.md) / [ADR 0005](../adr/0005-release-authorization-and-reconciliation.md)的 M0 约束和后续实现契约；没有新增自动远端撤销、生产幂等或任意工作流兼容承诺，也未批准缩减关键权限要求。
+表中处理沿用 [ADR 0003](../adr/0003-gitea-authorization-profiles.md) / [ADR 0004](../adr/0004-issue-validation-and-reconciliation.md) / [ADR 0005](../adr/0005-release-authorization-and-reconciliation.md) / [ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)的 M0 约束和后续实现契约；没有新增自动远端撤销、生产幂等、强制制品保留或任意工作流兼容承诺，也未批准缩减关键权限要求。
 
 | 编号 | 已取证的原始行为 | 现有处理与仍须保留的边界 |
 | --- | --- | --- |
@@ -78,10 +78,14 @@ Webhook 另验收 event 名、action、payload、投递 ID、HMAC、重放与重
 | M0-G21 | Tag POST 文档 200，处理器 / 实测 201 | 精确版本接受 201 并保留声明 gap，不扩为任意 2xx |
 | M0-G22 | 已有 Tag 与 target 不同仍发布 200，Tag 指向原提交 | 发布前查精确 Tag / SHA，不符拒绝；发布后再查，不能宣称竞态已消除 |
 | M0-G23 | 无效 target 发布 500 | 回读草稿 / Tag 并保留原错误；本例未发布不外推所有 500 无副作用 |
+| M0-G24 | 公开个人包关联私有仓库后其他用户仍可 pull | 按包所有者 / 组织可见性及直接 Registry 权限判断，不把 link 当 ACL；私有组织边界已单独取证 |
+| M0-G25 | Registry 请求 pull，但 write:package PAT 仍可上传 | 实际范围依赖 PAT scope 和当前资源权限，不宣传 query scope 已收窄凭据 |
+| M0-G26 | 覆盖最后一个 Tag 后原 Manifest Digest 404 | 固定 Digest 仍要验证保留 / 存在；缺失阻断，不取 latest 或重新构建冒充原制品；强制保留待决定 |
+| M0-G27 | 删除 PAT 后旧 Registry Token 仍能读写 | 本地停止 / 丢弃缓存不等于已复制 Token 远端立即失效；不以禁用整个账号或改全局签名密钥代替单凭据撤销 |
 
 已有正文 `content_version` 冲突 409、只读 / 越权 / 撤权拒绝、删除和响应丢失回查是相应原生切片证据。它们与上述 gap 一同保留，不把正确拒绝再计为差异，也不把正确主路径抵消失败。组织继承标签、自定义单元权限、产品会话 / 草稿 / 请求持久化，以及 GitHub REST 字段 / Link / 错误体与指定客户端的双端对照仍待验收；上方兼容矩阵不因本表改成“直接兼容”。
 
-下批按[OCI 准备与 Release 已验证边界](delivery-flow.md#m0-release--oci-契约准备)取得剩余原生证据，再补 Action / API 精确样例及差异决定。Runner 暂停期间不冻结未经执行的 Action commit / 运行时支持，不启动 Actions；GitHub REST 对照版本的当前支持与客户端版本也须在相应取证时复核。M0-G06 自动化方案、M0-G19 / G20 的能力边界、关键权限 / 未知结果处理和完整阶段出口未收口前，不放行 M1。
+Release / OCI 已取得相应原生切片证据，仍需完整范围取舍与 Action / API 精确样例。Runner 暂停期间不冻结未经执行的 Action commit / 运行时支持，不启动 Actions；GitHub REST 对照版本的当前支持与客户端版本也须在相应取证时复核。M0-G06 自动化方案、M0-G19 / G20、G24—G27 的能力边界、关键权限 / 保留 / 未知结果处理和完整阶段出口未收口前，不放行 M1。
 
 ## 缺口处理顺序与边界
 

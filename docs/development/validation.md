@@ -35,4 +35,6 @@ Mock 用于确定性失败注入，但不证明真实底座协议；构建通过
 
 [接续 Release 切片](../records/2026-11-04-m0-release-validation.md)新增独立用途与显式原始 bytes，用真实附件长度 / SHA-256 核对内容，分别验证元数据和两种下载路径的权限。共用注入按精确操作限制创建 POST / 发布 PATCH / 附件 POST：三类已提交响应丢失和未转发均真实超时，另有半包断开与同名多匹配；只读回查、零自动重试。48 项本地测试与最终三个真实流程分开，后三者分别保留 5 / 12 / 1 条差异退出 2；前三个中断批次也保留退出 1、只读诊断和已执行源码，不删标记重放或把 URL / 状态码修正冒充上游原始结果改变。
 
+[OCI 切片](../records/2026-11-04-m0-oci-validation.md)区分标准库有界协议、Docker build / save / load 和真实 regctl 推拉；按原始 Manifest / config / layer bytes 核对 Digest，权限负例直接访问 Registry。上传开始没有 Location、只观察到 Range 前缀及半包后零完整对象均保持 unknown，回查仅 GET / HEAD，零自动重试；不以不存在对象替代撤权证明。63 项本地测试只证明本地边界；四项 OCI 差异和旧共享差异继续非零退出。Registry metadata 的 24 小时声明不代替真实到期，固定 Digest 不代替保留验收，健康 CLI 传输不代替其故障重试验收。
+
 证据见[规划建立记录](../records/2026-10-29-planning-bootstrap.md)和[治理基础记录](../records/2026-10-29-governance-foundation.md)；功能验收见[矩阵](../planning/acceptance.md)。

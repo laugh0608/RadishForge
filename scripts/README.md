@@ -40,3 +40,5 @@ Windows 可用 `py -3` 替代 `python3`，不额外维护仅转发命令的 shel
 `--mode issues` 调用 [m0_issues.py](m0_issues.py) 验证 Issue 列表 / 筛选 / 分页、正文版本与状态、元数据 / 分配、真实权限、非法输入和删除。[m0_response_loss.py](m0_response_loss.py)由原 Issue 注入模块提取，供 Issue / Release 共用；仅在超时用例中临时监听回环 18543，按明确操作固定合成路径 / 凭据 / 请求体，不是通用代理或产品服务。共享 HTTP 默认超时仍为 15 秒，故障用例单次显式 1 秒；网络错误记录 unknown，不自动重试。新增纯本地前检、分页、对账和传输负例同样从 unittest 入口运行；不启动 Docker 或监听端口。
 
 `--mode releases` 调用 [m0_releases.py](m0_releases.py)，使用第四种独立 `release_write` 用途，覆盖草稿 / 分页、编辑 / 发布、Tag SHA、raw / multipart 附件与字节摘要、角色 / 越权 / 撤权 / 删除及重复请求。字节响应为显式 `BinaryBody`，不经文本解码，最大读取 2 MB，附件用例限 64 KiB；只暴露白名单响应头。响应丢失测试包含 Release 创建、发布 PATCH、附件 POST 和真实半包断开，未知结果不重放。其余用途及默认 JSON / form 行为保持原边界；具体命令、资源及证据见契约入口。
+
+`--mode oci --regctl <task-binary>` 调用 [m0_oci.py](m0_oci.py)、[m0_registry.py](m0_registry.py) 与 [m0_oci_client.py](m0_oci_client.py)。独立 Registry 契约限定 package PAT、同源 challenge / Location、原始 Blob / Manifest bytes 和客户端资产摘要；原四种 OAuth 组合不变。私有组织 / team 与仓库关联权限分开验收，未知写入只读回查；共用故障监听新增固定 namespace 的 POST / PATCH / PUT。真实客户端为 Docker 无网络 scratch 构建、regctl task CA 推拉与 Docker load；Buildx / regctl 状态均在任务目录，不改用户配置或 daemon 信任，不全局 prune。工具不会自动下载 regctl，入口先核对二进制 SHA-256；资源与手工准备见契约说明。

@@ -8,6 +8,8 @@
 
 随后完成[Release 隔离切片](../records/2026-11-04-m0-release-validation.md)与共享 Issue / OAuth 回归，新增独立 Release 用途，保留五项差异并进入同一 M0-S04 基线，见[ADR 0005](../adr/0005-release-authorization-and-reconciliation.md)。OCI / Actions、完整发布器与兼容范围仍未完成；Runner 继续暂停，M1 不启动。
 
+接续已完成[OCI 私有组织 / 固定 Digest / 撤权与超时取证](../records/2026-11-04-m0-oci-validation.md)，四项原始差异纳入同一基线，见[ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)。原生协议与 regctl 客户端样例不替代强制制品保留、即时 JWT 撤销、完整工作流 / 发行链路；Actions 仍暂停，M0 尚未通过出口。
+
 | 阶段 | 目标与可展示结果 | 依赖 / 出口 |
 | --- | --- | --- |
 | P0 | 建立规划、治理文件、模板与本地检查 | 已完成本地验收，不代表产品或远端可用 |

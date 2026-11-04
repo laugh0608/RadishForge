@@ -1,4 +1,4 @@
-"""Bounded TLS response loss for explicitly allowed synthetic Issue/Release POSTs."""
+"""Bounded TLS response loss for explicitly allowed M0 Issue/Release/OCI writes."""
 import http.client
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
@@ -22,20 +22,28 @@ class ResponseLoss:
             r'/api/v1/repos/alice/private-fixture/releases/[1-9][0-9]*/assets\?name=m0-[a-z0-9-]+\.bin', path)
         publish = operation == 'release_publish' and re.fullmatch(
             r'/api/v1/repos/alice/private-fixture/releases/[1-9][0-9]*', path)
-        if (not (asset or publish or operation in routes and path == routes[operation]) or type(forward) is not bool
+        upload = r'/v2/m0-private-org/m0-probe/blobs/uploads/[-A-Za-z0-9_.=]+'
+        oci_methods = {'oci_start': 'POST', 'oci_chunk': 'PATCH', 'oci_blob_commit': 'PUT', 'oci_manifest': 'PUT'}
+        oci = ((operation == 'oci_start' and path == '/v2/m0-private-org/m0-probe/blobs/uploads/')
+               or operation == 'oci_chunk' and re.fullmatch(upload, path)
+               or operation == 'oci_blob_commit' and re.fullmatch(upload + r'\?digest=sha256:[a-f0-9]{64}', path)
+               or operation == 'oci_manifest' and re.fullmatch(r'/v2/m0-private-org/m0-probe/manifests/m0-[a-z0-9-]+', path))
+        if (not (asset or publish or oci or operation in routes and path == routes[operation]) or type(forward) is not bool
                 or not isinstance(token, str) or not token):
             raise ValueError('Fault injection is limited to the selected synthetic endpoint')
-        if (asset and type(payload) is not bytes) or (not asset and not isinstance(payload, dict)):
+        binary = bool(asset or oci)
+        if (binary and type(payload) is not bytes) or (not binary and not isinstance(payload, dict)):
             raise ValueError('Fault payload does not match the selected operation')
-        self.body = payload if asset else json.dumps(payload).encode()
-        if not 0 < len(self.body) <= 65536:
+        self.body = payload if binary else json.dumps(payload).encode()
+        if not (0 <= len(self.body) <= 65536) or (not self.body and operation != 'oci_start'):
             raise ValueError('Fault payload exceeds its fixture bound')
-        if partial_bytes is not None and (not asset or not forward or type(partial_bytes) is not int
+        if partial_bytes is not None and (not (asset or operation in ('oci_chunk', 'oci_blob_commit')) or not forward or type(partial_bytes) is not int
                                           or not 0 < partial_bytes < len(self.body)):
             raise ValueError('Partial forwarding is limited to a nonempty attachment prefix')
         self.path, self.token, self.payload, self.forward = path, token, payload, forward
-        self.method = 'PATCH' if publish else 'POST'
-        self.asset, self.partial_bytes = bool(asset), partial_bytes
+        self.method = oci_methods[operation] if oci else 'PATCH' if publish else 'POST'
+        self.asset, self.partial_bytes = binary, partial_bytes
+        self.content_type = 'application/vnd.oci.image.manifest.v1+json' if operation == 'oci_manifest' else 'application/octet-stream'
         self.release, self.lock = threading.Event(), threading.Lock()
         self.attempts = self.forwarded = 0
         self.sent_bytes = 0
@@ -72,7 +80,7 @@ class ResponseLoss:
                             trust = ssl.create_default_context(cafile=str(RUNTIME / 'ca.crt'))
                             connection = http.client.HTTPSConnection('localhost', 18443, timeout=3, context=trust)
                             try:
-                                connection.putrequest('POST', fault.path)
+                                connection.putrequest(fault.method, fault.path)
                                 connection.putheader('Authorization', 'Bearer ' + fault.token)
                                 connection.putheader('Content-Type', 'application/octet-stream')
                                 connection.putheader('Content-Length', str(len(body)))
@@ -84,7 +92,7 @@ class ResponseLoss:
                         else:
                             result = Client('https://localhost:18443').request(
                                 fault.method, fault.path, token=fault.token,
-                                **({'raw': body} if fault.asset else {'payload': fault.payload}))
+                                **({'raw': body, 'content_type': fault.content_type, 'binary': True} if fault.asset else {'payload': fault.payload}))
                             fault.sent_bytes = len(body)
                             fault.upstream_status = result[0]
                     # Hold all response bytes until the caller has really timed out.
@@ -94,6 +102,7 @@ class ResponseLoss:
                     fault.error_type = type(exc).__name__
 
             do_PATCH = do_POST
+            do_PUT = do_POST
 
         self.server = ThreadingHTTPServer(('127.0.0.1', 18543), Handler)
         self.server.daemon_threads = False

@@ -96,7 +96,7 @@ class Client:
         self.opener = urllib.request.build_opener(*handlers)
 
     def request(self, method, path, *, payload=None, form=None, token=None, basic=None, timeout=15,
-                raw=None, content_type=None, binary=False, max_bytes=2_000_000):
+                raw=None, content_type=None, binary=False, max_bytes=2_000_000, headers=None):
         if type(timeout) not in (int, float) or not 0 < timeout <= 15:
             raise ValueError('Probe timeout must be positive and at most 15 seconds')
         if (sum(v is not None for v in (payload, form, raw)) > 1 or (token and basic)
@@ -105,13 +105,19 @@ class Client:
         if raw is not None and (type(raw) is not bytes or len(raw) > 2_000_000):
             raise ValueError('Raw request body must be bounded bytes')
         if content_type is not None and (raw is None or content_type not in (
-                'application/octet-stream', 'multipart/form-data; boundary=m0-release-boundary')):
+                'application/octet-stream', 'multipart/form-data; boundary=m0-release-boundary',
+                'application/vnd.oci.image.manifest.v1+json', 'application/vnd.oci.image.index.v1+json',
+                'application/vnd.docker.distribution.manifest.v2+json')):
             raise ValueError('Unsupported raw probe content type')
+        if headers is not None and (not isinstance(headers, dict) or any(
+                k not in ('Accept', 'Content-Range') or not isinstance(v, str) or not 0 < len(v) <= 256
+                or '\r' in v or '\n' in v for k, v in headers.items())):
+            raise ValueError('Unsupported probe request header')
         url = urllib.parse.urljoin(self.base + '/', path)
         origin = urllib.parse.urlsplit(url)
         if f'{origin.scheme}://{origin.netloc}' != self.base:
             raise RuntimeError('Refusing to send request outside the registered test origin')
-        headers = {'User-Agent': 'RadishForge-M0-contract-probe'}
+        headers = {'User-Agent': 'RadishForge-M0-contract-probe', **(headers or {})}
         body = None
         if payload is not None:
             body = json.dumps(payload).encode()
@@ -139,7 +145,8 @@ class Client:
                 kind = result.headers.get('Content-Type', '')
                 if binary:
                     content = BinaryBody(raw, {name: result.headers[name] for name in (
-                        'Content-Type', 'Content-Length', 'Content-Disposition', 'ETag') if name in result.headers})
+                        'Content-Type', 'Content-Length', 'Content-Disposition', 'ETag', 'WWW-Authenticate',
+                        'Docker-Content-Digest', 'Docker-Upload-Uuid', 'Range', 'Location') if name in result.headers})
                 else:
                     content = json.loads(raw) if raw and 'json' in kind else raw.decode(errors='replace')
                 REQUESTS.append({'origin': self.base, 'method': method,

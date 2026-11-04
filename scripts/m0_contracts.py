@@ -212,14 +212,19 @@ def profile_checks(owner, forge, idp, credentials, record):
     record('real_access_expiry_and_scoped_refresh')
 
 
-def main(mode):
+def main(mode, regctl=None):
+    if mode == 'oci':
+        from m0_oci_client import client_path
+        if regctl is None:
+            raise RuntimeError('OCI mode requires the pinned task-local --regctl binary')
+        client_path(regctl)
     owner = state()
     if mode != 'discovery' and (not owner.get('auth_profile') or
                               owner.get('auth_profile_sha256') != hashlib.sha256(PROFILE_PATH.read_bytes()).hexdigest()):
         raise RuntimeError('Prepare a fresh environment with --auth-profile matching the reviewed contract')
     if mode == 'lifecycle-baseline' and not owner.get('legacy_query_auth'):
         raise RuntimeError('Historical diagnosis requires a fresh --legacy-query-auth environment')
-    if mode in ('profiles', 'lifecycle', 'issues', 'releases') and owner.get('legacy_query_auth'):
+    if mode in ('profiles', 'lifecycle', 'issues', 'releases', 'oci') and owner.get('legacy_query_auth'):
         raise RuntimeError('Controlled probes refuse the historical form-token authentication setting')
     marker = RUNTIME / 'contract-started.json'
     if marker.exists():
@@ -237,6 +242,8 @@ def main(mode):
                                             'scripts/m0_lifecycle.py', 'scripts/m0_local.py',
                                             'scripts/m0_scope.py', 'scripts/m0_issues.py', 'scripts/m0_response_loss.py',
                                             'scripts/m0_releases.py',
+                                            'scripts/m0_registry.py', 'scripts/m0_oci.py', 'scripts/m0_oci_client.py',
+                                            'tests/contracts/m0/gitea-registry-profile.json',
                                             'tests/contracts/m0/gitea-auth-profile.json',
                                             'tests/contracts/m0/compose.yaml')}
     report['effective_provider_settings'] = owner.get('effective_provider_settings')
@@ -292,7 +299,8 @@ def main(mode):
                 raise RuntimeError('Could not capture generated bootstrap password; output withheld')
             admin = ('m0-admin', match.group(1))
             credentials[service] = {'admin': admin}
-            users = ('alice', 'bob', 'carol') if mode in ('issues', 'releases') else ('alice', 'bob')
+            users = (('alice', 'bob', 'carol', 'dave') if mode == 'oci' else
+                     ('alice', 'bob', 'carol') if mode in ('issues', 'releases') else ('alice', 'bob'))
             for username in (users if service == 'forge' else ('alice',)):
                 password = secrets.token_urlsafe(32)
                 user = expect(client.request('POST', '/api/v1/admin/users', basic=admin, payload={
@@ -309,6 +317,13 @@ def main(mode):
                       {201}, 'ordinary user creates private repo')
         path = '/api/v1/repos/alice/private-fixture'
         record('ordinary_user_private_repository', repository_id=repo['id'])
+        if mode == 'oci':
+            from m0_oci import oci_checks
+            oci_checks(owner, forge, credentials, regctl, record)
+            report['completed'] = True
+            report['passed_product_acceptance'] = False
+            record('oci_probe_completed', scope='M0 OCI upstream and real client slice; Runner paused, no M1')
+            return 2 if any(r['status'] == 'gap' for r in results) else 0
         if mode == 'releases':
             from m0_releases import release_checks
             release_checks(forge, credentials, record)
@@ -427,7 +442,9 @@ def main(mode):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--mode', choices=['profiles', 'discovery', 'lifecycle', 'lifecycle-baseline', 'issues', 'releases'], default='profiles',
+    parser.add_argument('--mode', choices=['profiles', 'discovery', 'lifecycle', 'lifecycle-baseline', 'issues', 'releases', 'oci'], default='profiles',
                         help='profiles: reviewed grants; discovery: raw scopes; lifecycle: long expiry/native consent; '
-                             'lifecycle-baseline: historical form-token diagnosis; issues/releases: resource contracts and response loss')
-    raise SystemExit(main(parser.parse_args().mode))
+                             'lifecycle-baseline: historical form-token diagnosis; issues/releases/oci: resource contracts and response loss')
+    parser.add_argument('--regctl', help='OCI only: path to the pinned task-local regctl binary')
+    args = parser.parse_args()
+    raise SystemExit(main(args.mode, args.regctl))

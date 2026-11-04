@@ -1,16 +1,16 @@
 # 构建、镜像、Release 与部署
 
-状态：产品链路设计；已有 M0 合成 Release 上游证据，产品发布器 / 部署链路尚未实现。发布和部署分别建模，每个外部操作有意图、实际结果和恢复路径。
+状态：产品链路设计；已有 M0 合成 Release / OCI 上游证据，产品发布器 / 部署链路尚未实现。发布和部署分别建模，每个外部操作有意图、实际结果和恢复路径。
 
 ## M0 Release / OCI 契约准备
 
-归属 M0-S03 / M0-03，给 M0-S04 提供原生接口证据；2026-11-04 先完成[公开契约静态准备](../records/2026-11-04-m0-gap-and-delivery-preparation.md)，随后取得[Release 隔离证据](../records/2026-11-04-m0-release-validation.md)，最终保留五项差异。OCI 仍待真实验证，不是 REL / ART / BASE 验收通过。本节继续规定准入与操作边界，不增加产品工程、Runner、GitHub 发布或部署。
+归属 M0-S03 / M0-03，给 M0-S04 提供原生接口证据；2026-11-04 先完成[静态准备](../records/2026-11-04-m0-gap-and-delivery-preparation.md)，随后取得[Release](../records/2026-11-04-m0-release-validation.md)和[OCI 隔离证据](../records/2026-11-04-m0-oci-validation.md)，分别保留五项 / 四项差异，不是完整 REL / ART / BASE 通过。本节继续规定准入与操作边界，不增加产品工程、Runner、GitHub 发布或部署。
 
 ### 认证、角色与资源
 
 - 沿用本机隔离方案的 context、固定镜像、合成账号、回环端口、任务 CA 与串行 cleanup。原三种 OAuth 组合不变；`issue_write` 没有 Release 写入或 package 权限，不把它扩为通用发布凭据。
 - 已新增并实测第四种独立 `release_write = openid read:user write:repository`，对应只读与错误用途凭据作负例。它允许宽于 Release 的仓库操作，须如实记录 grant，不能命名成仅 Release 按钮权限。普通角色、grant / 在线账号与刷新分别取证；只读 scope 的草稿元数据与下载可见性不一致，受控草稿读取要求新用途和 Release 单元写权限，原始差异保留，见[ADR 0005](../adr/0005-release-authorization-and-reconciliation.md)。
-- OCI 单独验证 Registry challenge → 固定同源 `/v2/token` → Registry Bearer；路由没有使用普通 OAuth Bearer 校验链。候选 package 只读 / 写入权限为 `read:package` / `write:package`，凭据类型和作用域保持独立，未验证前不透传 OAuth Token 或用管理员 / 无限制 PAT 兜底。Registry Token 的有效期、账号禁用 / 包权限撤销后行为另测，不能继承 OAuth refresh 证据。
+- OCI 已单独验证 Registry challenge → 固定同源 `/v2/token` → Registry Bearer，使用普通用户 `read:package` / `write:package` PAT；四种 OAuth 组合不变，不透传 Release OAuth Bearer 或用管理员 / 无限制 PAT 兜底。Registry metadata / 源码声明 24 小时，未真实等待；团队 / 组织权限与账号禁用即时拒绝、PAT 删除后旧 JWT 仍可读写分别保留，见[ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)。
 - 普通所有者准备合成仓库 / 私有组织，写者、读者及非成员分别验证。Release 单元读写权限、仓库角色和 Token scope 分开；OCI 按所有者可见性、组织成员 / team package 权限验证，关联私有仓库不等于 package 私有。
 - M0 HTTP 客户端已为显式 binary 请求补齐原始 bytes、严格大小限额和响应头白名单，默认 JSON / form 行为保留；沿用固定 origin、任务 CA、禁止带凭据跨域 / 自动跟随重定向及不自动重试。附件上限 64 KiB、通用读取上限 2 MB，不以损失字节的文本解码验证附件或未来镜像 Digest，不表示已有完整 OCI 客户端。
 
@@ -46,7 +46,9 @@
 | 私有包与撤权 | 同一组 Registry URL 由普通成员、仓库协作者但无包权限者、组织非成员及匿名直接访问 | 私有组织 / team package 权限独立验证；包链接私有仓库后的权限仍须直拉核对，撤权后缓存凭据不能绕过 |
 | 关联与删除 | `/api/v1/packages/{owner}/...`、Registry manifest / blob / upload 删除 | link 只是关联事实；删除 / 失联 / 摘要不符阻止后续发布。只清理本批已确认归属的上传与镜像 |
 
-先用任务 CA 的有界协议客户端证明基础推拉，再按所选真实 OCI 客户端验证一个最小镜像的构建、推送和固定 Digest 拉取。CLI / daemon 的任务证书信任、可达地址、客户端精确版本、镜像和磁盘清理方案须在启动前明确；不得为此更改宿主 / daemon 全局信任或下载未经说明的大型工具镜像。协议样例不能冒充 Docker CLI 或完整构建通过。
+本批已用任务 CA 的有界协议客户端取得基础推拉 / 权限 / 故障证据，并由 Docker 无网络 scratch 构建 + regctl v0.11.7 推送 / 固定 Digest 导出 + Docker load 验证微型真实镜像。regctl 独立私密配置禁用 Docker 凭据 / 证书导入，Buildx 状态在任务目录；未改系统 / daemon CA，未使用 Docker daemon push / pull。客户端、网络 / 磁盘和清理条件须在启动前明确，不下载未经说明的大型工具镜像，不把协议样例外推为任意 OCI 客户端 / 构建链路通过。
+
+包隐私不能由仓库关联决定；组织成员的读取基线也不能用 team 中缺失 package 单元来推断拒绝。完整 Manifest / config / layer Digest 是内容身份，仍需单独验收保留：覆盖最后一个 Tag 后旧 Manifest Digest 404 的原始结果继续是 gap。冻结版本所引用制品缺失时阻断，不用 latest、改 Tag 或重构建补成假成功。PAT 删除不保证已复制 Registry JWT 立即失效；后续本地停止与远端撤销承诺分别建模。
 
 Runner 暂停时没有真实 workflow run / attempt，证据须明确为缺失，不能填 0、占位 ID 或借最新 run 补齐；源码 SHA、制品 Digest 的原生协议证据可独立取得，完整源码 / run / 制品链路仍未通过。M0 的最小镜像样例不关闭五组件 ART / REL、部署或恢复验收。
 

@@ -68,7 +68,7 @@ python3 -B scripts/m0_local.py up
 python3 -u -B scripts/m0_contracts.py --mode lifecycle-baseline
 ```
 
-这是显式历史诊断，保留表单 / 查询串资源 Token 鉴权；受控 `profiles` / `lifecycle` / `issues` / `releases` 模式拒绝该设置，不能作为默认运行方案。新结果不覆盖旧差异，见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)和[ADR 0003](../../../docs/adr/0003-gitea-authorization-profiles.md)。
+这是显式历史诊断，保留表单 / 查询串资源 Token 鉴权；受控 `profiles` / `lifecycle` / `issues` / `releases` / `oci` 模式拒绝该设置，不能作为默认运行方案。新结果不覆盖旧差异，见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)和[ADR 0003](../../../docs/adr/0003-gitea-authorization-profiles.md)。
 
 ### Issue 契约与响应丢失
 
@@ -102,8 +102,28 @@ python3 -u -B scripts/m0_contracts.py --mode releases
 
 窗口沿用约 15–25 分钟和现有 2.75 GiB / 回环资源，结束按同一入口保存脱敏证据、`status`、`cleanup`；不能删开始标记重放。最终源码的 48 项本地测试及 Release / Issue / profiles 实测分别记录，见[Release 证据](../../../docs/records/2026-11-04-m0-release-validation.md)和[ADR 0005](../../../docs/adr/0005-release-authorization-and-reconciliation.md)。
 
+### OCI 专用准备与执行
+
+在已有本机 OCI 取证授权覆盖资源 / 下载的前提下，准备官方 [regctl v0.11.7 darwin/arm64 资产](https://github.com/regclient/regclient/releases/download/v0.11.7/regctl-darwin-arm64)，约 12 MB，Apache-2.0；SHA-256 必须为 `8ac077a1eeb834d3053714e86ccbd838d0da46567df8cd7c2695d1a19135bf60`。二进制放在本任务临时目录而非全局 PATH，结束核对归属后移除。工具不自动安装 / 下载，`--regctl` 在创建账号前校验完整资产摘要；不按 latest 自动更新。
+
+使用新批次 `prepare --auth-profile` / `up`，将以下示例中的绝对路径替换为已核对的任务二进制路径：
+
+```bash
+python3 -u -B scripts/m0_contracts.py --mode oci --regctl /absolute/task/regctl
+```
+
+[gitea-registry-profile.json](gitea-registry-profile.json)单独限定 Registry origin / service、PAT 只读 / 写入与客户端版本 / 摘要；四种 OAuth 组合不变。普通 Alice / Bob / Carol / Dave、私有组织 / team、仓库协作者身份和可见性回读后，创建 `read:package` / `write:package` PAT，经固定 HTTPS `/v2/token` 交换 Registry Bearer。管理员只建账号及控制合成账号禁用，不用于数据访问；实际 Scope、包所有者 / 成员权限与仓库关联分开验证。
+
+先执行标准库有界 Blob / Manifest 推拉、Range / Digest / 原始字节核对与私有组织权限；再由已有 Docker / Buildx 无网络 scratch 构建、regctl 推送 / 按 Digest 导出、Docker load 验证。只构建合成文本，无 RUN / 基础镜像拉取。regctl 的 `REGCTL_CONFIG` 与空 `DOCKER_CONFIG` 位于私密运行目录，关闭 Docker 凭据 / 证书导入；Buildx 使用任务 `BUILDX_CONFIG` 和显式相同 context。不会修改用户 HOME / 全局配置、系统 / daemon CA，也不宣称执行了 daemon push / pull。
+
+故障监听仅接受固定 `m0-private-org/m0-probe` 的上传启动、chunk、完成和 Manifest 操作，精确 path / method / token / bytes，一次处理；caller 真正超时，另测 TLS 半包断开。写入前确定预期 Digest；已知 Location / UUID 按同源路径查 Range，完整对象按 Digest 查原始内容。启动回执丢失拿不到 Location、零对象或部分前缀均保持 unknown，不猜 UUID、不另开上传、不重放 PATCH / PUT。回查只 GET / HEAD；其后删除归属明确的测试 upload 是夹具清理，不是自动恢复。
+
+资源沿用 2.75 GiB 平台限额与回环 18443 / 19443 / 短时 18543；CLI 工具约 12 MB，微型 archive 约 9 KB，实际构建 / Registry 数据量按批记录。窗口约 15–25 分钟，Task 镜像标签在 finally 核对归属并移除，运行目录由 `cleanup` 清理，外部工具临时目录另清理；共享镜像 / BuildKit 缓存不 prune。任何 CLI 写入失败 / 超时均停止并对账，不反复 import / build 当作恢复。
+
+原始四条差异及未覆盖面见[OCI 证据](../../../docs/records/2026-11-04-m0-oci-validation.md)和[ADR 0006](../../../docs/adr/0006-oci-authorization-and-digest-retention.md)。源码 / metadata 声明的 Registry Token 24 小时不等于已真实等待到期，PAT 删除也不等于旧 JWT 已失效；Digest 固定身份不等于服务器永久保留。
+
 ## 清理与未覆盖
 
 无论探针成功、发现缺口或中断，交接前执行 `cleanup`。它按归属删除本批容器 / 网络 / 六个卷和 `.local/m0` 凭据，不触碰其他项目资源；下载镜像保留在共享缓存，不全局 prune。需要保留运行环境时先有用户明确要求，再交接项目名、容器 ID、端口和停止命令。
 
-完整产品会话 / 账号绑定 / 加密存储、浏览器 Cookie / CSRF、产品解绑与后台任务停止、Issue 工作台 / 草稿 / XSS、生产请求关联、组织继承标签 / 自定义单元权限、其他 IdP / 版本、Actions / Runner、OCI、五组件构建与发布冻结、崩溃恢复、amd64 安装 / 恢复和生产仍未覆盖。Release 仅为合成上游切片，不关闭整个 REL / BASE。刷新到期 / 并发与原生撤销按实际批次记录，不从本地测试或模式存在推导通过。首轮结果见[本机记录](../../../docs/records/2026-11-01-m0-local-validation.md)，历史组合见[授权组合记录](../../../docs/records/2026-11-01-m0-auth-profile-validation.md)，当日结果见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)、[Issue 记录](../../../docs/records/2026-11-04-m0-issue-validation.md)与[Release 记录](../../../docs/records/2026-11-04-m0-release-validation.md)。
+完整产品会话 / 账号绑定 / 加密存储、浏览器 Cookie / CSRF、产品解绑与后台任务停止、Issue 工作台 / 草稿 / XSS、生产请求关联、组织继承标签 / 任意自定义权限策略、其他 IdP / 版本、Actions / Runner、五组件构建与发布冻结、强制 Digest 保留、即时 Registry JWT 撤销 / 24 小时真实到期、任意客户端故障恢复、amd64 安装 / 恢复和生产仍未覆盖。Release / OCI 仅为合成上游切片，不关闭整个 REL / ART / BASE。刷新到期 / 并发与原生撤销按实际批次记录，不从本地测试或模式存在推导通过。首轮结果见[本机记录](../../../docs/records/2026-11-01-m0-local-validation.md)，历史组合见[授权组合记录](../../../docs/records/2026-11-01-m0-auth-profile-validation.md)，当日结果见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)、[Issue 记录](../../../docs/records/2026-11-04-m0-issue-validation.md)、[Release 记录](../../../docs/records/2026-11-04-m0-release-validation.md)与[OCI 记录](../../../docs/records/2026-11-04-m0-oci-validation.md)。

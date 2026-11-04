@@ -101,6 +101,8 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 
 **Release / OCI 接续（同日）。** 先按固定公开来源完成[角色、端点、字节校验与失败恢复准备](../architecture/delivery-flow.md#m0-release--oci-契约准备)，见[静态记录](../records/2026-11-04-m0-gap-and-delivery-preparation.md)；随后[Release 隔离切片](../records/2026-11-04-m0-release-validation.md)完整取证，新增第四种独立用途且原三种不变。最终 Release / Issue / profiles 回归分别保留 5 / 12 / 1 条差异退出 2，六批清理通过；[ADR 0005](../adr/0005-release-authorization-and-reconciliation.md)约束草稿、固定引用和附件对账，不表示原生差异已修复。OCI 协议 / 真实客户端及 Actions 仍待取证，Runner 不启动，不关闭完整 BASE / REL。
 
+**OCI 切片（同日后续）。** [协议与客户端取证](../records/2026-11-04-m0-oci-validation.md)已覆盖私有组织 / team、scoped PAT 与 Registry Bearer、原始 Blob / Manifest Digest、Docker scratch 构建 / regctl 推拉 / Docker load、权限撤销、删除与九个真实超时 / 半包场景。原四种 OAuth 组合未变；四条差异及关键边界见[ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)。OCI 原生切片不关闭完整 ART / BASE，强制 Digest 保留 / 远端即时 Registry JWT 撤销与真实 run 关联仍未证明；Actions 继续受 Runner 暂停约束。
+
 **交付与证据。** 按能力记录版本、端点、权限、合成数据、请求 / 回读、失败与未知结果，以及需要工作台补足的部分。若关键接口缺失或无法安全实现，先提出范围 / 方案差异，不直接扩为底座补丁或重写执行器。
 
 ## M0-S04：首批兼容范围与缺口决策
@@ -112,7 +114,7 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 
 **输入与方案。** 从原有矩阵选择首批最小样例，不复制一套兼容状态。优先覆盖 checkout、Go / Node 工具链、一次镜像构建推送、Release / 附件，以及项目实际需要的仓库只读、Issue、Actions、Release REST 调用。缓存、附件 Action 等候选须逐项决定是否列入首批，未选中项明确延期，不承诺市场全部 Action。
 
-2026-11-04 已在[原兼容专题](../architecture/github-compatibility.md#m0-现有差异基线)先汇总 18 条已有原生差异 / 接口缺口，再加入五条 Release 差异，合计 23 条；原静态快照保留。该工作仍是已取证输入整理；未运行的 Action / 双端 API 样例保持待验证，OCI / Actions 证据、自动撤销和 Release 草稿 scope / 空字段等方案未齐前，不冻结完整范围或批准阶段晋级。
+2026-11-04 已在[原兼容专题](../architecture/github-compatibility.md#m0-现有差异基线)先汇总 18 条已有原生差异 / 接口缺口，再加入五条 Release 与四条 OCI 差异，合计 27 条；原静态快照保留。该工作仍是已取证输入整理；未运行的 Action / 双端 API 样例保持待验证，Actions、自动撤销、草稿 scope / 空字段、包所有者 / scope、强制保留与即时 Registry JWT 撤销方案未齐前，不冻结完整范围或批准阶段晋级。
 
 固定 GitHub REST 对照版本、客户端版本、Action 仓库 / commit、运行平台、原始工作流及预期输出。版本支持状态执行时核对官方来源，不沿用静态参考作为当前结论。权限负例至少包含 permissions、environment、concurrency、fork PR 秘密访问；不能只测 YAML 是否接受。
 
