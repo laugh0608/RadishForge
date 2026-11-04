@@ -1,7 +1,9 @@
 """Shared real OAuth transport and reviewed grants for M0 probes only."""
 import base64
+from dataclasses import dataclass
 import hashlib
 from html.parser import HTMLParser
+import http.client
 import http.cookiejar
 import json
 import secrets
@@ -78,6 +80,12 @@ class Forms(HTMLParser):
             self.current = None
 
 
+@dataclass(frozen=True)
+class BinaryBody:
+    data: bytes
+    headers: dict
+
+
 class Client:
     def __init__(self, base, *, browser_session=False):
         self.base = base
@@ -87,9 +95,18 @@ class Client:
             handlers.append(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
         self.opener = urllib.request.build_opener(*handlers)
 
-    def request(self, method, path, *, payload=None, form=None, token=None, basic=None, timeout=15):
+    def request(self, method, path, *, payload=None, form=None, token=None, basic=None, timeout=15,
+                raw=None, content_type=None, binary=False, max_bytes=2_000_000):
         if type(timeout) not in (int, float) or not 0 < timeout <= 15:
             raise ValueError('Probe timeout must be positive and at most 15 seconds')
+        if (sum(v is not None for v in (payload, form, raw)) > 1 or (token and basic)
+                or type(binary) is not bool or type(max_bytes) is not int or not 1 <= max_bytes <= 2_000_000):
+            raise ValueError('Ambiguous credentials/body or invalid response limit')
+        if raw is not None and (type(raw) is not bytes or len(raw) > 2_000_000):
+            raise ValueError('Raw request body must be bounded bytes')
+        if content_type is not None and (raw is None or content_type not in (
+                'application/octet-stream', 'multipart/form-data; boundary=m0-release-boundary')):
+            raise ValueError('Unsupported raw probe content type')
         url = urllib.parse.urljoin(self.base + '/', path)
         origin = urllib.parse.urlsplit(url)
         if f'{origin.scheme}://{origin.netloc}' != self.base:
@@ -102,6 +119,9 @@ class Client:
         if form is not None:
             body = urllib.parse.urlencode(form).encode()
             headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        if raw is not None:
+            body = raw
+            headers['Content-Type'] = content_type or 'application/octet-stream'
         if token:
             headers['Authorization'] = 'Bearer ' + token
         if basic:
@@ -113,17 +133,21 @@ class Client:
             except urllib.error.HTTPError as exc:
                 result = exc
             with result:
-                raw = result.read(2_000_001)
-                if len(raw) > 2_000_000:
+                raw = result.read(max_bytes + 1)
+                if len(raw) > max_bytes:
                     raise RuntimeError('Response exceeds probe size limit')
                 kind = result.headers.get('Content-Type', '')
-                content = json.loads(raw) if raw and 'json' in kind else raw.decode(errors='replace')
+                if binary:
+                    content = BinaryBody(raw, {name: result.headers[name] for name in (
+                        'Content-Type', 'Content-Length', 'Content-Disposition', 'ETag') if name in result.headers})
+                else:
+                    content = json.loads(raw) if raw and 'json' in kind else raw.decode(errors='replace')
                 REQUESTS.append({'origin': self.base, 'method': method,
                                  'path': urllib.parse.urlsplit(url).path, 'status': result.code,
                                  'content_type': kind.split(';')[0], 'body_type': type(content).__name__,
                                  'final_path': urllib.parse.urlsplit(result.url).path})
                 return result.code, content, result.headers.get('Location'), result.url
-        except (OSError, urllib.error.URLError) as exc:
+        except (OSError, urllib.error.URLError, http.client.HTTPException) as exc:
             REQUESTS.append({'origin': self.base, 'method': method,
                              'path': urllib.parse.urlsplit(url).path, 'status': None,
                              'outcome': 'unknown', 'error_type': type(exc).__name__})

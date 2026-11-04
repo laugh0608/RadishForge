@@ -1,26 +1,26 @@
 # 构建、镜像、Release 与部署
 
-状态：设计。发布和部署分别建模，每个外部操作有意图、实际结果和恢复路径。
+状态：产品链路设计；已有 M0 合成 Release 上游证据，产品发布器 / 部署链路尚未实现。发布和部署分别建模，每个外部操作有意图、实际结果和恢复路径。
 
 ## M0 Release / OCI 契约准备
 
-归属 M0-S03 / M0-03，给 M0-S04 提供原生接口证据；本节是下一次隔离验证的输入，尚未执行 Release / OCI 写入，也不是 REL / ART / BASE 验收通过。2026-11-04 已核对 Gitea 28.2.0 固定源码和同版 OpenAPI，来源摘要与静态发现见[准备记录](../records/2026-11-04-m0-gap-and-delivery-preparation.md)。不增加产品工程、Runner、真实仓库发布或部署。
+归属 M0-S03 / M0-03，给 M0-S04 提供原生接口证据；2026-11-04 先完成[公开契约静态准备](../records/2026-11-04-m0-gap-and-delivery-preparation.md)，随后取得[Release 隔离证据](../records/2026-11-04-m0-release-validation.md)，最终保留五项差异。OCI 仍待真实验证，不是 REL / ART / BASE 验收通过。本节继续规定准入与操作边界，不增加产品工程、Runner、GitHub 发布或部署。
 
 ### 认证、角色与资源
 
-- 沿用本机隔离方案的 context、固定镜像、合成账号、回环端口、任务 CA 与串行 cleanup。现有三种 OAuth 组合不变；`issue_write` 没有 Release 写入或 package 权限，不把它扩为通用发布凭据。
-- Release 新用途组合以独立 `write:repository`、账号复核所需 `read:user` / `openid` 为待验证候选；对应只读与错误用途凭据作负例。它可能允许其他仓库写操作，须如实记录 grant，不能命名成仅 Release 按钮权限。注册 / 授权、写后结果和草稿可见性均需真实验证，不能仅由源码推导通过。
+- 沿用本机隔离方案的 context、固定镜像、合成账号、回环端口、任务 CA 与串行 cleanup。原三种 OAuth 组合不变；`issue_write` 没有 Release 写入或 package 权限，不把它扩为通用发布凭据。
+- 已新增并实测第四种独立 `release_write = openid read:user write:repository`，对应只读与错误用途凭据作负例。它允许宽于 Release 的仓库操作，须如实记录 grant，不能命名成仅 Release 按钮权限。普通角色、grant / 在线账号与刷新分别取证；只读 scope 的草稿元数据与下载可见性不一致，受控草稿读取要求新用途和 Release 单元写权限，原始差异保留，见[ADR 0005](../adr/0005-release-authorization-and-reconciliation.md)。
 - OCI 单独验证 Registry challenge → 固定同源 `/v2/token` → Registry Bearer；路由没有使用普通 OAuth Bearer 校验链。候选 package 只读 / 写入权限为 `read:package` / `write:package`，凭据类型和作用域保持独立，未验证前不透传 OAuth Token 或用管理员 / 无限制 PAT 兜底。Registry Token 的有效期、账号禁用 / 包权限撤销后行为另测，不能继承 OAuth refresh 证据。
 - 普通所有者准备合成仓库 / 私有组织，写者、读者及非成员分别验证。Release 单元读写权限、仓库角色和 Token scope 分开；OCI 按所有者可见性、组织成员 / team package 权限验证，关联私有仓库不等于 package 私有。
-- 现有 HTTP 客户端仅提供 JSON / form 请求与文本读取。上传 / 下载前按实际需要补原始 bytes、严格大小限额和响应头白名单，沿用固定 origin、任务 CA、禁止带凭据跨域 / 自动跟随重定向及不自动重试；不以损失字节的文本解码验证附件或镜像 Digest。
+- M0 HTTP 客户端已为显式 binary 请求补齐原始 bytes、严格大小限额和响应头白名单，默认 JSON / form 行为保留；沿用固定 origin、任务 CA、禁止带凭据跨域 / 自动跟随重定向及不自动重试。附件上限 64 KiB、通用读取上限 2 MB，不以损失字节的文本解码验证附件或未来镜像 Digest，不表示已有完整 OCI 客户端。
 
 ### Release 最小执行切片
 
-令 `R=/api/v1/repos/{owner}/{repo}`，全部指向本批隔离仓库。表中状态码是固定 OpenAPI 声明的正向值，权限拒绝、无效输入和部分失败须保留实际响应及回读；不是放宽断言的候选集合。
+令 `R=/api/v1/repos/{owner}/{repo}`，全部指向本批隔离仓库。表中状态码是固定 OpenAPI 声明的正向值，Tag POST 另注明已实测的声明差异；权限拒绝、无效输入和部分失败须保留实际响应及回读，不以宽状态码集合吞掉差异。
 
 | 操作 | 公开入口 / 正向值 | 必须核对的结果 |
 | --- | --- | --- |
-| 固定源码与 Tag | `GET R/git/commits/{sha}`、`GET R/tags/{tag}`；Tag 创建为 `POST R/tags` / 200 | 使用完整 commit SHA；Tag 的 `commit.sha` 独立核实，不把 Tag object ID 或 Release 的 `target_commitish` 字符串当最终提交 |
+| 固定源码与 Tag | `GET R/git/commits/{sha}`、`GET R/tags/{tag}`；Tag `POST R/tags` 声明 200，实测 / 同版处理器为 201，保留 gap | 使用完整 commit SHA；Tag 的 `commit.sha` 独立核实，不把 Tag object ID 或 Release 的 `target_commitish` 字符串当最终提交 |
 | 创建与定位草稿 | `POST R/releases` / 201；`GET R/releases/{id}`、`GET R/releases/tags/{tag}` / 200 | 唯一 tag、正文关联标记、作者、draft、源 SHA；草稿创建不一定生成 Git Tag，不能在尚未发布时假设已存在 |
 | 列表与可见性 | `GET R/releases?draft=...&page=...&limit=...` / 200 | 分页不重不漏；草稿需要 Release 单元写权限且具备仓库写 scope，普通读者 / 只读 scope 看不到草稿不是“创建未执行”证明 |
 | 说明 / 发布 | `PATCH R/releases/{id}` / 200 | 说明与 draft / prerelease 分别回读；已有 Tag 必须仍指向预期 SHA。空说明清除、错误 target、Tag 漂移、重复同 tag 创建分别保留结果 |
@@ -31,6 +31,8 @@
 执行顺序：先准备两条可区分提交和唯一 Tag 名 → 独立授权与角色负例 → 草稿 / 分页 → 小型合成附件上传 / 字节校验 → 固定 SHA 后发布 / 回读 → 重复、失权、非法关联及故障 → 删除与 cleanup。只在隔离 Gitea 发布合成 Release，不对当前 GitHub 仓库打 Tag 或创建 Release。
 
 至少覆盖：已提交但响应丢失、请求未转发、重复同 tag、同名附件重复 / 部分上传、下载损坏、跨用户 / 撤权、被删除资源、Tag 与 target 不一致。创建未知后先按固定仓库 + tag 查询再回读 ID / 标记；附件未知后列出候选并逐个校验内容。零匹配、多匹配、无权限或查询失败都保持 unknown，不重新 POST、不选 latest、不删除归属未确认的对象。发布前后分别核对 Tag SHA；检查与写入仍存在竞态，不宣称跨系统原子性。
+
+本批已执行上述个人仓库合成切片及真实超时 / 半包断开，失败边界和未覆盖面以验证记录为准。空 name / body 清除被忽略、无效 target 发布 500、已有 Tag 的实际提交与 target 不同等继续为 gap；附件按稳定身份与真实内容对账，列表 / 详情的两种合法下载 URL 均严格验证，不以 URL 字符串相等作为同一对象条件。草稿 scope 差异和空字段能力没有因本地约束而原生修复，不提前关闭完整发布链路。
 
 ### OCI 最小执行切片
 

@@ -50,9 +50,19 @@ class ScopePolicy(unittest.TestCase):
             with self.subTest(profile=name):
                 self.assertNotIn('all', profile['scopes'])
                 self.assertFalse(any(s.endswith((':admin', ':package')) for s in profile['scopes']))
-                self.assertNotIn('write:repository', profile['scopes'])
+                if name != 'release_write':
+                    self.assertNotIn('write:repository', profile['scopes'])
         self.assertFalse(any(s.startswith('write:') for s in profiles['resource_read']['scopes']))
         self.assertEqual([s for s in profiles['issue_write']['scopes'] if s.startswith('write:')], ['write:issue'])
+        self.assertEqual(profiles['release_write']['scopes'], ['openid', 'read:user', 'write:repository'])
+
+    def test_release_scope_does_not_replace_issue_or_read_profiles(self):
+        release = SCOPE.scope_for('release_write')
+        for purpose in ('identity', 'resource_read', 'issue_write'):
+            with self.subTest(purpose=purpose), self.assertRaises(SCOPE.ProfileError):
+                SCOPE.scope_for(purpose, release)
+        with self.assertRaises(SCOPE.ProfileError):
+            SCOPE.scope_for('release_write', release + ' write:package')
 
     def test_empty_duplicate_and_malformed_inputs_rejected(self):
         for value in ['', [], {}, 3, ['openid', 'openid'], ['openid', 1],

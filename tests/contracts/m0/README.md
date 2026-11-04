@@ -31,7 +31,7 @@ python3 scripts/m0_local.py cleanup
 
 ### 授权配置与验证模式
 
-[gitea-auth-profile.json](gitea-auth-profile.json)是 M0 配置单一来源：固定身份、资源只读、Issue 写入三个完整 scope 组合及 issuer；客户端 confidential / 精确 callback / 不跳过首次同意。`m0_scope.py` 在创建应用、发起授权或刷新前校验完整组合，不接受任意子集、并集、空值或未知 scope。实际授予 scope 用受认证 introspection 核对；凭据还须通过在线账号复核，不能只看签名或 Token 端点 HTTP 200。
+[gitea-auth-profile.json](gitea-auth-profile.json)是 M0 配置单一来源：固定身份、资源只读、Issue 写入和 Release 写入四个完整 scope 组合及 issuer；Release 用途新增于本批，原三种组合不变。客户端 confidential / 精确 callback / 不跳过首次同意。`m0_scope.py` 在创建应用、发起授权或刷新前校验完整组合，不接受任意子集、并集、空值或未知 scope。实际授予 scope 用受认证 introspection 核对；凭据还须通过在线账号复核，不能只看签名或 Token 端点 HTTP 200。
 
 `prepare --auth-profile` 另给本任务新实例写入 refresh 单次使用、access token 30 秒 / refresh token 1 小时等测试配置，并要求 `[security] DISABLE_QUERY_AUTH_TOKEN=true`；`up` 回读两套实例的实际设置及 Actions 关闭状态，漂移即停止。后者避免 introspection 正文的 `token` 被通用资源鉴权提前处理，资源 API 只携带 Bearer Header；TTL 不是生产默认值，不改共享 Gitea。默认探针模式为 `profiles`，要求运行目录与当前配置 SHA-256 一致，验证受控组合、拒绝同意、client secret、callback、刷新 / 撤销等。
 
@@ -68,7 +68,7 @@ python3 -B scripts/m0_local.py up
 python3 -u -B scripts/m0_contracts.py --mode lifecycle-baseline
 ```
 
-这是显式历史诊断，保留表单 / 查询串资源 Token 鉴权；受控 `profiles` / `lifecycle` / `issues` 模式拒绝该设置，不能作为默认运行方案。新结果不覆盖旧差异，见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)和[ADR 0003](../../../docs/adr/0003-gitea-authorization-profiles.md)。
+这是显式历史诊断，保留表单 / 查询串资源 Token 鉴权；受控 `profiles` / `lifecycle` / `issues` / `releases` 模式拒绝该设置，不能作为默认运行方案。新结果不覆盖旧差异，见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)和[ADR 0003](../../../docs/adr/0003-gitea-authorization-profiles.md)。
 
 ### Issue 契约与响应丢失
 
@@ -82,12 +82,28 @@ python3 -u -B scripts/m0_contracts.py --mode issues
 
 `m0_issues.py` 使用当前仓库目录校验关联对象、限制分页并只读对账；目录成员资格不代表操作权限。合成原始负例刻意绕过前检，保留非法字段被忽略、无效筛选变宽、500 后部分字段已写入等 gap；不以 HTTP 2xx 代替逐项回读，也不将 `content_version` 外推为整个 PATCH 的原子版本。具体证据与边界见[Issue 记录](../../../docs/records/2026-11-04-m0-issue-validation.md)和[ADR 0004](../../../docs/adr/0004-issue-validation-and-reconciliation.md)。
 
-`m0_issue_faults.py` 在同一前台探针内临时绑定 `127.0.0.1:18543`，使用本批服务器证书 / CA，客户端仍验证 TLS；原有 issuer 与默认 15 秒请求超时不变。仅接收精确路径、Bearer 与请求体匹配的一次合成 Issue POST，分别测试上游已提交但响应被扣住、完全未转发两种 1 秒调用超时。不提供通用代理、授权或 Token 端点，监听随场景退出而停止。执行前须确认该端口归本任务且空闲；本批总窗口约 15–25 分钟，结束仍执行 `status`、脱敏导出与 `cleanup`。
+`m0_response_loss.py`（由原 Issue 故障模块提取）在同一前台探针内临时绑定 `127.0.0.1:18543`，使用本批服务器证书 / CA，客户端仍验证 TLS；原有 issuer 与默认 15 秒请求超时不变。Issue 操作仅接收精确路径、Bearer 与请求体匹配的一次合成 POST，分别测试上游已提交但响应被扣住、完全未转发两种 1 秒调用超时。不提供通用代理、授权或 Token 端点，监听随场景退出而停止。执行前须确认该端口归本任务且空闲；本批总窗口约 15–25 分钟，结束仍执行 `status`、脱敏导出与 `cleanup`。
 
-超时后仅分页 GET 与详情回读；唯一匹配可观察到本批结果，零 / 多匹配保持 unknown，不自动再 POST。合成标记不是生产幂等键；失败 / 超时先查结果文件和资源状态，不能删除开始标记重放。本地 35 项测试不启动 Docker / 监听，也不替代真实协议和响应丢失取证。
+超时后仅分页 GET 与详情回读；唯一匹配可观察到本批结果，零 / 多匹配保持 unknown，不自动再 POST。合成标记不是生产幂等键；失败 / 超时先查结果文件和资源状态，不能删除开始标记重放。本地测试不启动 Docker / 监听，也不替代真实协议和响应丢失取证。
+
+### Release 契约与附件
+
+新批次 `prepare --auth-profile` / `up` 后执行：
+
+```bash
+python3 -u -B scripts/m0_contracts.py --mode releases
+```
+
+创建普通 Alice / Bob / Carol，管理员仅准备账号；所有者通过公开 API 准备两条合成提交，`release_write` 独立客户端申请 `openid read:user write:repository`。这比仅 Release 写入更宽，不能视作逐按钮权限；原只读 / Issue 用途用于负例。普通写者、降级读者、外部用户、撤权及匿名下载分别验收，草稿元数据和两种直接下载 URL 另测，不能只看列表隐藏。
+
+模式覆盖草稿 / 分页、编辑 / 清空原始差异、发布与 Tag 实际 SHA、raw / multipart 上传、字节摘要 / 改名、跨对象关联、重复 tag / 同名附件、删除与回读。所有 Release / Tag / 附件只在本机隔离 Gitea，绝不写当前 GitHub 仓库。`Client.request` 的显式 binary 模式保留原始 bytes 和白名单头；请求 / 响应均有上限，附件场景限 64 KiB，测试内容含非 UTF-8 字节。默认 JSON / form 调用不改为二进制。
+
+共用故障监听按 `release_create` / `release_publish` / `release_asset` 分别限制固定仓库的 POST / PATCH；精确凭据、路径与 body 只能处理一次。创建 / 发布 / 附件分别注入已提交响应丢失和未转发，另在 TLS 上游发送完整 Content-Length 但仅发送附件前缀后断开；每次 caller 真实超时、监听随后停止。回查仅 GET：创建按 tag / 标记 / 作者，发布按 ID / draft / Tag SHA，附件按 ID / UUID / 名称 / size / 真实摘要；两个有效 URL 表示不当作身份不同，零 / 多匹配或内容不符保持 unknown，自动重试为 0。
+
+窗口沿用约 15–25 分钟和现有 2.75 GiB / 回环资源，结束按同一入口保存脱敏证据、`status`、`cleanup`；不能删开始标记重放。最终源码的 48 项本地测试及 Release / Issue / profiles 实测分别记录，见[Release 证据](../../../docs/records/2026-11-04-m0-release-validation.md)和[ADR 0005](../../../docs/adr/0005-release-authorization-and-reconciliation.md)。
 
 ## 清理与未覆盖
 
 无论探针成功、发现缺口或中断，交接前执行 `cleanup`。它按归属删除本批容器 / 网络 / 六个卷和 `.local/m0` 凭据，不触碰其他项目资源；下载镜像保留在共享缓存，不全局 prune。需要保留运行环境时先有用户明确要求，再交接项目名、容器 ID、端口和停止命令。
 
-完整产品会话 / 账号绑定 / 加密存储、浏览器 Cookie / CSRF、产品解绑与后台任务停止、Issue 工作台 / 草稿 / XSS、生产请求关联、组织继承标签 / 自定义单元权限、其他 IdP / 版本、Actions / Runner、OCI、Release、多组件清单、amd64 安装 / 恢复和生产仍未覆盖。刷新到期 / 并发与原生撤销按实际批次记录，不从本地测试或模式存在推导通过。首轮结果见[本机记录](../../../docs/records/2026-11-01-m0-local-validation.md)，历史组合见[授权组合记录](../../../docs/records/2026-11-01-m0-auth-profile-validation.md)，当日结果见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)与[Issue 记录](../../../docs/records/2026-11-04-m0-issue-validation.md)。
+完整产品会话 / 账号绑定 / 加密存储、浏览器 Cookie / CSRF、产品解绑与后台任务停止、Issue 工作台 / 草稿 / XSS、生产请求关联、组织继承标签 / 自定义单元权限、其他 IdP / 版本、Actions / Runner、OCI、五组件构建与发布冻结、崩溃恢复、amd64 安装 / 恢复和生产仍未覆盖。Release 仅为合成上游切片，不关闭整个 REL / BASE。刷新到期 / 并发与原生撤销按实际批次记录，不从本地测试或模式存在推导通过。首轮结果见[本机记录](../../../docs/records/2026-11-01-m0-local-validation.md)，历史组合见[授权组合记录](../../../docs/records/2026-11-01-m0-auth-profile-validation.md)，当日结果见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)、[Issue 记录](../../../docs/records/2026-11-04-m0-issue-validation.md)与[Release 记录](../../../docs/records/2026-11-04-m0-release-validation.md)。

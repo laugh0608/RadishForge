@@ -51,3 +51,7 @@
 旧配置诊断必须显式使用 `prepare --auth-profile --legacy-query-auth` 和 `--mode lifecycle-baseline`，不能作为受控组合默认值。该开关仅用于本任务隔离实例的历史行为复现，不授权变更共享或生产配置。原始三项 scope 差异与禁用账号仍可刷新继续保留为上游差异；上述决定不等于 Gitea 原生行为已修复，也不代表 M1 或完整 IAM 验收通过。
 
 原因定位依据固定提交的 [OAuth 中间件](https://github.com/go-gitea/gitea/blob/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/services/auth/oauth2.go)、[Web 鉴权与路由](https://github.com/go-gitea/gitea/blob/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/web/web.go)、[OAuth 处理器](https://github.com/go-gitea/gitea/blob/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/web/auth/oauth2_provider.go)，以及 [RFC 7662](https://www.rfc-editor.org/rfc/rfc7662.html#section-2.2)；实际行为和来源摘要以本批记录为准。
+
+## 2026-11-04 Release 用途补充
+
+按用户授权的 Release 隔离取证，新增第四种 `release_write` 组合：`openid read:user write:repository`；原三种组合、issuer、客户端约束及安全 / TTL 设置逐项核对未变。新用途在独立 confidential client 下完成同意、grant scope / 在线账号复核及按阶段显式刷新，再验证实际 Release 单元角色、资源撤权与错误用途拒绝。它是仓库写 scope，不是仅 Release 按钮权限，也不授权 package / OCI 或任意第三方应用；具体边界与五项差异见[ADR 0005](0005-release-authorization-and-reconciliation.md)和[Release 记录](../records/2026-11-04-m0-release-validation.md)。前三种用途的历史结论保留，不能将新增用途回写成过去已验证。

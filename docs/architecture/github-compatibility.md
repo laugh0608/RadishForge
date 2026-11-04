@@ -49,9 +49,9 @@ Webhook 另验收 event 名、action、payload、投递 ID、HMAC、重放与重
 
 ## M0 现有差异基线
 
-本节是 M0-S04 的已取证输入，不是新的兼容状态矩阵或阶段放行。`M0-G01`—`M0-G18` 仅为差异引用编号，不增加任务 / 验收项；执行状态仍由 [tasks](../planning/tasks.md)维护。原生结果依据[首轮 scope 证据](../records/2026-11-01-m0-local-validation.md)、[生命周期对照](../records/2026-11-04-m0-lifecycle-validation.md)与[Issue 最终批次](../records/2026-11-04-m0-issue-validation.md)，机器可定位输入和汇总方法见[本批记录](../records/2026-11-04-m0-gap-and-delivery-preparation.md)。三项 scope 差异、两项生命周期差异、一个公开撤销接口缺口和十二项 Issue 差异分别列入，不按复现批次数重复计数。
+本节是 M0-S04 的已取证输入，不是新的兼容状态矩阵或阶段放行。`M0-G01`—`M0-G23` 仅为差异引用编号，不增加任务 / 验收项；执行状态仍由 [tasks](../planning/tasks.md)维护。前三项 scope、两项生命周期、一个公开撤销接口缺口及十二项 Issue 差异的原始输入见[基线记录](../records/2026-11-04-m0-gap-and-delivery-preparation.md)；接续新增五项 Release 差异见[Release 记录](../records/2026-11-04-m0-release-validation.md)。原始来源和命名记录可定位，不按复现批次数重复计数；先前 18 项的导出快照不回写。
 
-表中处理沿用 [ADR 0003](../adr/0003-gitea-authorization-profiles.md) / [ADR 0004](../adr/0004-issue-validation-and-reconciliation.md)的 M0 约束和后续实现契约；没有新增自动远端撤销、生产幂等或任意工作流兼容承诺，也未批准缩减关键权限要求。
+表中处理沿用 [ADR 0003](../adr/0003-gitea-authorization-profiles.md) / [ADR 0004](../adr/0004-issue-validation-and-reconciliation.md) / [ADR 0005](../adr/0005-release-authorization-and-reconciliation.md)的 M0 约束和后续实现契约；没有新增自动远端撤销、生产幂等或任意工作流兼容承诺，也未批准缩减关键权限要求。
 
 | 编号 | 已取证的原始行为 | 现有处理与仍须保留的边界 |
 | --- | --- | --- |
@@ -73,10 +73,15 @@ Webhook 另验收 event 名、action、payload、投递 ID、HMAC、重放与重
 | M0-G16 | 无效标签筛选 200，结果变宽 | 失效约束明确失败，不移除约束回退；没有证据证明跨用户泄漏 |
 | M0-G17 | 无效里程碑筛选 200，结果变宽 | 同上；目录前检不能替代结果 / 权限核对 |
 | M0-G18 | 仓库读者创建 Issue 201，分类字段被忽略 | 区分正文创建与分类权限；不能从 scope 或创建成功推导分类管理权 |
+| M0-G19 | 只读 scope 的草稿元数据 404，两种附件下载路径 200 | 受控草稿操作要求 Release 写用途与单元写权限；原生差异保留，没有证明跨用户泄漏 |
+| M0-G20 | Release PATCH 空 name / body 为 200，原值未清除 | 不报告清空成功；公开清空路径仍待决定，不用空格 / 删除重建伪造 |
+| M0-G21 | Tag POST 文档 200，处理器 / 实测 201 | 精确版本接受 201 并保留声明 gap，不扩为任意 2xx |
+| M0-G22 | 已有 Tag 与 target 不同仍发布 200，Tag 指向原提交 | 发布前查精确 Tag / SHA，不符拒绝；发布后再查，不能宣称竞态已消除 |
+| M0-G23 | 无效 target 发布 500 | 回读草稿 / Tag 并保留原错误；本例未发布不外推所有 500 无副作用 |
 
 已有正文 `content_version` 冲突 409、只读 / 越权 / 撤权拒绝、删除和响应丢失回查是相应原生切片证据。它们与上述 gap 一同保留，不把正确拒绝再计为差异，也不把正确主路径抵消失败。组织继承标签、自定义单元权限、产品会话 / 草稿 / 请求持久化，以及 GitHub REST 字段 / Link / 错误体与指定客户端的双端对照仍待验收；上方兼容矩阵不因本表改成“直接兼容”。
 
-下批先按[Release / OCI 准备](delivery-flow.md#m0-release--oci-契约准备)取得剩余原生证据，再补 Action / API 精确样例及差异决定。Runner 暂停期间不冻结未经执行的 Action commit / 运行时支持，不启动 Actions；GitHub REST 对照版本的当前支持与客户端版本也须在相应取证时复核。M0-G06 的自动化方案、关键权限 / 未知结果处理和完整阶段出口未收口前，不放行 M1。
+下批按[OCI 准备与 Release 已验证边界](delivery-flow.md#m0-release--oci-契约准备)取得剩余原生证据，再补 Action / API 精确样例及差异决定。Runner 暂停期间不冻结未经执行的 Action commit / 运行时支持，不启动 Actions；GitHub REST 对照版本的当前支持与客户端版本也须在相应取证时复核。M0-G06 自动化方案、M0-G19 / G20 的能力边界、关键权限 / 未知结果处理和完整阶段出口未收口前，不放行 M1。
 
 ## 缺口处理顺序与边界
 

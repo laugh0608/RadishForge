@@ -28,6 +28,10 @@
     "issue_write": {
       "issuer": "https://localhost:18443",
       "scopes": ["openid", "read:user", "read:repository", "write:issue"]
+    },
+    "release_write": {
+      "issuer": "https://localhost:18443",
+      "scopes": ["openid", "read:user", "write:repository"]
     }
   }
 }

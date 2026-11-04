@@ -6,6 +6,8 @@
 
 接续启动 M0-S04 的[已有差异基线汇总](../architecture/github-compatibility.md#m0-现有差异基线)，并完成 Release / OCI [公开契约静态准备](../records/2026-11-04-m0-gap-and-delivery-preparation.md)；仅整理已取证输入和下一轮执行条件，没有新增真实联调或完成完整兼容范围冻结。
 
+随后完成[Release 隔离切片](../records/2026-11-04-m0-release-validation.md)与共享 Issue / OAuth 回归，新增独立 Release 用途，保留五项差异并进入同一 M0-S04 基线，见[ADR 0005](../adr/0005-release-authorization-and-reconciliation.md)。OCI / Actions、完整发布器与兼容范围仍未完成；Runner 继续暂停，M1 不启动。
+
 | 阶段 | 目标与可展示结果 | 依赖 / 出口 |
 | --- | --- | --- |
 | P0 | 建立规划、治理文件、模板与本地检查 | 已完成本地验收，不代表产品或远端可用 |

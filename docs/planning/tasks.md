@@ -16,8 +16,8 @@
 | G0-03 | TOP-GOV | 接入真实 CI、验证聚合失败传播、升级同一主线规则 | G0-02、真实检查与对应授权 | GOV-03 | 待开始 |
 | M0-01 | TOP-BASE / M0-S01 | 选择 Gitea / Runner / 工具链 / 镜像 Digest 组合，记录许可 | 静态核查可先行；下载 / 环境等需对应授权 | BASE-01 | 进行中：候选、本机隔离配置与平台基础验证已交付，最终支持冻结待阶段取证；见[本机记录](../records/2026-11-01-m0-local-validation.md) |
 | M0-02 | TOP-IAM / M0-S02 | 隔离环境验证 OIDC、OAuth scope、绑定与私有权限 | M0-01 的候选 / 隔离准备部分 | IAM-01、IAM-02 | 进行中：本批生命周期切片已交付；两项差异已定位并形成受控配置 / 在线账号拒绝边界，真实刷新到期、并发 / 重放、单用户撤销 / 范围隔离和账号恢复均取得证据，最终源码回归及清理通过。公开单用户撤销接口缺口与原始差异纳入 M0-S04 评审，不关闭完整 IAM；产品会话 / 绑定实现验收在 M1，见[本批记录](../records/2026-11-04-m0-lifecycle-validation.md)与[M0-S02](m0-validation.md#m0-s02身份与私有权限可行性) |
-| M0-03 | TOP-BASE / M0-S03 | 真实 Issue / Actions / OCI / Release API 最小验证 | M0-01 的候选 / 隔离准备；M0-02 的用户授权部分 | BASE-01 | 进行中：[Issue 切片](../records/2026-11-04-m0-issue-validation.md)已取证并保留 12 条 gap；[Release / OCI 公开契约准备](../records/2026-11-04-m0-gap-and-delivery-preparation.md)已静态核查，真实验证仍未执行。Actions 受 Runner 暂停约束；不关闭完整 ISSUE / BASE |
-| M0-04 | TOP-COMPAT / M0-S04 | 冻结首批 GitHub API / Action 样例及缺口决策 | M0-02、M0-03 | COMP-01 | 进行中：[已有差异基线](../architecture/github-compatibility.md#m0-现有差异基线)已汇总 18 条差异 / 接口缺口，沿用 ADR 0003 / 0004；自动远端撤销、剩余原生证据、精确双端样例与完整范围 / 缺口决定仍待，不表示 COMP 或 M0 通过 |
+| M0-03 | TOP-BASE / M0-S03 | 真实 Issue / Actions / OCI / Release API 最小验证 | M0-01 的候选 / 隔离准备；M0-02 的用户授权部分 | BASE-01 | 进行中：[Issue 切片](../records/2026-11-04-m0-issue-validation.md)保留 12 条 gap；[Release 切片](../records/2026-11-04-m0-release-validation.md)完成普通用户、附件 / 固定 SHA、权限 / 删除和真实超时取证，保留 5 条 gap，最终共享回归与清理通过。OCI 未执行，Actions 受 Runner 暂停约束；不关闭完整 BASE / REL / ISSUE |
+| M0-04 | TOP-COMPAT / M0-S04 | 冻结首批 GitHub API / Action 样例及缺口决策 | M0-02、M0-03 | COMP-01 | 进行中：[差异基线](../architecture/github-compatibility.md#m0-现有差异基线)已汇总 23 条差异 / 接口缺口，沿用 ADR 0003 / 0004 / 0005；自动远端撤销、草稿 scope / 空字段能力、剩余原生证据、精确双端样例与完整范围 / 缺口决定仍待，不表示 COMP 或 M0 通过 |
 | M1-01 | TOP-BASE | 最小 Go / React / OpenAPI / PostgreSQL / 工具链基础 | M0 | BASE-02 | 待开始 |
 | M1-02 | TOP-IAM | OIDC 会话、显式账号绑定、Token 保护与撤销 | M1-01 | IAM-01、IAM-02 | 待开始 |
 | M1-03 | TOP-WORKBENCH | 项目 / 组件 / 仓库关联和代码只读页面 | M1-02 | REPO-01、UI-01 | 待开始 |

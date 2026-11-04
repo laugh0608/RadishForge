@@ -41,7 +41,7 @@ def load_contract(path=PROFILE_PATH):
     security = data['test_security_settings']
     if set(security) != {'DISABLE_QUERY_AUTH_TOKEN'} or security['DISABLE_QUERY_AUTH_TOKEN'] is not True:
         raise ProfileError('Reviewed profiles require header-only resource authentication')
-    if set(data['profiles']) != {'identity', 'resource_read', 'issue_write'}:
+    if set(data['profiles']) != {'identity', 'resource_read', 'issue_write', 'release_write'}:
         raise ProfileError('Unexpected M0 authorization purpose')
     for profile in data['profiles'].values():
         scopes = profile['scopes']

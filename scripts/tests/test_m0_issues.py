@@ -72,7 +72,7 @@ class IssueBoundaries(unittest.TestCase):
     def test_fault_relay_cannot_target_another_path_or_truthy_non_boolean_mode(self):
         for path, mode in [('/api/v1/users', True), (issues.REPO + '/issues', 1)]:
             with self.assertRaises(ValueError):
-                issues.IssueResponseLoss(path, 'synthetic', {'title': 'fixture'}, forward=mode)
+                issues.ResponseLoss('issue_create', path, 'synthetic', {'title': 'fixture'}, forward=mode)
 
     def test_malformed_issue_cannot_be_normalized_as_a_successful_readback(self):
         for fields in [{'content_version': True}, {'labels': [{'id': 0}]}, {'assignees': [{'login': ''}]},

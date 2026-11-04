@@ -3,7 +3,7 @@ import base64
 import secrets
 import urllib.parse
 
-from m0_issue_faults import FAULT_ORIGIN, IssueResponseLoss
+from m0_response_loss import FAULT_ORIGIN, ResponseLoss
 from m0_oauth import (Client, REQUESTS, authorize, expect, receipt, refresh)
 
 REPO = '/api/v1/repos/alice/private-fixture'
@@ -453,7 +453,7 @@ def permission_and_deletion(client, credentials, token, read_token, bob_token, l
 
 def timeout_reconciliation(client, token, author_id, forward, record):
     payload = {'title': 'M0 response loss ' + secrets.token_hex(8), 'body': 'M0 isolated request marker ' + secrets.token_hex(16)}
-    with IssueResponseLoss(REPO + '/issues', token, payload, forward=forward) as fault:
+    with ResponseLoss('issue_create', REPO + '/issues', token, payload, forward=forward) as fault:
         try:
             Client(FAULT_ORIGIN).request('POST', REPO + '/issues', token=token, payload=payload, timeout=1)
         except OSError as exc:
