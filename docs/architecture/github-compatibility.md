@@ -78,10 +78,10 @@ Webhook 另验收 event 名、action、payload、投递 ID、HMAC、重放与重
 | M0-G21 | Tag POST 文档 200，处理器 / 实测 201 | 精确版本接受 201 并保留声明 gap，不扩为任意 2xx |
 | M0-G22 | 已有 Tag 与 target 不同仍发布 200，Tag 指向原提交 | 发布前查精确 Tag / SHA，不符拒绝；发布后再查，不能宣称竞态已消除 |
 | M0-G23 | 无效 target 发布 500 | 回读草稿 / Tag 并保留原错误；本例未发布不外推所有 500 无副作用 |
-| M0-G24 | 公开个人包关联私有仓库后其他用户仍可 pull | 按包所有者 / 组织可见性及直接 Registry 权限判断，不把 link 当 ACL；私有组织边界已单独取证 |
-| M0-G25 | Registry 请求 pull，但 write:package PAT 仍可上传 | 实际范围依赖 PAT scope 和当前资源权限，不宣传 query scope 已收窄凭据 |
+| M0-G24 | 公开个人包关联私有仓库后其他用户仍可 pull | 直接拉取按包所有者、可见性及组织权限判定，link 仅保存关联。同组织内逐仓库隔离缺口保留。见 [包权限核查](../records/2026-11-09-m0-package-access-mechanisms.md#g24--所有者仓库关联与包权限) |
+| M0-G25 | Registry 请求 pull，但 write:package PAT 仍可上传 | 固定版签发保留原 scope，目标权限在数据请求判定。单镜像和操作级收窄缺口保留。见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-包可见性与-registry-scope-核查) |
 | M0-G26 | 覆盖最后一个 Tag 后原 Manifest Digest 404 | 固定版包保留规则只约束清理流程。按原 Digest 复核，缺失时阻断。强制保留缺口和取舍见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-公开机制核查补充) |
-| M0-G27 | 删除 PAT 后新交换拒绝，旧 Registry Token 仍能读写 | 固定版校验不回查签发 PAT，单凭据即时远端失效缺口保留。产品侧停用与上游状态分别报告，见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-公开机制核查补充) |
+| M0-G27 | 删除 PAT 后该 PAT 换发被拒绝，旧 Registry Token 仍能读写 | 校验不回查签发 PAT。旧 Bearer 换发后继待实测，单凭据远端失效缺口保留。见 [G27 补证来源](../records/2026-11-09-m0-package-access-mechanisms.md#g27--旧-bearer-换发待证) |
 
 已有正文 `content_version` 冲突 409、只读 / 越权 / 撤权拒绝、删除和响应丢失回查是相应原生切片证据。它们与上述 gap 一同保留，不把正确拒绝再计为差异，也不把正确主路径抵消失败。组织继承标签、自定义单元权限、产品会话 / 草稿 / 请求持久化，以及 GitHub REST 字段 / Link / 错误体与指定客户端的双端对照仍待验收；上方兼容矩阵不因本表改成“直接兼容”。
 

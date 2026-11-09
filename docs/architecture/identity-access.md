@@ -54,11 +54,11 @@ Gitea 28.2.0 的单用户远端撤销由用户在原生授权应用设置页确�
 | 平台配置 | 管理员角色；不能自动获得所有客户仓库内容 |
 | 后台同步 | 明确范围的机器人授权，审计其来源及撤销 |
 
-包与仓库关联不改变包权限。首版以组织作为制品隔离边界，需要项目间严格隔离时分组织或使用后续独立 Registry；验收直接 pull 的权限，不能只看网页隐藏。
+包与仓库关联仅保存关联记录，包可见性按所有者和当前组织权限判定。首版以私有组织作为制品隔离边界。需要项目间严格隔离时，分别验证不同组织或独立 Registry 的直接拉取权限。 [包权限核查](../records/2026-11-09-m0-package-access-mechanisms.md)
 
 2026-11-04 的[OCI 切片](../records/2026-11-04-m0-oci-validation.md)使用独立的[Registry 契约](../../tests/contracts/m0/gitea-registry-profile.json)：普通用户 `read:package` / `write:package` PAT 经固定同源 `/v2/token` 交换 Registry Bearer，不复用 OAuth 凭据。私有组织非成员及只有仓库协作权的用户直接拉取被拒绝；组织成员的读取基线与 team package 写权限分别判断，缺少 package 单元不等于没有读取权。公开个人包关联私有仓库仍可读，Registry 的 pull 请求参数也不能收窄 write PAT，不能承诺逐仓库包隔离或仅凭 query 得到只读凭据。
 
-团队降权、移出私有组织和禁用账号已对旧 Registry Token 的相应操作生效。删除 PAT 后新交换被拒绝，旧 Registry JWT 在观察时仍可读写。Gitea 28.2.0 的 Registry JWT 校验不回查签发 PAT，公开路径未提供单凭据即时撤销。其固定 24 小时有效期为签发声明，真实到期仍待补证。后续产品分别报告本地停用、PAT 删除及上游状态，远端失效窗口与首版要求待所有者确认，见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-公开机制核查补充)。
+团队降权、移出私有组织和禁用账号已对旧 Registry Token 的相应操作生效。删除 PAT 后使用该 PAT 换发被拒绝，旧 Registry JWT 在观察时仍可读写。固定版 JWT 校验不回查签发 PAT。旧 Bearer 换发和真实到期仍待验证，远端失效窗口与首版要求待确认。后续产品分别报告本地停用、PAT 删除和上游状态。 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-包可见性与-registry-scope-核查)
 
 排队到实际执行之间重新检查授权。生产 Runner 只消费已授权、固定清单和固定工作流的部署意图，不能接受普通 PR 任意指定目标、命令或秘密。用户失权时新操作拒绝，正在运行的外部任务记录已发生副作用与可取消范围。
 

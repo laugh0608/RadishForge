@@ -48,7 +48,7 @@
 
 本批已用任务 CA 的有界协议客户端取得基础推拉 / 权限 / 故障证据，并由 Docker 无网络 scratch 构建 + regctl v0.11.7 推送 / 固定 Digest 导出 + Docker load 验证微型真实镜像。regctl 独立私密配置禁用 Docker 凭据 / 证书导入，Buildx 状态在任务目录；未改系统 / daemon CA，未使用 Docker daemon push / pull。客户端、网络 / 磁盘和清理条件须在启动前明确，不下载未经说明的大型工具镜像，不把协议样例外推为任意 OCI 客户端 / 构建链路通过。
 
-包隐私按所有者和当前包权限判定。组织成员仍有读取基线。删除 PAT 后，旧 Registry JWT 的远端失效与后续产品侧停用分别报告，见[身份与访问](identity-access.md#权限模型)。
+包隐私按实际所有者和当前包权限判定。组织成员有读取基线，仓库关联只记录关联。受控拉取使用 `read:package` PAT，推送使用独立 `write:package` PAT。Registry 查询参数用于构造目标请求，签发器保留实际授予的 package scope。删除 PAT 后，后续产品侧停用和旧 JWT 的远端状态分别报告，旧 Bearer 换发仍待实测。 [包权限与 scope 核查](../records/2026-11-09-m0-package-access-mechanisms.md)
 
 Manifest / config / layer Digest 固定内容身份。上轮实测覆盖最后一个 Tag 后旧 Manifest Digest 返回 404。Gitea 28.2.0 的包清理保留规则只作用于清理任务，Registry 覆盖和显式删除按包权限处理。独立发布引用和清理保留规则是待验收的受控保留候选。发布、部署及回退均复核清单所需的原制品，缺失、摘要不符或不可复核时阻断并保留原因。强制保留范围和恢复目标待所有者确认，见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-公开机制核查补充)。
 
