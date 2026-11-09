@@ -80,8 +80,8 @@ Webhook 另验收 event 名、action、payload、投递 ID、HMAC、重放与重
 | M0-G23 | 无效 target 发布 500 | 回读草稿 / Tag 并保留原错误；本例未发布不外推所有 500 无副作用 |
 | M0-G24 | 公开个人包关联私有仓库后其他用户仍可 pull | 按包所有者 / 组织可见性及直接 Registry 权限判断，不把 link 当 ACL；私有组织边界已单独取证 |
 | M0-G25 | Registry 请求 pull，但 write:package PAT 仍可上传 | 实际范围依赖 PAT scope 和当前资源权限，不宣传 query scope 已收窄凭据 |
-| M0-G26 | 覆盖最后一个 Tag 后原 Manifest Digest 404 | 固定 Digest 仍要验证保留 / 存在；缺失阻断，不取 latest 或重新构建冒充原制品；强制保留待决定 |
-| M0-G27 | 删除 PAT 后旧 Registry Token 仍能读写 | 本地停止 / 丢弃缓存不等于已复制 Token 远端立即失效；不以禁用整个账号或改全局签名密钥代替单凭据撤销 |
+| M0-G26 | 覆盖最后一个 Tag 后原 Manifest Digest 404 | 固定版包保留规则只约束清理流程。按原 Digest 复核，缺失时阻断。强制保留缺口和取舍见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-公开机制核查补充) |
+| M0-G27 | 删除 PAT 后新交换拒绝，旧 Registry Token 仍能读写 | 固定版校验不回查签发 PAT，单凭据即时远端失效缺口保留。产品侧停用与上游状态分别报告，见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-公开机制核查补充) |
 
 已有正文 `content_version` 冲突 409、只读 / 越权 / 撤权拒绝、删除和响应丢失回查是相应原生切片证据。它们与上述 gap 一同保留，不把正确拒绝再计为差异，也不把正确主路径抵消失败。组织继承标签、自定义单元权限、产品会话 / 草稿 / 请求持久化，以及 GitHub REST 字段 / Link / 错误体与指定客户端的双端对照仍待验收；上方兼容矩阵不因本表改成“直接兼容”。
 

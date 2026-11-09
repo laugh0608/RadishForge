@@ -43,12 +43,14 @@
 | 准入 / 凭据 | `GET /v2/`、`GET /v2/token` | challenge 的 realm / service 和 origin 白名单、账号身份、read / write package 区分；不向未知 realm 发送秘密 |
 | Blob 上传与状态 | `POST /v2/N/blobs/uploads/`，返回 Location；随后 PATCH / PUT，GET 查询该 upload；HEAD / GET blob Digest | 按返回 Location / UUID 和 Range 回查，限制同源与目标路径；校验完整长度和 SHA-256。POST 回执丢失而 UUID 未知时停止，不新建另一上传冒充恢复 |
 | Manifest 与固定拉取 | `PUT /v2/N/manifests/{tag}`，HEAD / GET `{tag}` 与 `{digest}`，GET blobs | 核对 Content-Type、原始 manifest / config / layer 的 size 与 Digest；服务器确认值和实收 bytes 一致，按 Digest 拉取，不从 tag 名猜 Digest |
-| 私有包与撤权 | 同一组 Registry URL 由普通成员、仓库协作者但无包权限者、组织非成员及匿名直接访问 | 私有组织 / team package 权限独立验证；包链接私有仓库后的权限仍须直拉核对，撤权后缓存凭据不能绕过 |
+| 私有包与撤权 | 同一组 Registry URL 由普通成员、仓库协作者但无包权限者、组织非成员及匿名直接访问 | 私有组织 / team package 权限独立验证，包链接私有仓库后仍须直拉核对。当前账号与包权限变更、删除 PAT 后旧 JWT 的行为分别验证 |
 | 关联与删除 | `/api/v1/packages/{owner}/...`、Registry manifest / blob / upload 删除 | link 只是关联事实；删除 / 失联 / 摘要不符阻止后续发布。只清理本批已确认归属的上传与镜像 |
 
 本批已用任务 CA 的有界协议客户端取得基础推拉 / 权限 / 故障证据，并由 Docker 无网络 scratch 构建 + regctl v0.11.7 推送 / 固定 Digest 导出 + Docker load 验证微型真实镜像。regctl 独立私密配置禁用 Docker 凭据 / 证书导入，Buildx 状态在任务目录；未改系统 / daemon CA，未使用 Docker daemon push / pull。客户端、网络 / 磁盘和清理条件须在启动前明确，不下载未经说明的大型工具镜像，不把协议样例外推为任意 OCI 客户端 / 构建链路通过。
 
-包隐私不能由仓库关联决定；组织成员的读取基线也不能用 team 中缺失 package 单元来推断拒绝。完整 Manifest / config / layer Digest 是内容身份，仍需单独验收保留：覆盖最后一个 Tag 后旧 Manifest Digest 404 的原始结果继续是 gap。冻结版本所引用制品缺失时阻断，不用 latest、改 Tag 或重构建补成假成功。PAT 删除不保证已复制 Registry JWT 立即失效；后续本地停止与远端撤销承诺分别建模。
+包隐私按所有者和当前包权限判定。组织成员仍有读取基线。删除 PAT 后，旧 Registry JWT 的远端失效与后续产品侧停用分别报告，见[身份与访问](identity-access.md#权限模型)。
+
+Manifest / config / layer Digest 固定内容身份。上轮实测覆盖最后一个 Tag 后旧 Manifest Digest 返回 404。Gitea 28.2.0 的包清理保留规则只作用于清理任务，Registry 覆盖和显式删除按包权限处理。独立发布引用和清理保留规则是待验收的受控保留候选。发布、部署及回退均复核清单所需的原制品，缺失、摘要不符或不可复核时阻断并保留原因。强制保留范围和恢复目标待所有者确认，见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-公开机制核查补充)。
 
 Runner 暂停时没有真实 workflow run / attempt，证据须明确为缺失，不能填 0、占位 ID 或借最新 run 补齐；源码 SHA、制品 Digest 的原生协议证据可独立取得，完整源码 / run / 制品链路仍未通过。M0 的最小镜像样例不关闭五组件 ART / REL、部署或恢复验收。
 

@@ -56,7 +56,7 @@ Token 仅在服务端加密保存，密钥独立于数据库、可轮换和备�
 
 2026-11-04 的[OCI 切片](../records/2026-11-04-m0-oci-validation.md)使用独立的[Registry 契约](../../tests/contracts/m0/gitea-registry-profile.json)：普通用户 `read:package` / `write:package` PAT 经固定同源 `/v2/token` 交换 Registry Bearer，不复用 OAuth 凭据。私有组织非成员及只有仓库协作权的用户直接拉取被拒绝；组织成员的读取基线与 team package 写权限分别判断，缺少 package 单元不等于没有读取权。公开个人包关联私有仓库仍可读，Registry 的 pull 请求参数也不能收窄 write PAT，不能承诺逐仓库包隔离或仅凭 query 得到只读凭据。
 
-团队降权、移出私有组织和禁用账号已对旧 Registry Token 的相应操作生效；删除 PAT 仅证明新交换被拒绝，旧 Registry JWT 在观察时仍可读写。声明的 24 小时有效期未真实等待，不将其等同 OAuth 刷新 / 撤销结论。本地停止与已复制 Token 的远端即时失效分别报告；单凭据即时撤销承诺仍待 M0-S04 决策，见[ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)。这些仍为上游证据与后续实现契约。
+团队降权、移出私有组织和禁用账号已对旧 Registry Token 的相应操作生效。删除 PAT 后新交换被拒绝，旧 Registry JWT 在观察时仍可读写。Gitea 28.2.0 的 Registry JWT 校验不回查签发 PAT，公开路径未提供单凭据即时撤销。其固定 24 小时有效期为签发声明，真实到期仍待补证。后续产品分别报告本地停用、PAT 删除及上游状态，远端失效窗口与首版要求待所有者确认，见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-公开机制核查补充)。
 
 排队到实际执行之间重新检查授权。生产 Runner 只消费已授权、固定清单和固定工作流的部署意图，不能接受普通 PR 任意指定目标、命令或秘密。用户失权时新操作拒绝，正在运行的外部任务记录已发生副作用与可取消范围。
 
