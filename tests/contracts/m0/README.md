@@ -2,6 +2,8 @@
 
 这是 Gitea / PostgreSQL 的隔离验证环境，不是 RadishForge 业务应用或发行部署配置。当前平台为 macOS / arm64 + OrbStack 的 Linux arm64 daemon；使用已核对的镜像 Digest，不升级本机 Docker / Compose。方案与边界见[M0-S01](../../../docs/planning/m0-s01-baseline.md)。
 
+M0-S04 的首批 REST、GitHub CLI 与工作流输入另存于 [GitHub 对照样例](compat/README.md)。实际执行须按其中的双端环境准入条件另行取证。
+
 ## 资源与授权
 
 仅在已授权的本机 Docker 上使用。默认显式 context `orbstack`，随机 Compose 项目名 `rf-m0-local-<8 hex>`；工具不会切换全局 context。运行三个服务：PostgreSQL、资源 Gitea、独立测试 IdP Gitea。无 Runner / Actions、Docker socket、privileged 或 host network。

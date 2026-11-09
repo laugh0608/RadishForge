@@ -1,0 +1,77 @@
+name: M0 permissions, environment and concurrency
+'on':
+  workflow_dispatch:
+    inputs:
+      probe:
+        type: choice
+        required: true
+        options:
+          - permissions
+          - environment
+          - concurrency
+
+permissions:
+  contents: read
+
+jobs:
+  permissions:
+    if: inputs.probe == 'permissions'
+    permissions:
+      contents: read
+      issues: read
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Attempt a write with the read-only job token
+        shell: bash
+        env:
+          JOB_TOKEN: ${{ github.token }}
+          API_URL: ${{ github.api_url }}
+          EXPECTED_API_URL: ${{ vars.M0_API_URL }}
+          TARGET_REPO: ${{ github.repository }}
+        run: |
+          test -n "$JOB_TOKEN"
+          test -n "$EXPECTED_API_URL"
+          test "$API_URL" = "$EXPECTED_API_URL"
+          url="${API_URL%/}/repos/$TARGET_REPO/issues"
+          api_headers=()
+          if [[ "$API_URL" = 'https://api.github.com' ]]; then
+            api_headers=(--header 'Accept: application/vnd.github+json' --header 'X-GitHub-Api-Version: 2026-03-10')
+          fi
+          status="$(printf 'Authorization: Bearer %s\n' "$JOB_TOKEN" |
+            curl --silent --show-error --max-time 20 --output /dev/null --write-out '%{http_code}' \
+              "${api_headers[@]}" --header @- "$url")"
+          test "$status" = 200
+          status="$(printf 'Authorization: Bearer %s\n' "$JOB_TOKEN" |
+            curl --silent --show-error --max-time 20 --output /dev/null --write-out '%{http_code}' \
+              "${api_headers[@]}" --header @- --header 'Content-Type: application/json' \
+              --data '{"title":"m0-policy-forbidden-write"}' "$url")"
+          printf 'write_status=%s\n' "$status"
+          case "$status" in
+            401|403|404) ;;
+            *) exit 1 ;;
+          esac
+  environment:
+    if: inputs.probe == 'environment'
+    environment: m0-protected
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check the isolated environment canary
+        shell: bash
+        env:
+          M0_CANARY: ${{ secrets.M0_ENV_CANARY }}
+        run: |
+          test -n "$M0_CANARY"
+          printf 'environment-canary-received\n'
+  concurrency:
+    if: inputs.probe == 'concurrency'
+    concurrency:
+      group: m0-compat-single-job
+      cancel-in-progress: true
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Hold the isolated job
+        shell: bash
+        run: |
+          printf 'concurrency-start\n'
+          sleep 60
+          printf 'concurrency-finish\n'

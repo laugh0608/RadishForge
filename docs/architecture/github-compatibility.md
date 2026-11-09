@@ -14,7 +14,7 @@
 
 每条记录包含：GitHub 文档 / REST API version、Gitea 和 Runner 精确版本、Action 仓库及 commit、运行平台、原始样例、改动 diff、预期 / 实际、证据、限制与负责人。状态限定为：待验证、直接兼容、需配置、需适配、不支持。只有原始行为验证通过才能标“直接兼容”；仅替换 endpoint / Token 的情况标“需配置”。
 
-M0 固定首批样例清单，M3 完成首版验收。2026-10-29 官方文档列出 `2026-03-10` 与 `2022-11-28` 两个受支持 REST 版本；新契约优先以 `2026-03-10` 为候选，现有脚本按需要增加 `2022-11-28` profile，不混用两者响应预期。M0 再核对支持状态和客户端版本，当前未冻结长期 API 版本。资料入口见[来源核查](../references/source-review.md)。
+M0 固定首批样例，M3 完成首版验收。2026-11-09 核对官方仍支持 `2026-03-10` 与 `2022-11-28`。首批样例使用 `2026-03-10` 和 GitHub CLI `v2.96.0`，旧版保留独立 profile。首批四份原始工作流固定六个 Action 提交，API 输入、通过条件和执行前待固定项随样例保存。对照状态保持待验证。 [首批对照样例](../../tests/contracts/m0/compat/README.md) · [GitHub REST 版本](https://docs.github.com/en/rest/about-the-rest-api/api-versions#supported-api-versions)
 
 ## 首批工作流测试矩阵
 
@@ -85,7 +85,7 @@ Webhook 另验收 event 名、action、payload、投递 ID、HMAC、重放与重
 
 已有正文 `content_version` 冲突 409、只读 / 越权 / 撤权拒绝、删除和响应丢失回查是相应原生切片证据。它们与上述 gap 一同保留，不把正确拒绝再计为差异，也不把正确主路径抵消失败。组织继承标签、自定义单元权限、产品会话 / 草稿 / 请求持久化，以及 GitHub REST 字段 / Link / 错误体与指定客户端的双端对照仍待验收；上方兼容矩阵不因本表改成“直接兼容”。
 
-Release / OCI 已取得相应原生切片证据，仍需完整范围取舍与 Action / API 精确样例。Runner 暂停期间不冻结未经执行的 Action commit / 运行时支持，不启动 Actions；GitHub REST 对照版本的当前支持与客户端版本也须在相应取证时复核。M0-G06 自动化方案、M0-G19 / G20、G24—G27 的能力边界、关键权限 / 保留 / 未知结果处理和完整阶段出口未收口前，不放行 M1。
+Release / OCI 已取得相应原生切片证据。首批 Action 提交与 API 对照版本已固定为样例输入，运行时支持与等价行为仍待实测。M0-G06 自动化方案、M0-G19 / G20、G24—G27 的能力边界、关键权限 / 保留 / 未知结果处理和完整阶段出口未收口前，不放行 M1。 [M0-S04 接续事项](../planning/m0-validation.md#接续事项)
 
 ## 缺口处理顺序与边界
 
