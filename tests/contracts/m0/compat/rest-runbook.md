@@ -22,6 +22,20 @@ Gitea 侧可用既有探针的 `--mode rest` 复现本机对照。Issue 评论�
 
 用 `GET /user` 核对实际身份，以有权配置身份读回 `GET R/collaborators/{username}/permission`。保留 GitHub 的 `permission` 和 `role_name`，以及 Gitea 的 `permission`。目标访问负例前后，用独立有权身份确认目标确实存在。401 先确认凭据有效性，403 / 404 结合角色、同端读回及实际副作用解释。私有仓库的 404 单独保留原码。 [GitHub 协作者权限](https://docs.github.com/en/rest/collaborators/collaborators?apiVersion=2026-03-10#get-repository-permissions-for-a-user)
 
+### GitHub 单账号凭据对照
+
+`laugh0608/RadishForge-Test` 是个人私有仓库，协作者可获得写权限。普通写者的仓库授权及移除须使用独立身份，原生读者角色须使用组织仓库。GitHub 的 fine-grained PAT 目前也限制仓库协作者的使用。只读 PAT 体现所有者的凭据权限，角色和凭据结果分别归档。 [个人仓库权限](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/repository-access-and-collaboration/permission-levels-for-a-personal-account-repository#collaborator-access-for-a-repository-owned-by-a-personal-account) · [Fine-grained PAT 限制](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#fine-grained-personal-access-tokens-limitations)
+
+用当前所有者创建独立短期 fine-grained PAT。Resource owner 选择 `laugh0608`，仓库只选择 `RadishForge-Test`，Contents 和 Issues 为只读，保留默认 Metadata 只读。在 RadishForge 根目录的交互式终端运行：
+
+```bash
+python3 -B scripts/m0_github_scope.py
+```
+
+凭据只在终端的隐藏提示输入，结果写入忽略的 `.local/m0-scope-*.json`。脚本先以现有 gh 凭据确认仓库、固定提交、已发布 Release、Actions 与匿名对照，再用短期 PAT 读回目标并尝试写入两个带唯一标记的合成对象。权限拒绝需由所有者独立回读确认无副作用。脚本提示后在 GitHub 设置删除本次 PAT，确认列表中该条目已消失，再回终端输入 `REVOKED`。用同一凭据验证返回 401，并确认所有者仍可读取仓库。失败或中断先按结果中的标记对账，测试 PAT 仍由创建者删除。 `--preflight` 只执行现有凭据和匿名读回。 [创建和管理 PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) · [GitHub REST 鉴权](https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api#failed-login-limit)
+
+若只读权限已取证且测试 PAT 仍未删除，使用 `python3 -B scripts/m0_github_scope.py --revocation-only`，按同样的隐藏输入和删除步骤复测。该模式只发 GET，在删除前先验证 PAT 仍可访问，再以进程中的同一凭据验证失效。若列表和安全日志已确认删除，且操作者仍能输入同一 PAT 值，改用 `--check-revoked` 补做一次 GET。该模式记录提交值是否返回 401，操作者需核对输入与之前使用的是同一值。 [实测记录](../../../../docs/records/2026-11-09-m0-github-owner-pat.md)
+
 ## 确定性源码夹具
 
 [rest-source.fi](rest-source.fi) 只包含合成文本、两个 SHA-1 提交和一个轻量 Tag。文件 SHA-256 为 `223a5feddbd5791ad883a2a4b30aabdd209aa15193508e929334650b55cb7cef`。
