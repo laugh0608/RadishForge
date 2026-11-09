@@ -74,7 +74,7 @@ Webhook 另验收 event 名、action、payload、投递 ID、HMAC、重放与重
 | M0-G17 | 无效里程碑筛选 200，结果变宽 | 同上；目录前检不能替代结果 / 权限核对 |
 | M0-G18 | 仓库读者创建 Issue 201，分类字段被忽略 | 区分正文创建与分类权限；不能从 scope 或创建成功推导分类管理权 |
 | M0-G19 | 有 Release 单元写权限的用户持只读 scope，按 ID 查草稿为 404，两条附件下载路径为 200；同源对照确认普通写者按 Tag 也为 200 | 产品统一要求 Release 写用途和当前单元写权限，原生差异保留。见 [ADR 0005 核查补充](../adr/0005-release-authorization-and-reconciliation.md#2026-11-09-草稿权限与字段清除核查) |
-| M0-G20 | Release PATCH 空 name / body 为 200，原值保留 | 固定版公开自动清除缺口保留，原生手动清空说明待验证。见 [ADR 0005 核查补充](../adr/0005-release-authorization-and-reconciliation.md#2026-11-09-草稿权限与字段清除核查) |
+| M0-G20 | Release PATCH 空 name / body 为 200，原值保留；原生页面可清空草稿说明，空标题返回 400 | 保留固定版公开自动清除缺口，可引导用户在原生页面手动清空草稿说明。 [原生编辑实测](../records/2026-11-09-m0-release-native-edit.md) · [ADR 0005 核查补充](../adr/0005-release-authorization-and-reconciliation.md#2026-11-09-草稿权限与字段清除核查) |
 | M0-G21 | Tag POST 文档 200，处理器 / 实测 201 | 精确版本接受 201 并保留声明 gap，不扩为任意 2xx |
 | M0-G22 | 已有 Tag 与 target 不同仍发布 200，Tag 指向原提交 | 发布前查精确 Tag / SHA，不符拒绝；发布后再查，不能宣称竞态已消除 |
 | M0-G23 | 无效 target 发布 500 | 回读草稿 / Tag 并保留原错误；本例未发布不外推所有 500 无副作用 |

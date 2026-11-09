@@ -4,7 +4,7 @@
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
 
-2026-11-09 M0-S04 已完成仓库、Issue 和 Release 的固定版 Gitea 同源 REST 对照。普通角色的主路径与 Issue 只读 / 撤权对照已验证，Release 保留 G19 / G20 两项原生差异。GitHub 个人私有测试仓库已取得所有者和匿名参考，普通角色仍待验收。G26 / G27 取舍和旧 Bearer 换发补证继续保留。Runner 和 Actions 持续暂停，阶段保持 M0。 [Gitea 对照记录](../records/2026-11-09-m0-gitea-rest-comparison.md) · [GitHub 参考记录](../records/2026-11-09-m0-github-rest-reference.md)
+2026-11-09 M0-S04 已完成固定版 Gitea 同源 REST 对照。G20 补证确认普通写者可通过原生页面清空草稿说明，空标题返回 400，公开 API 的空字段清除差异仍保留。GitHub 已取得所有者、匿名和只读 PAT 参考，普通角色仍待验收。G26 / G27 取舍和旧 Bearer 换发补证继续保留。Runner 和 Actions 持续暂停，阶段保持 M0。 [G20 原生编辑记录](../records/2026-11-09-m0-release-native-edit.md) · [Gitea 对照记录](../records/2026-11-09-m0-gitea-rest-comparison.md)
 
 2026-11-04 收工时，生命周期、Issue、静态准备、Release 与 OCI 已分别由 `78d11a2`、`a6eca0d`、`c825fb2`、`c77b29e`、`01eb1b0` 保存，records 保留各自导出快照。63 项本地测试通过，最终 OCI / Release / Issue / profiles 真实流程分别保留 4 / 5 / 12 / 1 条差异退出 2，七批资源清理读回通过。当日提交与代码 / 文档复核见[收工回顾](../records/2026-11-04-day-review.md)。
 
@@ -89,7 +89,7 @@ python3 -B -m unittest discover -s scripts/tests -v
 继续 M0-S04。M0-S03 未覆盖能力继续保留。详细输入、交付物和完成标准见 [M0-S04 接续事项](../planning/m0-validation.md#接续事项)。
 
 1. 由所有者分别确认制品保留与回退要求、单凭据远端失效要求和可接受窗口。G27 先验证旧 Bearer 换发，再根据结果确定到期观察范围，长时窗口另预算。 [OCI 补证条件](../planning/m0-validation.md#oci-补证条件)
-2. 独立测试身份具备后验证 GitHub 普通写者及仓库权限撤销，原生读者角色使用已授权组织仓库。Gitea 侧接续 G20 原生页面手动清空和 G19 的剩余权限场景。工作流执行前另固定 Gitea job 镜像、BuildKit Digest 及实际运行时。 [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) · [M0-S04 补证入口](../planning/m0-validation.md#接续事项)
+2. Gitea 侧接续 G19 的草稿权限场景，优先验证降权和撤权后按 Tag 查询及附件下载的实际回执。独立测试身份具备后验证 GitHub 普通写者及仓库权限撤销，原生读者角色使用已授权组织仓库。工作流执行前另固定 Gitea job 镜像、BuildKit Digest 及实际运行时。 [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) · [M0-S04 补证入口](../planning/m0-validation.md#接续事项)
 3. 保持 Runner 暂停 / Actions 关闭；没有真实 run / attempt 不填占位，不把合成 Release 或个人仓库证据外推为五组件清单、完整发布冻结、组织权限、恢复或整个 M0 通过；M1 / M2 产品实现仍未开始。
 
 Runner 持续暂停，当前配置明确关闭 Actions。M0-S03 的 Actions、Release / OCI 的完整产品能力及 M0-S04 的完整兼容样例 / 缺口决定仍未完成；原始差异继续保留，受控处理不冒充上游修复，不进入 M1 业务工程初始化。
