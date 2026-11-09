@@ -4,7 +4,7 @@
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
 
-2026-11-09 已固定 M0-S04 首批样例，并在个人私有仓库 `laugh0608/RadishForge-Test` 取得仓库、Issue 和 Release 的首轮 GitHub REST 参考。证据覆盖所有者和无凭据对照，普通角色与固定版 Gitea 的同源夹具仍待验收。G26 / G27 取舍和旧 Bearer 换发补证继续保留。Runner 和 Actions 持续暂停，阶段保持 M0。 [REST 准备记录](../records/2026-11-09-m0-rest-fixture-preparation.md) · [GitHub 参考记录](../records/2026-11-09-m0-github-rest-reference.md)
+2026-11-09 M0-S04 已完成仓库、Issue 和 Release 的固定版 Gitea 同源 REST 对照。普通角色的主路径与 Issue 只读 / 撤权对照已验证，Release 保留 G19 / G20 两项原生差异。GitHub 个人私有测试仓库已取得所有者和匿名参考，普通角色仍待验收。G26 / G27 取舍和旧 Bearer 换发补证继续保留。Runner 和 Actions 持续暂停，阶段保持 M0。 [Gitea 对照记录](../records/2026-11-09-m0-gitea-rest-comparison.md) · [GitHub 参考记录](../records/2026-11-09-m0-github-rest-reference.md)
 
 2026-11-04 收工时，生命周期、Issue、静态准备、Release 与 OCI 已分别由 `78d11a2`、`a6eca0d`、`c825fb2`、`c77b29e`、`01eb1b0` 保存，records 保留各自导出快照。63 项本地测试通过，最终 OCI / Release / Issue / profiles 真实流程分别保留 4 / 5 / 12 / 1 条差异退出 2，七批资源清理读回通过。当日提交与代码 / 文档复核见[收工回顾](../records/2026-11-04-day-review.md)。
 
@@ -69,6 +69,8 @@
 
 用户随后授权以其 GitHub 账号创建正式命名的私有测试仓库。该轮仅在新建的 `laugh0608/RadishForge-Test` 关闭 Actions、推送合成 refs 并写入 REST 夹具，正式项目的 `origin` 配置与远端未动。测试仓库及合成数据保留供后续对照。新增测试身份、协作者或组织权限需确认范围。 [GitHub 参考记录](../records/2026-11-09-m0-github-rest-reference.md)
 
+用户要求提交上一批并接续，REST 夹具与 GitHub 参考已由 `10d4511` 保存。接续按既有授权在同一 context、缓存镜像与回环端口建立 Gitea 隔离批次，首批中断经只读对账后清理，最终新批完成并保留两项差异。两个批次的容器、卷、网络、凭据和监听均已清理。GitHub 侧只读确认测试仓库没有额外协作者。 [Gitea 对照记录](../records/2026-11-09-m0-gitea-rest-comparison.md)
+
 保持“暂不写业务代码”的边界。当前范围不包含 Runner、安装 / 升级宿主工具、新 VM、全局设置 / 系统信任、正式项目的远端写入或设置变更、生产凭据、对外发行或部署。
 
 ## 当前验证入口
@@ -85,7 +87,7 @@ python3 -B -m unittest discover -s scripts/tests -v
 继续 M0-S04。M0-S03 未覆盖能力继续保留。详细输入、交付物和完成标准见 [M0-S04 接续事项](../planning/m0-validation.md#接续事项)。
 
 1. 由所有者分别确认制品保留与回退要求、单凭据远端失效要求和可接受窗口。G27 先验证旧 Bearer 换发，再根据结果确定到期观察范围，长时窗口另预算。 [OCI 补证条件](../planning/m0-validation.md#oci-补证条件)
-2. 按手册在确认环境与授权后导入同一 Git 夹具，执行固定版 Gitea 的仓库、Issue 和 Release 原生对照。GitHub 另用普通读写角色补齐只读凭据、越权与撤权负例。工作流执行前另固定 Gitea job 镜像、BuildKit Digest 及实际运行时。 [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) · [M0-S04 补证入口](../planning/m0-validation.md#接续事项)
+2. 在确认独立测试身份和权限范围后，补齐 GitHub 普通读写角色、只读凭据、越权与撤权负例。Gitea 侧接续 G20 原生页面手动清空和 G19 的剩余权限场景。工作流执行前另固定 Gitea job 镜像、BuildKit Digest 及实际运行时。 [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) · [M0-S04 补证入口](../planning/m0-validation.md#接续事项)
 3. 保持 Runner 暂停 / Actions 关闭；没有真实 run / attempt 不填占位，不把合成 Release 或个人仓库证据外推为五组件清单、完整发布冻结、组织权限、恢复或整个 M0 通过；M1 / M2 产品实现仍未开始。
 
 Runner 持续暂停，当前配置明确关闭 Actions。M0-S03 的 Actions、Release / OCI 的完整产品能力及 M0-S04 的完整兼容样例 / 缺口决定仍未完成；原始差异继续保留，受控处理不冒充上游修复，不进入 M1 业务工程初始化。

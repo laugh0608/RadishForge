@@ -70,7 +70,7 @@ python3 -B scripts/m0_local.py up
 python3 -u -B scripts/m0_contracts.py --mode lifecycle-baseline
 ```
 
-这是显式历史诊断，保留表单 / 查询串资源 Token 鉴权；受控 `profiles` / `lifecycle` / `issues` / `releases` / `oci` 模式拒绝该设置，不能作为默认运行方案。新结果不覆盖旧差异，见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)和[ADR 0003](../../../docs/adr/0003-gitea-authorization-profiles.md)。
+这是显式历史诊断，保留表单 / 查询串资源 Token 鉴权；受控 `profiles` / `lifecycle` / `issues` / `releases` / `oci` / `rest` 模式拒绝该设置，不能作为默认运行方案。新结果不覆盖旧差异，见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)和[ADR 0003](../../../docs/adr/0003-gitea-authorization-profiles.md)。
 
 ### Issue 契约与响应丢失
 
@@ -123,6 +123,16 @@ python3 -u -B scripts/m0_contracts.py --mode oci --regctl /absolute/task/regctl
 资源沿用 2.75 GiB 平台限额与回环 18443 / 19443 / 短时 18543；CLI 工具约 12 MB，微型 archive 约 9 KB，实际构建 / Registry 数据量按批记录。窗口约 15–25 分钟，Task 镜像标签在 finally 核对归属并移除，运行目录由 `cleanup` 清理，外部工具临时目录另清理；共享镜像 / BuildKit 缓存不 prune。任何 CLI 写入失败 / 超时均停止并对账，不反复 import / build 当作恢复。
 
 原始四条差异及未覆盖面见[OCI 证据](../../../docs/records/2026-11-04-m0-oci-validation.md)和[ADR 0006](../../../docs/adr/0006-oci-authorization-and-digest-retention.md)。源码 / metadata 声明的 Registry Token 24 小时不等于已真实等待到期，PAT 删除也不等于旧 JWT 已失效；Digest 固定身份不等于服务器永久保留。
+
+### M0-S04 同源 REST 对照
+
+使用新隔离批次 `prepare --auth-profile` / `up` 后执行：
+
+```bash
+python3 -u -B scripts/m0_contracts.py --mode rest
+```
+
+探针校验空私有仓库、同源夹具摘要和三个 refs，通过本机 HTTPS 一次原子推送，再独立读回 Git / REST。夹具安装凭据只由任务内的 Git askpass 从私密运行目录读取，Git 与 REST 均校验任务 CA。仓库读取、Issue 分页及写入、Release 草稿权限与字段语义使用独立普通用户和既定用途。G19 / G20 的原生差异在结果中保留并退出 2。结束按现有命令读回状态、归档脱敏结果并清理。 [双端手册](compat/rest-runbook.md) · [本批结果](../../../docs/records/2026-11-09-m0-gitea-rest-comparison.md)
 
 ## 清理与未覆盖
 

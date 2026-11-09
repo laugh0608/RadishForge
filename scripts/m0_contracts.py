@@ -224,7 +224,7 @@ def main(mode, regctl=None):
         raise RuntimeError('Prepare a fresh environment with --auth-profile matching the reviewed contract')
     if mode == 'lifecycle-baseline' and not owner.get('legacy_query_auth'):
         raise RuntimeError('Historical diagnosis requires a fresh --legacy-query-auth environment')
-    if mode in ('profiles', 'lifecycle', 'issues', 'releases', 'oci') and owner.get('legacy_query_auth'):
+    if mode not in ('discovery', 'lifecycle-baseline') and owner.get('legacy_query_auth'):
         raise RuntimeError('Controlled probes refuse the historical form-token authentication setting')
     marker = RUNTIME / 'contract-started.json'
     if marker.exists():
@@ -246,6 +246,9 @@ def main(mode, regctl=None):
                                             'tests/contracts/m0/gitea-registry-profile.json',
                                             'tests/contracts/m0/gitea-auth-profile.json',
                                             'tests/contracts/m0/compose.yaml')}
+    if mode == 'rest':
+        for name in ('scripts/m0_rest.py', 'tests/contracts/m0/compat/rest-source.fi'):
+            report['source_sha256'][name] = hashlib.sha256((RUNTIME.parent.parent / name).read_bytes()).hexdigest()
     report['effective_provider_settings'] = owner.get('effective_provider_settings')
 
     def record(name, status='pass', **details):
@@ -299,7 +302,8 @@ def main(mode, regctl=None):
                 raise RuntimeError('Could not capture generated bootstrap password; output withheld')
             admin = ('m0-admin', match.group(1))
             credentials[service] = {'admin': admin}
-            users = (('alice', 'bob', 'carol', 'dave') if mode == 'oci' else
+            users = (('alice', 'bob', 'carol', 'dave', 'erin') if mode == 'rest' else
+                     ('alice', 'bob', 'carol', 'dave') if mode == 'oci' else
                      ('alice', 'bob', 'carol') if mode in ('issues', 'releases') else ('alice', 'bob'))
             for username in (users if service == 'forge' else ('alice',)):
                 password = secrets.token_urlsafe(32)
@@ -311,6 +315,13 @@ def main(mode, regctl=None):
                 credentials[service][username] = (username, password)
             write_private(RUNTIME / 'credentials.json', json.dumps(credentials))
         record('ordinary_users_and_independent_idp_created')
+        if mode == 'rest':
+            from m0_rest import rest_checks
+            rest_checks(owner, forge, credentials['forge'], record)
+            report['completed'] = True
+            report['passed_product_acceptance'] = False
+            record('rest_probe_completed', scope='M0 fixed Gitea REST reference; no Runner or product compatibility')
+            return 2 if any(r['status'] == 'gap' for r in results) else 0
         alice, bob = credentials['forge']['alice'], credentials['forge']['bob']
         repo = expect(forge.request('POST', '/api/v1/user/repos', basic=alice,
                                     payload={'name': 'private-fixture', 'private': True, 'auto_init': True}),
@@ -442,9 +453,11 @@ def main(mode, regctl=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--mode', choices=['profiles', 'discovery', 'lifecycle', 'lifecycle-baseline', 'issues', 'releases', 'oci'], default='profiles',
+    parser.add_argument('--mode', choices=['profiles', 'discovery', 'lifecycle', 'lifecycle-baseline',
+                                           'issues', 'releases', 'oci', 'rest'], default='profiles',
                         help='profiles: reviewed grants; discovery: raw scopes; lifecycle: long expiry/native consent; '
-                             'lifecycle-baseline: historical form-token diagnosis; issues/releases/oci: resource contracts and response loss')
+                             'lifecycle-baseline: historical form-token diagnosis; issues/releases/oci: resource contracts and response loss; '
+                             'rest: same-source GitHub/Gitea REST comparison')
     parser.add_argument('--regctl', help='OCI only: path to the pinned task-local regctl binary')
     args = parser.parse_args()
     raise SystemExit(main(args.mode, args.regctl))

@@ -10,6 +10,8 @@
 
 GitHub 个人私有测试仓库已有所有者凭据和无凭据的参考结果。后续普通用户验收须独立验证表中角色，复用仓库前先核对既有夹具与批次归属。 [GitHub 参考记录](../../../../docs/records/2026-11-09-m0-github-rest-reference.md)
 
+Gitea 侧可用既有探针的 `--mode rest` 复现本机对照。Issue 评论读回使用固定路由的有界 GET，该路由只声明 `since` / `before`，Issue 和 PR 集合仍独立逐页核对。 [执行入口](../README.md#m0-s04-同源-rest-对照) · [Gitea 对照记录](../../../../docs/records/2026-11-09-m0-gitea-rest-comparison.md)
+
 | 角色或对照 | GitHub 最小权限 | Gitea 用途 / 角色 |
 | --- | --- | --- |
 | 仓库和提交读取 | 目标仓库的 Metadata、Contents 读 | 普通成员持 `resource_read` |
