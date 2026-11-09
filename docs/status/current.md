@@ -4,7 +4,7 @@
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
 
-2026-11-09 完成 M0-S04 的 [G26 / G27 公开机制静态核查](../records/2026-11-09-m0-oci-public-mechanisms.md)，明确固定版能力和待决范围。Runner 和 Actions 继续暂停，阶段保持 M0。
+2026-11-09 完成 M0-S04 的 [G26 / G27 公开机制核查](../records/2026-11-09-m0-oci-public-mechanisms.md)及 [G06 单用户撤销核查](../records/2026-11-09-m0-oauth-grant-revocation.md)。G26 / G27 的取舍保留，G06 已分清原生设置页、产品侧停用和公开自动化边界。Runner 和 Actions 继续暂停，阶段保持 M0。
 
 2026-11-04 收工时，生命周期、Issue、静态准备、Release 与 OCI 已分别由 `78d11a2`、`a6eca0d`、`c825fb2`、`c77b29e`、`01eb1b0` 保存，records 保留各自导出快照。63 项本地测试通过，最终 OCI / Release / Issue / profiles 真实流程分别保留 4 / 5 / 12 / 1 条差异退出 2，七批资源清理读回通过。当日提交与代码 / 文档复核见[收工回顾](../records/2026-11-04-day-review.md)。
 
@@ -24,7 +24,7 @@
 - [11 月 1 日生命周期证据](../records/2026-11-01-m0-auth-profile-validation.md)覆盖拒绝同意、client secret、callback、刷新客户端绑定 / 轮换 / 重放 / 不扩权、资源撤权 / 应用删除和真实 access token 过期，保留禁用账号仍可 refresh 与过期 introspection 401 两项差异，流程完成但退出 2；该历史结果不改写。
 - [11 月 4 日对照验证](../records/2026-11-04-m0-lifecycle-validation.md)复现两项差异，并定位 introspection 正文 `token` 被通用鉴权先处理的问题。受控 JSON schema 2 要求新实例关闭表单 / 查询串资源鉴权并回读配置；过期目标 Token 返回 inactive，错误客户端 secret 401。禁用账号仍可刷新 / introspection active，但在线账号 403，凭据复核拒绝；上游签发差异继续保留，不能宣称原生修复。
 - 同批已取得一次并发刷新单一成功后继、旧值重放 / 后继只读边界、账号恢复，以及原生 UI 单用户撤销 / 跨 grant 隔离 / 显式重新同意的证据；真实等待 3602.849 秒后 refresh token 自身到期拒绝，同一客户端重新授权有效、旧值仍拒绝。最终源码受控组合 / 旧配置均回归，25 项本地检查通过。四批均保留差异退出 2，不以本批切片关闭完整 M0-02 / IAM 或 M0。
-- 固定公开 REST 描述没有单用户 grant 撤销接口，两套实例 Discovery 未公布撤销端点；自动化方案 / 范围留待 M0-S04 确认，不封装私有页面请求或删除共享应用代替。产品解绑、会话、加密存储和后台任务停止仍在 M1。
+- 固定 OpenAPI、OAuth 路由和两套实例的 Discovery 均无公开单用户 grant 撤销入口。`DELETE /api/v1/token` 删除 PAT，原生设置页由用户撤销自己的 grant，工作台分别报告本地停用和上游状态。公开自动撤销缺口保留，产品解绑和后台任务停止仍在 M1 验收。见 [ADR 0003 撤销边界](../adr/0003-gitea-authorization-profiles.md#2026-11-09-单用户-grant-撤销边界)。
 - M0-S03 的[Issue 上游切片](../records/2026-11-04-m0-issue-validation.md)覆盖列表 / 筛选 / 分页排除真实 PR、正文版本冲突、编辑 / 关闭 / 重开、标签 / 负责人 / 里程碑操作，以及只读 scope、仓库读写角色、跨用户 / 撤权和资源删除。最终批次 32 条命名记录保留 12 条 gap：非法输入被忽略 / 转换、无效筛选变宽、部分错误返回 500、复合编辑 500 后标题已改变、创建分类字段被静默丢弃。受控前检不表示上游已修复，也不关闭完整 ISSUE-01 或 M0-03。
 - 两种真实 TLS 响应丢失场景均只发一次合成 Issue POST：上游 201 后超时可通过只读回查观察到唯一结果；未转发 / 零匹配及两个匹配仍为 unknown、自动重试为 0。[ADR 0004](../adr/0004-issue-validation-and-reconciliation.md)明确目录与权限、正文版本与复合写入、失败后回读的边界；生产持久化关联与 UI 尚未实现。共享 OAuth 回归保留禁用账号可刷新的既有差异。
 - [Release 切片](../records/2026-11-04-m0-release-validation.md)覆盖草稿 / 分页、编辑 / 发布、固定 Tag SHA、raw / multipart 附件与真实字节摘要、普通写者 / 读者 / 外部用户、撤权 / 删除、跨对象关联和重复。创建 / 发布 / 附件的已提交响应丢失均只写一次并经 GET 对账；未转发、半包断开和同名多匹配仍 unknown、自动重试 0。保留五项差异：草稿只读 scope 的元数据 / 下载不一致、空字段清除被忽略、Tag POST 声明 / 实测状态码不一致、已有 Tag 与 target 不同仍发布、无效 target 发布 500；不宣称原生修复或完整发布器通过。
@@ -65,7 +65,7 @@
 
 用户随后明确要求提交本批 Release 工作区更改，并按计划执行 OCI 隔离取证，覆盖私有组织包权限、固定 Digest 推拉、撤权及超时先回查，做好验证与文档同步。Release 28 个路径已由 `c77b29e` 保存。说明固定客户端版本、约 12 MB 下载 / 磁盘、临时路径与资源清理后，完成本机合成 OCI 协议 / 客户端、撤权 / 超时及共享回归；Buildx 原全局状态目录写入被拒绝后，仅改任务 `BUILDX_CONFIG`，未关闭验证。前两批中断保存后清理再新建，最终源码在新批重跑；未删标记重放、不向 GitHub / 公共 Registry 推送，不启动 Runner / 业务工程或修改全局信任。用户本次明确要求先提交工作区，再回顾当日全部提交、同步文档和接续事项，最后单独提交文档并收工；OCI 23 个路径已由 `01eb1b0` 保存，文档收尾由本页及[当日回顾](../records/2026-11-04-day-review.md)所在的独立提交保存，实际 SHA 以 Git 历史为准。本次不再运行真实联调，没有 fetch / push 或远端写入。
 
-2026-11-09 用户要求核查固定 Gitea 的公开机制并同步 M0-S04 文档。实际范围为公开资料只读查询和本地文档更新，未启动隔离环境，未提交或推送。Runner 和 Actions 持续暂停，不进入 M1。后续补证前复核资源归属及相同目标的既有授权，服务、权限或外部目标发生实质变化时再核对授权。
+2026-11-09 用户要求核查固定 Gitea 的 OCI 公开机制并同步 M0-S04 文档，随后授权提交这批文档，形成 `4d3468d`。本批按用户要求接续单用户 grant 撤销的静态核查及文档同步。两批均未启动隔离环境或推送，Runner 和 Actions 持续暂停，不进入 M1。后续补证前复核资源归属及相同目标的既有授权，服务、权限或外部目标发生实质变化时再核对授权。
 
 保持“暂不写业务代码”的边界。当前范围不包含 Runner、安装 / 升级宿主工具、新 VM、全局设置 / 系统信任、真实仓库或生产凭据、GitHub 远端测试 PR、远端设置、对外发行或部署。
 
@@ -83,7 +83,7 @@ python3 -B -m unittest discover -s scripts/tests -v
 继续 M0-S04。M0-S03 未覆盖能力继续保留。详细输入、交付物和完成标准见 [M0-S04 接续事项](../planning/m0-validation.md#接续事项)。
 
 1. 由所有者分别确认制品保留与回退要求、单凭据远端失效要求和可接受窗口，再按 [OCI 补证条件](../planning/m0-validation.md#oci-补证条件)选择隔离用例及环境。真实 JWT 到期观察另预算。
-2. 待决期间可收敛原有公开单用户 grant 自动撤销、Release 草稿 scope / 空字段清除和包所有者 / scope 的能力边界，准备精确 GitHub REST / 客户端及 Action 样例。版本支持状态在相应取证时复核，未运行项保持待验证。
+2. G06 保留 [分层补证条件](../planning/m0-validation.md#单用户-grant-撤销补证条件)。若首版必须自动远端撤销，先决定公开方案。接下来收敛 Release 草稿 scope / 空字段清除和包所有者 / scope，再准备精确 GitHub REST / 客户端及 Action 样例。版本支持状态在相应取证时复核，未运行项保持待验证。
 3. 保持 Runner 暂停 / Actions 关闭；没有真实 run / attempt 不填占位，不把合成 Release 或个人仓库证据外推为五组件清单、完整发布冻结、组织权限、恢复或整个 M0 通过；M1 / M2 产品实现仍未开始。
 
 Runner 持续暂停，当前配置明确关闭 Actions。M0-S03 的 Actions、Release / OCI 的完整产品能力及 M0-S04 的完整兼容样例 / 缺口决定仍未完成；原始差异继续保留，受控处理不冒充上游修复，不进入 M1 业务工程初始化。

@@ -53,7 +53,7 @@ M0—M6 是时间与依赖维度，专题是能力维度，两者不是同一棵
 | M0-S01 | M0；[准备与冻结范围](m0-validation.md#m0-s01底座组合与隔离验证准备)、[候选方案](m0-s01-baseline.md) | [tasks](tasks.md)：M0-01 | [矩阵](acceptance.md)：BASE-01 的来源 / 环境部分 | [来源](../records/2026-11-01-m0-s01-review.md)、[本机结果](../records/2026-11-01-m0-local-validation.md) |
 | M0-S02 | M0；[身份 / 权限范围](m0-validation.md#m0-s02身份与私有权限可行性) | [tasks](tasks.md)：M0-02 | [矩阵](acceptance.md)：IAM-01 / IAM-02 的上游部分 | [首轮 scope 差异](../records/2026-11-01-m0-local-validation.md)、[受控组合与生命周期](../records/2026-11-01-m0-auth-profile-validation.md)、[生命周期差异定位与负例](../records/2026-11-04-m0-lifecycle-validation.md)、[ADR 0003](../adr/0003-gitea-authorization-profiles.md) |
 | M0-S03 | M0；[Issue 与交付接口](m0-validation.md#m0-s03issue-与交付接口最小验证) | [tasks](tasks.md)：M0-03 | [矩阵](acceptance.md)：BASE-01 | [Issue](../records/2026-11-04-m0-issue-validation.md)、[Release](../records/2026-11-04-m0-release-validation.md)、[OCI 取证](../records/2026-11-04-m0-oci-validation.md)与 ADR 0004—0006；Actions 仍待，原始缺口不关闭 |
-| M0-S04 | M0；[兼容范围与缺口](m0-validation.md#m0-s04首批兼容范围与缺口决策) | [tasks](tasks.md)：M0-04 | [矩阵](acceptance.md)：COMP-01 的样例 / 差异部分 | [差异基线](../architecture/github-compatibility.md#m0-现有差异基线)与 [OCI 公开机制核查](../records/2026-11-09-m0-oci-public-mechanisms.md)，完整样例冻结 / 缺口决定尚未完成 |
+| M0-S04 | M0；[兼容范围与缺口](m0-validation.md#m0-s04首批兼容范围与缺口决策) | [tasks](tasks.md)：M0-04 | [矩阵](acceptance.md)：COMP-01 的样例 / 差异部分 | [差异基线](../architecture/github-compatibility.md#m0-现有差异基线)、[OCI 公开机制核查](../records/2026-11-09-m0-oci-public-mechanisms.md)与[单用户 grant 撤销核查](../records/2026-11-09-m0-oauth-grant-revocation.md)，完整样例冻结 / 缺口决定尚未完成 |
 
 任务已实现、待验收或已完成的语义分别见[状态词](../governance/documentation.md#状态词)。S01 准备、S02 身份 / 权限、S03 Issue / Actions / OCI / Release 可分批取证，整项完成必须覆盖本计划要求的全部范围；S04 的样例冻结不代替 M3 完整兼容验收。
 

@@ -2,7 +2,7 @@
 
 当前已完成 P0 规划与治理基础及 G0-01 本地 Git 初始化；M0-S01 已有候选静态核查与[本机隔离配置](m0-s01-baseline.md)，M0-S02 / S03 已取得身份生命周期、Issue、Release 与 OCI 的受控切片证据。当日五个提交、实际范围与文档复核见[2026-11-04 收工回顾](../records/2026-11-04-day-review.md)，既有证据保留各批原始差异与非零退出码。
 
-M0-S04 已完成 Digest 保留与 Registry JWT 远端失效的[固定版本公开机制核查](../records/2026-11-09-m0-oci-public-mechanisms.md)。强制保留和单凭据远端失效待所有者取舍与补证，其余兼容范围和精确样例继续按[M0-S04 接续事项](m0-validation.md#接续事项)推进。[27 条差异基线](../architecture/github-compatibility.md#m0-现有差异基线)保留。Runner / Actions 继续暂停，M0 尚未通过出口，M1—M6 未开始。G0 基础保护已有配置读回，行为验收与真实 CI 仍待。
+M0-S04 已核查固定版 [OCI 公开机制](../records/2026-11-09-m0-oci-public-mechanisms.md)和[单用户 grant 撤销](../records/2026-11-09-m0-oauth-grant-revocation.md)。OCI 两项待所有者取舍与补证，公开自动 grant 撤销缺口保留。接续 Release 草稿与包权限、精确样例，详见 [M0-S04 接续事项](m0-validation.md#接续事项)。[27 条差异基线](../architecture/github-compatibility.md#m0-现有差异基线)保留。Runner / Actions 继续暂停，M0 尚未通过出口，M1—M6 未开始。G0 基础保护已有配置读回，行为验收与真实 CI 仍待。
 
 | 阶段 | 目标与可展示结果 | 依赖 / 出口 |
 | --- | --- | --- |

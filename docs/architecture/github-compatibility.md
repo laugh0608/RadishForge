@@ -60,7 +60,7 @@ Webhook 另验收 event 名、action、payload、投递 ID、HMAC、重放与重
 | M0-G03 | 未知 scope 被接受并能读私有仓库 | 联网前拒绝未知组合、回读实际 grant；不宣称上游已拒绝原始请求 |
 | M0-G04 | 旧配置过期 Token introspection 401 | 受控实例禁用查询 / 表单资源鉴权后 inactive；错误 secret 和原因未知的 401 仍拒绝，不伪造 inactive |
 | M0-G05 | 禁用账号仍可 refresh / active | 在线账号复核拒绝后停止使用；恢复账号不自动恢复已终止的本地授权，M1 尚须实现 |
-| M0-G06 | 固定公开 REST / Discovery 无单用户 grant 撤销端点 | 原生 UI 撤销已实测；自动远端撤销路径 / 承诺仍待决定，不调用私有页面请求或删除共享应用代替 |
+| M0-G06 | 固定公开 REST / Discovery 无单用户 grant 撤销端点，`DELETE /api/v1/token` 删除 PAT | 原生 UI 撤销已实测。产品侧停用与上游状态分别报告，公开自动撤销缺口保留。见 [ADR 0003 撤销边界](../adr/0003-gitea-authorization-profiles.md#2026-11-09-单用户-grant-撤销边界) |
 | M0-G07 | 外仓库标签添加 200、无改变 | 当前目录前检 + 写后核对；原始接口仍忽略输入 |
 | M0-G08 | 不存在标签添加 200、无改变 | 明确拒绝失效 ID，不把 200 当作分类已完成 |
 | M0-G09 | 小数标签 ID 200 且 labels 改变 | 仅接受真正整数，拒绝小数 / 布尔 / 重复 ID；不沿用数值截断 |
