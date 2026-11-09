@@ -124,7 +124,7 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 
 ### 接续事项
 
-2026-11-09 已基于现有 27 条差异核查 Gitea 28.2.0 的 [OCI 保留与撤销机制](../records/2026-11-09-m0-oci-public-mechanisms.md)、[G06 单用户撤销](../records/2026-11-09-m0-oauth-grant-revocation.md)、[G19 / G20 草稿权限与字段清除](../records/2026-11-09-m0-release-public-mechanisms.md)及 [G24 / G25 包权限与 scope](../records/2026-11-09-m0-package-access-mechanisms.md)。沿用原兼容专题、M0-04 和既有验收。
+2026-11-09 已完成固定版公开机制核查、首批样例固定、REST 对照及 G19 / G20 / G27 的定向实测。沿用原 27 条差异、M0-04 和既有验收。 [当日提交与证据](../records/2026-11-09-day-review.md)
 
 | 顺序 | 缺少的证据 / 决定 | 下一批交付与完成标准 |
 | --- | --- | --- |
@@ -133,9 +133,11 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 | 3 · M0-G06 | 原生单用户撤销已有实测，固定版公开自动撤销缺口保留。已区分产品侧停用、原生 UI 与自动化支持边界 | 按 [单用户 grant 撤销补证条件](#单用户-grant-撤销补证条件)分层验收。若首版必须自动远端撤销，先确认公开方案，再进行隔离取证 |
 | 4 · M0-G19 / G20 | 普通写者用只读凭据按 Tag 可读同一草稿。降权和撤权后，原凭据按 Tag 查草稿及两路下载均为 404。REST PATCH 空正文保留原值，原生页面可手动清空草稿说明。 [角色切换实测](../records/2026-11-09-m0-release-draft-role-transitions.md) · [同源 REST](../records/2026-11-09-m0-gitea-rest-comparison.md) · [原生编辑实测](../records/2026-11-09-m0-release-native-edit.md) | G19 组织单元及对象存储直链按启用配置另验。G20 其余字段组合按 [Release 补证条件](#release-草稿权限与字段清除补证条件)验收，公开自动清除缺口保留 |
 | 5 · M0-G24 / G25 | 已定位包所有者权限、仓库 link 和 Registry 签发规则。逐仓库隔离、请求 scope 收窄缺口保留 | 按 [OCI 补证条件](#oci-补证条件)验证跨命名空间行为与产品侧读写用途隔离 |
-| 6 · COMP-01 首批样例 | 已固定 GitHub REST `2026-03-10`、gh `v2.96.0`、四份原始工作流及六个 Action 提交。仓库 / Issue / Release 已取得 [GitHub 所有者及匿名参考](../records/2026-11-09-m0-github-rest-reference.md)与 [Gitea 同源普通角色对照](../records/2026-11-09-m0-gitea-rest-comparison.md) | 确认独立测试身份与授权后补齐 GitHub 普通读写角色和权限负例。工作流执行前另固定 Gitea job 镜像、BuildKit 和运行时。 [首批对照样例](../../tests/contracts/m0/compat/README.md) · [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) |
+| 6 · COMP-01 首批样例 | 已固定 GitHub REST `2026-03-10`、gh `v2.96.0`、四份原始工作流及六个 Action 提交。仓库 / Issue / Release 已取得 GitHub 所有者及匿名参考、所有者只读 PAT 及删除后拒绝，以及 Gitea 同源普通角色对照。 [GitHub 参考](../records/2026-11-09-m0-github-rest-reference.md) · [只读 PAT](../records/2026-11-09-m0-github-owner-pat.md) · [Gitea 对照](../records/2026-11-09-m0-gitea-rest-comparison.md) | 确认独立测试身份与授权后补齐 GitHub 普通角色的正向读写、越权和撤权。工作流执行前另固定 Gitea job 镜像、BuildKit 和运行时。 [首批对照样例](../../tests/contracts/m0/compat/README.md) · [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) |
 
-两项待决期间可继续其余公开接口与对照样例的静态准备。上述事项未收口前保持 M0，Runner / Actions 继续暂停，不进入 M1。真实 run / attempt、完整发行 / 恢复及产品实现验收继续保留。
+下一批先记录 G26 的保留对象、窗口、删除例外和恢复要求，以及 G27 是否需要远端失效、可接受的窗口与起算点。两项独立取舍。G26 选择受控保留时，优先验收发布引用、清理和按原 Digest 回退。要求强制保留时，将直接覆盖和删除拒绝纳入同一验收。G27 若只要求产品侧停用，沿用固定版 Gitea，并记录已复制 JWT 的访问和换发风险。接受短期 Bearer 剩余窗口时，准备 Harbor 隔离短测，测量签发拒绝和数据拒绝的时点。要求在 Bearer 到期前拒绝新请求时，先确认逐请求入口的身份映射、直连及下载旁路。 [OCI 补证条件](#oci-补证条件) · [G27 方案与验收](../records/2026-11-09-m0-registry-revocation-options.md)
+
+两项取舍待定期间，优先准备 G24 / G25 的同一写 JWT 跨允许和拒绝命名空间、独立只读 PAT 的对照矩阵。取证须记录目标对象、实际角色和响应，成功读取核对 Digest，拒绝读取核对没有夹具字节，写负例确认未开启上传。GitHub 普通角色测试等独立身份具备后按手册执行。Runner / Actions 保持暂停，阶段保持 M0。
 
 ### 单用户 grant 撤销补证条件
 

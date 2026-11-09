@@ -1,8 +1,8 @@
 # 阶段路线图
 
-当前已完成 P0 规划与治理基础及 G0-01 本地 Git 初始化；M0-S01 已有候选静态核查与[本机隔离配置](m0-s01-baseline.md)，M0-S02 / S03 已取得身份生命周期、Issue、Release 与 OCI 的受控切片证据。当日五个提交、实际范围与文档复核见[2026-11-04 收工回顾](../records/2026-11-04-day-review.md)，既有证据保留各批原始差异与非零退出码。
+P0 规划与治理基础及 G0-01 本地 Git 初始化已完成。M0-S01 已有候选静态核查和本机隔离配置，M0-S02 / S03 已取得身份生命周期、Issue、Release 与 OCI 的受控切片证据。 [本机隔离配置](m0-s01-baseline.md) · [11 月 4 日回顾](../records/2026-11-04-day-review.md)
 
-M0-S04 已核查固定版 OCI 保留与撤销、包可见性与 Registry scope、单用户 grant 撤销及 Release 草稿权限，并固定首批 REST、CLI 与工作流输入。双端行为待取证，OCI 两项取舍及其他缺口继续保留。 [M0-S04 接续事项](m0-validation.md#接续事项) · [27 条差异基线](../architecture/github-compatibility.md#m0-现有差异基线)
+M0-S04 已固定首批 REST、CLI 与工作流输入。REST 已取得 GitHub 所有者与匿名参考、所有者只读 PAT 对照、固定版 Gitea 同源普通角色结果。GitHub 普通角色、工作流执行及 OCI 两项首版取舍仍待收口。 [11 月 9 日回顾](../records/2026-11-09-day-review.md) · [M0-S04 接续事项](m0-validation.md#接续事项) · [27 条差异基线](../architecture/github-compatibility.md#m0-现有差异基线)
 
 Runner / Actions 继续暂停，M0 尚未通过出口，M1—M6 未开始。G0 基础保护已有配置读回，行为验收与真实 CI 仍待。
 

@@ -1,6 +1,6 @@
 # M0-S04 首批 GitHub 对照样例
 
-2026-11-09 固定首批输入，REST、客户端和工作流均为待验证。样例保存在契约目录。未来取证时只把原始 YAML 装入获授权的隔离仓库，保留原文件摘要、实际安装路径及任何改动 diff。来源与阶段归属见 [GitHub 兼容策略](../../../../docs/architecture/github-compatibility.md)。
+2026-11-09 固定首批输入。REST 已取得 GitHub 所有者和匿名参考、所有者只读 PAT 对照，以及固定版 Gitea 同源普通角色结果。GitHub 普通角色、指定客户端的完整双端行为和工作流运行仍待验证。工作流取证时将原始 YAML 装入获授权的隔离仓库，记录文件摘要、安装路径和改动 diff。 [REST 取证手册](rest-runbook.md) · [GitHub 兼容策略](../../../../docs/architecture/github-compatibility.md)
 
 ## 版本与准入
 

@@ -37,4 +37,6 @@ Mock 用于确定性失败注入，但不证明真实底座协议；构建通过
 
 [OCI 切片](../records/2026-11-04-m0-oci-validation.md)区分标准库有界协议、Docker build / save / load 和真实 regctl 推拉；按原始 Manifest / config / layer bytes 核对 Digest，权限负例直接访问 Registry。上传开始没有 Location、只观察到 Range 前缀及半包后零完整对象均保持 unknown，回查仅 GET / HEAD，零自动重试；不以不存在对象替代撤权证明。63 项本地测试只证明本地边界；四项 OCI 差异和旧共享差异继续非零退出。Registry metadata 的 24 小时声明不代替真实到期，固定 Digest 不代替保留验收，健康 CLI 传输不代替其故障重试验收。
 
+M0-S04 同源 REST 对照复用固定 Git 引用和附件。Gitea 探针的两个差异退出 2，GitHub 参考包含所有者及匿名。独立的 GitHub PAT 探针分别验证所有者凭据的只读范围和删除后拒绝，其退出 0 表示相应模式完成，退出 1 保留中断原因。GitHub 普通协作者的角色变化和撤权另行验证。G27 的短测仅观察单次换发与后继的读取和开启上传，真实到期保留为独立用例。 [同源 REST](../records/2026-11-09-m0-gitea-rest-comparison.md) · [所有者 PAT](../records/2026-11-09-m0-github-owner-pat.md) · [G27 换发](../records/2026-11-09-m0-registry-bearer-reissue.md)
+
 证据见[规划建立记录](../records/2026-10-29-planning-bootstrap.md)和[治理基础记录](../records/2026-10-29-governance-foundation.md)；功能验收见[矩阵](../planning/acceptance.md)。
