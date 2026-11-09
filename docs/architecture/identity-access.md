@@ -29,7 +29,7 @@ OIDC 登录成功只建立工作台身份。访问私有仓库之前，用户还
 | `issue_write` | 当前用户仓库读取与 Issue 路由组写入，不能创建仓库；仍需对象权限 |
 | `release_write` | `openid read:user write:repository`，用于已验证的 Release / 附件操作；仓库写 scope 宽于 Release 按钮，仍需 Release 单元与对象权限，不授权 package / OCI |
 
-Release 草稿的只读 scope 元数据与直接下载权限不一致；受控草稿操作要求独立 Release 用途与当前 Release 单元写权限，不能只凭列表可见性或下载 URL 推断授权。原始差异及未实现边界见[ADR 0005](../adr/0005-release-authorization-and-reconciliation.md)。
+Release 草稿的按 ID 详情、列表与 REST 附件元数据要求仓库写 scope，原生附件下载只要求仓库读 scope。按 Tag 查询的只读结果待补证。受控草稿详情和下载统一校验独立 Release 写用途、当前 Release 单元写权限及对象归属。 [ADR 0005 核查补充](../adr/0005-release-authorization-and-reconciliation.md#2026-11-09-草稿权限与字段清除核查)
 
 校验完整组合而非仅校验单个名称：缺少 public-only 的合法名称组合也必须拒绝；创建应用、授权和刷新前均拒绝未知 / 缺失 / 额外 / 重复 scope 或错误 issuer。授权后核对实际 grant scope、签名身份和在线账号；刷新成功或 introspection HTTP 200 不代表凭据可用，缺失 / 非对象 / inactive 元数据、账号不符、拒绝或无法核实均停止。资源访问继续按实际上游对象权限判断，刷新不得恢复已撤销权限。
 
