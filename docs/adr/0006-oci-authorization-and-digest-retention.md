@@ -44,6 +44,13 @@ regctl v0.11.7 darwin/arm64（Apache-2.0）固定官方资产摘要，仅作为�
 
 静态路径、原始实测及协议对照见 [G24 / G25 核查记录](../records/2026-11-09-m0-package-access-mechanisms.md)。测试条件见 [M0-S04 OCI 补证](../planning/m0-validation.md#oci-补证条件)。
 
+## 2026-11-09 G27 撤销方案核查
+
+- 若首版允许等待短期 Bearer 到期，Harbor 项目机器人是隔离验证候选。每枚受管凭据对应独立机器人，撤销后验证原 secret 和旧 Bearer 均无法获得有权后继。远端窗口须覆盖签发竞态、Bearer 寿命、时钟宽限与时钟偏差。
+- 若首版要求在已签 Bearer 到期前拒绝后续数据请求，候选是能按授权记录逐请求复核的唯一入口。Gitea JWT 缺少来源 PAT ID，入口须独立识别凭据，保留当前用户和目标权限检查，并控制签发、数据及任何直连或下载路径。
+
+两条路径均为静态候选，首版窗口及部署方案待所有者决定。 [G27 方案与验收](../records/2026-11-09-m0-registry-revocation-options.md)
+
 ## 停止线
 
 四项差异、早期中断与原始源码摘要全部保留。没有强制制品保留或已复制 Registry Token 的立即撤销证据，不能宣称原生修复 / 完整 ART / BASE 通过。多组件清单、发布冻结、任意组织策略、生产请求持久化 / 崩溃恢复、24 小时真实到期、其他平台 / 客户端、Runner 与 Actions 仍待验收；没有真实 run / attempt，不填占位。Runner 暂停，不进入 M1。

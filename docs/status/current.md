@@ -32,6 +32,7 @@
 - 原四种 OAuth 组合逐字未变；新增[Registry 专用契约](../../tests/contracts/m0/gitea-registry-profile.json)限定 PAT / 固定 origin / service 和 regctl 资产摘要。regctl v0.11.7 darwin/arm64 为任务临时工具，不是产品依赖；使用任务 CA、私密配置且关闭 Docker 凭据 / 证书导入，Buildx 状态在任务目录，无系统 / daemon 信任修改。
 - [M0-S04 差异基线](../architecture/github-compatibility.md#m0-现有差异基线)现汇总 3 条 scope、2 条生命周期、1 条公开单用户撤销接口缺口、12 条 Issue、5 条 Release 及 4 条 OCI 差异，共 27 条；26 条定位到原始 gap，接口缺口单列，复现不重复计数。沿用 ADR 0003—0006，尚未冻结完整 GitHub 兼容范围或批准阶段晋级；早先快照不回写。
 - 固定版包清理规则约束计划清理，直接覆盖和显式删除另走包写权限。Registry JWT 校验不回查来源 PAT，实测原 Bearer 换出的后继保留用户和 `write:package` scope，`nbf` / `exp` 均晚 3 秒。真实到期、原 JWT 到期后后继的实际可用性及连续换发待验，总体远端失效窗口仍无可承诺上限。G26 / G27 缺口及所有者取舍继续保留。 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-包可见性与-registry-scope-核查)
+- G27 已完成替代机制静态核查。Harbor 项目机器人可作为短期 Bearer 窗口候选，需实测禁用后无法取得有权后继、已签 Bearer 的真实到期和时钟宽限。逐请求撤销候选须控制全部访问路径并独立识别凭据。两条路径均待选型及真实验收。 [G27 方案核查](../records/2026-11-09-m0-registry-revocation-options.md)
 - 11 月 1 日及 11 月 4 日任务资源均已清理；先前生命周期 / Issue / Release 各批和本批 OCI / 共享回归七批的容器 / 网络 / 卷读回均为 0，本批任务镜像标签 / 镜像读回为 0。`.local/m0` 凭据 / 证书 / 客户端 / Buildx 状态已移除，18443 / 19443 / 18543 已释放，无本任务运行服务。共享镜像与 BuildKit 缓存保留，未触碰其他项目资源。尚无自有业务工程、产品依赖、自有数据库、产品容器发行配置或活动 CI。
 - 本地初始共同基线为 `c2764aa278cbed9aab3faf6f43a0556e80e623f4`，已推送 master / dev；当前在 dev，后续远端配置记录提交沿 dev 推进，master 保持初始基线。见[初始化记录](../records/2026-10-29-local-git-bootstrap.md)与[远端记录](../records/2026-10-29-remote-governance.md)。
 - origin 为 `https://github.com/laugh0608/RadishForge.git`，保持用户创建的 public 可见性；本地 master / dev 分别跟踪 origin/master / origin/dev。没有 PR、Tag、镜像或 Release，候选域名未配置。
@@ -88,7 +89,7 @@ python3 -B -m unittest discover -s scripts/tests -v
 
 继续 M0-S04。M0-S03 未覆盖能力继续保留。详细输入、交付物和完成标准见 [M0-S04 接续事项](../planning/m0-validation.md#接续事项)。
 
-1. 由所有者分别确认制品保留与回退要求、是否要求单凭据在确定窗口内远端失效。G27 已确认单次换发，按取舍确定是否安排真实到期观察，或先评估可按单凭据拒绝换发及数据操作的方案。长时窗口另预算。 [OCI 补证条件](../planning/m0-validation.md#oci-补证条件)
+1. 由所有者分别确认 G26 保留与回退要求、G27 首版远端失效要求。若允许短期 Bearer 窗口，先隔离验证 Harbor 的换发拒绝、真实到期和独立凭据。若要求已签 Bearer 在到期前失效，先验证逐请求入口和旁路。保留原生 Gitea 时，按所需证据决定是否安排长时到期观察。 [G27 方案核查](../records/2026-11-09-m0-registry-revocation-options.md) · [OCI 补证条件](../planning/m0-validation.md#oci-补证条件)
 2. 独立测试身份具备后验证 GitHub 普通写者及仓库权限撤销，原生读者角色使用已授权组织仓库。Gitea 的 G19 组织单元和对象存储直链按启用配置另验。工作流执行前另固定 Gitea job 镜像、BuildKit Digest 及实际运行时。 [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) · [M0-S04 补证入口](../planning/m0-validation.md#接续事项)
 3. 保持 Runner 暂停 / Actions 关闭；没有真实 run / attempt 不填占位，不把合成 Release 或个人仓库证据外推为五组件清单、完整发布冻结、组织权限、恢复或整个 M0 通过；M1 / M2 产品实现仍未开始。
 
