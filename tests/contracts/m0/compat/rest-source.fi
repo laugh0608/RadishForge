@@ -1,0 +1,33 @@
+blob
+mark :1
+data <<M0_BASE
+M0 REST fixture base
+M0_BASE
+commit refs/heads/main
+mark :2
+author M0 Fixture <m0-fixture@example.invalid> 1700000000 +0000
+committer M0 Fixture <m0-fixture@example.invalid> 1700000000 +0000
+data <<M0_BASE_MESSAGE
+M0 REST fixture baseline
+M0_BASE_MESSAGE
+M 100644 :1 fixture.txt
+
+blob
+mark :3
+data <<M0_PR
+M0 REST fixture PR
+M0_PR
+commit refs/heads/m0-fixture-pr
+mark :4
+author M0 Fixture <m0-fixture@example.invalid> 1700000060 +0000
+committer M0 Fixture <m0-fixture@example.invalid> 1700000060 +0000
+data <<M0_PR_MESSAGE
+M0 REST fixture PR change
+M0_PR_MESSAGE
+from :2
+M 100644 :3 fixture.txt
+
+reset refs/tags/m0-release-01
+from :2
+
+done

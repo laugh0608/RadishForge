@@ -32,6 +32,8 @@ GitHub REST 主样例显式使用 `X-GitHub-Api-Version: 2026-03-10`。官方在
 
 ## REST 与客户端样例
 
+仓库、Issue 和 Release 的双端执行顺序、角色及确定性 Git 夹具见 [REST 取证手册](rest-runbook.md)。
+
 以 `R=/repos/{owner}/{repo}` 表示隔离仓库路径。除特别注明外，GitHub 请求走 `https://api.github.com`，使用 `Accept: application/vnd.github+json`、固定版本头和单用途测试凭据，JSON 写入另带 `Content-Type: application/json`。样例中的 ID 由本次回执取得，Tag 与 SHA 由夹具预先固定。Gitea 原生请求从已固定的 `/api/v1` 入口发出，使用各用途独立授权。对同一动作保留原始请求、必要转换、响应和副作用读回。
 
 | 切片 | GitHub 原始请求与验收 | Gitea 原生对照点 |

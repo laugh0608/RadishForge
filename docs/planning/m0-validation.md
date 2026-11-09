@@ -133,7 +133,7 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 | 3 · M0-G06 | 原生单用户撤销已有实测，固定版公开自动撤销缺口保留。已区分产品侧停用、原生 UI 与自动化支持边界 | 按 [单用户 grant 撤销补证条件](#单用户-grant-撤销补证条件)分层验收。若首版必须自动远端撤销，先确认公开方案，再进行隔离取证 |
 | 4 · M0-G19 / G20 | 已定位草稿鉴权和空字符串忽略原因。按 Tag 只读查询、原生页面手动清空说明待证，固定版无公开自动清除路径 | 按 [Release 补证条件](#release-草稿权限与字段清除补证条件)分别验证原生入口与后续产品边界 |
 | 5 · M0-G24 / G25 | 已定位包所有者权限、仓库 link 和 Registry 签发规则。逐仓库隔离、请求 scope 收窄缺口保留 | 按 [OCI 补证条件](#oci-补证条件)验证跨命名空间行为与产品侧读写用途隔离 |
-| 6 · COMP-01 首批样例 | 已固定 GitHub REST `2026-03-10`、gh `v2.96.0`、四份原始工作流及六个 Action 提交，双端行为待验证 | 执行前先固定 Gitea job 镜像、BuildKit 和运行时，按原始请求与失败判定取证。 [首批对照样例](../../tests/contracts/m0/compat/README.md) · [本批静态核查](../records/2026-11-09-m0-compat-reference-samples.md) |
+| 6 · COMP-01 首批样例 | 已固定 GitHub REST `2026-03-10`、gh `v2.96.0`、四份原始工作流及六个 Action 提交。仓库 / Issue / Release 已取得 [GitHub 所有者及无凭据参考](../records/2026-11-09-m0-github-rest-reference.md) | 确认隔离环境与角色后，以同源夹具取得 Gitea 原生结果，补齐 GitHub 普通读写角色及权限负例。工作流执行前另固定 Gitea job 镜像、BuildKit 和运行时。 [首批对照样例](../../tests/contracts/m0/compat/README.md) · [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) |
 
 两项待决期间可继续其余公开接口与对照样例的静态准备。上述事项未收口前保持 M0，Runner / Actions 继续暂停，不进入 M1。真实 run / attempt、完整发行 / 恢复及产品实现验收继续保留。
 
