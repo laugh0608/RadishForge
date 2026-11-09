@@ -4,7 +4,7 @@
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
 
-2026-11-09 M0-S04 已完成固定版 Gitea 同源 REST 对照。G19 补证确认同一普通写者降权和撤权后，原有效凭据按 Tag 查草稿及两路下载均为 404。G20 补证确认原生页面可清空草稿说明，空标题返回 400。两项公开 API 差异仍保留。GitHub 普通角色仍待验收，G26 / G27 取舍和旧 Bearer 换发补证继续保留。Runner 和 Actions 持续暂停，阶段保持 M0。 [G19 角色切换记录](../records/2026-11-09-m0-release-draft-role-transitions.md) · [G20 原生编辑记录](../records/2026-11-09-m0-release-native-edit.md)
+2026-11-09 M0-S04 已完成固定版 Gitea 同源 REST 对照。G19 确认普通写者降权和撤权后，原凭据按 Tag 查草稿及两路下载均为 404。G20 确认原生页面可清空草稿说明，空标题返回 400。G27 确认删除来源 PAT 后，原 Registry JWT 可换发声明到期更晚、能读取和开启上传的后继。公开 API 差异、OCI 两项取舍和 GitHub 普通角色验收继续保留。Runner 和 Actions 持续暂停，阶段保持 M0。 [G19 角色切换记录](../records/2026-11-09-m0-release-draft-role-transitions.md) · [G20 原生编辑记录](../records/2026-11-09-m0-release-native-edit.md) · [G27 换发实测](../records/2026-11-09-m0-registry-bearer-reissue.md)
 
 2026-11-04 收工时，生命周期、Issue、静态准备、Release 与 OCI 已分别由 `78d11a2`、`a6eca0d`、`c825fb2`、`c77b29e`、`01eb1b0` 保存，records 保留各自导出快照。63 项本地测试通过，最终 OCI / Release / Issue / profiles 真实流程分别保留 4 / 5 / 12 / 1 条差异退出 2，七批资源清理读回通过。当日提交与代码 / 文档复核见[收工回顾](../records/2026-11-04-day-review.md)。
 
@@ -31,7 +31,7 @@
 - [OCI 切片](../records/2026-11-04-m0-oci-validation.md)覆盖独立 package PAT / Registry Bearer、私有组织 / team、原始 Blob / Manifest Digest、Docker scratch 构建 / regctl 推拉 / Docker load、撤权 / 删除及九个真实超时 / 半包场景。旧 Registry Token 在团队降权、移出私有组织或禁用账号后受相应限制；四条差异仍保留：公开个人包的仓库 link 不提供隐私、Registry pull 参数不收窄 write PAT、覆盖最后 Tag 后旧 Digest 404、删除 PAT 后旧 JWT 仍可读写。Metadata 声明 24 小时但未真实等待，未证明即时单凭据撤销 / 强制保留，见[ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)。
 - 原四种 OAuth 组合逐字未变；新增[Registry 专用契约](../../tests/contracts/m0/gitea-registry-profile.json)限定 PAT / 固定 origin / service 和 regctl 资产摘要。regctl v0.11.7 darwin/arm64 为任务临时工具，不是产品依赖；使用任务 CA、私密配置且关闭 Docker 凭据 / 证书导入，Buildx 状态在任务目录，无系统 / daemon 信任修改。
 - [M0-S04 差异基线](../architecture/github-compatibility.md#m0-现有差异基线)现汇总 3 条 scope、2 条生命周期、1 条公开单用户撤销接口缺口、12 条 Issue、5 条 Release 及 4 条 OCI 差异，共 27 条；26 条定位到原始 gap，接口缺口单列，复现不重复计数。沿用 ADR 0003—0006，尚未冻结完整 GitHub 兼容范围或批准阶段晋级；早先快照不回写。
-- 固定版包清理规则约束计划清理，直接覆盖和显式删除另走包写权限。Registry JWT 校验不回查来源 PAT，旧 Bearer 能否换出后继及真实到期均待实测。当前证据无法界定总体远端失效窗口。两个缺口及所有者取舍继续保留。 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-包可见性与-registry-scope-核查)
+- 固定版包清理规则约束计划清理，直接覆盖和显式删除另走包写权限。Registry JWT 校验不回查来源 PAT，实测原 Bearer 换出的后继保留用户和 `write:package` scope，`nbf` / `exp` 均晚 3 秒。真实到期、原 JWT 到期后后继的实际可用性及连续换发待验，总体远端失效窗口仍无可承诺上限。G26 / G27 缺口及所有者取舍继续保留。 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-包可见性与-registry-scope-核查)
 - 11 月 1 日及 11 月 4 日任务资源均已清理；先前生命周期 / Issue / Release 各批和本批 OCI / 共享回归七批的容器 / 网络 / 卷读回均为 0，本批任务镜像标签 / 镜像读回为 0。`.local/m0` 凭据 / 证书 / 客户端 / Buildx 状态已移除，18443 / 19443 / 18543 已释放，无本任务运行服务。共享镜像与 BuildKit 缓存保留，未触碰其他项目资源。尚无自有业务工程、产品依赖、自有数据库、产品容器发行配置或活动 CI。
 - 本地初始共同基线为 `c2764aa278cbed9aab3faf6f43a0556e80e623f4`，已推送 master / dev；当前在 dev，后续远端配置记录提交沿 dev 推进，master 保持初始基线。见[初始化记录](../records/2026-10-29-local-git-bootstrap.md)与[远端记录](../records/2026-10-29-remote-governance.md)。
 - origin 为 `https://github.com/laugh0608/RadishForge.git`，保持用户创建的 public 可见性；本地 master / dev 分别跟踪 origin/master / origin/dev。没有 PR、Tag、镜像或 Release，候选域名未配置。
@@ -88,7 +88,7 @@ python3 -B -m unittest discover -s scripts/tests -v
 
 继续 M0-S04。M0-S03 未覆盖能力继续保留。详细输入、交付物和完成标准见 [M0-S04 接续事项](../planning/m0-validation.md#接续事项)。
 
-1. 由所有者分别确认制品保留与回退要求、单凭据远端失效要求和可接受窗口。G27 先验证旧 Bearer 换发，再根据结果确定到期观察范围，长时窗口另预算。 [OCI 补证条件](../planning/m0-validation.md#oci-补证条件)
+1. 由所有者分别确认制品保留与回退要求、是否要求单凭据在确定窗口内远端失效。G27 已确认单次换发，按取舍确定是否安排真实到期观察，或先评估可按单凭据拒绝换发及数据操作的方案。长时窗口另预算。 [OCI 补证条件](../planning/m0-validation.md#oci-补证条件)
 2. 独立测试身份具备后验证 GitHub 普通写者及仓库权限撤销，原生读者角色使用已授权组织仓库。Gitea 的 G19 组织单元和对象存储直链按启用配置另验。工作流执行前另固定 Gitea job 镜像、BuildKit Digest 及实际运行时。 [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) · [M0-S04 补证入口](../planning/m0-validation.md#接续事项)
 3. 保持 Runner 暂停 / Actions 关闭；没有真实 run / attempt 不填占位，不把合成 Release 或个人仓库证据外推为五组件清单、完整发布冻结、组织权限、恢复或整个 M0 通过；M1 / M2 产品实现仍未开始。
 

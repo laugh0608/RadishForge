@@ -81,7 +81,7 @@ Webhook 另验收 event 名、action、payload、投递 ID、HMAC、重放与重
 | M0-G24 | 公开个人包关联私有仓库后其他用户仍可 pull | 直接拉取按包所有者、可见性及组织权限判定，link 仅保存关联。同组织内逐仓库隔离缺口保留。见 [包权限核查](../records/2026-11-09-m0-package-access-mechanisms.md#g24--所有者仓库关联与包权限) |
 | M0-G25 | Registry 请求 pull，但 write:package PAT 仍可上传 | 固定版签发保留原 scope，目标权限在数据请求判定。单镜像和操作级收窄缺口保留。见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-包可见性与-registry-scope-核查) |
 | M0-G26 | 覆盖最后一个 Tag 后原 Manifest Digest 404 | 固定版包保留规则只约束清理流程。按原 Digest 复核，缺失时阻断。强制保留缺口和取舍见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-公开机制核查补充) |
-| M0-G27 | 删除 PAT 后该 PAT 换发被拒绝，旧 Registry Token 仍能读写 | 校验不回查签发 PAT。旧 Bearer 换发后继待实测，单凭据远端失效缺口保留。见 [G27 补证来源](../records/2026-11-09-m0-package-access-mechanisms.md#g27--旧-bearer-换发待证) |
+| M0-G27 | 删除 PAT 后原 PAT 交换 401，原 JWT 仍可读取、开启上传并换发可用后继 | 校验不回查签发 PAT，后继声明的到期时间晚于原 JWT。单凭据远端失效缺口保留。 [G27 换发实测](../records/2026-11-09-m0-registry-bearer-reissue.md) |
 
 已有正文 `content_version` 冲突 409、只读 / 越权 / 撤权拒绝、删除和响应丢失回查是相应原生切片证据。它们与上述 gap 一同保留，不把正确拒绝再计为差异，也不把正确主路径抵消失败。组织继承标签、自定义单元权限、产品会话 / 草稿 / 请求持久化，以及 GitHub REST 字段 / Link / 错误体与指定客户端的双端对照仍待验收；上方兼容矩阵不因本表改成“直接兼容”。
 

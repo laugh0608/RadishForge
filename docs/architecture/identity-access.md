@@ -58,7 +58,7 @@ Gitea 28.2.0 的单用户远端撤销由用户在原生授权应用设置页确�
 
 2026-11-04 的[OCI 切片](../records/2026-11-04-m0-oci-validation.md)使用独立的[Registry 契约](../../tests/contracts/m0/gitea-registry-profile.json)：普通用户 `read:package` / `write:package` PAT 经固定同源 `/v2/token` 交换 Registry Bearer，不复用 OAuth 凭据。私有组织非成员及只有仓库协作权的用户直接拉取被拒绝；组织成员的读取基线与 team package 写权限分别判断，缺少 package 单元不等于没有读取权。公开个人包关联私有仓库仍可读，Registry 的 pull 请求参数也不能收窄 write PAT，不能承诺逐仓库包隔离或仅凭 query 得到只读凭据。
 
-团队降权、移出私有组织和禁用账号已对旧 Registry Token 的相应操作生效。删除 PAT 后使用该 PAT 换发被拒绝，旧 Registry JWT 在观察时仍可读写。固定版 JWT 校验不回查签发 PAT。旧 Bearer 换发和真实到期仍待验证，远端失效窗口与首版要求待确认。后续产品分别报告本地停用、PAT 删除和上游状态。 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-包可见性与-registry-scope-核查)
+团队降权、移出私有组织和禁用账号已对旧 Registry Token 的相应操作生效。删除 PAT 后，原 PAT 交换被拒绝，原 Registry JWT 仍可读取、开启上传，并换发保留用户和 scope、声明到期更晚的可用后继。固定版 JWT 校验不回查来源 PAT。真实到期、连续换发和首版远端失效要求待确认。后续产品分别报告本地停用、PAT 删除和上游状态。 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-包可见性与-registry-scope-核查) · [G27 换发实测](../records/2026-11-09-m0-registry-bearer-reissue.md)
 
 排队到实际执行之间重新检查授权。生产 Runner 只消费已授权、固定清单和固定工作流的部署意图，不能接受普通 PR 任意指定目标、命令或秘密。用户失权时新操作拒绝，正在运行的外部任务记录已发生副作用与可取消范围。
 

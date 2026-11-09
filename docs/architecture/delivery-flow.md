@@ -10,7 +10,7 @@
 
 - 沿用本机隔离方案的 context、固定镜像、合成账号、回环端口、任务 CA 与串行 cleanup。原三种 OAuth 组合不变；`issue_write` 没有 Release 写入或 package 权限，不把它扩为通用发布凭据。
 - 已新增并实测第四种独立 `release_write = openid read:user write:repository`，对应只读与错误用途凭据作负例。它允许宽于 Release 的仓库操作，须如实记录 grant，不能命名成仅 Release 按钮权限。普通角色、grant / 在线账号与刷新分别取证；只读 scope 的草稿元数据与下载可见性不一致，受控草稿读取要求新用途和 Release 单元写权限，原始差异保留，见[ADR 0005](../adr/0005-release-authorization-and-reconciliation.md)。
-- OCI 已单独验证 Registry challenge → 固定同源 `/v2/token` → Registry Bearer，使用普通用户 `read:package` / `write:package` PAT；四种 OAuth 组合不变，不透传 Release OAuth Bearer 或用管理员 / 无限制 PAT 兜底。Registry metadata / 源码声明 24 小时，未真实等待；团队 / 组织权限与账号禁用即时拒绝、PAT 删除后旧 JWT 仍可读写分别保留，见[ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)。
+- OCI 已单独验证 Registry challenge → 固定同源 `/v2/token` → Registry Bearer，使用普通用户 `read:package` / `write:package` PAT；四种 OAuth 组合不变，不透传 Release OAuth Bearer 或用管理员 / 无限制 PAT 兜底。团队 / 组织撤权和账号禁用会限制旧 JWT 的相应操作。删除 PAT 会拒绝原 PAT 交换，旧 JWT 仍可访问并换发。单枚 JWT 声明 24 小时，真实到期仍待验。 [ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)
 - 普通所有者准备合成仓库 / 私有组织，写者、读者及非成员分别验证。Release 单元读写权限、仓库角色和 Token scope 分开；OCI 按所有者可见性、组织成员 / team package 权限验证，关联私有仓库不等于 package 私有。
 - M0 HTTP 客户端已为显式 binary 请求补齐原始 bytes、严格大小限额和响应头白名单，默认 JSON / form 行为保留；沿用固定 origin、任务 CA、禁止带凭据跨域 / 自动跟随重定向及不自动重试。附件上限 64 KiB、通用读取上限 2 MB，不以损失字节的文本解码验证附件或未来镜像 Digest，不表示已有完整 OCI 客户端。
 
@@ -48,7 +48,7 @@
 
 本批已用任务 CA 的有界协议客户端取得基础推拉 / 权限 / 故障证据，并由 Docker 无网络 scratch 构建 + regctl v0.11.7 推送 / 固定 Digest 导出 + Docker load 验证微型真实镜像。regctl 独立私密配置禁用 Docker 凭据 / 证书导入，Buildx 状态在任务目录；未改系统 / daemon CA，未使用 Docker daemon push / pull。客户端、网络 / 磁盘和清理条件须在启动前明确，不下载未经说明的大型工具镜像，不把协议样例外推为任意 OCI 客户端 / 构建链路通过。
 
-包隐私按实际所有者和当前包权限判定。组织成员有读取基线，仓库关联只记录关联。受控拉取使用 `read:package` PAT，推送使用独立 `write:package` PAT。Registry 查询参数用于构造目标请求，签发器保留实际授予的 package scope。删除 PAT 后，后续产品侧停用和旧 JWT 的远端状态分别报告，旧 Bearer 换发仍待实测。 [包权限与 scope 核查](../records/2026-11-09-m0-package-access-mechanisms.md)
+包隐私按实际所有者和当前包权限判定。组织成员有读取基线，仓库关联只记录关联。受控拉取使用 `read:package` PAT，推送使用独立 `write:package` PAT。Registry 查询参数用于构造目标请求，签发器保留实际授予的 package scope。删除 PAT 后，产品侧停用和 JWT 的远端状态分别报告。原 JWT 及其换出的后继均已实测可读 Manifest 和开启上传。 [包权限与 scope 核查](../records/2026-11-09-m0-package-access-mechanisms.md) · [G27 换发实测](../records/2026-11-09-m0-registry-bearer-reissue.md)
 
 Manifest / config / layer Digest 固定内容身份。上轮实测覆盖最后一个 Tag 后旧 Manifest Digest 返回 404。Gitea 28.2.0 的包清理保留规则只作用于清理任务，Registry 覆盖和显式删除按包权限处理。独立发布引用和清理保留规则是待验收的受控保留候选。发布、部署及回退均复核清单所需的原制品，缺失、摘要不符或不可复核时阻断并保留原因。强制保留范围和恢复目标待所有者确认，见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-公开机制核查补充)。
 
