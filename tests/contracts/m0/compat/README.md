@@ -17,6 +17,12 @@ GitHub REST 主样例显式使用 `X-GitHub-Api-Version: 2026-03-10`。官方在
 
 以上六个 Action 的固定元数据均声明 `node24`。目标平台为 Linux amd64，GitHub 参考标签为 `ubuntu-24.04`。Gitea 对照沿用 28.2.0-rootless / Runner 5.2.4 候选。启动前固定并记录 Gitea job 镜像与 BuildKit 的 amd64 Digest、Docker Engine、实际 Git 和 Action 所用 Node 24 运行时，GitHub 侧记录实际托管镜像和运行时。工作流安装的 Go `1.27.3`、Node `24.22.2` 和随附 npm `11.19.1` 用于应用工具链对照。Buildx 固定 `v0.38.2`。 [候选组合与隔离约束](../../../../docs/planning/m0-s01-baseline.md) · [Buildx 固定发行](https://github.com/docker/buildx/releases/tag/v0.38.2)
 
+## 2026-11-10 执行顺序说明
+
+四份 YAML、Action 提交、既定 amd64 目标与原始预期保持不变，本次未改机器输入或执行样例。后续按[Runner 分步恢复条件](../../../../docs/planning/m0-s01-baseline.md#runner-resumption)先固定实际位置与权限，先无 Registry 写凭据完成基础运行，再按获准路径接镜像与 Release。若为基础批准备不含推送的受控样例，单独记录 diff，不把其通过写成原始镜像样例兼容通过。
+
+现有 arm64 协议证据不代替 amd64 工作流；无可用目标时先作平台决定，不自动模拟或扩建环境。GitHub 普通角色与参考环境能力缺证只约束相应兼容承诺，不阻塞本地基础 Runner 准备；M0 必需路径仍须真实证据，排除首批承诺须明确确认。G26 / G27 具体取舍待确认，当前 Runner / Actions 仍暂停，文档确认不授权执行上述样例。
+
 ## 工作流样例
 
 两端分别准备合成私有仓库，导入相同源码提交，默认分支 `main`。先以 `.github/workflows` 的原始布局验证发现与触发。验证 Gitea 的另一发现目录或文件优先级时，使用独立夹具，记录真实触发数量和 diff。分支、Tag、制品和凭据均限定在各自隔离环境。

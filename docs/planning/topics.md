@@ -42,6 +42,8 @@ M0—M6 是时间与依赖维度，专题是能力维度，两者不是同一棵
 | M0-S03 Issue 与交付接口最小验证 | TOP-BASE；TOP-WORKBENCH、TOP-COMPAT、TOP-DELIVERY | M0-03 / BASE-01 | 真实 Issue、Actions、OCI、Release 最小操作及失败结果；不冒充完整产品或 CD |
 | M0-S04 首批兼容范围与缺口决策 | TOP-COMPAT；TOP-IAM、TOP-DELIVERY | M0-04 / COMP-01 的样例和差异基线 | 固定样例、版本、预期和差异处理；未运行项保持待验证，M3 完成兼容验收 |
 
+2026-11-10 收口顺序由[M0 四批计划](m0-validation.md#closeout-batches)承载，必要阻塞见[范围边界](m0-validation.md#closeout-blockers)，Runner 准入见[分步恢复](m0-s01-baseline.md#runner-resumption)，阶段通过条件统一见[验收出口](acceptance.md#m0-exit)。原专题 / 任务 ID、历史证据与产品范围保留；G26 / G27 具体取舍仍待确认。
+
 治理收尾复用[Rulesets 启用与验收方案](../governance/rulesets.md)：G0-02 补安全报告渠道与独立权限 / PR 行为证据；G0-03 接入真实治理检查与聚合失败传播后，才升级同一规则。两项的状态仍以 tasks 为准，不因本次规划整理关闭。
 
 ## 近期状态与验收读取链

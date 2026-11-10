@@ -42,6 +42,26 @@ Node 发行页标注 10 月 28 日，`dist/index.json` 标注 10 月 27 日；�
 
 Runner 5.x 文档要求 Gitea 1.21+、Git 2.34.1+，JavaScript Action 的 Node 运行时取决于 Action 与 job 环境，不能从控制端 Node 版本推导。M0-S03 / S04 启动 Runner 前再固定实际 job 镜像、Git / Node 版本和 Action commit；`builtin:checkout` 可作为独立样例，不能替代原 `actions/checkout` 的兼容取证。
 
+<a id="runner-resumption"></a>
+
+### 2026-11-10 Runner 分步恢复条件
+
+所有者确认按基础运行、制品接续分步准备。本节只调整后续准入；当前 Runner / Actions 仍暂停，既有 Compose 和脚本仍要求 Actions 关闭，本次没有下载、注册、启用或运行授权，不可直接把现有身份 / API 操作单当成 Runner 操作单。
+
+**基础运行的必要前提：**
+
+- 正式工作流对照沿[已固定样例](../../tests/contracts/m0/compat/README.md)的 Linux amd64 目标，先确认实际执行位置与资源。本机已有协议证据为 arm64，不外推 amd64；资源不可得时作一次明确的平台决定，不自动启动 VM、模拟或建设双平台矩阵。
+- 固定 Runner、job 镜像及对应平台 Digest、Git、Action 所用 Node 和 commit；需要构建时再固定 BuildKit / Buildx 与实际 Engine。控制端 Node 不代替 job 运行时，候选表不代替实际输入回读。
+- 明确 Runner 注册范围、daemon / socket 权限、挂载、网络、合成输入与清理归属。平台不挂 Docker socket；同一 daemon 下不同 Compose 项目不证明管理权限隔离。若实际权限会触及其他项目资源，先确定可接受的隔离执行方式，不默许扩大访问。
+- 只执行已审阅的合成工作流；基础批不含 Registry 写凭据或生产秘密，不执行不可信代码。权限、environment、concurrency 和 fork 的负例仅使用无实际权限的 canary；隔离尚未证明时不放入真实秘密。
+- 准备精确操作、资源 / 时间上限、失败停止、未知结果对账和清理方案，取得具体授权后执行；计划确认不代替本次运行授权。
+
+**基础批交付：** 注册、私有检出、工具链、push / Tag / 手动触发与唯一 run / attempt 关联、日志、失败、取消 / 重跑及失联观察。可以先用不含镜像推送步骤的受控样例，记录与原始兼容样例的差异；此结果不标记原镜像工作流兼容通过。G26 / G27 和 GitHub 普通角色对照未齐不必阻塞本地基础运行，但对应缺口保持。
+
+**制品接续：** 基础批通过后，固定获准的测试 Registry 路径、私有命名空间、独立读写测试凭据与清理 / 撤权方式，才接一个微型镜像及 Release 衔接。核对 SHA → run / attempt → Digest，以独立读凭据拉取原制品；G26 / G27 尚未选定时，原生协议结果仅作有限证据，不冻结制品方案或通过 M0。Registry 或运行候选改变时复验受影响链路，不自动重跑所有历史矩阵。
+
+最终是否晋级按[M0 出口](acceptance.md#m0-exit)评审；具体运行前仍核对当时输入、可用环境和授权。
+
 ## OpenAPI 与身份静态结论
 
 本轮读取[Gitea 固定提交 OpenAPI](https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/templates/swagger/v1-openapi3.generated.json)，SHA-256 为 `c797dc2a94e070c19ea823cb4396829f234a745a7a8c90b4a686b91cbc4d278e`，与 2026-10-29 静态记录一致。共 342 个路径，Issue / Actions / Release 相关筛选命中 70 个；筛选不代表覆盖所有首版操作。`info.version` 仍为构建占位值，版本以固定来源确认。OCI 的 `/v2/` 属独立协议，不能从此 OpenAPI 推导其可用。
