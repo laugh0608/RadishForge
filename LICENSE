@@ -1,0 +1,58 @@
+RadishForge Source-Available License
+Version 1.0, November 14, 2026
+
+Copyright (c) 2026 RadishForge Project Owner. All rights reserved.
+
+1. Scope
+
+This license covers only the original RadishForge software, configuration,
+test tools, and documentation that the copyright owner makes available under
+these terms (the Project). Gitea, Forgejo, runners, base images, dependencies,
+and other upstream or third-party materials remain under their respective
+licenses. Separate licenses and permissions, existing rights, and rights
+available under applicable law or hosting-platform terms continue to apply.
+
+2. Use and internal self-hosting
+
+The copyright owner grants individuals and organizations a worldwide,
+non-exclusive, royalty-free license to download, copy, build, run, privately
+modify, and back up the Project for study, evaluation, and internal
+development or operation. Internal operation includes self-hosting a
+RadishForge instance for your own projects and giving your own employees and
+authorized collaborators access to work on those projects. This includes
+internal work for a business and the use of paid hosting infrastructure.
+An authorized instance may serve its bundled web client to those users.
+
+3. Uses requiring separate permission
+
+You must obtain prior written permission from the copyright owner to
+redistribute or mirror Project source, binaries, images, or modifications, or
+to provide a public forge, hosted forge service, or managed RadishForge
+deployment to other organizations or customers.
+
+Retain copyright, attribution, and license notices in permitted copies and
+modifications. This license grants no rights to use project names or marks
+to brand an unofficial service or distribution. Software, repositories, and
+build artifacts you manage with the Project remain governed by their own
+terms.
+
+4. Contributions
+
+By submitting material for inclusion in the Project, you represent that you
+have the right to submit it and, unless otherwise agreed in writing, grant
+the copyright owner a worldwide, perpetual, irrevocable, non-exclusive,
+royalty-free license to use, reproduce, modify, distribute, and relicense the
+contribution. You retain copyright in your contribution.
+
+5. Warranty and liability
+
+THE PROJECT IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE, AND NON-INFRINGEMENT. TO THE EXTENT PERMITTED BY APPLICABLE LAW,
+THE COPYRIGHT OWNER AND CONTRIBUTORS ARE NOT LIABLE FOR CLAIMS, DAMAGES,
+OR OTHER LIABILITY ARISING FROM THE PROJECT OR ITS USE.
+
+6. Licensing contact
+
+For redistribution, hosted or managed services, or other permissions,
+contact luobo@radishx.com.

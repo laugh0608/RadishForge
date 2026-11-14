@@ -15,7 +15,7 @@ RadishForge 计划以 Gitea 为首选底座，使用 Go 业务服务与 TypeScri
 - 复用 Gitea 的 Git、PR、Actions、Packages 和 Release；自有服务保存项目关联、发布清单和部署记录。
 - 参考 Radish 的开发 / 本地容器 / 测试 / 生产分层，以及固定镜像、迁移、备份和恢复流程。
 - 不要求运行 Radish、RadishNexus 或其他兄弟项目才能自部署。
-- 自有代码的最终许可尚待所有者决定；Gitea、Forgejo 和第三方部分分别遵守各自许可。
+- 原创软件、配置、工具与文档采用 [RadishForge Source-Available License 1.0](LICENSE)，允许内部使用与自托管。Gitea、Forgejo 和第三方部分遵循各自许可。
 
 ## 文档入口
 
