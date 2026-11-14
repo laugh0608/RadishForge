@@ -153,8 +153,8 @@ def check(root, base_ref=None):
                 if not dest.is_relative_to(root) or not dest.exists():
                     errors.append(f'{name}: missing or outside-root link: {target}')
     if 'AGENTS.md' in texts and 'CLAUDE.md' in texts:
-        if texts['AGENTS.md'].splitlines()[1:] != texts['CLAUDE.md'].splitlines()[1:]:
-            errors.append('AGENTS.md / CLAUDE.md differ below their titles')
+        if texts['AGENTS.md'] != texts['CLAUDE.md']:
+            errors.append('AGENTS.md and CLAUDE.md must have identical contents')
         if len(texts['AGENTS.md'].splitlines()) > 250:
             errors.append('Root collaboration instructions exceed 250 lines')
     errors.extend(policy_errors(root))

@@ -38,8 +38,11 @@ class GovernanceFailures(unittest.TestCase):
 
     def test_collaboration_drift(self):
         p = self.root / 'CLAUDE.md'
-        p.write_text(p.read_text() + '\n未同步约束。\n')
-        self.assertTrue(any('differ below' in e for e in self.errors()))
+        original = p.read_text()
+        for content in ('# 不同标题\n' + original.partition('\n')[2], original + '\n未同步约束。\n'):
+            with self.subTest(content=content.splitlines()[0]):
+                p.write_text(content)
+                self.assertIn('AGENTS.md and CLAUDE.md must have identical contents', self.errors())
 
     def test_text_and_broken_link(self):
         (self.root / 'invalid.md').write_bytes(b'\xef\xbb\xbf[missing](no-such-file.md)\r\n')
