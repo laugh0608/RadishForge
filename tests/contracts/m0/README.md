@@ -166,6 +166,16 @@ python3 -u -B scripts/m0_contracts.py --mode release-edit
 
 探针对比省略字段、空值与非空字段混合更新、字符串契约之外的 `null`，每次编辑后由另一普通用户按同一 ID 回读。最后复核草稿状态、附件字节与 Tag / SHA。固定版复现 G20 差异时完成并退出 2。先导出脱敏结果，再清理本批资源。 [G20 实测](../../../docs/records/2026-11-17-m0-release-edit-fields.md)
 
+### G22 Release 发布与超时回读
+
+在获准的本机隔离环境用 `prepare --context orbstack --auth-profile` 准备独立批次。固定镜像均已缓存时，准备后直接运行 `up`。启动前确认 18443 / 19443 / 18543 回环端口空闲。
+
+```bash
+python3 -u -B scripts/m0_contracts.py --mode release-publication
+```
+
+普通写者在已有 Tag 和明确允许新建 Tag 的两条路径各发布一个合成草稿。按原 Release ID、Tag 名与完整 SHA 做写前及写后回读。另用两个独立草稿验证已提交响应丢失与未转发两种真实超时，各用一次合成 PATCH，超时后仅按原 ID 与 Tag 发 GET。先导出脱敏结果，再清理本批。 [G22 隔离实测](../../../docs/records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测)
+
 ## 清理与未覆盖
 
 无论探针成功、发现缺口或中断，交接前执行 `cleanup`。它按归属删除本批容器 / 网络 / 六个卷和 `.local/m0` 凭据，不触碰其他项目资源；下载镜像保留在共享缓存，不全局 prune。需要保留运行环境时先有用户明确要求，再交接项目名、容器 ID、端口和停止命令。

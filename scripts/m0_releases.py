@@ -114,6 +114,48 @@ def publish(client, token, release_id, expected_sha, *, expected_tag, allow_tag_
     return after
 
 
+def publication_checks(client, users, repo, record):
+    if repo.get('private') is not True or repo.get('full_name') != 'alice/private-fixture':
+        raise RuntimeError('G22 requires the exact isolated private repository')
+    alice, bob = users['alice'], users['bob']
+    member = REPO + '/collaborators/bob'
+    expect(client.request('PUT', member, basic=alice, payload={'permission': 'write'}), {204}, 'assign G22 ordinary writer')
+    role = expect(client.request('GET', member + '/permission', basic=alice), {200}, 'verify ordinary writer')['permission']
+    if role != 'write':
+        raise RuntimeError('G22 writer role did not take effect')
+    commit_path = REPO + '/git/commits/' + urllib.parse.quote(repo['default_branch'], safe='')
+    source = expect(client.request('GET', commit_path, basic=alice), {200}, 'resolve G22 source')['sha']
+    app, grant, claims, _ = authorize('release_write', client, bob, 'm0-g22-publication')
+
+    for label in ('existing', 'new'):
+        grant = renew(client, 'release_write', app, grant)
+        token = grant['access_token']
+        tag = 'm0-g22-' + label
+        if label == 'existing':
+            expect(client.request('POST', REPO + '/tags', token=token, payload={'tag_name': tag, 'target': source}),
+                   {201}, 'create G22 fixed Tag')
+        draft = create_release(client, token, payload(tag, source))
+        before_sha = current_tag(client, token, tag)
+        if before_sha != (source if label == 'existing' else None) or str(draft['author_id']) != claims['sub']:
+            raise RuntimeError('G22 draft author or initial Tag differs from the fixture')
+        start = len(REQUESTS)
+        after = publish(client, token, draft['id'], source, expected_tag=tag, allow_tag_creation=(label == 'new'))
+        calls = REQUESTS[start:]
+        release_path, tag_path = REPO + '/releases/' + str(draft['id']), REPO + '/tags/' + tag
+        if [(r['method'], r['path']) for r in calls] != [
+            ('GET', release_path), ('GET', tag_path), ('PATCH', release_path), ('GET', release_path), ('GET', tag_path),
+        ]:
+            raise RuntimeError('G22 publication did not perform one write between exact readbacks')
+        record('release_publication_' + label + '_tag', writer_role=role, source_sha=source,
+               before={**{k: draft[k] for k in ('id', 'tag_name', 'draft')}, 'tag_commit': before_sha},
+               after={**{k: after[k] for k in ('id', 'tag_name', 'draft')}, 'tag_commit': source},
+               request_statuses=[r['status'] for r in calls], publish_patches=1, automatic_retries=0)
+
+    for forward in (True, False):
+        grant = renew(client, 'release_write', app, grant)
+        timeout_publish(client, grant['access_token'], source, forward, record)
+
+
 def assets(client, token, release_id):
     rows = expect(client.request('GET', asset_path(release_id), token=token), {200}, 'list Release attachments')
     if not isinstance(rows, list) or len(rows) > 20:
@@ -467,10 +509,14 @@ def timeout_publish(client, token, sha, forward, record):
     tag = current_tag(client, token, target['tag_name'])
     observed = (current['id'] == target['id'] and current['tag_name'] == target['tag_name']
                 and not current['draft'] and tag == sha)
-    if observed != forward or any(v['method'] != 'GET' for v in REQUESTS[start:]):
+    readbacks = REQUESTS[start:]
+    if observed != forward or [v['method'] for v in readbacks] != ['GET', 'GET']:
         raise RuntimeError('Publication reconciliation wrote or misclassified the result')
     record('release_publish_response_loss_' + ('committed' if forward else 'not_forwarded'), **transport,
-           reconciliation={'state': 'observed' if observed else 'unknown', 'draft': current['draft'], 'tag_commit': tag})
+           release_id=target['id'], tag=target['tag_name'], expected_sha=sha,
+           reconciliation={'state': 'observed' if observed else 'unknown', 'id': current['id'],
+                           'tag_name': current['tag_name'], 'draft': current['draft'], 'tag_commit': tag,
+                           'request_statuses': [v['status'] for v in readbacks], 'get_requests': len(readbacks)})
 
 
 def timeout_asset(client, token, release_id, forward, record, *, partial=False):

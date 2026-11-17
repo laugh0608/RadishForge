@@ -35,6 +35,8 @@
 
 若首版要求原生下载也强制仓库写 scope，或必须通过公开 API 清空说明或标题，需先确认公开上游方案和支持范围。保留 [定向补证条件](../planning/m0-validation.md#release-草稿权限与字段清除补证条件)。
 
+2026-11-17 已实测 G22 的探针约束。已有 Tag 和允许新建 Tag 的两条发布路径均回读了原 Release ID、Tag 名及实际完整 SHA。两种超时仅按原 ID 和 Tag 执行 GET，上游成功得到已观察结果，未转发保持未知。固定版原生差异保留。 [G22 隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测)
+
 ## 停止线
 
 保留五项原始差异、早期中断批次及非零退出码，进入[既有差异基线](../architecture/github-compatibility.md#m0-现有差异基线)；不以本 ADR 关闭 REL / BASE / COMP、降低权限或原子性标准。本 Release 批次未包含 OCI；同日后续的 OCI 协议 / 客户端证据及限制见[ADR 0006](0006-oci-authorization-and-digest-retention.md)，不回写本批原始结果。Actions / Runner、真实 workflow run / attempt、完整客户端兼容及生产仍未验证，Runner 继续暂停，不进入 M1。

@@ -358,6 +358,13 @@ def main(mode, regctl=None):
             report['passed_product_acceptance'] = False
             record('release_edit_probe_completed', scope='G20 draft PATCH field semantics; Actions paused')
             return 2 if any(r['status'] == 'gap' for r in results) else 0
+        if mode == 'release-publication':
+            from m0_releases import publication_checks
+            publication_checks(forge, credentials['forge'], repo, record)
+            report['completed'] = True
+            report['passed_product_acceptance'] = False
+            record('release_publication_probe_completed', scope='G22 exact Release and Tag readback; Actions paused')
+            return 0
         if mode == 'oci':
             from m0_oci import oci_checks
             oci_checks(owner, forge, credentials, regctl, record)
@@ -484,11 +491,13 @@ def main(mode, regctl=None):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--mode', choices=['profiles', 'discovery', 'lifecycle', 'lifecycle-baseline', 'consent-restart',
-                                           'issues', 'releases', 'release-org', 'release-edit', 'oci', 'rest'], default='profiles',
+                                           'issues', 'releases', 'release-org', 'release-edit', 'release-publication',
+                                           'oci', 'rest'], default='profiles',
                         help='profiles: reviewed grants; discovery: raw scopes; lifecycle: long expiry/native consent; '
                              'lifecycle-baseline: historical form-token diagnosis; issues/releases/oci: resource contracts and response loss; '
                              'consent-restart: G06 native removal persistence; '
                              'release-org: G19 team role changes; release-edit: G20 draft fields; '
+                             'release-publication: G22 fixed Release and Tag readback; '
                              'rest: same-source GitHub/Gitea REST comparison')
     parser.add_argument('--regctl', help='OCI only: path to the pinned task-local regctl binary')
     args = parser.parse_args()
