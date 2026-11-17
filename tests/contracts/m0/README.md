@@ -146,6 +146,16 @@ python3 -u -B scripts/m0_contracts.py --mode release-org
 
 以固定私有组织、仓库及两支普通 team 为夹具，用原有效凭据核对写者降权与移出 team 前后，草稿及已发布 Release 的详情和附件。保留独立读 team 及固定 Tag / SHA 的对照。仍使用任务 CA，Runner / Actions 暂停。先导出脱敏 `.local/m0/results.json`，再按下节清理。 [组织仓库实测](../../../docs/records/2026-11-17-m0-release-org-role-transitions.md)
 
+### G20 Release 草稿 PATCH 字段
+
+在已授权的空批次执行 `prepare --auth-profile` 与 `up` 后运行：
+
+```bash
+python3 -u -B scripts/m0_contracts.py --mode release-edit
+```
+
+探针对比省略字段、空值与非空字段混合更新、字符串契约之外的 `null`，每次编辑后由另一普通用户按同一 ID 回读。最后复核草稿状态、附件字节与 Tag / SHA。固定版复现 G20 差异时完成并退出 2。先导出脱敏结果，再清理本批资源。 [G20 实测](../../../docs/records/2026-11-17-m0-release-edit-fields.md)
+
 ## 清理与未覆盖
 
 无论探针成功、发现缺口或中断，交接前执行 `cleanup`。它按归属删除本批容器 / 网络 / 六个卷和 `.local/m0` 凭据，不触碰其他项目资源；下载镜像保留在共享缓存，不全局 prune。需要保留运行环境时先有用户明确要求，再交接项目名、容器 ID、端口和停止命令。

@@ -1,0 +1,727 @@
+{
+  "project": "rf-m0-local-ae770684",
+  "platform": "linux/arm64",
+  "context": "orbstack",
+  "runner_started": false,
+  "system_trust_changed": false,
+  "results": [
+    {
+      "name": "local_tls_requires_explicit_task_ca",
+      "status": "pass",
+      "observed_at_utc": "2026-11-17T12:37:49.684008+00:00"
+    },
+    {
+      "name": "ordinary_users_and_independent_idp_created",
+      "status": "pass",
+      "observed_at_utc": "2026-11-17T12:37:50.061517+00:00"
+    },
+    {
+      "name": "ordinary_user_private_repository",
+      "status": "pass",
+      "observed_at_utc": "2026-11-17T12:37:50.200026+00:00",
+      "repository_id": 1
+    },
+    {
+      "name": "release_edit_draft_fixture",
+      "status": "pass",
+      "observed_at_utc": "2026-11-17T12:37:50.809909+00:00",
+      "release_id": 1,
+      "tag": "m0-g20-edit",
+      "source_sha": "57f0188694aabaacd61984c73244212deb974bf0",
+      "writer_role": "write",
+      "attachment_id": 1,
+      "bytes": 1064,
+      "sha256": "5cf455217db1710351bb5a616296a9fd19f4d9bce832ddc12b43492053974d08"
+    },
+    {
+      "name": "release_edit_omitted_body",
+      "status": "pass",
+      "observed_at_utc": "2026-11-17T12:37:50.822020+00:00",
+      "http_status": 200,
+      "request_fields": {
+        "name": "M0 G20 title only"
+      },
+      "before": {
+        "name": "M0 m0-g20-edit",
+        "body": "M0 synthetic operation m0-g20-edit"
+      },
+      "after": {
+        "name": "M0 G20 title only",
+        "body": "M0 synthetic operation m0-g20-edit"
+      },
+      "changed_fields": [
+        "name"
+      ]
+    },
+    {
+      "name": "release_edit_omitted_name",
+      "status": "pass",
+      "observed_at_utc": "2026-11-17T12:37:50.836597+00:00",
+      "http_status": 200,
+      "request_fields": {
+        "body": "M0 G20 body only"
+      },
+      "before": {
+        "name": "M0 G20 title only",
+        "body": "M0 synthetic operation m0-g20-edit"
+      },
+      "after": {
+        "name": "M0 G20 title only",
+        "body": "M0 G20 body only"
+      },
+      "changed_fields": [
+        "body"
+      ]
+    },
+    {
+      "name": "release_edit_empty_body_with_name",
+      "status": "gap",
+      "observed_at_utc": "2026-11-17T12:37:50.848048+00:00",
+      "http_status": 200,
+      "request_fields": {
+        "name": "M0 G20 mixed title",
+        "body": ""
+      },
+      "before": {
+        "name": "M0 G20 title only",
+        "body": "M0 G20 body only"
+      },
+      "after": {
+        "name": "M0 G20 mixed title",
+        "body": "M0 G20 body only"
+      },
+      "changed_fields": [
+        "name"
+      ]
+    },
+    {
+      "name": "release_edit_empty_name_with_body",
+      "status": "gap",
+      "observed_at_utc": "2026-11-17T12:37:50.861889+00:00",
+      "http_status": 200,
+      "request_fields": {
+        "name": "",
+        "body": "M0 G20 mixed body"
+      },
+      "before": {
+        "name": "M0 G20 mixed title",
+        "body": "M0 G20 body only"
+      },
+      "after": {
+        "name": "M0 G20 mixed title",
+        "body": "M0 G20 mixed body"
+      },
+      "changed_fields": [
+        "body"
+      ]
+    },
+    {
+      "name": "release_edit_null_fields_outside_schema",
+      "status": "pass",
+      "observed_at_utc": "2026-11-17T12:37:50.873971+00:00",
+      "http_status": 200,
+      "request_fields": {
+        "name": null,
+        "body": null
+      },
+      "before": {
+        "name": "M0 G20 mixed title",
+        "body": "M0 G20 mixed body"
+      },
+      "after": {
+        "name": "M0 G20 mixed title",
+        "body": "M0 G20 mixed body"
+      },
+      "changed_fields": []
+    },
+    {
+      "name": "release_edit_unchanged_draft_attachment_and_tag",
+      "status": "pass",
+      "observed_at_utc": "2026-11-17T12:37:50.891340+00:00",
+      "release_id": 1,
+      "draft": true,
+      "attachment_id": 1,
+      "tag": "m0-g20-edit",
+      "source_sha": "57f0188694aabaacd61984c73244212deb974bf0",
+      "bytes": 1064,
+      "sha256": "5cf455217db1710351bb5a616296a9fd19f4d9bce832ddc12b43492053974d08"
+    },
+    {
+      "name": "release_edit_probe_completed",
+      "status": "pass",
+      "observed_at_utc": "2026-11-17T12:37:50.891667+00:00",
+      "scope": "G20 draft PATCH field semantics; Actions paused"
+    }
+  ],
+  "requests": [
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/admin/users",
+      "status": 201,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/admin/users"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/admin/users",
+      "status": 201,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/admin/users"
+    },
+    {
+      "origin": "https://localhost:19443",
+      "method": "POST",
+      "path": "/api/v1/admin/users",
+      "status": 201,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/admin/users"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/user/repos",
+      "status": 201,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/user/repos"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "PUT",
+      "path": "/api/v1/repos/alice/private-fixture/collaborators/bob",
+      "status": 204,
+      "content_type": "",
+      "body_type": "str",
+      "final_path": "/api/v1/repos/alice/private-fixture/collaborators/bob"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/collaborators/bob/permission",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/collaborators/bob/permission"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/git/commits/main",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/git/commits/main"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/user/applications/oauth2",
+      "status": 201,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/user/applications/oauth2"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user/applications/oauth2/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/user/applications/oauth2/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/authorize",
+      "status": 200,
+      "content_type": "text/html",
+      "body_type": "str",
+      "final_path": "/user/login"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/user/login",
+      "status": 200,
+      "content_type": "text/html",
+      "body_type": "str",
+      "final_path": "/login/oauth/authorize"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/grant",
+      "status": 303,
+      "content_type": "",
+      "body_type": "str",
+      "final_path": "/login/oauth/grant"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/login/oauth/access_token"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/.well-known/openid-configuration",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/.well-known/openid-configuration"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/keys",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/login/oauth/keys"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/userinfo",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/login/oauth/userinfo"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/introspect",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/login/oauth/introspect"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/user"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/user/applications/oauth2",
+      "status": 201,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/user/applications/oauth2"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user/applications/oauth2/2",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/user/applications/oauth2/2"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/authorize",
+      "status": 200,
+      "content_type": "text/html",
+      "body_type": "str",
+      "final_path": "/user/login"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/user/login",
+      "status": 200,
+      "content_type": "text/html",
+      "body_type": "str",
+      "final_path": "/login/oauth/authorize"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/grant",
+      "status": 303,
+      "content_type": "",
+      "body_type": "str",
+      "final_path": "/login/oauth/grant"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/access_token",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/login/oauth/access_token"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/.well-known/openid-configuration",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/.well-known/openid-configuration"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/keys",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/login/oauth/keys"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/login/oauth/userinfo",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/login/oauth/userinfo"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/login/oauth/introspect",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/login/oauth/introspect"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/user",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/user"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/repos/alice/private-fixture/tags",
+      "status": 201,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/tags"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/tags/m0-g20-edit",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/tags/m0-g20-edit"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/repos/alice/private-fixture/releases",
+      "status": 201,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "POST",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1/assets",
+      "status": 201,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1/assets"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1/assets/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1/assets/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/attachments/{uuid}",
+      "status": 200,
+      "content_type": "application/octet-stream",
+      "body_type": "BinaryBody",
+      "final_path": "/attachments/{uuid}"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/attachments/{uuid}",
+      "status": 200,
+      "content_type": "application/octet-stream",
+      "body_type": "BinaryBody",
+      "final_path": "/attachments/{uuid}"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "PATCH",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "PATCH",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "PATCH",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "PATCH",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "PATCH",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/tags/m0-g20-edit",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/tags/m0-g20-edit"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/api/v1/repos/alice/private-fixture/releases/1/assets/1",
+      "status": 200,
+      "content_type": "application/json",
+      "body_type": "dict",
+      "final_path": "/api/v1/repos/alice/private-fixture/releases/1/assets/1"
+    },
+    {
+      "origin": "https://localhost:18443",
+      "method": "GET",
+      "path": "/attachments/{uuid}",
+      "status": 200,
+      "content_type": "application/octet-stream",
+      "body_type": "BinaryBody",
+      "final_path": "/attachments/{uuid}"
+    }
+  ],
+  "mode": "release-edit",
+  "http_transport": "stateless API credentials; isolated browser cookie jars for login/consent only",
+  "started_at_utc": "2026-11-17T12:37:49.656646+00:00",
+  "repository_head": "041cd88e470352007279880f90706f0d8f2ce3b3",
+  "source_sha256": {
+    "scripts/m0_contracts.py": "a6a576719216fb3d9860a0c9269d01f40d625f2038e36a812565131d7ff6bbac",
+    "scripts/m0_oauth.py": "cbd6afc85e527879b1935fd6dbcf0b56026132a2fc4e6419dd1a085323af2b17",
+    "scripts/m0_lifecycle.py": "19c87fcac7b343e64ce6e005936d196f5f4d794b721d50508227fbc920a69609",
+    "scripts/m0_local.py": "2253c3e36f3d8fb408d7fa9c225bacd841ccb48b448a409dce64a4eafa988ca3",
+    "scripts/m0_scope.py": "b2525e472bb12b8f1b8752daef0e94d2a3963aa4805334107eb80d9ac2d66c15",
+    "scripts/m0_issues.py": "695f61f84e4eba985765d2a1949f3964d8a1fb1f6c1673822d95d45cac4fd3de",
+    "scripts/m0_response_loss.py": "357d4e9014f2b083bd7223c78ad828741e5967c6ec742bef0fa3a6d06c431304",
+    "scripts/m0_releases.py": "23d1cd97c1cc1017f94c4d7753456fd40bd7f8508959b5d7bb1a384f7f7658f5",
+    "scripts/m0_registry.py": "702190a79ebb41dab44630a6169156096d055d604daac27d4d041f339073bcb6",
+    "scripts/m0_oci.py": "9635c762719ba856ddea9a620977e1fa011953d7bf619a89e91e76fb9ff3e9a6",
+    "scripts/m0_oci_client.py": "aeabd8c90987e40bc30ced0b5139b8cd2941d48a5fff10748f115c6d9aaced06",
+    "tests/contracts/m0/gitea-registry-profile.json": "1e15f6b2b341ccef5bb7a2c3fa881f3b6c248a58fa31d3603387ed15312a9d8c",
+    "tests/contracts/m0/gitea-auth-profile.json": "23372e4709efa5337257f4cc619b4caf77c13c4c9fc6662ecacc62a8a5a97fe8",
+    "tests/contracts/m0/compose.yaml": "e31d0948c6e7d7dae36ce0014c9820f0096964e48bee0917be6aa22c82e5075d",
+    "scripts/m0_release_edit.py": "6857aff4a88a74c0608a37d519e80b43c811676f13aaa365dc2bfd3d97770a36"
+  },
+  "effective_provider_settings": {
+    "forge": {
+      "oauth2": {
+        "INVALIDATE_REFRESH_TOKENS": true,
+        "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+        "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+        "DEFAULT_APPLICATIONS": ""
+      },
+      "security": {
+        "DISABLE_QUERY_AUTH_TOKEN": true
+      },
+      "actions_enabled": false,
+      "config_sha256": "1abc8265605d78a62835bba18636f8f89db46aeb1f000402c85556a36408acce"
+    },
+    "idp": {
+      "oauth2": {
+        "INVALIDATE_REFRESH_TOKENS": true,
+        "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+        "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+        "DEFAULT_APPLICATIONS": ""
+      },
+      "security": {
+        "DISABLE_QUERY_AUTH_TOKEN": true
+      },
+      "actions_enabled": false,
+      "config_sha256": "95dfeb5c0861fc72490b1d658a822b6728b410d0b0b4c325767f5e8fb14013da"
+    }
+  },
+  "completed": true,
+  "passed_product_acceptance": false,
+  "cleanup": {
+    "project_resources": {
+      "containers": 0,
+      "volumes": 0,
+      "networks": 0
+    },
+    "loopback_ports_available": [
+      18443,
+      19443
+    ],
+    "runtime_removed": true,
+    "fixed_images_preserved": true
+  },
+  "exit_code": 2
+}

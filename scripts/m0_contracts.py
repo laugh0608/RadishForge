@@ -252,6 +252,9 @@ def main(mode, regctl=None):
     if mode == 'release-org':
         name = 'scripts/m0_release_org.py'
         report['source_sha256'][name] = hashlib.sha256((RUNTIME.parent.parent / name).read_bytes()).hexdigest()
+    if mode == 'release-edit':
+        name = 'scripts/m0_release_edit.py'
+        report['source_sha256'][name] = hashlib.sha256((RUNTIME.parent.parent / name).read_bytes()).hexdigest()
     report['effective_provider_settings'] = owner.get('effective_provider_settings')
 
     def record(name, status='pass', **details):
@@ -338,6 +341,13 @@ def main(mode, regctl=None):
                       {201}, 'ordinary user creates private repo')
         path = '/api/v1/repos/alice/private-fixture'
         record('ordinary_user_private_repository', repository_id=repo['id'])
+        if mode == 'release-edit':
+            from m0_release_edit import release_edit_checks
+            release_edit_checks(forge, credentials['forge'], repo, record)
+            report['completed'] = True
+            report['passed_product_acceptance'] = False
+            record('release_edit_probe_completed', scope='G20 draft PATCH field semantics; Actions paused')
+            return 2 if any(r['status'] == 'gap' for r in results) else 0
         if mode == 'oci':
             from m0_oci import oci_checks
             oci_checks(owner, forge, credentials, regctl, record)
@@ -464,10 +474,11 @@ def main(mode, regctl=None):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--mode', choices=['profiles', 'discovery', 'lifecycle', 'lifecycle-baseline',
-                                           'issues', 'releases', 'release-org', 'oci', 'rest'], default='profiles',
+                                           'issues', 'releases', 'release-org', 'release-edit', 'oci', 'rest'], default='profiles',
                         help='profiles: reviewed grants; discovery: raw scopes; lifecycle: long expiry/native consent; '
                              'lifecycle-baseline: historical form-token diagnosis; issues/releases/oci: resource contracts and response loss; '
-                             'release-org: G19 organization team role changes; rest: same-source GitHub/Gitea REST comparison')
+                             'release-org: G19 team role changes; release-edit: G20 draft fields; '
+                             'rest: same-source GitHub/Gitea REST comparison')
     parser.add_argument('--regctl', help='OCI only: path to the pinned task-local regctl binary')
     args = parser.parse_args()
     raise SystemExit(main(args.mode, args.regctl))
