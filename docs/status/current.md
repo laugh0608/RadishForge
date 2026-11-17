@@ -1,6 +1,6 @@
 # 当前状态
 
-更新日期：2026-11-10（Asia/Shanghai；收口规划，无新增运行证据）。
+更新日期：2026-11-17（Asia/Shanghai；基础 Runner 操作单与静态核对，无新增工作流运行证据）。
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
 
@@ -9,6 +9,8 @@
 2026-11-04 收工时，生命周期、Issue、静态准备、Release 与 OCI 已分别由 `78d11a2`、`a6eca0d`、`c825fb2`、`c77b29e`、`01eb1b0` 保存，records 保留各自导出快照。63 项本地测试通过，最终 OCI / Release / Issue / profiles 真实流程分别保留 4 / 5 / 12 / 1 条差异退出 2，七批资源清理读回通过。当日提交与代码 / 文档复核见[收工回顾](../records/2026-11-04-day-review.md)。
 
 2026-11-10 所有者确认按“关键取舍 → 最小 Runner 链路 → 定向补证与组合 → 阶段评审”收口，保留原 M0-S01—S04。G26 / G27 具体取舍仍待确认；当前 Runner / Actions 仍暂停，不进入 M1。本次只更新文档，未恢复环境操作或提交 / 推送授权。 [规划记录](../records/2026-11-10-m0-closeout-planning.md)
+
+2026-11-17 已交付[基础 Runner 操作单](../../tests/contracts/m0/compat/runner-runbook.md)，固定首轮样例和候选 job 镜像的 amd64 Digest，写明私有检出、触发关联、失败、取消 / 重跑、失联、权限与清理。只读确认本机 OrbStack daemon 为 Linux arm64；实际 amd64 宿主、执行配置及运行授权待确认。G26 / G27 具体承诺待所有者决定，阶段保持 M0。 [静态准备记录](../records/2026-11-17-m0-runner-preparation.md)
 
 ## 当前事实
 
@@ -92,7 +94,7 @@ python3 -B -m unittest discover -s scripts/tests -v
 下一完整交付：在固定隔离目标上完成普通用户的源码检出、真实工作流、单镜像固定 Digest 与 Release 最小链路，追溯 SHA / run / attempt / 制品及关键失败结果，再冻结可进入 M1 的组合与首版支持范围。执行细节统一见[M0 四批收口](../planning/m0-validation.md#closeout-batches)。
 
 1. **先固定关键取舍与输入。** G26 的保留对象、窗口、删除例外 / 恢复目标，以及 G27 的撤销语义、起算点和可接受窗口仍待所有者确认，不自动选受控保留、有限窗口或新 Registry。按[差异分组](../architecture/github-compatibility.md#closeout-disposition)限定补证；确定 amd64 工作流的实际执行位置，已有 arm64 协议证据不代替。
-2. **准备基础 Runner 的具体操作包。** 固定 job 输入、注册与 daemon 权限、合成样例、资源 / 时长和清理，按[恢复条件](../planning/m0-s01-baseline.md#runner-resumption)另获运行授权。先无 Registry 写凭据，完成检出、工具链、触发关联、日志、失败、取消 / 重跑和失联观察；G26 / G27 未定及 GitHub 普通角色缺证不必阻塞这项准备。
+2. **确认基础 Runner 的实际执行目标。** 在[操作单](../../tests/contracts/m0/compat/runner-runbook.md)回填专用 amd64 daemon、实际资源与配置 / 命令，按[恢复条件](../planning/m0-s01-baseline.md#runner-resumption)另获运行授权。基础批先验证无 Registry 写凭据的工作流；G26 / G27 与 GitHub 普通角色对照各按所需证据推进。
 3. **按所选路线补证并组合。** 基础批通过后，获准接一个微型镜像、独立读凭据回拉和 Release 衔接，补首版实际组织权限、命名空间与选中兼容样例。未决 OCI 方案只保留有限原生证据，不作制品冻结；候选变化只复验受影响链路。
 4. **评审 M0 出口并交接 M1。** 满足[唯一阶段出口](../planning/acceptance.md#m0-exit)才进入原定工程、身份与仓库基础；否则列具名阻塞和解除条件，不新增采用准备阶段。
 

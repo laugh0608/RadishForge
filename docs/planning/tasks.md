@@ -48,7 +48,7 @@
 
 - M0-01：固定实际工作流平台、job 输入与运行权限，再依据全阶段证据最终冻结；候选表与 arm64 协议验证不代替 amd64 工作流。
 - M0-02：沿既有授权与原生撤销证据，按选定承诺补直接影响安全的缺口；产品会话 / 停用仍归 M1。
-- M0-03：基础 Runner 无 Registry 写凭据先行，具体运行另获授权；通过后按获准路径接单镜像、来源关联和 Release，必要权限与失败边界保持。
+- M0-03：已整理[基础 Runner 操作单](../../tests/contracts/m0/compat/runner-runbook.md)，现待确认 amd64 执行位置、实际配置和运行授权。基础批无 Registry 写凭据，通过后按获准路径接单镜像、来源关联和 Release。
 - M0-04：按[差异分组](../architecture/github-compatibility.md#closeout-disposition)作有限裁决和补证。G26 / G27 具体取舍仍待确认，GitHub 普通角色与未执行样例保持待验；不因基础 Runner 可准备而关闭相应承诺。
 
 当前 Runner / Actions 仍暂停、不进入 M1。每批保留资源上限、失败去向与实际证据；满足阶段出口后交接原 M1，未满足则登记具名阻塞，不新增采用准备任务。
