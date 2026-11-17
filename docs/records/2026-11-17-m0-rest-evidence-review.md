@@ -20,3 +20,9 @@
 下一轮优先取得 GitHub 普通角色参考。若用同一批验收仓库 `Read` / `Write`，选获准的私有组织仓库与独立普通成员，核对两个角色和凭据各自的范围。现有个人私有仓库可作为普通写者 / 移除协作者的备选；它只能授予协作者写权限，fine-grained PAT 对仓库协作者的贡献也有限制。已确认可读的历史夹具作为参考保留，后续写入用新标记、Tag 及独立读回。 [执行手册](../../tests/contracts/m0/compat/rest-runbook.md) · [GitHub 个人仓库权限](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/repository-access-and-collaboration/permission-levels-for-a-personal-account-repository#collaborator-access-for-a-personal-account-repository) · [GitHub 凭据限制](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#fine-grained-personal-access-tokens-limitations)
 
 原 COMP-01 状态和 27 条差异保持，GitHub 普通角色继续待验证。Runner / Actions 暂停，M0 阶段出口继续适用。本轮无远端写入、服务启停或新运行资源。
+
+## 个人仓库普通写者复查
+
+`b40b3fb` 提交后按确认的目标 `laugh0608/RadishForge-Test` 复查。`GET R` 返回原仓库 ID `1451320859`、`private=true`、`owner.type=User` 和调用者 `permissions.admin=true`。`GET R/collaborators/laugh0608/permission` 返回 `permission=admin`、`role_name=admin`，协作者分页列表仍只有所有者。当前只有这个账号可用，普通写者与移除后的实际访问均未执行。既有所有者只读 PAT 和匿名记录各自保留。 [GitHub 个人仓库权限](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/repository-access-and-collaboration/permission-levels-for-a-personal-account-repository)
+
+GitHub 允许由人注册、专供自动化使用的机器账号担任个人仓库协作者。若采用该路径，后续可覆盖 REST 写者与移除后的资源访问，结果记录为机器账号的协作者角色实测。当前复查只执行 GET，无账号创建、协作者变更或测试对象写入。 [GitHub 机器账号条款](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service#3-account-requirements) · [机器账号协作权限](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys#machine-users)

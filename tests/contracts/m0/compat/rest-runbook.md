@@ -43,6 +43,10 @@ python3 -B scripts/m0_github_scope.py
 - 验收两种仓库角色时，使用私有组织测试仓库及普通成员。通过 team 分配并分别回读 `Read` / `Write`。精细 PAT 单独限制目标仓库和实际所需权限。只读凭据边界与仓库角色边界分别记录；测试仓库角色的拒绝时，选用该角色确实无权限的操作，例如创建 Release 或改写另一作者的 Issue。 [GitHub 组织仓库角色](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization)
 - 只验证普通写者及移除协作者时，可使用现有个人私有测试仓库。先确认独立账号和适用凭据，细粒度凭据不可用时由所有者确认可接受的授权范围。用原有三个引用与已发布 Release 作读对照。写入使用新批次标记、新 Tag 和新对象，逐次读回并按授权范围清理。
 
+`laugh0608/RadishForge-Test` 已选为普通写者与移除协作者的目标。角色回读为所有者 `admin`，当前无普通协作者。具备独立身份后，沿用上方角色准入和下方 Issue / Release 用例。先以协作者身份取得正向读写及读回，再由所有者移除本批协作者并确认权限变化。复测使用原测试凭据，先确认身份端点仍识别该账号，再验证原资源的读写拒绝，由所有者独立确认资源仍可读、拒绝写入未产生对象。身份端点失败时单独保留凭据结果。 [个人仓库角色复查](../../../../docs/records/2026-11-17-m0-rest-evidence-review.md#个人仓库普通写者复查)
+
+只有所有者个人账号时，独立身份可采用由人注册、仅用于自动化的 GitHub 机器账号。在确认账号、凭据及授权范围后，仅将其加入测试仓库，并使用自动化流程采集协作者角色证据。 [GitHub 账号条款](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service#3-account-requirements) · [机器账号协作权限](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys#machine-users)
+
 ## 确定性源码夹具
 
 [rest-source.fi](rest-source.fi) 只包含合成文本、两个 SHA-1 提交和一个轻量 Tag。文件 SHA-256 为 `223a5feddbd5791ad883a2a4b30aabdd209aa15193508e929334650b55cb7cef`。
