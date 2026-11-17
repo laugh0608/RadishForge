@@ -27,7 +27,7 @@ Windows 可用 `py -3` 替代 `python3`，不额外维护仅转发命令的 shel
 
 ## M0 本机验证工具
 
-[m0_local.py](m0_local.py)管理明确归属的本机 Docker 验证批次，[m0_contracts.py](m0_contracts.py)验证真实 Gitea OIDC / OAuth、普通用户权限及 Issue API；两者不是默认治理检查的一部分。配置、命令、资源、退出码、秘密和清理边界见[M0 契约说明](../tests/contracts/m0/README.md)。
+[m0_local.py](m0_local.py)管理明确归属的本机 Docker 验证批次，[m0_contracts.py](m0_contracts.py)验证真实 Gitea 的 OIDC / OAuth、普通用户权限、Issue、Release、OCI 与同源 REST 对照。这些探针按需运行。配置、命令、资源、退出码、秘密和清理边界见[M0 契约说明](../tests/contracts/m0/README.md)。
 
 `prepare` 生成本批私密文件，`pull` 下载固定镜像，`up` 初始化新卷并启动三个平台服务，协议探针写入合成账号 / 仓库 / Issue / OAuth 授权，`cleanup` 删除本批测试资源。仅在对应授权下执行，不因本地治理通过自动启动；当前配置没有 Runner，也不挂 Docker socket。
 
@@ -48,6 +48,8 @@ Windows 可用 `py -3` 替代 `python3`，不额外维护仅转发命令的 shel
 [m0_release_org.py](m0_release_org.py) 由 `--mode release-org` 调用，验证私有组织仓库的 Release team 权限变化，使用独立已发布对照及同一有效凭据。 [组织仓库契约](../tests/contracts/m0/README.md#g19-组织仓库-release-草稿权限)
 
 [m0_release_edit.py](m0_release_edit.py) 由 `--mode release-edit` 调用，验证 G20 草稿 PATCH 的省略、空值混合编辑与独立回读。 [Release 字段契约](../tests/contracts/m0/README.md#g20-release-草稿-patch-字段)
+
+`--mode release-publication` 调用 [m0_releases.py](m0_releases.py) 的定向探针。G22 按原 Release ID、Tag 名及完整 SHA 核对单次发布，超时后仅按原 ID 和 Tag 发 GET。G23 在新建 Tag 前按完整 SHA 回读目标仓库的提交，读取失败后的零 PATCH 目前有本地模拟证据。 [发布与超时回读入口](../tests/contracts/m0/README.md#g22-release-发布与超时回读)
 
 [m0_consent_restart.py](m0_consent_restart.py) 由 `--mode consent-restart` 调用，检查普通用户自助撤销在仅重启本批资源 Gitea 后的持久性及独立授权有效性。 [执行与清理](../tests/contracts/m0/README.md#g06-原生自助撤销重启补证)
 

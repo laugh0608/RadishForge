@@ -22,7 +22,7 @@
 | --- | --- | --- |
 | 固定源码与 Tag | `GET R/git/commits/{sha}`、`GET R/tags/{tag}`；Tag `POST R/tags` 声明 200，实测 / 同版处理器为 201，保留 gap | 使用完整 commit SHA；Tag 的 `commit.sha` 独立核实，不把 Tag object ID 或 Release 的 `target_commitish` 字符串当最终提交 |
 | 创建与定位草稿 | `POST R/releases` / 201；`GET R/releases/{id}`、`GET R/releases/tags/{tag}` / 200 | 唯一 tag、正文关联标记、作者、draft、源 SHA；草稿创建不一定生成 Git Tag，不能在尚未发布时假设已存在 |
-| 列表与可见性 | `GET R/releases?draft=...&page=...&limit=...` / 200 | 分页不重不漏。列表与按 ID 详情要求 Release 单元写权限且具备仓库写 scope。按 Tag 查询的只读结果待补证。查询排除草稿时，创建结果仍需有权主体回读 |
+| 列表与可见性 | `GET R/releases?draft=...&page=...&limit=...` / 200 | 分页不重不漏。草稿列表与按 ID 详情要求 Release 单元写权限及仓库写 scope。具备该单元写权限的用户持仓库只读 scope 时，按 Tag 仍可读取草稿。产品入口统一校验用途和角色。 [G19 证据及边界](../adr/0005-release-authorization-and-reconciliation.md#2026-11-09-草稿权限与字段清除核查) |
 | 说明 / 发布 | `PATCH R/releases/{id}` / 200 | 说明与 draft / prerelease 分别回读。发布前后按原 Release ID、Tag 名及 Tag 的实际 SHA 核对。空说明清除、错误 target、Tag 漂移、重复同 tag 创建分别保留结果 |
 | 附件上传 / 定位 | `POST R/releases/{id}/assets?name=...` / 201，multipart 字段 `attachment` 或原始 bytes；列表 / 单项 GET 为 200 | 名称、ID / UUID、size、所属仓库 / Release；同名不当作幂等键。Attachment DTO 未提供内容 Digest，必须实际下载计算 SHA-256 |
 | 附件改名 / 删除 | `PATCH R/releases/{id}/assets/{attachment_id}` / 201，DELETE / 204 | 跨 Release / 仓库 ID 拒绝；删除后元数据和下载均失效，拒绝 / 超时后回查 |
@@ -32,7 +32,9 @@
 
 至少覆盖：已提交但响应丢失、请求未转发、重复同 tag、同名附件重复 / 部分上传、下载损坏、跨用户 / 撤权、被删除资源、Tag 与 target 不一致。创建未知后先按固定仓库 + tag 查询再回读 ID / 标记；附件未知后列出候选并逐个校验内容。零匹配、多匹配、无权限或查询失败都保持 unknown，不重新 POST、不选 latest、不删除归属未确认的对象。发布前后分别核对 Tag SHA；检查与写入仍存在竞态，不宣称跨系统原子性。
 
-此前已执行个人仓库合成切片及真实超时 / 半包断开。空 name / body 被忽略、无效 target 发布返回 500、已有 Tag 的实际提交与 target 不同等继续为 gap。附件以对象身份和实收字节对账。后续产品在交付草稿附件字节前复核授权与归属，固定版 REST 的空字段清除请求在写入前明确拒绝。原生手动清空说明和按 Tag 的只读草稿查询待验证。 [ADR 0005 核查补充](../adr/0005-release-authorization-and-reconciliation.md#2026-11-09-草稿权限与字段清除核查)
+G19 已实测私有组织 team 的写者降权与移除，并分别读回草稿、附件及独立已发布对照。G20 已实测原生页面手动清空说明和 REST 混合字段只写入非空值。后续产品统一验证草稿用途、权限和对象归属。使用固定版 REST 时，含清空意图的请求在写前拒绝整次编辑。 [ADR 0005 核查补充](../adr/0005-release-authorization-and-reconciliation.md#2026-11-09-草稿权限与字段清除核查)
+
+G22 已隔离验证按原 Release ID、Tag 名及完整 SHA 核对发布，已提交响应丢失及未转发两例均只读回查。G23 已验证允许新建 Tag 时先按完整 SHA 回读提交再发送一次 PATCH。目标提交查询失败后的零 PATCH 仍以本地模拟为证，固定版原生差异继续保留。 [G22 实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 复测](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)
 
 ### OCI 最小执行切片
 

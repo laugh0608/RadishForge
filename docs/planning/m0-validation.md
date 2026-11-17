@@ -161,16 +161,20 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 
 ### 接续事项
 
-2026-11-09 已完成固定版公开机制核查、首批样例固定、REST 对照及 G19 / G20 / G27 的定向实测。沿用原 27 条差异、M0-04 和既有验收。 [当日提交与证据](../records/2026-11-09-day-review.md)
+2026-11-17 已完成 G24—G26 隔离取证、G06 重启补证、G19 组织 team、G20 混合字段、G22 回查及 G23 正向前检，并复核 COMP-01 的既有测试仓库。沿用原 27 条差异、M0-04 和既有验收。 [11 月 9 日证据](../records/2026-11-09-day-review.md) · [11 月 17 日收工回顾](../records/2026-11-17-day-review.md)
 
-| 顺序 | 缺少的证据 / 决定 | 下一批交付与完成标准 |
+当前按单人、单台 Mac 安排工作，沿用本机 OrbStack 串行执行隔离用例。**下一批建议只补一次 G23 拒绝路径。** 在获准的新隔离批次中，用合成草稿验证目标提交按完整 SHA 查询返回 404 时，前检阶段只有 GET，发布 PATCH 为零。独立回读原 Release ID 仍为草稿、原 Tag 仍缺失，记录拒绝与清理结果。已有正向路径沿用已归档证据。 [G23 实测与模拟边界](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)
+
+这轮之后，若没有影响首版的新增缺口，下一项决策集中在一台 Mac 下的 Runner 执行平台。选定可用且可隔离的候选并满足[分步恢复条件](m0-s01-baseline.md#runner-resumption)前，Runner / Actions 继续暂停。Linux amd64 候选的真实工作流及 SHA / run / Digest / Release 组合保持待验证。GitHub 普通角色继续等待独立协作者；当前使用现有个人账号及已保存的参考，暂缓补齐该项。 [M0 出口](acceptance.md#m0-exit)
+
+| 主题 | 证据 / 决定 | 剩余验收条件 |
 | --- | --- | --- |
-| 1 · M0-G26 | 已确认 30 天受控保留。清理保留规则有公开配置，覆盖最后 Tag 后旧 Manifest 404 | 独立发布引用、实际清理、例外删除及原 Digest 恢复已[取证](../records/2026-11-17-m0-oci-retention-validation.md)，产品窗口与组合链路待验 |
-| 2 · M0-G27 | 已确认产品侧停用与原 PAT 交换拒绝，接受已复制 Bearer 的远端风险。 [G27 换发实测](../records/2026-11-09-m0-registry-bearer-reissue.md) | 沿用原 PAT 删除后 401 与旧 Bearer 换发的 M0 上游证据，在产品阶段验收本地停用、新操作与待执行作业 |
-| 3 · M0-G06 | 原生单用户撤销及[重启持久性](../records/2026-11-17-m0-oauth-restart-validation.md)已有实测，固定版公开自动撤销缺口保留。已区分产品侧停用、原生 UI 与自动化支持边界 | 按 [单用户 grant 撤销补证条件](#单用户-grant-撤销补证条件)分层验收。若首版必须自动远端撤销，先确认公开方案，再进行隔离取证 |
-| 4 · M0-G19 / G20 | 普通写者用只读凭据按 Tag 可读同一草稿。降权和撤权后，原凭据按 Tag 查草稿及两路下载均为 404。REST PATCH 空正文保留原值，原生页面可手动清空草稿说明。 [角色切换实测](../records/2026-11-09-m0-release-draft-role-transitions.md) · [同源 REST](../records/2026-11-09-m0-gitea-rest-comparison.md) · [原生编辑实测](../records/2026-11-09-m0-release-native-edit.md) | G19 已补[私有组织普通 team 权限](../records/2026-11-17-m0-release-org-role-transitions.md)，对象存储直链按启用配置另验。G20 已补[省略、混合更新与 null 的字段证据](../records/2026-11-17-m0-release-edit-fields.md)，产品整次拒绝与公开自动清除缺口分别保留 |
-| 5 · M0-G24 / G25 | 已定位包所有者权限、仓库 link 和 Registry 签发规则。逐仓库隔离、请求 scope 收窄缺口保留 | 已[验证](../records/2026-11-17-m0-oci-retention-validation.md)跨组织数据权限与独立读 PAT；后续产品按对象和用途控制 |
-| 6 · COMP-01 首批样例 | 已固定 GitHub REST `2026-03-10`、gh `v2.96.0`、四份原始工作流及六个 Action 提交。仓库 / Issue / Release 已取得 GitHub 所有者及匿名参考、所有者只读 PAT 及删除后拒绝，以及 Gitea 同源普通角色对照。 [GitHub 参考](../records/2026-11-09-m0-github-rest-reference.md) · [只读 PAT](../records/2026-11-09-m0-github-owner-pat.md) · [Gitea 对照](../records/2026-11-09-m0-gitea-rest-comparison.md) | 确认独立测试身份与授权后补齐 GitHub 普通角色的正向读写、越权和撤权。工作流执行前另固定 Gitea job 镜像、BuildKit 和运行时。 [首批对照样例](../../tests/contracts/m0/compat/README.md) · [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) |
+| M0-G26 | 已确认 30 天受控保留。清理保留规则有公开配置，覆盖最后 Tag 后旧 Manifest 404 | 独立发布引用、实际清理、例外删除及原 Digest 恢复已[取证](../records/2026-11-17-m0-oci-retention-validation.md)，产品窗口与组合链路待验 |
+| M0-G27 | 已确认产品侧停用与原 PAT 交换拒绝，接受已复制 Bearer 的远端风险。 [G27 换发实测](../records/2026-11-09-m0-registry-bearer-reissue.md) | 沿用原 PAT 删除后 401 与旧 Bearer 换发的 M0 上游证据，在产品阶段验收本地停用、新操作与待执行作业 |
+| M0-G06 | 原生单用户撤销及[重启持久性](../records/2026-11-17-m0-oauth-restart-validation.md)已有实测，固定版公开自动撤销缺口保留。已区分产品侧停用、原生 UI 与自动化支持边界 | 按 [单用户 grant 撤销补证条件](#单用户-grant-撤销补证条件)分层验收。若首版必须自动远端撤销，先确认公开方案，再进行隔离取证 |
+| M0-G19 / G20 | 普通写者用只读凭据按 Tag 可读同一草稿。降权和撤权后，原凭据按 Tag 查草稿及两路下载均为 404。REST PATCH 空正文保留原值，原生页面可手动清空草稿说明。 [角色切换实测](../records/2026-11-09-m0-release-draft-role-transitions.md) · [同源 REST](../records/2026-11-09-m0-gitea-rest-comparison.md) · [原生编辑实测](../records/2026-11-09-m0-release-native-edit.md) | G19 已补[私有组织普通 team 权限](../records/2026-11-17-m0-release-org-role-transitions.md)，对象存储直链按启用配置另验。G20 已补[省略、混合更新与 null 的字段证据](../records/2026-11-17-m0-release-edit-fields.md)，产品整次拒绝与公开自动清除缺口分别保留 |
+| M0-G24 / G25 | 已定位包所有者权限、仓库 link 和 Registry 签发规则。逐仓库隔离、请求 scope 收窄缺口保留 | 已[验证](../records/2026-11-17-m0-oci-retention-validation.md)跨组织数据权限与独立读 PAT；后续产品按对象和用途控制 |
+| COMP-01 首批样例 | 已固定 GitHub REST `2026-03-10`、gh `v2.96.0`、四份原始工作流及六个 Action 提交。仓库 / Issue / Release 已取得 GitHub 所有者及匿名参考、所有者只读 PAT 及删除后拒绝，以及 Gitea 同源普通角色对照。 [GitHub 参考](../records/2026-11-09-m0-github-rest-reference.md) · [只读 PAT](../records/2026-11-09-m0-github-owner-pat.md) · [Gitea 对照](../records/2026-11-09-m0-gitea-rest-comparison.md) | 确认独立测试身份与授权后补齐 GitHub 普通角色的正向读写、越权和撤权。工作流执行前另固定 Gitea job 镜像、BuildKit 和运行时。 [首批对照样例](../../tests/contracts/m0/compat/README.md) · [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) |
 
 G24 / G25 的跨命名空间与独立只读凭据对照已并入 G26 短测。真实清理、原 Digest 恢复及负例见[实测记录](../records/2026-11-17-m0-oci-retention-validation.md)。
 

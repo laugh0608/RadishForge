@@ -100,7 +100,7 @@ python3 -u -B scripts/m0_contracts.py --mode releases
 
 模式覆盖草稿 / 分页、编辑 / 清空原始差异、发布与 Tag 实际 SHA、raw / multipart 上传、字节摘要 / 改名、跨对象关联、重复 tag / 同名附件、删除与回读。所有 Release / Tag / 附件只在本机隔离 Gitea，绝不写当前 GitHub 仓库。`Client.request` 的显式 binary 模式保留原始 bytes 和白名单头；请求 / 响应均有上限，附件场景限 64 KiB，测试内容含非 UTF-8 字节。默认 JSON / form 调用不改为二进制。
 
-共用故障监听按 `release_create` / `release_publish` / `release_asset` 分别限制固定仓库的 POST / PATCH；精确凭据、路径与 body 只能处理一次。创建 / 发布 / 附件分别注入已提交响应丢失和未转发，另在 TLS 上游发送完整 Content-Length 但仅发送附件前缀后断开；每次 caller 真实超时、监听随后停止。回查仅 GET：创建按 tag / 标记 / 作者，发布按 ID / draft / Tag SHA，附件按 ID / UUID / 名称 / size / 真实摘要；两个有效 URL 表示不当作身份不同，零 / 多匹配或内容不符保持 unknown，自动重试为 0。
+共用故障监听按 `release_create` / `release_publish` / `release_asset` 分别限制固定仓库的 POST / PATCH；精确凭据、路径与 body 只能处理一次。创建 / 发布 / 附件分别注入已提交响应丢失和未转发，另在 TLS 上游发送完整 Content-Length 但仅发送附件前缀后断开；每次 caller 真实超时、监听随后停止。回查仅发 GET。创建按 Tag / 标记 / 作者，发布按原 Release ID、Tag 名、draft 及实际 Tag SHA，附件按 ID / UUID / 名称 / size / 字节摘要。两种合法附件 URL 可表示同一对象。零匹配、多匹配或内容不符保持 unknown，自动重试为 0。
 
 窗口沿用约 15–25 分钟和现有 2.75 GiB / 回环资源，结束按同一入口保存脱敏证据、`status`、`cleanup`；不能删开始标记重放。最终源码的 48 项本地测试及 Release / Issue / profiles 实测分别记录，见[Release 证据](../../../docs/records/2026-11-04-m0-release-validation.md)和[ADR 0005](../../../docs/adr/0005-release-authorization-and-reconciliation.md)。
 

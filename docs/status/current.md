@@ -1,8 +1,10 @@
 # 当前状态
 
-更新日期：2026-11-17（Asia/Shanghai；基础 Runner 准备及 OCI、G06、G19、G20、G22、G23 隔离实测）。
+更新日期：2026-11-17（Asia/Shanghai，收工）。
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
+
+2026-11-17 收工前已保存 12 个提交，完成基础 Runner 操作单、OCI 与 Release 定向取证、G06 自助撤销重启复测及 GitHub 参考权限复查。70 项本地测试通过，OrbStack 本批资源已清理。 [提交回顾与收工交接](../records/2026-11-17-day-review.md)
 
 2026-11-09 收工时，M0-S04 已取得固定版 Gitea 同源 REST、GitHub 所有者和匿名参考及所有者只读 PAT 证据。G19 补证确认普通写者降权和撤权后，原凭据按 Tag 查草稿及两路下载均为 404。G20 确认原生页面可清空草稿说明。G27 确认删除来源 PAT 后仍能换发可用后继，撤销候选已完成静态核查。OCI 两项取舍和 GitHub 普通角色验收继续保留，Runner 和 Actions 持续暂停，阶段保持 M0。 [当日提交与收工交接](../records/2026-11-09-day-review.md)
 
@@ -47,8 +49,8 @@ COMP-01 已复核双端 REST 证据，并只读确认 GitHub 个人私有测试�
 - [OCI 切片](../records/2026-11-04-m0-oci-validation.md)覆盖独立 package PAT / Registry Bearer、私有组织 / team、原始 Blob / Manifest Digest、Docker scratch 构建 / regctl 推拉 / Docker load、撤权 / 删除及九个真实超时 / 半包场景。旧 Registry Token 在团队降权、移出私有组织或禁用账号后受相应限制；四条差异仍保留：公开个人包的仓库 link 不提供隐私、Registry pull 参数不收窄 write PAT、覆盖最后 Tag 后旧 Digest 404、删除 PAT 后旧 JWT 仍可读写。Metadata 声明 24 小时但未真实等待，未证明即时单凭据撤销 / 强制保留，见[ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)。
 - 原四种 OAuth 组合逐字未变；新增[Registry 专用契约](../../tests/contracts/m0/gitea-registry-profile.json)限定 PAT / 固定 origin / service 和 regctl 资产摘要。regctl v0.11.7 darwin/arm64 为任务临时工具，不是产品依赖；使用任务 CA、私密配置且关闭 Docker 凭据 / 证书导入，Buildx 状态在任务目录，无系统 / daemon 信任修改。
 - [M0-S04 差异基线](../architecture/github-compatibility.md#m0-现有差异基线)现汇总 3 条 scope、2 条生命周期、1 条公开单用户撤销接口缺口、12 条 Issue、5 条 Release 及 4 条 OCI 差异，共 27 条；26 条定位到原始 gap，接口缺口单列，复现不重复计数。沿用 ADR 0003—0006，尚未冻结完整 GitHub 兼容范围或批准阶段晋级；早先快照不回写。
-- 固定版包清理规则约束计划清理，直接覆盖和显式删除另走包写权限。Registry JWT 校验不回查来源 PAT，实测原 Bearer 换出的后继保留用户和 `write:package` scope，`nbf` / `exp` 均晚 3 秒。真实到期、原 JWT 到期后后继的实际可用性及连续换发待验，总体远端失效窗口仍无可承诺上限。G26 / G27 缺口及所有者取舍继续保留。 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-包可见性与-registry-scope-核查)
-- G27 已完成替代机制静态核查。Harbor 项目机器人可作为短期 Bearer 窗口候选，需实测禁用后无法取得有权后继、已签 Bearer 的真实到期和时钟宽限。逐请求撤销候选须控制全部访问路径并独立识别凭据。两条路径均待选型及真实验收。 [G27 方案核查](../records/2026-11-09-m0-registry-revocation-options.md)
+- 固定版包清理规则约束计划清理，直接覆盖和显式删除另走包写权限。Registry JWT 校验不回查来源 PAT，实测原 Bearer 换出的后继保留用户和 `write:package` scope，`nbf` / `exp` 均晚 3 秒。真实到期、原 JWT 到期后后继的实际可用性及连续换发待验，总体远端失效窗口仍无可承诺上限。后续交付按已确认的 G26 受控保留及 G27 产品侧停用方案推进。 [ADR 0006 首版承诺](../adr/0006-oci-authorization-and-digest-retention.md#first-release-oci-decisions)
+- G27 已静态核查 Harbor 项目机器人与逐请求撤销。若未来要求有界远端失效，再验证停用后无法取得有权后继、已签 Bearer 的实际窗口，以及逐请求方案对全部访问路径的控制。 [G27 方案核查](../records/2026-11-09-m0-registry-revocation-options.md)
 - 11 月 1 日及 11 月 4 日任务资源均已清理；先前生命周期 / Issue / Release 各批和本批 OCI / 共享回归七批的容器 / 网络 / 卷读回均为 0，本批任务镜像标签 / 镜像读回为 0。`.local/m0` 凭据 / 证书 / 客户端 / Buildx 状态已移除，18443 / 19443 / 18543 已释放，无本任务运行服务。共享镜像与 BuildKit 缓存保留，未触碰其他项目资源。尚无自有业务工程、产品依赖、自有数据库、产品容器发行配置或活动 CI。
 - 本地初始共同基线为 `c2764aa278cbed9aab3faf6f43a0556e80e623f4`，已推送 master / dev；当前在 dev，后续远端配置记录提交沿 dev 推进，master 保持初始基线。见[初始化记录](../records/2026-10-29-local-git-bootstrap.md)与[远端记录](../records/2026-10-29-remote-governance.md)。
 - origin 为 `https://github.com/laugh0608/RadishForge.git`，保持用户创建的 public 可见性；本地 master / dev 分别跟踪 origin/master / origin/dev。没有 PR、Tag、镜像或 Release，候选域名未配置。
@@ -107,11 +109,11 @@ python3 -B -m unittest discover -s scripts/tests -v
 
 `RadishForge-Test` 权限复查已提交 `3111071`。暂不注册机器账号，普通写者和移除协作者后的访问继续待验证。组织仓库的 `Read` / `Write` 仍按私有组织条件补证。 [角色复查](../records/2026-11-17-m0-rest-evidence-review.md#个人仓库普通写者复查)
 
-G22 隔离实测已提交 `dc33663`。已有 Tag、新建 Tag、已提交后超时和未转发超时四个场景均按原 Release ID、Tag 名与完整 SHA 核对。G23 前检已提交 `a37c21d`，隔离复测确认新建 Tag 前按完整 SHA 读回同一提交，再发送一次 PATCH。读取失败时零 PATCH 有本地模拟证据，两批资源均已清理。 [G22 隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 隔离复测](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)
+G22 隔离实测已提交 `dc33663`。G23 已提交写前校验 `a37c21d` 与正向隔离复测 `6d0465a`，读取失败时零 PATCH 有本地模拟证据。 [G22 隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 隔离复测](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)
 
-1. **承接 OCI 证据。** G24—G26 的[隔离证据](../records/2026-11-17-m0-oci-retention-validation.md)已覆盖固定版发布组织权限、实际清理与按原 Digest 恢复。保持所选 G27 撤销边界，后续组合沿用同一发布命名空间及独立读写凭据。
-2. **确认基础 Runner 的实际执行目标。** 在[操作单](../../tests/contracts/m0/compat/runner-runbook.md)回填专用 amd64 daemon、实际资源与配置 / 命令，按[恢复条件](../planning/m0-s01-baseline.md#runner-resumption)另获运行授权。基础批先验证无 Registry 写凭据的工作流；G26 / G27 与 GitHub 普通角色对照各按所需证据推进。
-3. **按所选路线补证并组合。** 基础批通过后，获准接一个微型镜像、独立读凭据回拉和 Release 衔接，补首版实际组织权限、命名空间与选中兼容样例。未决 OCI 方案只保留有限原生证据，不作制品冻结；候选变化只复验受影响链路。
+1. **在现有 Mac 上补 G23 拒绝路径。** 建议下一次仅用 OrbStack 做一批，核对目标提交查询 404 后零发布 PATCH，回读原草稿和 Tag 并清理。 [接续事项](../planning/m0-validation.md#接续事项)
+2. **决定基础 Runner 的执行平台。** 当前按单人、单台 Mac 推进，Runner / Actions 继续暂停。Linux amd64 执行环境尚未确认，平台选定且满足恢复条件后由基础工作流开始。 [恢复条件](../planning/m0-s01-baseline.md#runner-resumption) · [基础 Runner 操作单](../../tests/contracts/m0/compat/runner-runbook.md)
+3. **按所选路线补证并组合。** 基础批通过后，获准接一个微型镜像和 Release，沿用独立发布命名空间及读写凭据，以独立读凭据回拉。补首版实际组织权限与选中兼容样例，组合评审后冻结制品方案。候选变化只复验受影响链路。
 4. **评审 M0 出口并交接 M1。** 满足[唯一阶段出口](../planning/acceptance.md#m0-exit)才进入原定工程、身份与仓库基础；否则列具名阻塞和解除条件，不新增采用准备阶段。
 
 阻塞按作用范围区分：平台 / 输入 / 执行权限 / 授权阻塞基础 Runner；发布组织权限与 G26 隔离清理 / 恢复有证据，制品方案仍待真实组合链路评审；独立参考身份与双端条件阻塞相应兼容承诺；真实最小链路、关键权限和来源关联待补，M0 保持进行中。原 27 条差异基线继续适用。
