@@ -64,3 +64,14 @@ G26 / G27 未定不必阻塞无 Registry 写凭据的基础 Runner 准备；实�
 四项差异、早期中断与原始源码摘要全部保留。没有强制制品保留或已复制 Registry Token 的立即撤销证据，不能宣称原生修复 / 完整 ART / BASE 通过。多组件清单、发布冻结、任意组织策略、生产请求持久化 / 崩溃恢复、24 小时真实到期、其他平台 / 客户端、Runner 与 Actions 仍待验收；没有真实 run / attempt，不填占位。Runner 暂停，不进入 M1。
 
 来源：[Registry 路由](https://github.com/go-gitea/gitea/blob/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/api/packages/api.go)、[Token 签发 / 解析](https://github.com/go-gitea/gitea/blob/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/services/packages/auth.go)、[包权限](https://github.com/go-gitea/gitea/blob/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/services/context/package.go)、[OCI Distribution 固定规范](https://github.com/opencontainers/distribution-spec/blob/a139cc423184af6078077b9b7ee336eddbd03f8f/spec.md)、[regctl v0.11.7](https://github.com/regclient/regclient/releases/tag/v0.11.7)。实际行为及摘要以本批记录为准。
+
+<a id="first-release-oci-decisions"></a>
+
+## 2026-11-17 首版留存与撤销决定
+
+所有者确认首版验证 **30 天受控保留**，以及 **产品侧停用和删除 PAT 后拒绝该 PAT 交换**。两项以现有独立 Gitea 为验证候选。
+
+- **G26。** 保留各环境正在引用的 Digest 和上一可回退版本。验证时把成功切换、原版本成为可回退版本的 UTC 时点作为 30 天起算点。切换更频繁时，已建立的窗口继续有效；同一制品的多环境引用按仍生效的最晚要求保留。候选机制为私有发布组织、独立发布引用、清理保留规则及可按原字节恢复的独立副本。常规构建写者与部署读取者无发布组织写权限。只有发布管理员可以例外删除，记录原因与受影响引用；制品缺失即阻断发布、部署或回退，原坐标下恢复 Manifest / Index、config 和全部层并由独立读凭据复核后再继续。
+- **G27。** 产品侧停用后，拒绝使用该授权的新操作和待执行作业，清除关联缓存，迟到完成或刷新回调不得重新激活授权；已发出的上游请求按实际状态对账。上游 PAT 删除及原 PAT 交换被拒分别记录。所有者接受已复制 Registry Bearer 仍可访问和换发的风险，首版无远端失效时限承诺。已有原 PAT 交换 401 和旧 Bearer 换发证据用于 M0，产品侧行为按产品阶段落地和验收。
+
+同日已取得 G24 / G25 命名空间和读写权限、G26 实际清理及原 Digest 恢复的隔离证据。已测请求的发布组织边界成立，G25 的原生权限收窄差异复现。30 天应用保留逻辑与真实交付组合另验，原四条差异及 [M0 出口](../planning/acceptance.md#m0-exit)继续适用。 [实测记录](../records/2026-11-17-m0-oci-retention-validation.md)

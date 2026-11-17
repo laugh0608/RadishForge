@@ -50,7 +50,7 @@
 
 包隐私按实际所有者和当前包权限判定。组织成员有读取基线，仓库关联只记录关联。受控拉取使用 `read:package` PAT，推送使用独立 `write:package` PAT。Registry 查询参数用于构造目标请求，签发器保留实际授予的 package scope。删除 PAT 后，产品侧停用和 JWT 的远端状态分别报告。原 JWT 及其换出的后继均已实测可读 Manifest 和开启上传。 [包权限与 scope 核查](../records/2026-11-09-m0-package-access-mechanisms.md) · [G27 换发实测](../records/2026-11-09-m0-registry-bearer-reissue.md)
 
-Manifest / config / layer Digest 固定内容身份。上轮实测覆盖最后一个 Tag 后旧 Manifest Digest 返回 404。Gitea 28.2.0 的包清理保留规则只作用于清理任务，Registry 覆盖和显式删除按包权限处理。独立发布引用和清理保留规则是待验收的受控保留候选。发布、部署及回退均复核清单所需的原制品，缺失、摘要不符或不可复核时阻断并保留原因。强制保留范围和恢复目标待所有者确认，见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-公开机制核查补充)。
+Manifest / config / layer Digest 固定内容身份。上轮实测覆盖最后一个 Tag 后旧 Manifest Digest 返回 404。Gitea 28.2.0 的包清理保留规则作用于清理任务，Registry 覆盖和显式删除按包权限处理。候选机制以私有发布组织、独立发布引用和清理规则实现受控保留，并以独立副本支持例外删除后的原字节恢复。发布、部署及回退均复核清单所需的原制品，缺失、摘要不符或不可复核时阻断并保留原因。 [首版留存决定](../adr/0006-oci-authorization-and-digest-retention.md#first-release-oci-decisions)
 
 Runner 暂停时没有真实 workflow run / attempt，证据须明确为缺失，不能填 0、占位 ID 或借最新 run 补齐；源码 SHA、制品 Digest 的原生协议证据可独立取得，完整源码 / run / 制品链路仍未通过。M0 的最小镜像样例不关闭五组件 ART / REL、部署或恢复验收。
 
@@ -58,7 +58,7 @@ Runner 暂停时没有真实 workflow run / attempt，证据须明确为缺失�
 
 按[四批收口](../planning/m0-validation.md#closeout-batches)，基础 Runner 先在获准隔离范围内验证无 Registry 写凭据的运行链；通过后再按获准测试路径接单镜像、独立读凭据固定 Digest 拉取与 Release 衔接，取得真实源码 / run / attempt / 制品关联。当前没有新增运行证据，Runner 仍暂停。
 
-G26 / G27 的具体取舍仍待确认；受控保留、强制保留、仅产品停用、有界失效或逐请求撤销均未因规划确认获选。仅原生推拉、产品侧停止使用或一枚 JWT 到期不足以关闭所承诺的保留 / 撤销保证。所选机制的必要证据未齐时，不冻结制品方案或通过 M0。 [ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)
+2026-11-17 已确认 G26 为 30 天受控保留，G27 为产品侧停用和删除 PAT 后拒绝该 PAT 交换。私有发布组织权限、真实清理与按原 Digest 恢复已[独立取证](../records/2026-11-17-m0-oci-retention-validation.md)。完成原生 Runner 与组合链路后再评审制品冻结。 [首版决定](../adr/0006-oci-authorization-and-digest-retention.md#first-release-oci-decisions)
 
 下述完整链路继续按 M1—M6 实现。M0 不预建五组件发布器、生产请求持久化、部署或恢复平台；但首版已承诺的关键权限、保留 / 撤销和未知结果条件不能直接后置。候选变化只复验受影响路径，既有通过结果按原范围保留。
 

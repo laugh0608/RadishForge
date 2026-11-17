@@ -14,8 +14,8 @@ from m0_response_loss import FAULT_ORIGIN, ResponseLoss
 ROOT = '/v2/' + IMAGE
 
 
-def team(client, owner, name, units, *, ident=None):
-    path = '/api/v1/orgs/' + ORG + '/teams' if ident is None else '/api/v1/teams/' + str(ident)
+def team(client, owner, name, units, *, ident=None, organization=ORG):
+    path = '/api/v1/orgs/' + organization + '/teams' if ident is None else '/api/v1/teams/' + str(ident)
     row = expect(client.request('POST' if ident is None else 'PATCH', path, basic=owner,
                                 payload={'name': name, 'permission': 'read', 'units_map': units,
                                          'includes_all_repositories': False, 'can_create_org_repo': False}),

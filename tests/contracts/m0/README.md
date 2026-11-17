@@ -124,6 +124,8 @@ python3 -u -B scripts/m0_contracts.py --mode oci --regctl /absolute/task/regctl
 
 原始四条差异及未覆盖面见[OCI 证据](../../../docs/records/2026-11-04-m0-oci-validation.md)和[ADR 0006](../../../docs/adr/0006-oci-authorization-and-digest-retention.md)。源码 / metadata 声明的 Registry Token 24 小时不等于已真实等待到期，PAT 删除也不等于旧 JWT 已失效；Digest 固定身份不等于服务器永久保留。
 
+G24—G26 独立补证用 [OCI 权限、留存与恢复操作单](compat/oci-retention-runbook.md)，复用同一本机隔离环境与有界协议客户端。
+
 ### M0-S04 同源 REST 对照
 
 使用新隔离批次 `prepare --auth-profile` / `up` 后执行：

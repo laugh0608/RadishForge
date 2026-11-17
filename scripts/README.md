@@ -43,6 +43,8 @@ Windows 可用 `py -3` 替代 `python3`，不额外维护仅转发命令的 shel
 
 `--mode oci --regctl <task-binary>` 调用 [m0_oci.py](m0_oci.py)、[m0_registry.py](m0_registry.py) 与 [m0_oci_client.py](m0_oci_client.py)。独立 Registry 契约限定 package PAT、同源 challenge / Location、原始 Blob / Manifest bytes 和客户端资产摘要；原四种 OAuth 组合不变。私有组织 / team 与仓库关联权限分开验收，未知写入只读回查；共用故障监听新增固定 namespace 的 POST / PATCH / PUT。真实客户端为 Docker 无网络 scratch 构建、regctl task CA 推拉与 Docker load；Buildx / regctl 状态均在任务目录，不改用户配置或 daemon 信任，不全局 prune。工具不会自动下载 regctl，入口先核对二进制 SHA-256；资源与手工准备见契约说明。
 
+[m0_oci_retention.py](m0_oci_retention.py) 复用同一本机空批次、Registry 字节校验与 team 夹具，定向验证 G24—G26。执行真实组织权限验证、保存原生清理规则、触发本批清理并恢复合成制品。写入限本机隔离数据，要求本批运行授权。 [执行与清理](../tests/contracts/m0/compat/oci-retention-runbook.md)
+
 `--mode rest` 调用 [m0_rest.py](m0_rest.py)。在新的本机受控批次内核对合成 Git 夹具摘要、空私有仓库和三个 refs，再通过任务 CA 校验的 HTTPS 原子推送并读回。探针按普通角色验证仓库、Issue / PR 和 Release，记录 G19 / G20 差异并退出 2。 [同源 REST 执行入口](../tests/contracts/m0/README.md#m0-s04-同源-rest-对照)
 
 [m0_github_scope.py](m0_github_scope.py) 是独立的 GitHub 所有者只读 PAT 探针，固定目标为获授权的 `RadishForge-Test`。默认模式执行两项带唯一标记的合成写入负例并独立回读。`--preflight`、`--revocation-only` 和 `--check-revoked` 只发 GET。PAT 经交互式终端隐藏输入，删除由操作者在设置页完成。执行范围、回读条件和报告位置见手册。 [GitHub 单账号凭据对照](../tests/contracts/m0/compat/rest-runbook.md#github-单账号凭据对照)

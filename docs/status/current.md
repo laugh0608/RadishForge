@@ -1,6 +1,6 @@
 # 当前状态
 
-更新日期：2026-11-17（Asia/Shanghai；基础 Runner 操作单与静态核对，无新增工作流运行证据）。
+更新日期：2026-11-17（Asia/Shanghai；基础 Runner 准备、OCI 首版承诺及 G24—G26 隔离实测）。
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
 
@@ -10,7 +10,9 @@
 
 2026-11-10 所有者确认按“关键取舍 → 最小 Runner 链路 → 定向补证与组合 → 阶段评审”收口，保留原 M0-S01—S04。G26 / G27 具体取舍仍待确认；当前 Runner / Actions 仍暂停，不进入 M1。本次只更新文档，未恢复环境操作或提交 / 推送授权。 [规划记录](../records/2026-11-10-m0-closeout-planning.md)
 
-2026-11-17 已交付[基础 Runner 操作单](../../tests/contracts/m0/compat/runner-runbook.md)，固定首轮样例和候选 job 镜像的 amd64 Digest，写明私有检出、触发关联、失败、取消 / 重跑、失联、权限与清理。只读确认本机 OrbStack daemon 为 Linux arm64；实际 amd64 宿主、执行配置及运行授权待确认。G26 / G27 具体承诺待所有者决定，阶段保持 M0。 [静态准备记录](../records/2026-11-17-m0-runner-preparation.md)
+2026-11-17 已交付[基础 Runner 操作单](../../tests/contracts/m0/compat/runner-runbook.md)，固定首轮样例和候选 job 镜像的 amd64 Digest，写明私有检出、触发关联、失败、取消 / 重跑、失联、权限与清理。只读确认本机 OrbStack daemon 为 Linux arm64；实际 amd64 宿主、执行配置及运行授权待确认。 [静态准备记录](../records/2026-11-17-m0-runner-preparation.md)
+
+同日所有者确认 G26 验证 30 天受控保留，G27 承诺产品侧停用和删除 PAT 后拒绝该 PAT 交换，并接受已复制 Bearer 的风险。已按本批授权在 OrbStack 拉取两个固定镜像，完成 G24—G26 权限、真实清理和原 Digest 恢复。原生 G25 差异复现，最终批退出 2，三批资源清理及端口读回通过。30 天实时时间窗、产品逻辑及真实交付组合待验。 [首版决定](../adr/0006-oci-authorization-and-digest-retention.md#first-release-oci-decisions) · [隔离实测](../records/2026-11-17-m0-oci-retention-validation.md)
 
 ## 当前事实
 
@@ -93,12 +95,12 @@ python3 -B -m unittest discover -s scripts/tests -v
 
 下一完整交付：在固定隔离目标上完成普通用户的源码检出、真实工作流、单镜像固定 Digest 与 Release 最小链路，追溯 SHA / run / attempt / 制品及关键失败结果，再冻结可进入 M1 的组合与首版支持范围。执行细节统一见[M0 四批收口](../planning/m0-validation.md#closeout-batches)。
 
-1. **先固定关键取舍与输入。** G26 的保留对象、窗口、删除例外 / 恢复目标，以及 G27 的撤销语义、起算点和可接受窗口仍待所有者确认，不自动选受控保留、有限窗口或新 Registry。按[差异分组](../architecture/github-compatibility.md#closeout-disposition)限定补证；确定 amd64 工作流的实际执行位置，已有 arm64 协议证据不代替。
+1. **承接 OCI 证据。** G24—G26 的[隔离证据](../records/2026-11-17-m0-oci-retention-validation.md)已覆盖固定版发布组织权限、实际清理与按原 Digest 恢复。保持所选 G27 撤销边界，后续组合沿用同一发布命名空间及独立读写凭据。
 2. **确认基础 Runner 的实际执行目标。** 在[操作单](../../tests/contracts/m0/compat/runner-runbook.md)回填专用 amd64 daemon、实际资源与配置 / 命令，按[恢复条件](../planning/m0-s01-baseline.md#runner-resumption)另获运行授权。基础批先验证无 Registry 写凭据的工作流；G26 / G27 与 GitHub 普通角色对照各按所需证据推进。
 3. **按所选路线补证并组合。** 基础批通过后，获准接一个微型镜像、独立读凭据回拉和 Release 衔接，补首版实际组织权限、命名空间与选中兼容样例。未决 OCI 方案只保留有限原生证据，不作制品冻结；候选变化只复验受影响链路。
 4. **评审 M0 出口并交接 M1。** 满足[唯一阶段出口](../planning/acceptance.md#m0-exit)才进入原定工程、身份与仓库基础；否则列具名阻塞和解除条件，不新增采用准备阶段。
 
-阻塞按作用范围区分：平台 / 输入 / 执行权限 / 授权阻塞基础 Runner；G26 / G27 与必要机制证据阻塞制品冻结；独立参考身份与双端条件阻塞相应兼容承诺；真实最小链路、关键权限和来源关联未成立阻塞 M0 晋级。原始差异保留，受控处理不冒充上游修复，当前没有新增通过项。
+阻塞按作用范围区分：平台 / 输入 / 执行权限 / 授权阻塞基础 Runner；发布组织权限与 G26 隔离清理 / 恢复有证据，制品方案仍待真实组合链路评审；独立参考身份与双端条件阻塞相应兼容承诺；真实最小链路、关键权限和来源关联待补，M0 保持进行中。原 27 条差异基线继续适用。
 
 每个阻塞先安排一次有界取证；失败后定位并决定定向修正、改选或等待，不用扩展矩阵填补等待。五组件发布、生产 CD、完整安装 / 升级 / 恢复、更广平台 / IdP 与未入选兼容能力按原阶段后置；关键权限及首版承诺的保留 / 撤销保证不能直接后置。原 6—10 人日不作为剩余工期或自动追加预算。
 
