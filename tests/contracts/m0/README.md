@@ -126,6 +126,16 @@ python3 -u -B scripts/m0_contracts.py --mode oci --regctl /absolute/task/regctl
 
 G24—G26 独立补证用 [OCI 权限、留存与恢复操作单](compat/oci-retention-runbook.md)，复用同一本机隔离环境与有界协议客户端。
 
+### G06 原生自助撤销重启补证
+
+在已授权的空批次执行 `prepare --auth-profile` 与 `up` 后运行：
+
+```bash
+python3 -u -B scripts/m0_contracts.py --mode consent-restart
+```
+
+探针使用普通账号、共享应用和独立应用验证正常自助撤销，仅重启本批资源 Gitea，回读新会话授权列表、原 access token 和独立授权。先导出脱敏结果，再清理本批资源。 [G06 重启实测](../../../docs/records/2026-11-17-m0-oauth-restart-validation.md)
+
 ### M0-S04 同源 REST 对照
 
 使用新隔离批次 `prepare --auth-profile` / `up` 后执行：

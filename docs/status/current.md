@@ -1,6 +1,6 @@
 # 当前状态
 
-更新日期：2026-11-17（Asia/Shanghai；基础 Runner 准备及 OCI、G19、G20 隔离实测）。
+更新日期：2026-11-17（Asia/Shanghai；基础 Runner 准备及 OCI、G06、G19、G20 隔离实测）。
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
 
@@ -17,6 +17,8 @@
 G19 已补私有组织仓库的 `repo.releases` 写到读、移出 team 的证据。同一有效凭据在降权后草稿列表不含夹具，详情和两路附件下载为 404；移出后草稿与已发布对照均被拒。独立读 team 始终可读取已发布 Release 及附件。两批资源已清理，Runner / Actions 暂停。 [G19 组织仓库实测](../records/2026-11-17-m0-release-org-role-transitions.md)
 
 G19 已提交 `041cd88`。后续 G20 同源草稿字段补证完成，两个混合 PATCH 返回 200 且只写入非空字段，草稿状态、附件和 Tag / SHA 回读一致。G20 差异保留，探针退出 2，本批资源已清理。 [G20 字段实测](../records/2026-11-17-m0-release-edit-fields.md)
+
+G20 已提交 `2a1bf3e`。G06 已补正常自助撤销在单独重启资源 Gitea 后的持久性，目标授权仍缺失，原 access token 在自然到期前仍被拒绝，其他独立授权仍可用。本批退出 0，资源已清理；公开自动撤销缺口保留，产品侧停用仍在 M1。 [G06 重启实测](../records/2026-11-17-m0-oauth-restart-validation.md)
 
 ## 当前事实
 

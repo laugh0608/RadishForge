@@ -255,6 +255,9 @@ def main(mode, regctl=None):
     if mode == 'release-edit':
         name = 'scripts/m0_release_edit.py'
         report['source_sha256'][name] = hashlib.sha256((RUNTIME.parent.parent / name).read_bytes()).hexdigest()
+    if mode == 'consent-restart':
+        name = 'scripts/m0_consent_restart.py'
+        report['source_sha256'][name] = hashlib.sha256((RUNTIME.parent.parent / name).read_bytes()).hexdigest()
     report['effective_provider_settings'] = owner.get('effective_provider_settings')
 
     def record(name, status='pass', **details):
@@ -341,6 +344,13 @@ def main(mode, regctl=None):
                       {201}, 'ordinary user creates private repo')
         path = '/api/v1/repos/alice/private-fixture'
         record('ordinary_user_private_repository', repository_id=repo['id'])
+        if mode == 'consent-restart':
+            from m0_consent_restart import consent_restart_checks
+            consent_restart_checks(owner, forge, credentials['forge'], record)
+            report['completed'] = True
+            report['passed_product_acceptance'] = False
+            record('consent_restart_probe_completed', scope='G06 native self-revocation persistence; Actions paused')
+            return 0
         if mode == 'release-edit':
             from m0_release_edit import release_edit_checks
             release_edit_checks(forge, credentials['forge'], repo, record)
@@ -473,10 +483,11 @@ def main(mode, regctl=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--mode', choices=['profiles', 'discovery', 'lifecycle', 'lifecycle-baseline',
+    parser.add_argument('--mode', choices=['profiles', 'discovery', 'lifecycle', 'lifecycle-baseline', 'consent-restart',
                                            'issues', 'releases', 'release-org', 'release-edit', 'oci', 'rest'], default='profiles',
                         help='profiles: reviewed grants; discovery: raw scopes; lifecycle: long expiry/native consent; '
                              'lifecycle-baseline: historical form-token diagnosis; issues/releases/oci: resource contracts and response loss; '
+                             'consent-restart: G06 native removal persistence; '
                              'release-org: G19 team role changes; release-edit: G20 draft fields; '
                              'rest: same-source GitHub/Gitea REST comparison')
     parser.add_argument('--regctl', help='OCI only: path to the pinned task-local regctl binary')

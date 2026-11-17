@@ -167,7 +167,7 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 | --- | --- | --- |
 | 1 · M0-G26 | 已确认 30 天受控保留。清理保留规则有公开配置，覆盖最后 Tag 后旧 Manifest 404 | 独立发布引用、实际清理、例外删除及原 Digest 恢复已[取证](../records/2026-11-17-m0-oci-retention-validation.md)，产品窗口与组合链路待验 |
 | 2 · M0-G27 | 已确认产品侧停用与原 PAT 交换拒绝，接受已复制 Bearer 的远端风险。 [G27 换发实测](../records/2026-11-09-m0-registry-bearer-reissue.md) | 沿用原 PAT 删除后 401 与旧 Bearer 换发的 M0 上游证据，在产品阶段验收本地停用、新操作与待执行作业 |
-| 3 · M0-G06 | 原生单用户撤销已有实测，固定版公开自动撤销缺口保留。已区分产品侧停用、原生 UI 与自动化支持边界 | 按 [单用户 grant 撤销补证条件](#单用户-grant-撤销补证条件)分层验收。若首版必须自动远端撤销，先确认公开方案，再进行隔离取证 |
+| 3 · M0-G06 | 原生单用户撤销及[重启持久性](../records/2026-11-17-m0-oauth-restart-validation.md)已有实测，固定版公开自动撤销缺口保留。已区分产品侧停用、原生 UI 与自动化支持边界 | 按 [单用户 grant 撤销补证条件](#单用户-grant-撤销补证条件)分层验收。若首版必须自动远端撤销，先确认公开方案，再进行隔离取证 |
 | 4 · M0-G19 / G20 | 普通写者用只读凭据按 Tag 可读同一草稿。降权和撤权后，原凭据按 Tag 查草稿及两路下载均为 404。REST PATCH 空正文保留原值，原生页面可手动清空草稿说明。 [角色切换实测](../records/2026-11-09-m0-release-draft-role-transitions.md) · [同源 REST](../records/2026-11-09-m0-gitea-rest-comparison.md) · [原生编辑实测](../records/2026-11-09-m0-release-native-edit.md) | G19 已补[私有组织普通 team 权限](../records/2026-11-17-m0-release-org-role-transitions.md)，对象存储直链按启用配置另验。G20 已补[省略、混合更新与 null 的字段证据](../records/2026-11-17-m0-release-edit-fields.md)，产品整次拒绝与公开自动清除缺口分别保留 |
 | 5 · M0-G24 / G25 | 已定位包所有者权限、仓库 link 和 Registry 签发规则。逐仓库隔离、请求 scope 收窄缺口保留 | 已[验证](../records/2026-11-17-m0-oci-retention-validation.md)跨组织数据权限与独立读 PAT；后续产品按对象和用途控制 |
 | 6 · COMP-01 首批样例 | 已固定 GitHub REST `2026-03-10`、gh `v2.96.0`、四份原始工作流及六个 Action 提交。仓库 / Issue / Release 已取得 GitHub 所有者及匿名参考、所有者只读 PAT 及删除后拒绝，以及 Gitea 同源普通角色对照。 [GitHub 参考](../records/2026-11-09-m0-github-rest-reference.md) · [只读 PAT](../records/2026-11-09-m0-github-owner-pat.md) · [Gitea 对照](../records/2026-11-09-m0-gitea-rest-comparison.md) | 确认独立测试身份与授权后补齐 GitHub 普通角色的正向读写、越权和撤权。工作流执行前另固定 Gitea job 镜像、BuildKit 和运行时。 [首批对照样例](../../tests/contracts/m0/compat/README.md) · [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) |
@@ -178,7 +178,7 @@ GitHub 普通角色测试等独立身份具备后按手册执行。原生 Runner
 
 ### 单用户 grant 撤销补证条件
 
-已有正常原生撤销与隔离对照证据沿用 [11 月 4 日生命周期记录](../records/2026-11-04-m0-lifecycle-validation.md#新负例与资源结果)。针对版本 / 配置变化、未覆盖场景或新公开端点，另用固定镜像、任务 CA、合成普通用户、共享应用和私有仓库开展隔离补证。
+已有[正常原生撤销与隔离对照](../records/2026-11-04-m0-lifecycle-validation.md#新负例与资源结果)和[重启持久性](../records/2026-11-17-m0-oauth-restart-validation.md)证据。针对版本 / 配置变化、未覆盖场景或新公开端点，另用固定镜像、任务 CA、合成普通用户、共享应用和私有仓库开展隔离补证。
 
 1. **M0 原生设置页。** 复核登录用户与目标应用，以原生 UI 确认 Revoke 并回读授权列表。撤销前证明目标 access / refresh 可用，以无 cookie 的独立请求在 access 正常到期前验证资源读写拒绝、refresh 拒绝、正确客户端 introspection 为 inactive。回读共享应用、同应用另一用户、同用户其他应用及独立身份发行方的对照。定向补证检查撤销前签发且尚未兑换的授权码、与撤销并发的 refresh，以及任何竞态返回的凭据在撤销后无法访问或继续刷新。显式重新同意后，重新验证新授权可用、旧凭据仍失效。网络中断或目标不明时先核实原生页面与凭据状态，保留未知结果。
 2. **M1 产品侧停用，当前仅保留 IAM-02 验收契约。** 只停用目标资源授权，确认停用在重复操作和重启后仍生效。现有缓存、新操作、刷新与等待执行的作业均不得继续使用该授权。模拟在途刷新、迟到回调和外部写入响应丢失，验证旧授权不会重新激活，已发出的外部操作可追溯并按已知结果或未知状态处理。独立登录、其他用户与其他授权继续正常工作。界面区分本地停用完成、上游未确认及已取得的凭据状态证据。
