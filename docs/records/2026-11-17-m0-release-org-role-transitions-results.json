@@ -1,0 +1,3350 @@
+{
+  "context": "orbstack",
+  "engine": "29.8.2",
+  "compose": "5.5.0",
+  "platform": "linux/arm64",
+  "cached_images": {
+    "gitea": "sha256:94807314454f6525994a3b76286ba12bc7e7f8cd14f61d9e67431767f8103306",
+    "postgres": "sha256:5c4783a8cc3f0074912164f94dfa1be4e043438f0f707cf968d7af9a0d31a2c8"
+  },
+  "cleanup": {
+    "projects": {
+      "rf-m0-local-671d06cf": {
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0
+      },
+      "rf-m0-local-c2b9f11c": {
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0
+      }
+    },
+    "released_loopback_ports": [
+      18443,
+      19443
+    ],
+    "runtime_removed": true
+  },
+  "attempts": [
+    {
+      "project": "rf-m0-local-671d06cf",
+      "platform": "linux/arm64",
+      "context": "orbstack",
+      "runner_started": false,
+      "system_trust_changed": false,
+      "results": [
+        {
+          "name": "local_tls_requires_explicit_task_ca",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:30:24.405303+00:00"
+        },
+        {
+          "name": "ordinary_users_and_independent_idp_created",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:30:25.311909+00:00"
+        },
+        {
+          "name": "release_org_roles_verified",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:30:26.097326+00:00",
+          "organization_id": 5,
+          "repository_id": 1,
+          "source_sha": "29b3640f6d65e4c02ee3296927b5408a556f190a",
+          "writer_team_id": 2,
+          "writer_units": {
+            "repo.code": "read",
+            "repo.releases": "write"
+          },
+          "reader_team_id": 3,
+          "reader_units": {
+            "repo.code": "read",
+            "repo.releases": "read"
+          }
+        },
+        {
+          "name": "release_org_fixture_draft",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:30:28.360388+00:00",
+          "release_id": 1,
+          "tag": "m0-g19-org-draft",
+          "draft": true,
+          "source_sha": "29b3640f6d65e4c02ee3296927b5408a556f190a",
+          "attachment_id": 1,
+          "attachment_bytes": 1064,
+          "attachment_sha256": "5cf455217db1710351bb5a616296a9fd19f4d9bce832ddc12b43492053974d08"
+        },
+        {
+          "name": "release_org_fixture_published",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:30:28.370988+00:00",
+          "release_id": 2,
+          "tag": "m0-g19-org-published",
+          "draft": true,
+          "source_sha": "29b3640f6d65e4c02ee3296927b5408a556f190a",
+          "attachment_id": 2,
+          "attachment_bytes": 41,
+          "attachment_sha256": "2ebe883717f9ada4ec81a687ba455f3bc83ba5e6228fe27750d5cfa73b494d5f"
+        },
+        {
+          "name": "probe_interrupted",
+          "status": "fail",
+          "observed_at_utc": "2026-11-17T12:30:29.067700+00:00",
+          "reason": "Release listing did not contain the exact fixture once"
+        }
+      ],
+      "requests": [
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/orgs/m0-release-team-org",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-team-org"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs/m0-release-team-org/repos",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-team-org/repos"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs/m0-release-team-org/teams",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-team-org/teams"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/teams/2/repos/m0-release-team-org/private-fixture",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/2/repos/m0-release-team-org/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/2/repos/m0-release-team-org/private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/2/repos/m0-release-team-org/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/teams/2/members/bob",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/2/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/2/members/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/2/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs/m0-release-team-org/teams",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-team-org/teams"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/3",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/3"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/teams/3/repos/m0-release-team-org/private-fixture",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/3/repos/m0-release-team-org/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/3/repos/m0-release-team-org/private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/3/repos/m0-release-team-org/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/teams/3/members/carol",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/3/members/carol"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/3/members/carol",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/3/members/carol"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/git/commits/main",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/git/commits/main"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/3",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/3"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/tags",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/tags"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-draft",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-draft"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/tags",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/tags"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-published",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-published"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/2/members/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/2/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/3/members/carol",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/3/members/carol"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        }
+      ],
+      "mode": "release-org",
+      "http_transport": "stateless API credentials; isolated browser cookie jars for login/consent only",
+      "started_at_utc": "2026-11-17T12:30:24.357944+00:00",
+      "repository_head": "4c8b714ad07b9bc9976d95b62af2ca62daced4fd",
+      "source_sha256": {
+        "scripts/m0_contracts.py": "de5b6b38d39d4ac9db24821f00f084d526dd33243904ca980cae7af9f9128307",
+        "scripts/m0_oauth.py": "cbd6afc85e527879b1935fd6dbcf0b56026132a2fc4e6419dd1a085323af2b17",
+        "scripts/m0_lifecycle.py": "19c87fcac7b343e64ce6e005936d196f5f4d794b721d50508227fbc920a69609",
+        "scripts/m0_local.py": "2253c3e36f3d8fb408d7fa9c225bacd841ccb48b448a409dce64a4eafa988ca3",
+        "scripts/m0_scope.py": "b2525e472bb12b8f1b8752daef0e94d2a3963aa4805334107eb80d9ac2d66c15",
+        "scripts/m0_issues.py": "695f61f84e4eba985765d2a1949f3964d8a1fb1f6c1673822d95d45cac4fd3de",
+        "scripts/m0_response_loss.py": "357d4e9014f2b083bd7223c78ad828741e5967c6ec742bef0fa3a6d06c431304",
+        "scripts/m0_releases.py": "23d1cd97c1cc1017f94c4d7753456fd40bd7f8508959b5d7bb1a384f7f7658f5",
+        "scripts/m0_registry.py": "702190a79ebb41dab44630a6169156096d055d604daac27d4d041f339073bcb6",
+        "scripts/m0_oci.py": "9635c762719ba856ddea9a620977e1fa011953d7bf619a89e91e76fb9ff3e9a6",
+        "scripts/m0_oci_client.py": "aeabd8c90987e40bc30ced0b5139b8cd2941d48a5fff10748f115c6d9aaced06",
+        "tests/contracts/m0/gitea-registry-profile.json": "1e15f6b2b341ccef5bb7a2c3fa881f3b6c248a58fa31d3603387ed15312a9d8c",
+        "tests/contracts/m0/gitea-auth-profile.json": "23372e4709efa5337257f4cc619b4caf77c13c4c9fc6662ecacc62a8a5a97fe8",
+        "tests/contracts/m0/compose.yaml": "e31d0948c6e7d7dae36ce0014c9820f0096964e48bee0917be6aa22c82e5075d",
+        "scripts/m0_release_org.py": "105d7a72cbc8a15bc93c7d31ce154d369b0ed827b72af7efa01bbe8f8c628e0c"
+      },
+      "effective_provider_settings": {
+        "forge": {
+          "oauth2": {
+            "INVALIDATE_REFRESH_TOKENS": true,
+            "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+            "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+            "DEFAULT_APPLICATIONS": ""
+          },
+          "security": {
+            "DISABLE_QUERY_AUTH_TOKEN": true
+          },
+          "actions_enabled": false,
+          "config_sha256": "5ea8de46523d304c1fe32425de969076e0e933496aa977fbcab35266b134d199"
+        },
+        "idp": {
+          "oauth2": {
+            "INVALIDATE_REFRESH_TOKENS": true,
+            "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+            "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+            "DEFAULT_APPLICATIONS": ""
+          },
+          "security": {
+            "DISABLE_QUERY_AUTH_TOKEN": true
+          },
+          "actions_enabled": false,
+          "config_sha256": "73dc83ada2a474fc2f9c3fd0d00a1be496cff4943d534ae7272e9f9bb7024cb8"
+        }
+      },
+      "completed": false,
+      "exit_code": 1,
+      "interruption": "Published control fixture was created as a draft because the probe omitted the explicit publication flag"
+    },
+    {
+      "project": "rf-m0-local-c2b9f11c",
+      "platform": "linux/arm64",
+      "context": "orbstack",
+      "runner_started": false,
+      "system_trust_changed": false,
+      "results": [
+        {
+          "name": "local_tls_requires_explicit_task_ca",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:31:15.383402+00:00"
+        },
+        {
+          "name": "ordinary_users_and_independent_idp_created",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:31:15.746024+00:00"
+        },
+        {
+          "name": "release_org_roles_verified",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:31:16.125721+00:00",
+          "organization_id": 5,
+          "repository_id": 1,
+          "source_sha": "66f62be6c15c6e405fce59eea0b9ee3ae0410876",
+          "writer_team_id": 2,
+          "writer_units": {
+            "repo.code": "read",
+            "repo.releases": "write"
+          },
+          "reader_team_id": 3,
+          "reader_units": {
+            "repo.code": "read",
+            "repo.releases": "read"
+          }
+        },
+        {
+          "name": "release_org_fixture_draft",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:31:17.072815+00:00",
+          "release_id": 1,
+          "tag": "m0-g19-org-draft",
+          "draft": true,
+          "source_sha": "66f62be6c15c6e405fce59eea0b9ee3ae0410876",
+          "attachment_id": 1,
+          "attachment_bytes": 1064,
+          "attachment_sha256": "5cf455217db1710351bb5a616296a9fd19f4d9bce832ddc12b43492053974d08"
+        },
+        {
+          "name": "release_org_fixture_published",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:31:17.073271+00:00",
+          "release_id": 2,
+          "tag": "m0-g19-org-published",
+          "draft": false,
+          "source_sha": "66f62be6c15c6e405fce59eea0b9ee3ae0410876",
+          "attachment_id": 2,
+          "attachment_bytes": 41,
+          "attachment_sha256": "2ebe883717f9ada4ec81a687ba455f3bc83ba5e6228fe27750d5cfa73b494d5f"
+        },
+        {
+          "name": "release_org_team_write",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:31:17.684121+00:00",
+          "team_membership_status": 200,
+          "repository_status": 200,
+          "writer_active": true,
+          "reader_active": true,
+          "writer_scope": "openid read:user write:repository",
+          "reader_scope": "openid read:user read:repository read:issue",
+          "same_access_tokens_across_phases": true,
+          "writer_draft": {
+            "list": 200,
+            "by_id": 200,
+            "by_tag": 200,
+            "asset_list": 200,
+            "asset_detail": 200,
+            "uuid_download": 200,
+            "tag_download": 200
+          },
+          "writer_published": {
+            "list": 200,
+            "by_id": 200,
+            "by_tag": 200,
+            "asset_list": 200,
+            "asset_detail": 200,
+            "uuid_download": 200,
+            "tag_download": 200
+          },
+          "reader_draft": {
+            "list": 200,
+            "by_id": 404,
+            "by_tag": 404,
+            "asset_list": 404,
+            "asset_detail": 404,
+            "uuid_download": 404,
+            "tag_download": 404
+          },
+          "reader_published": {
+            "list": 200,
+            "by_id": 200,
+            "by_tag": 200,
+            "asset_list": 200,
+            "asset_detail": 200,
+            "uuid_download": 200,
+            "tag_download": 200
+          }
+        },
+        {
+          "name": "release_org_team_units_downgraded",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:31:17.712461+00:00",
+          "team_id": 2,
+          "units": {
+            "repo.releases": "read",
+            "repo.code": "read"
+          }
+        },
+        {
+          "name": "release_org_team_read",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:31:18.110539+00:00",
+          "team_membership_status": 200,
+          "repository_status": 200,
+          "writer_active": true,
+          "reader_active": true,
+          "writer_scope": "openid read:user write:repository",
+          "reader_scope": "openid read:user read:repository read:issue",
+          "same_access_tokens_across_phases": true,
+          "writer_draft": {
+            "list": 200,
+            "by_id": 404,
+            "by_tag": 404,
+            "asset_list": 404,
+            "asset_detail": 404,
+            "uuid_download": 404,
+            "tag_download": 404
+          },
+          "writer_published": {
+            "list": 200,
+            "by_id": 200,
+            "by_tag": 200,
+            "asset_list": 200,
+            "asset_detail": 200,
+            "uuid_download": 200,
+            "tag_download": 200
+          },
+          "reader_draft": {
+            "list": 200,
+            "by_id": 404,
+            "by_tag": 404,
+            "asset_list": 404,
+            "asset_detail": 404,
+            "uuid_download": 404,
+            "tag_download": 404
+          },
+          "reader_published": {
+            "list": 200,
+            "by_id": 200,
+            "by_tag": 200,
+            "asset_list": 200,
+            "asset_detail": 200,
+            "uuid_download": 200,
+            "tag_download": 200
+          }
+        },
+        {
+          "name": "release_org_team_removed",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:31:18.501872+00:00",
+          "team_membership_status": 404,
+          "repository_status": 404,
+          "writer_active": true,
+          "reader_active": true,
+          "writer_scope": "openid read:user write:repository",
+          "reader_scope": "openid read:user read:repository read:issue",
+          "same_access_tokens_across_phases": true,
+          "writer_draft": {
+            "list": 404,
+            "by_id": 404,
+            "by_tag": 404,
+            "asset_list": 404,
+            "asset_detail": 404,
+            "uuid_download": 404,
+            "tag_download": 404
+          },
+          "writer_published": {
+            "list": 404,
+            "by_id": 404,
+            "by_tag": 404,
+            "asset_list": 404,
+            "asset_detail": 404,
+            "uuid_download": 404,
+            "tag_download": 404
+          },
+          "reader_draft": {
+            "list": 200,
+            "by_id": 404,
+            "by_tag": 404,
+            "asset_list": 404,
+            "asset_detail": 404,
+            "uuid_download": 404,
+            "tag_download": 404
+          },
+          "reader_published": {
+            "list": 200,
+            "by_id": 200,
+            "by_tag": 200,
+            "asset_list": 200,
+            "asset_detail": 200,
+            "uuid_download": 200,
+            "tag_download": 200
+          }
+        },
+        {
+          "name": "release_org_fixtures_still_present",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:31:18.720486+00:00",
+          "unchanged_tag_sha": "66f62be6c15c6e405fce59eea0b9ee3ae0410876",
+          "unchanged_release_and_attachment_bytes": true
+        },
+        {
+          "name": "release_org_probe_completed",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:31:18.722053+00:00",
+          "scope": "G19 organization team access changes; Actions paused"
+        }
+      ],
+      "requests": [
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:19443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/orgs/m0-release-team-org",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-team-org"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs/m0-release-team-org/repos",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-team-org/repos"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs/m0-release-team-org/teams",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-team-org/teams"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/teams/2/repos/m0-release-team-org/private-fixture",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/2/repos/m0-release-team-org/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/2/repos/m0-release-team-org/private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/2/repos/m0-release-team-org/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/teams/2/members/bob",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/2/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/2/members/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/2/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs/m0-release-team-org/teams",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-team-org/teams"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/3",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/3"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/teams/3/repos/m0-release-team-org/private-fixture",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/3/repos/m0-release-team-org/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/3/repos/m0-release-team-org/private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/3/repos/m0-release-team-org/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/teams/3/members/carol",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/3/members/carol"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/3/members/carol",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/3/members/carol"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/git/commits/main",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/git/commits/main"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/user/applications/oauth2",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user/applications/oauth2/3",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user/applications/oauth2/3"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/authorize",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/login/oauth/authorize"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/grant",
+          "status": 303,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/login/oauth/grant"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/.well-known/openid-configuration",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/.well-known/openid-configuration"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/keys",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/keys"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/login/oauth/userinfo",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/userinfo"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/tags",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/tags"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-draft",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-draft"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/tags",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/tags"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-published",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-published"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-published",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-published"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PATCH",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-published",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-published"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/2/members/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/2/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/3/members/carol",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/3/members/carol"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PATCH",
+          "path": "/api/v1/teams/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/2/members/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/2/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/3/members/carol",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/3/members/carol"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "DELETE",
+          "path": "/api/v1/teams/2/members/bob",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/2/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/2/members/bob",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/2/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/3/members/carol",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/3/members/carol"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/access_token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/access_token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/login/oauth/introspect",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/login/oauth/introspect"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/user",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/user"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-draft",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-draft"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-draft"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/1/assets/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-draft/m0-draft.bin"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-published",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/tags/m0-g19-org-published"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/tags/m0-g19-org-published"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/repos/m0-release-team-org/private-fixture/releases/2/assets/2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/attachments/{uuid}",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/attachments/{uuid}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin",
+          "status": 200,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-team-org/private-fixture/releases/download/m0-g19-org-published/m0-published.bin"
+        }
+      ],
+      "mode": "release-org",
+      "http_transport": "stateless API credentials; isolated browser cookie jars for login/consent only",
+      "started_at_utc": "2026-11-17T12:31:15.370137+00:00",
+      "repository_head": "4c8b714ad07b9bc9976d95b62af2ca62daced4fd",
+      "source_sha256": {
+        "scripts/m0_contracts.py": "de5b6b38d39d4ac9db24821f00f084d526dd33243904ca980cae7af9f9128307",
+        "scripts/m0_oauth.py": "cbd6afc85e527879b1935fd6dbcf0b56026132a2fc4e6419dd1a085323af2b17",
+        "scripts/m0_lifecycle.py": "19c87fcac7b343e64ce6e005936d196f5f4d794b721d50508227fbc920a69609",
+        "scripts/m0_local.py": "2253c3e36f3d8fb408d7fa9c225bacd841ccb48b448a409dce64a4eafa988ca3",
+        "scripts/m0_scope.py": "b2525e472bb12b8f1b8752daef0e94d2a3963aa4805334107eb80d9ac2d66c15",
+        "scripts/m0_issues.py": "695f61f84e4eba985765d2a1949f3964d8a1fb1f6c1673822d95d45cac4fd3de",
+        "scripts/m0_response_loss.py": "357d4e9014f2b083bd7223c78ad828741e5967c6ec742bef0fa3a6d06c431304",
+        "scripts/m0_releases.py": "23d1cd97c1cc1017f94c4d7753456fd40bd7f8508959b5d7bb1a384f7f7658f5",
+        "scripts/m0_registry.py": "702190a79ebb41dab44630a6169156096d055d604daac27d4d041f339073bcb6",
+        "scripts/m0_oci.py": "9635c762719ba856ddea9a620977e1fa011953d7bf619a89e91e76fb9ff3e9a6",
+        "scripts/m0_oci_client.py": "aeabd8c90987e40bc30ced0b5139b8cd2941d48a5fff10748f115c6d9aaced06",
+        "tests/contracts/m0/gitea-registry-profile.json": "1e15f6b2b341ccef5bb7a2c3fa881f3b6c248a58fa31d3603387ed15312a9d8c",
+        "tests/contracts/m0/gitea-auth-profile.json": "23372e4709efa5337257f4cc619b4caf77c13c4c9fc6662ecacc62a8a5a97fe8",
+        "tests/contracts/m0/compose.yaml": "e31d0948c6e7d7dae36ce0014c9820f0096964e48bee0917be6aa22c82e5075d",
+        "scripts/m0_release_org.py": "8bb94cf694a4501e401c64f93f048ba0e3487766b6452ccda3849f21cfa11ae4"
+      },
+      "effective_provider_settings": {
+        "forge": {
+          "oauth2": {
+            "INVALIDATE_REFRESH_TOKENS": true,
+            "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+            "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+            "DEFAULT_APPLICATIONS": ""
+          },
+          "security": {
+            "DISABLE_QUERY_AUTH_TOKEN": true
+          },
+          "actions_enabled": false,
+          "config_sha256": "ece91ff4ce773987d7cd194019b05f8553d4aa1a64f6c74d7c65a0ac7dc97bf0"
+        },
+        "idp": {
+          "oauth2": {
+            "INVALIDATE_REFRESH_TOKENS": true,
+            "ACCESS_TOKEN_EXPIRATION_TIME": 30,
+            "REFRESH_TOKEN_EXPIRATION_TIME": 1,
+            "DEFAULT_APPLICATIONS": ""
+          },
+          "security": {
+            "DISABLE_QUERY_AUTH_TOKEN": true
+          },
+          "actions_enabled": false,
+          "config_sha256": "8309f7621a49ec9fa679068f2c82443cb5ebe50241bfebc09384ab7e2a54fd25"
+        }
+      },
+      "completed": true,
+      "passed_product_acceptance": false,
+      "exit_code": 0
+    }
+  ]
+}

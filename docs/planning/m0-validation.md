@@ -168,7 +168,7 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 | 1 · M0-G26 | 已确认 30 天受控保留。清理保留规则有公开配置，覆盖最后 Tag 后旧 Manifest 404 | 独立发布引用、实际清理、例外删除及原 Digest 恢复已[取证](../records/2026-11-17-m0-oci-retention-validation.md)，产品窗口与组合链路待验 |
 | 2 · M0-G27 | 已确认产品侧停用与原 PAT 交换拒绝，接受已复制 Bearer 的远端风险。 [G27 换发实测](../records/2026-11-09-m0-registry-bearer-reissue.md) | 沿用原 PAT 删除后 401 与旧 Bearer 换发的 M0 上游证据，在产品阶段验收本地停用、新操作与待执行作业 |
 | 3 · M0-G06 | 原生单用户撤销已有实测，固定版公开自动撤销缺口保留。已区分产品侧停用、原生 UI 与自动化支持边界 | 按 [单用户 grant 撤销补证条件](#单用户-grant-撤销补证条件)分层验收。若首版必须自动远端撤销，先确认公开方案，再进行隔离取证 |
-| 4 · M0-G19 / G20 | 普通写者用只读凭据按 Tag 可读同一草稿。降权和撤权后，原凭据按 Tag 查草稿及两路下载均为 404。REST PATCH 空正文保留原值，原生页面可手动清空草稿说明。 [角色切换实测](../records/2026-11-09-m0-release-draft-role-transitions.md) · [同源 REST](../records/2026-11-09-m0-gitea-rest-comparison.md) · [原生编辑实测](../records/2026-11-09-m0-release-native-edit.md) | G19 组织单元及对象存储直链按启用配置另验。G20 其余字段组合按 [Release 补证条件](#release-草稿权限与字段清除补证条件)验收，公开自动清除缺口保留 |
+| 4 · M0-G19 / G20 | 普通写者用只读凭据按 Tag 可读同一草稿。降权和撤权后，原凭据按 Tag 查草稿及两路下载均为 404。REST PATCH 空正文保留原值，原生页面可手动清空草稿说明。 [角色切换实测](../records/2026-11-09-m0-release-draft-role-transitions.md) · [同源 REST](../records/2026-11-09-m0-gitea-rest-comparison.md) · [原生编辑实测](../records/2026-11-09-m0-release-native-edit.md) | G19 已补[私有组织普通 team 权限](../records/2026-11-17-m0-release-org-role-transitions.md)，对象存储直链按启用配置另验。G20 其余字段组合按 [Release 补证条件](#release-草稿权限与字段清除补证条件)验收，公开自动清除缺口保留 |
 | 5 · M0-G24 / G25 | 已定位包所有者权限、仓库 link 和 Registry 签发规则。逐仓库隔离、请求 scope 收窄缺口保留 | 已[验证](../records/2026-11-17-m0-oci-retention-validation.md)跨组织数据权限与独立读 PAT；后续产品按对象和用途控制 |
 | 6 · COMP-01 首批样例 | 已固定 GitHub REST `2026-03-10`、gh `v2.96.0`、四份原始工作流及六个 Action 提交。仓库 / Issue / Release 已取得 GitHub 所有者及匿名参考、所有者只读 PAT 及删除后拒绝，以及 Gitea 同源普通角色对照。 [GitHub 参考](../records/2026-11-09-m0-github-rest-reference.md) · [只读 PAT](../records/2026-11-09-m0-github-owner-pat.md) · [Gitea 对照](../records/2026-11-09-m0-gitea-rest-comparison.md) | 确认独立测试身份与授权后补齐 GitHub 普通角色的正向读写、越权和撤权。工作流执行前另固定 Gitea job 镜像、BuildKit 和运行时。 [首批对照样例](../../tests/contracts/m0/compat/README.md) · [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) |
 
@@ -193,6 +193,8 @@ GitHub 普通角色测试等独立身份具备后按手册执行。原生 Runner
 原生页面补证已通过。普通写者清空说明并保存草稿后，按原 ID 回读为空，标题、状态、附件和 Tag 均保持预期。空标题返回 400，同次提交的说明未写入。 [原生编辑实测](../records/2026-11-09-m0-release-native-edit.md)
 
 G19 的个人私有仓库矩阵已补证。普通写者降权和撤权后，使用原两枚有效凭据复测草稿详情及附件入口，确认已发布对照随当前仓库权限变化。补证覆盖列表、按 ID / Tag、REST 附件列表与单项、两种下载路径，以及路径错配、外部和匿名对照。 [角色切换实测](../records/2026-11-09-m0-release-draft-role-transitions.md)
+
+G19 的私有组织仓库 team 矩阵已补证。普通写者从 Release 单元写权限降为读、再移出 team 后，原有效凭据的草稿访问均被拒。独立读取者始终可读取已发布 Release 与附件。 [组织仓库角色切换实测](../records/2026-11-17-m0-release-org-role-transitions.md)
 
 1. **G19 原生权限。** 同一所有者分别使用 `resource_read` 和 `release_write`，以无 cookie 请求比较列表、按 ID 与按 Tag 详情、REST 附件列表 / 单项元数据、UUID 与 Tag / 文件名下载。重点验证只读用途按 Tag 是否返回草稿及哪些字段。用普通写者、降权后的读者、已撤权用户、外部用户和匿名请求对照，记录拒绝或跳转的原始状态。已发布对照应保持各角色应有的读取能力。下载成功核对实收字节及摘要，路径错配和失权请求检查是否返回任何字节。涉及组织单元或对象存储直链时按启用配置另行验证。
 2. **G20 原生字段语义。** 在独立草稿或已发布夹具上比较省略、显式空、非空及适用的 `null` 输入，逐字段记录请求与回读，混合更新同时核实其他字段是否已修改。验证手动清空说明时，由普通写者进入原生编辑页，草稿选择保存草稿。按原 ID 回读 `body == ""`，核对标题、状态、附件身份和 Tag / SHA 保持预期；另验证空标题的拒绝及原值保留。若发现新公开方案，使用同一套回读条件，按原 Release ID 验收真实清空。

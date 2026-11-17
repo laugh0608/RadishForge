@@ -102,6 +102,13 @@ class ReleaseDecisions(unittest.TestCase):
             releases.asset_view(asset(browser_download_url=canonical), tag='m0-other-tag')
         with self.assertRaises(RuntimeError):
             releases.asset_view(asset(browser_download_url=canonical.replace('m0-fixture.bin', 'm0-other.bin')))
+        org_repo = '/api/v1/repos/fixture-org/private-fixture'
+        org_asset = asset(browser_download_url=canonical.replace('/alice/', '/fixture-org/'))
+        self.assertEqual(releases.asset_view(org_asset, tag='m0-tag', repo=org_repo), org_asset)
+        with self.assertRaises(RuntimeError):
+            releases.asset_view(org_asset)
+        with self.assertRaises(RuntimeError):
+            releases.asset_view(asset(browser_download_url=canonical), repo=org_repo)
 
     def test_tag_mismatch_or_disappearance_only_reads_and_stops_publication(self):
         for result in [response({}, 404), response({'commit': {'sha': 'b' * 40}})]:

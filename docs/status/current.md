@@ -1,6 +1,6 @@
 # 当前状态
 
-更新日期：2026-11-17（Asia/Shanghai；基础 Runner 准备、OCI 首版承诺及 G24—G26 隔离实测）。
+更新日期：2026-11-17（Asia/Shanghai；基础 Runner 准备及 OCI、G19 组织仓库隔离实测）。
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
 
@@ -13,6 +13,8 @@
 2026-11-17 已交付[基础 Runner 操作单](../../tests/contracts/m0/compat/runner-runbook.md)，固定首轮样例和候选 job 镜像的 amd64 Digest，写明私有检出、触发关联、失败、取消 / 重跑、失联、权限与清理。只读确认本机 OrbStack daemon 为 Linux arm64；实际 amd64 宿主、执行配置及运行授权待确认。 [静态准备记录](../records/2026-11-17-m0-runner-preparation.md)
 
 同日所有者确认 G26 验证 30 天受控保留，G27 承诺产品侧停用和删除 PAT 后拒绝该 PAT 交换，并接受已复制 Bearer 的风险。已按本批授权在 OrbStack 拉取两个固定镜像，完成 G24—G26 权限、真实清理和原 Digest 恢复。原生 G25 差异复现，最终批退出 2，三批资源清理及端口读回通过。30 天实时时间窗、产品逻辑及真实交付组合待验。 [首版决定](../adr/0006-oci-authorization-and-digest-retention.md#first-release-oci-decisions) · [隔离实测](../records/2026-11-17-m0-oci-retention-validation.md)
+
+G19 已补私有组织仓库的 `repo.releases` 写到读、移出 team 的证据。同一有效凭据在降权后草稿列表不含夹具，详情和两路附件下载为 404；移出后草稿与已发布对照均被拒。独立读 team 始终可读取已发布 Release 及附件。两批资源已清理，Runner / Actions 暂停。 [G19 组织仓库实测](../records/2026-11-17-m0-release-org-role-transitions.md)
 
 ## 当前事实
 

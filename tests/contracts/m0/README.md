@@ -136,6 +136,16 @@ python3 -u -B scripts/m0_contracts.py --mode rest
 
 探针校验空私有仓库、同源夹具摘要和三个 refs，通过本机 HTTPS 一次原子推送，再独立读回 Git / REST。夹具安装凭据只由任务内的 Git askpass 从私密运行目录读取，Git 与 REST 均校验任务 CA。仓库读取、Issue 分页及写入、Release 草稿权限与字段语义使用独立普通用户和既定用途。G19 / G20 的原生差异在结果中保留并退出 2。结束按现有命令读回状态、归档脱敏结果并清理。 [双端手册](compat/rest-runbook.md) · [本批结果](../../../docs/records/2026-11-09-m0-gitea-rest-comparison.md)
 
+### G19 组织仓库 Release 草稿权限
+
+在已授权的空批次执行 `prepare --auth-profile` 与 `up` 后运行：
+
+```bash
+python3 -u -B scripts/m0_contracts.py --mode release-org
+```
+
+以固定私有组织、仓库及两支普通 team 为夹具，用原有效凭据核对写者降权与移出 team 前后，草稿及已发布 Release 的详情和附件。保留独立读 team 及固定 Tag / SHA 的对照。仍使用任务 CA，Runner / Actions 暂停。先导出脱敏 `.local/m0/results.json`，再按下节清理。 [组织仓库实测](../../../docs/records/2026-11-17-m0-release-org-role-transitions.md)
+
 ## 清理与未覆盖
 
 无论探针成功、发现缺口或中断，交接前执行 `cleanup`。它按归属删除本批容器 / 网络 / 六个卷和 `.local/m0` 凭据，不触碰其他项目资源；下载镜像保留在共享缓存，不全局 prune。需要保留运行环境时先有用户明确要求，再交接项目名、容器 ID、端口和停止命令。

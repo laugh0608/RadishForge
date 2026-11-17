@@ -249,6 +249,9 @@ def main(mode, regctl=None):
     if mode == 'rest':
         for name in ('scripts/m0_rest.py', 'tests/contracts/m0/compat/rest-source.fi'):
             report['source_sha256'][name] = hashlib.sha256((RUNTIME.parent.parent / name).read_bytes()).hexdigest()
+    if mode == 'release-org':
+        name = 'scripts/m0_release_org.py'
+        report['source_sha256'][name] = hashlib.sha256((RUNTIME.parent.parent / name).read_bytes()).hexdigest()
     report['effective_provider_settings'] = owner.get('effective_provider_settings')
 
     def record(name, status='pass', **details):
@@ -304,7 +307,7 @@ def main(mode, regctl=None):
             credentials[service] = {'admin': admin}
             users = (('alice', 'bob', 'carol', 'dave', 'erin') if mode == 'rest' else
                      ('alice', 'bob', 'carol', 'dave') if mode == 'oci' else
-                     ('alice', 'bob', 'carol') if mode in ('issues', 'releases') else ('alice', 'bob'))
+                     ('alice', 'bob', 'carol') if mode in ('issues', 'releases', 'release-org') else ('alice', 'bob'))
             for username in (users if service == 'forge' else ('alice',)):
                 password = secrets.token_urlsafe(32)
                 user = expect(client.request('POST', '/api/v1/admin/users', basic=admin, payload={
@@ -315,6 +318,13 @@ def main(mode, regctl=None):
                 credentials[service][username] = (username, password)
             write_private(RUNTIME / 'credentials.json', json.dumps(credentials))
         record('ordinary_users_and_independent_idp_created')
+        if mode == 'release-org':
+            from m0_release_org import organization_release_checks
+            organization_release_checks(forge, credentials['forge'], record)
+            report['completed'] = True
+            report['passed_product_acceptance'] = False
+            record('release_org_probe_completed', scope='G19 organization team access changes; Actions paused')
+            return 0
         if mode == 'rest':
             from m0_rest import rest_checks
             rest_checks(owner, forge, credentials['forge'], record)
@@ -454,10 +464,10 @@ def main(mode, regctl=None):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--mode', choices=['profiles', 'discovery', 'lifecycle', 'lifecycle-baseline',
-                                           'issues', 'releases', 'oci', 'rest'], default='profiles',
+                                           'issues', 'releases', 'release-org', 'oci', 'rest'], default='profiles',
                         help='profiles: reviewed grants; discovery: raw scopes; lifecycle: long expiry/native consent; '
                              'lifecycle-baseline: historical form-token diagnosis; issues/releases/oci: resource contracts and response loss; '
-                             'rest: same-source GitHub/Gitea REST comparison')
+                             'release-org: G19 organization team role changes; rest: same-source GitHub/Gitea REST comparison')
     parser.add_argument('--regctl', help='OCI only: path to the pinned task-local regctl binary')
     args = parser.parse_args()
     raise SystemExit(main(args.mode, args.regctl))
