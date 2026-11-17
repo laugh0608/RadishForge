@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import sys
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, call, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import m0_oauth as oauth
@@ -120,6 +120,90 @@ class ReleaseDecisions(unittest.TestCase):
         with self.assertRaises(ValueError):
             releases.check_tag(client, 'synthetic', 'm0-tag', 'branch')
         client.request.assert_not_called()
+
+    def test_publish_reads_the_requested_release_and_tag_before_and_after_one_write(self):
+        repo = '/api/v1/repos/fixture-org/private-fixture'
+        release_path = repo + '/releases/1'
+        tag_path = repo + '/tags/m0-marker'
+        tag = response({'commit': {'sha': SHA}})
+        for allow_creation, initial_tag in ((False, tag), (True, response({}, 404))):
+            with self.subTest(allow_creation=allow_creation):
+                client = Mock()
+                client.request.side_effect = [response(release()), initial_tag, response({}),
+                                              response(release(draft=False)), tag]
+                result = releases.publish(client, 'synthetic', 1, SHA, expected_tag='m0-marker',
+                                          allow_tag_creation=allow_creation, repo=repo)
+                self.assertFalse(result['draft'])
+                self.assertEqual(client.request.call_args_list, [
+                    call('GET', release_path, token='synthetic'), call('GET', tag_path, token='synthetic'),
+                    call('PATCH', release_path, token='synthetic', payload={'draft': False}),
+                    call('GET', release_path, token='synthetic'), call('GET', tag_path, token='synthetic'),
+                ])
+
+    def test_publish_rejects_wrong_draft_identity_before_writing(self):
+        for fields in ({'id': 2}, {'tag_name': 'm0-other'}, {'draft': False}):
+            with self.subTest(fields=fields):
+                client = Mock()
+                client.request.return_value = response(release(**fields))
+                with self.assertRaisesRegex(RuntimeError, 'preflight did not find'):
+                    releases.publish(client, 'synthetic', 1, SHA, expected_tag='m0-marker')
+                client.request.assert_called_once_with('GET', releases.REPO + '/releases/1', token='synthetic')
+
+    def test_publish_rejects_missing_or_moved_fixed_tag_and_wrong_new_tag_target(self):
+        for tag in (response({}, 404), response({'commit': {'sha': 'b' * 40}})):
+            with self.subTest(tag=tag):
+                client = Mock()
+                client.request.side_effect = [response(release()), tag]
+                with self.assertRaisesRegex(ValueError, 'Tag is missing or points to a different commit'):
+                    releases.publish(client, 'synthetic', 1, SHA, expected_tag='m0-marker')
+                self.assertEqual([request.args[0] for request in client.request.call_args_list], ['GET', 'GET'])
+
+        client = Mock()
+        client.request.side_effect = [response(release(target_commitish='b' * 40)), response({}, 404)]
+        with self.assertRaisesRegex(RuntimeError, 'unexpected draft target'):
+            releases.publish(client, 'synthetic', 1, SHA, expected_tag='m0-marker', allow_tag_creation=True)
+        self.assertEqual([request.args[0] for request in client.request.call_args_list], ['GET', 'GET'])
+
+    def test_publish_rejects_wrong_readback_even_if_the_other_tag_points_to_the_same_commit(self):
+        tag = response({'commit': {'sha': SHA}})
+        for fields in ({'id': 2}, {'tag_name': 'm0-other'}, {'draft': True}):
+            with self.subTest(fields=fields):
+                client = Mock()
+                current = release(**{'draft': False, **fields})
+                client.request.side_effect = [response(release()), tag, response({}), response(current), tag]
+                with self.assertRaisesRegex(RuntimeError, 'readback does not match'):
+                    releases.publish(client, 'synthetic', 1, SHA, expected_tag='m0-marker')
+                self.assertEqual([request.args[0] for request in client.request.call_args_list],
+                                 ['GET', 'GET', 'PATCH', 'GET'])
+
+    def test_publish_stops_after_a_single_write_when_the_pinned_tag_changes(self):
+        correct_tag = response({'commit': {'sha': SHA}})
+        for after in (response({'commit': {'sha': 'b' * 40}}), response({}, 404)):
+            with self.subTest(after=after):
+                client = Mock()
+                client.request.side_effect = [response(release()), correct_tag, response({}),
+                                              response(release(draft=False)), after]
+                with self.assertRaisesRegex(RuntimeError, 'Published Tag is missing or points to a different commit'):
+                    releases.publish(client, 'synthetic', 1, SHA, expected_tag='m0-marker')
+                self.assertEqual([request.args[0] for request in client.request.call_args_list],
+                                 ['GET', 'GET', 'PATCH', 'GET', 'GET'])
+                self.assertEqual(client.request.call_args.args[1], releases.REPO + '/tags/m0-marker')
+
+    def test_publication_timeout_requires_the_original_release_and_tag_to_be_observed(self):
+        for fields in ({'id': 2}, {'tag_name': 'm0-other'}):
+            with self.subTest(fields=fields):
+                client, record = Mock(), Mock()
+                client.request.side_effect = [response(release(draft=False, **fields)),
+                                              response({'commit': {'sha': SHA}})]
+                with patch.object(releases, 'create_release', return_value=release()), \
+                     patch.object(releases, 'fault_call', return_value={'upstream_status': 200}):
+                    with self.assertRaisesRegex(RuntimeError, 'misclassified the result'):
+                        releases.timeout_publish(client, 'synthetic', SHA, True, record)
+                self.assertEqual(client.request.call_args_list, [
+                    call('GET', releases.REPO + '/releases/1', token='synthetic'),
+                    call('GET', releases.REPO + '/tags/m0-marker', token='synthetic'),
+                ])
+                record.assert_not_called()
 
     def test_release_missing_wrong_author_or_changed_detail_stays_unknown(self):
         wanted = {k: release()[k] for k in ('tag_name', 'name', 'body', 'target_commitish', 'draft', 'prerelease')}

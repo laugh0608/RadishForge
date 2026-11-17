@@ -9,7 +9,7 @@ from pathlib import Path
 from m0_issues import REPO, collect_pages, create_issue, read_issue, renew
 from m0_local import ROOT, RUNTIME, write_private
 from m0_oauth import BinaryBody, authorize, expect
-from m0_releases import asset_path, create_release, current_tag, download, read_release, release_view, upload
+from m0_releases import asset_path, create_release, current_tag, download, publish, read_release, release_view, upload
 
 
 ORIGIN = 'https://localhost:18443'
@@ -168,10 +168,8 @@ def release_checks(client, writer, writer_read, reader, outsider, record):
           'Draft association or fixed Tag drifted before publication')
     record('release_empty_body', 'pass' if draft['body'] == '' else 'gap', cleared=draft['body'] == '',
            original_retained=draft['body'] == release['body'], tag=TAG, tag_sha=MAIN)
-    expect(client.request('PATCH', path, token=writer, payload={'draft': False}), {200}, 'publish fixture')
-    after = read_release(client, writer, release_id)
-    check(not after['draft'] and after['tag_name'] == TAG and after['assets'] == [asset['id']]
-          and after['body'] == draft['body'] and current_tag(client, writer, TAG) == MAIN,
+    after = publish(client, writer, release_id, MAIN, expected_tag=TAG)
+    check(after['assets'] == [asset['id']] and after['body'] == draft['body'],
           'Published Release readback differs')
     public_read = release_view(expect(client.request('GET', tag_path, token=reader), {200}, 'reader published Release by Tag'))
     check(public_read == after, 'Reader received a different published Release')

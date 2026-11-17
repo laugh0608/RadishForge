@@ -97,15 +97,20 @@ def check_tag(client, token, tag, expected, *, allow_missing=False, repo=REPO):
     return actual
 
 
-def publish(client, token, release_id, expected_sha, *, repo=REPO):
+def publish(client, token, release_id, expected_sha, *, expected_tag, allow_tag_creation=False, repo=REPO):
     before = read_release(client, token, release_id, repo=repo)
-    check_tag(client, token, before['tag_name'], expected_sha, allow_missing=True, repo=repo)
+    if before['id'] != release_id or before['tag_name'] != expected_tag or not before['draft']:
+        raise RuntimeError('Publication preflight did not find the expected draft and Tag')
+    tag_sha = check_tag(client, token, expected_tag, expected_sha, allow_missing=allow_tag_creation, repo=repo)
+    if tag_sha is None and before['target_commitish'] != expected_sha:
+        raise RuntimeError('Missing Tag would be created from an unexpected draft target')
     expect(client.request('PATCH', repo + '/releases/' + str(release_id), token=token,
                           payload={'draft': False}), {200}, 'publish synthetic Release')
     after = read_release(client, token, release_id, repo=repo)
-    check_tag(client, token, after['tag_name'], expected_sha, repo=repo)
-    if after['draft'] or after['id'] != before['id']:
-        raise RuntimeError('Publication readback differs')
+    if after['id'] != release_id or after['tag_name'] != expected_tag or after['draft']:
+        raise RuntimeError('Publication readback does not match the requested Release and Tag')
+    if current_tag(client, token, expected_tag, repo=repo) != expected_sha:
+        raise RuntimeError('Published Tag is missing or points to a different commit')
     return after
 
 
@@ -281,7 +286,7 @@ def release_checks(client, credentials, record):
     empty = read_release(client, token, main['id'])
     record('release_empty_name_and_body_clear', 'pass' if empty['name'] == empty['body'] == '' else 'gap',
            http_status=200, name_cleared=empty['name'] == '', body_cleared=empty['body'] == '')
-    published = publish(client, token, main['id'], initial)
+    published = publish(client, token, main['id'], initial, expected_tag=main['tag_name'], allow_tag_creation=True)
     if not published['prerelease']:
         raise RuntimeError('Publication lost prerelease flag')
     expect(client.request('PATCH', REPO + '/releases/' + str(main['id']), token=token, payload={'prerelease': False}), {200}, 'stable Release flag')
@@ -399,7 +404,7 @@ def association_and_deletion(client, token, main_id, removable, foreign_asset, f
     expect(client.request('GET', removable['browser_download_url'], token=token, binary=True), {404}, 'deleted attachment bytes')
     disposable = create_release(client, token, payload('m0-delete-release', sha))
     attached = upload(client, token, disposable['id'], 'm0-delete-with-release.bin')
-    publish(client, token, disposable['id'], sha)
+    publish(client, token, disposable['id'], sha, expected_tag=disposable['tag_name'], allow_tag_creation=True)
     expect(client.request('DELETE', REPO + '/releases/' + str(disposable['id']), token=token), {204}, 'delete published Release')
     for path in (REPO + '/releases/' + str(disposable['id']), asset_path(disposable['id'], attached['id'])):
         expect(client.request('GET', path, token=token), {404}, 'deleted Release/attachment metadata')
@@ -460,7 +465,8 @@ def timeout_publish(client, token, sha, forward, record):
     start = len(REQUESTS)
     current = read_release(client, token, target['id'])
     tag = current_tag(client, token, target['tag_name'])
-    observed = not current['draft'] and tag == sha
+    observed = (current['id'] == target['id'] and current['tag_name'] == target['tag_name']
+                and not current['draft'] and tag == sha)
     if observed != forward or any(v['method'] != 'GET' for v in REQUESTS[start:]):
         raise RuntimeError('Publication reconciliation wrote or misclassified the result')
     record('release_publish_response_loss_' + ('committed' if forward else 'not_forwarded'), **transport,

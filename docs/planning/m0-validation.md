@@ -174,7 +174,7 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 
 G24 / G25 的跨命名空间与独立只读凭据对照已并入 G26 短测。真实清理、原 Digest 恢复及负例见[实测记录](../records/2026-11-17-m0-oci-retention-validation.md)。
 
-GitHub 个人测试仓库已通过只读预检，协作者列表只有所有者。普通角色取证待确认独立测试身份与获准目标，随后按手册执行。原生 Runner 继续按[分步恢复条件](m0-s01-baseline.md#runner-resumption)确认平台与运行授权。 [REST 证据复核](../records/2026-11-17-m0-rest-evidence-review.md) · [普通角色取证手册](../../tests/contracts/m0/compat/rest-runbook.md#普通角色取证的目标选择)
+GitHub 个人测试仓库已通过只读预检，协作者列表只有所有者。暂不注册机器账号，普通写者与移除协作者后的访问继续待验证。原生 Runner 继续按[分步恢复条件](m0-s01-baseline.md#runner-resumption)确认平台与运行授权。 [REST 证据复核](../records/2026-11-17-m0-rest-evidence-review.md) · [普通角色取证手册](../../tests/contracts/m0/compat/rest-runbook.md#普通角色取证的目标选择)
 
 ### 单用户 grant 撤销补证条件
 
@@ -197,6 +197,8 @@ GitHub 个人测试仓库已通过只读预检，协作者列表只有所有者�
 G19 的个人私有仓库矩阵已补证。普通写者降权和撤权后，使用原两枚有效凭据复测草稿详情及附件入口，确认已发布对照随当前仓库权限变化。补证覆盖列表、按 ID / Tag、REST 附件列表与单项、两种下载路径，以及路径错配、外部和匿名对照。 [角色切换实测](../records/2026-11-09-m0-release-draft-role-transitions.md)
 
 G19 的私有组织仓库 team 矩阵已补证。普通写者从 Release 单元写权限降为读、再移出 team 后，原有效凭据的草稿访问均被拒。独立读取者始终可读取已发布 Release 与附件。 [组织仓库角色切换实测](../records/2026-11-17-m0-release-org-role-transitions.md)
+
+G22 已在 M0 Release 探针绑定原 Release ID、Tag 名与完整 SHA，正常发布和超时回查均有本地回归。真实底座沿用既有 G21—G23 证据，本次探针改动待下一轮隔离验收。 [Release 发布回读回归](../records/2026-11-17-m0-release-publication-readback.md)
 
 1. **G19 原生权限。** 同一所有者分别使用 `resource_read` 和 `release_write`，以无 cookie 请求比较列表、按 ID 与按 Tag 详情、REST 附件列表 / 单项元数据、UUID 与 Tag / 文件名下载。重点验证只读用途按 Tag 是否返回草稿及哪些字段。用普通写者、降权后的读者、已撤权用户、外部用户和匿名请求对照，记录拒绝或跳转的原始状态。已发布对照应保持各角色应有的读取能力。下载成功核对实收字节及摘要，路径错配和失权请求检查是否返回任何字节。涉及组织单元或对象存储直链时按启用配置另行验证。
 2. **G20 原生字段语义。** 在独立草稿或已发布夹具上比较省略、显式空、非空及适用的 `null` 输入，逐字段记录请求与回读，混合更新同时核实其他字段是否已修改。验证手动清空说明时，由普通写者进入原生编辑页，草稿选择保存草稿。按原 ID 回读 `body == ""`，核对标题、状态、附件身份和 Tag / SHA 保持预期；另验证空标题的拒绝及原值保留。若发现新公开方案，使用同一套回读条件，按原 Release ID 验收真实清空。

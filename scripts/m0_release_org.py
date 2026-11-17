@@ -36,7 +36,7 @@ def fixture(client, token, source, label, content, *, published=False):
     release = create_release(client, token, payload(tag, source), repo=REPO)
     asset = upload(client, token, release['id'], 'm0-' + label + '.bin', content, repo=REPO)
     if published:
-        release = publish(client, token, release['id'], source, repo=REPO)
+        release = publish(client, token, release['id'], source, expected_tag=tag, repo=REPO)
     else:
         release = read_release(client, token, release['id'], repo=REPO)
     if release['draft'] == published or release['assets'] != [asset['id']]:

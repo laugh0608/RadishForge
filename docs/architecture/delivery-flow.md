@@ -23,7 +23,7 @@
 | 固定源码与 Tag | `GET R/git/commits/{sha}`、`GET R/tags/{tag}`；Tag `POST R/tags` 声明 200，实测 / 同版处理器为 201，保留 gap | 使用完整 commit SHA；Tag 的 `commit.sha` 独立核实，不把 Tag object ID 或 Release 的 `target_commitish` 字符串当最终提交 |
 | 创建与定位草稿 | `POST R/releases` / 201；`GET R/releases/{id}`、`GET R/releases/tags/{tag}` / 200 | 唯一 tag、正文关联标记、作者、draft、源 SHA；草稿创建不一定生成 Git Tag，不能在尚未发布时假设已存在 |
 | 列表与可见性 | `GET R/releases?draft=...&page=...&limit=...` / 200 | 分页不重不漏。列表与按 ID 详情要求 Release 单元写权限且具备仓库写 scope。按 Tag 查询的只读结果待补证。查询排除草稿时，创建结果仍需有权主体回读 |
-| 说明 / 发布 | `PATCH R/releases/{id}` / 200 | 说明与 draft / prerelease 分别回读；已有 Tag 必须仍指向预期 SHA。空说明清除、错误 target、Tag 漂移、重复同 tag 创建分别保留结果 |
+| 说明 / 发布 | `PATCH R/releases/{id}` / 200 | 说明与 draft / prerelease 分别回读。发布前后按原 Release ID、Tag 名及 Tag 的实际 SHA 核对。空说明清除、错误 target、Tag 漂移、重复同 tag 创建分别保留结果 |
 | 附件上传 / 定位 | `POST R/releases/{id}/assets?name=...` / 201，multipart 字段 `attachment` 或原始 bytes；列表 / 单项 GET 为 200 | 名称、ID / UUID、size、所属仓库 / Release；同名不当作幂等键。Attachment DTO 未提供内容 Digest，必须实际下载计算 SHA-256 |
 | 附件改名 / 删除 | `PATCH R/releases/{id}/assets/{attachment_id}` / 201，DELETE / 204 | 跨 Release / 仓库 ID 拒绝；删除后元数据和下载均失效，拒绝 / 超时后回查 |
 | 草稿 / Release 删除 | `DELETE R/releases/{id}` / 204 | 回读已删除、关联附件与 Tag 的真实存续；不假设删 Release 等于删 Tag，也不用于自动补偿未知结果 |
