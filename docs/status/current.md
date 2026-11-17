@@ -20,7 +20,9 @@ G19 已提交 `041cd88`。后续 G20 同源草稿字段补证完成，两个混�
 
 G20 已提交 `2a1bf3e`。G06 已补正常自助撤销在单独重启资源 Gitea 后的持久性，目标授权仍缺失，原 access token 在自然到期前仍被拒绝，其他独立授权仍可用。本批退出 0，资源已清理；公开自动撤销缺口保留，产品侧停用仍在 M1。 [G06 重启实测](../records/2026-11-17-m0-oauth-restart-validation.md)
 
-G06 重启补证已提交 `d3cd475`。尚未兑换的授权码与在途刷新仍缺上游实测；已补 M1 防护验收条件，要求晚到结果无法复活已停用的授权或覆盖新凭据。 [撤销时序证据复核](../records/2026-11-17-m0-oauth-revocation-timing-review.md)
+G06 重启补证已提交 `d3cd475`。尚未兑换的授权码与在途刷新仍缺上游实测。M1 防护验收要求晚到结果无法复活已停用的授权或覆盖新凭据，验收边界已提交 `596d1b7`。 [撤销时序证据复核](../records/2026-11-17-m0-oauth-revocation-timing-review.md)
+
+COMP-01 已复核双端 REST 证据，并只读确认 GitHub 个人私有测试仓库的固定引用、已发布 Release 和附件元数据。Actions 关闭，协作者列表只有所有者。补齐 GitHub 普通角色证据待确认独立测试账号与获准目标。 [REST 证据复核](../records/2026-11-17-m0-rest-evidence-review.md)
 
 ## 当前事实
 
@@ -102,6 +104,8 @@ python3 -B -m unittest discover -s scripts/tests -v
 ## 下一步
 
 下一完整交付：在固定隔离目标上完成普通用户的源码检出、真实工作流、单镜像固定 Digest 与 Release 最小链路，追溯 SHA / run / attempt / 制品及关键失败结果，再冻结可进入 M1 的组合与首版支持范围。执行细节统一见[M0 四批收口](../planning/m0-validation.md#closeout-batches)。
+
+等待 amd64 执行目标期间，优先补 COMP-01 的 GitHub 普通角色参考。确认独立测试账号与私有组织测试仓库后，按手册验证 `Read` / `Write`、已发布对照与角色撤销。若采用现有个人私有仓库，本批覆盖普通写者和移除协作者。 [普通角色取证手册](../../tests/contracts/m0/compat/rest-runbook.md#普通角色取证的目标选择)
 
 1. **承接 OCI 证据。** G24—G26 的[隔离证据](../records/2026-11-17-m0-oci-retention-validation.md)已覆盖固定版发布组织权限、实际清理与按原 Digest 恢复。保持所选 G27 撤销边界，后续组合沿用同一发布命名空间及独立读写凭据。
 2. **确认基础 Runner 的实际执行目标。** 在[操作单](../../tests/contracts/m0/compat/runner-runbook.md)回填专用 amd64 daemon、实际资源与配置 / 命令，按[恢复条件](../planning/m0-s01-baseline.md#runner-resumption)另获运行授权。基础批先验证无 Registry 写凭据的工作流；G26 / G27 与 GitHub 普通角色对照各按所需证据推进。

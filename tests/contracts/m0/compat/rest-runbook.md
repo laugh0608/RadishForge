@@ -6,7 +6,7 @@
 
 - **GitHub。** 确认获授权的专用私有仓库 `owner/repo`、仓库 ID、普通测试用户和允许的资源写入范围。优先使用获授权的测试组织仓库，让普通成员通过 team 获得读写角色，并将 fine-grained PAT 限于测试仓库。GitHub 文档对外部和仓库协作者使用 fine-grained PAT 有限制，凭据或角色不可用的用例保留待验证。 [GitHub PAT 限制](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#fine-grained-personal-access-tokens-limitations)
 - **Gitea。** 采用获授权的新隔离批次、固定镜像和 `https://localhost:18443`，只信任任务 CA。创建空私有测试仓库，回读 Actions 关闭及默认分支。沿用 `resource_read`、`issue_write` 与 `release_write` 三个既定用途。运行环境和停止条件见 [M0 契约入口](../README.md)。
-- **两端共通。** 安装前确认仓库为空，绑定仓库 ID、用户 ID、批次与角色，验证 Issues 已启用。配置账户仅准备仓库和权限，实际正负例使用普通用户。保存精确环境、脱敏身份、Token 用途和实际权限回读。未取得目标或授权的端不发起请求。
+- **两端共通。** 首次安装夹具前确认目标仓库为空，复用时回读既有夹具。绑定仓库 ID、用户 ID、批次与角色，验证 Issues 已启用。配置账户仅准备仓库和权限，实际正负例使用普通用户。保存精确环境、脱敏身份、Token 用途和实际权限回读。未取得目标或授权的端不发起请求。
 
 GitHub 个人私有测试仓库已有所有者凭据和无凭据的参考结果。后续普通用户验收须独立验证表中角色，复用仓库前先核对既有夹具与批次归属。 [GitHub 参考记录](../../../../docs/records/2026-11-09-m0-github-rest-reference.md)
 
@@ -35,6 +35,13 @@ python3 -B scripts/m0_github_scope.py
 凭据只在终端的隐藏提示输入，结果写入忽略的 `.local/m0-scope-*.json`。脚本先以现有 gh 凭据确认仓库、固定提交、已发布 Release、Actions 与匿名对照，再用短期 PAT 读回目标并尝试写入两个带唯一标记的合成对象。权限拒绝需由所有者独立回读确认无副作用。脚本提示后在 GitHub 设置删除本次 PAT，确认列表中该条目已消失，再回终端输入 `REVOKED`。用同一凭据验证返回 401，并确认所有者仍可读取仓库。失败或中断先按结果中的标记对账，测试 PAT 仍由创建者删除。 `--preflight` 只执行现有凭据和匿名读回。 [创建和管理 PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) · [GitHub REST 鉴权](https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api#failed-login-limit)
 
 若只读权限已取证且测试 PAT 仍未删除，使用 `python3 -B scripts/m0_github_scope.py --revocation-only`，按同样的隐藏输入和删除步骤复测。该模式只发 GET，在删除前先验证 PAT 仍可访问，再以进程中的同一凭据验证失效。若列表和安全日志已确认删除，且操作者仍能输入同一 PAT 值，改用 `--check-revoked` 补做一次 GET。该模式记录提交值是否返回 401，操作者需核对输入与之前使用的是同一值。 [实测记录](../../../../docs/records/2026-11-09-m0-github-owner-pat.md)
+
+### 普通角色取证的目标选择
+
+2026-11-17 只读确认个人私有测试仓库仍保存原三条 Git 引用、已发布 Release 及附件元数据，协作者列表只有所有者。下一批待确认独立普通测试身份与获准目标。 [预检与证据复核](../../../../docs/records/2026-11-17-m0-rest-evidence-review.md)
+
+- 验收两种仓库角色时，使用私有组织测试仓库及普通成员。通过 team 分配并分别回读 `Read` / `Write`。精细 PAT 单独限制目标仓库和实际所需权限。只读凭据边界与仓库角色边界分别记录；测试仓库角色的拒绝时，选用该角色确实无权限的操作，例如创建 Release 或改写另一作者的 Issue。 [GitHub 组织仓库角色](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization)
+- 只验证普通写者及移除协作者时，可使用现有个人私有测试仓库。先确认独立账号和适用凭据，细粒度凭据不可用时由所有者确认可接受的授权范围。用原有三个引用与已发布 Release 作读对照。写入使用新批次标记、新 Tag 和新对象，逐次读回并按授权范围清理。
 
 ## 确定性源码夹具
 

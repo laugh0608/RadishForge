@@ -174,7 +174,7 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 
 G24 / G25 的跨命名空间与独立只读凭据对照已并入 G26 短测。真实清理、原 Digest 恢复及负例见[实测记录](../records/2026-11-17-m0-oci-retention-validation.md)。
 
-GitHub 普通角色测试等独立身份具备后按手册执行。原生 Runner 继续按[分步恢复条件](m0-s01-baseline.md#runner-resumption)确认平台与运行授权。
+GitHub 个人测试仓库已通过只读预检，协作者列表只有所有者。普通角色取证待确认独立测试身份与获准目标，随后按手册执行。原生 Runner 继续按[分步恢复条件](m0-s01-baseline.md#runner-resumption)确认平台与运行授权。 [REST 证据复核](../records/2026-11-17-m0-rest-evidence-review.md) · [普通角色取证手册](../../tests/contracts/m0/compat/rest-runbook.md#普通角色取证的目标选择)
 
 ### 单用户 grant 撤销补证条件
 
