@@ -99,7 +99,7 @@ python3 scripts/check-repo.py
 python3 -B -m unittest discover -s scripts/tests -v
 ```
 
-以上验证本地治理及 M0 scope、Issue / Release / OCI 输入 / 对账、客户端隔离、二进制和 HTTP 失败决策，当前共 69 项本地测试，包含工作树 / 暂存区空白检查，不启动服务；上游协议另用[M0 契约入口](../../tests/contracts/m0/README.md)，有 Docker / 网络 / 合成数据写入副作用，仅在对应授权下执行。结果层级不能混用。
+以上验证本地治理及 M0 scope、Issue / Release / OCI 输入 / 对账、客户端隔离、二进制和 HTTP 失败决策，当前共 70 项本地测试，包含工作树 / 暂存区空白检查，不启动服务；上游协议另用[M0 契约入口](../../tests/contracts/m0/README.md)，有 Docker / 网络 / 合成数据写入副作用，仅在对应授权下执行。结果层级不能混用。
 
 ## 下一步
 
@@ -107,7 +107,7 @@ python3 -B -m unittest discover -s scripts/tests -v
 
 `RadishForge-Test` 权限复查已提交 `3111071`。暂不注册机器账号，普通写者和移除协作者后的访问继续待验证。组织仓库的 `Read` / `Write` 仍按私有组织条件补证。 [角色复查](../records/2026-11-17-m0-rest-evidence-review.md#个人仓库普通写者复查)
 
-G22 本地回归已提交 `dc36df8`，并在固定版 Gitea 完成已有 Tag、新建 Tag、已提交后超时和未转发超时四个场景。按原 Release ID、Tag 名与完整 SHA 核对，超时对账只有 GET。本批资源已清理，真实 Runner 组合仍待验证。 [G22 隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测)
+G22 隔离实测已提交 `dc33663`。已有 Tag、新建 Tag、已提交后超时和未转发超时四个场景均按原 Release ID、Tag 名与完整 SHA 核对，资源已清理。接续 G23 已补目标提交可读的本地前检及零 PATCH 回归，新前检待固定版 Gitea 隔离复测。 [G22 隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 前检记录](../records/2026-11-17-m0-release-target-preflight.md)
 
 1. **承接 OCI 证据。** G24—G26 的[隔离证据](../records/2026-11-17-m0-oci-retention-validation.md)已覆盖固定版发布组织权限、实际清理与按原 Digest 恢复。保持所选 G27 撤销边界，后续组合沿用同一发布命名空间及独立读写凭据。
 2. **确认基础 Runner 的实际执行目标。** 在[操作单](../../tests/contracts/m0/compat/runner-runbook.md)回填专用 amd64 daemon、实际资源与配置 / 命令，按[恢复条件](../planning/m0-s01-baseline.md#runner-resumption)另获运行授权。基础批先验证无 Registry 写凭据的工作流；G26 / G27 与 GitHub 普通角色对照各按所需证据推进。

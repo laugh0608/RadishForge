@@ -129,13 +129,17 @@ class ReleaseDecisions(unittest.TestCase):
         for allow_creation, initial_tag in ((False, tag), (True, response({}, 404))):
             with self.subTest(allow_creation=allow_creation):
                 client = Mock()
-                client.request.side_effect = [response(release()), initial_tag, response({}),
-                                              response(release(draft=False)), tag]
+                preflight_responses = [response(release()), initial_tag]
+                preflight_calls = [call('GET', release_path, token='synthetic'),
+                                   call('GET', tag_path, token='synthetic')]
+                if allow_creation:
+                    preflight_responses.append(response({'sha': SHA}))
+                    preflight_calls.append(call('GET', repo + '/git/commits/' + SHA, token='synthetic'))
+                client.request.side_effect = preflight_responses + [response({}), response(release(draft=False)), tag]
                 result = releases.publish(client, 'synthetic', 1, SHA, expected_tag='m0-marker',
                                           allow_tag_creation=allow_creation, repo=repo)
                 self.assertFalse(result['draft'])
-                self.assertEqual(client.request.call_args_list, [
-                    call('GET', release_path, token='synthetic'), call('GET', tag_path, token='synthetic'),
+                self.assertEqual(client.request.call_args_list, preflight_calls + [
                     call('PATCH', release_path, token='synthetic', payload={'draft': False}),
                     call('GET', release_path, token='synthetic'), call('GET', tag_path, token='synthetic'),
                 ])
@@ -163,6 +167,21 @@ class ReleaseDecisions(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'unexpected draft target'):
             releases.publish(client, 'synthetic', 1, SHA, expected_tag='m0-marker', allow_tag_creation=True)
         self.assertEqual([request.args[0] for request in client.request.call_args_list], ['GET', 'GET'])
+
+    def test_publish_stops_before_patch_if_the_new_tag_target_cannot_be_read_back(self):
+        cases = (response({}, 404), response({}, 403), response({}, 500),
+                 response({'sha': 'b' * 40}), response({}), response([]), TimeoutError('synthetic read timeout'))
+        for result in cases:
+            with self.subTest(result=result):
+                client = Mock()
+                client.request.side_effect = [response(release()), response({}, 404), result]
+                with self.assertRaises((RuntimeError, TimeoutError)):
+                    releases.publish(client, 'synthetic', 1, SHA, expected_tag='m0-marker', allow_tag_creation=True)
+                self.assertEqual(client.request.call_args_list, [
+                    call('GET', releases.REPO + '/releases/1', token='synthetic'),
+                    call('GET', releases.REPO + '/tags/m0-marker', token='synthetic'),
+                    call('GET', releases.REPO + '/git/commits/' + SHA, token='synthetic'),
+                ])
 
     def test_publish_rejects_wrong_readback_even_if_the_other_tag_points_to_the_same_commit(self):
         tag = response({'commit': {'sha': SHA}})

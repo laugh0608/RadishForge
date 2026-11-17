@@ -102,8 +102,13 @@ def publish(client, token, release_id, expected_sha, *, expected_tag, allow_tag_
     if before['id'] != release_id or before['tag_name'] != expected_tag or not before['draft']:
         raise RuntimeError('Publication preflight did not find the expected draft and Tag')
     tag_sha = check_tag(client, token, expected_tag, expected_sha, allow_missing=allow_tag_creation, repo=repo)
-    if tag_sha is None and before['target_commitish'] != expected_sha:
-        raise RuntimeError('Missing Tag would be created from an unexpected draft target')
+    if tag_sha is None:
+        if before['target_commitish'] != expected_sha:
+            raise RuntimeError('Missing Tag would be created from an unexpected draft target')
+        commit = expect(client.request('GET', repo + '/git/commits/' + expected_sha, token=token),
+                        {200}, 'verify exact publication commit')
+        if not isinstance(commit, dict) or commit.get('sha') != expected_sha:
+            raise RuntimeError('Publication commit readback does not match the exact target SHA')
     expect(client.request('PATCH', repo + '/releases/' + str(release_id), token=token,
                           payload={'draft': False}), {200}, 'publish synthetic Release')
     after = read_release(client, token, release_id, repo=repo)
@@ -142,9 +147,11 @@ def publication_checks(client, users, repo, record):
         after = publish(client, token, draft['id'], source, expected_tag=tag, allow_tag_creation=(label == 'new'))
         calls = REQUESTS[start:]
         release_path, tag_path = REPO + '/releases/' + str(draft['id']), REPO + '/tags/' + tag
-        if [(r['method'], r['path']) for r in calls] != [
-            ('GET', release_path), ('GET', tag_path), ('PATCH', release_path), ('GET', release_path), ('GET', tag_path),
-        ]:
+        preflight = [('GET', release_path), ('GET', tag_path)]
+        if label == 'new':
+            preflight.append(('GET', REPO + '/git/commits/' + source))
+        if [(r['method'], r['path']) for r in calls] != preflight + [
+                ('PATCH', release_path), ('GET', release_path), ('GET', tag_path)]:
             raise RuntimeError('G22 publication did not perform one write between exact readbacks')
         record('release_publication_' + label + '_tag', writer_role=role, source_sha=source,
                before={**{k: draft[k] for k in ('id', 'tag_name', 'draft')}, 'tag_commit': before_sha},

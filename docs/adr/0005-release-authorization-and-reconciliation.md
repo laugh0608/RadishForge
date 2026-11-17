@@ -12,7 +12,7 @@
 
 1. **Release 使用独立用途。** 在原三种组合不变的基础上增加 `release_write = openid read:user write:repository`，独立 confidential client、精确 callback、显式同意、实际 grant 与在线账号复核，沿用 [ADR 0003](0003-gitea-authorization-profiles.md)。`write:repository` 是宽于 Release 按钮的仓库权限，不能改名宣称仅发布权限；它不包含 package 用途，不自动推广为 OCI 凭据。既有 `resource_read` / `issue_write` 对 Release 写入拒绝继续验收。
 2. **草稿读取明确校验用途与角色。** 元数据 API 在只读 scope 下返回 404，但仓库所有者持相同凭据能从 UUID 和 API 展示的下载路径读取草稿附件。受控草稿操作要求 Release 写用途及当前 Release 单元写权限，并在下载前回查对象状态 / 归属；无权或无法确认则停止。这个约束尚未进入产品，也不能限制用户直接调用原生接口；原始差异不改成成功。普通仓库读者与外部用户的直接下载拒绝已分别取证，不宣称存在跨用户泄漏。
-3. **固定源码用 Tag 的实际 commit。** 发布前按已保存的 Release ID、Tag 名和完整 SHA 核对草稿及精确 Tag 的 `commit.sha`。已有 Tag 指向其他提交时拒绝写入。要求预置 Tag 的夹具遇到缺失即停止。明确允许发布创建 Tag 的夹具先核对草稿的 `target_commitish` 与预期完整 SHA 一致。发布后回读同一 Release ID、Tag 名、发布状态及原 Tag 的实际 SHA。前后两次检查仍存在并发移动窗口。写后不符停止后续发布链路，保留实际副作用供对账，不自动删除 / 重建 Release 或强移 Tag 模拟回滚。
+3. **固定源码用 Tag 的实际 commit。** 发布前按已保存的 Release ID、Tag 名和完整 SHA 核对草稿及精确 Tag 的 `commit.sha`。已有 Tag 指向其他提交时拒绝写入。要求预置 Tag 的夹具遇到缺失即停止。明确允许发布创建 Tag 的夹具先核对草稿的 `target_commitish`，再按完整 SHA 在目标仓库读取同一提交。任一检查失败即停止写入。发布后回读同一 Release ID、Tag 名、发布状态及原 Tag 的实际 SHA。前后两次检查仍存在并发移动窗口。写后不符停止后续发布链路，保留实际副作用供对账，不自动删除 / 重建 Release 或强移 Tag 模拟回滚。
 4. **请求字段逐项回读。** 当前 PATCH 的空 `name` / `body` 返回 200 而原值保留，不能报告“已清空”。尚无通过验证的公开清空路径，不用空格替代、删除重建或隐藏错误；如需承诺该能力，M0-S04 另行确认公开方案和范围。无效 target 的 500 仍保留原码，回读草稿和 Tag 后再判断本次副作用，不因这一例草稿未发布外推所有 500 都无写入。
 5. **按精确版本处理状态码差异。** 固定 OpenAPI 声明 Tag POST 为 200，同版处理器和真实返回均为 201；M0 精确接受 201 并单独记录 gap，不用宽状态码集合吞掉差异、不改写上游生成文档。后续客户端 / 适配器仍须明确版本与失败边界。
 6. **附件以身份和内容对账。** 原始 bytes 有大小上限，核对 ID / UUID、名称、size、下载实收长度与 SHA-256；同名不是幂等键，元数据没有内容 Digest。列表中的仓库 / Tag / 名称路径与详情中的 UUID 路径均须精确绑定任务 origin 与对象；两种有效 URL 表示不作为身份变化。比较稳定字段和真实内容，不按字符串 URL 相等或 `download_count` 判断同一上传。
