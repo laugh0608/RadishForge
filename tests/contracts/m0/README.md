@@ -174,7 +174,7 @@ python3 -u -B scripts/m0_contracts.py --mode release-edit
 python3 -u -B scripts/m0_contracts.py --mode release-publication
 ```
 
-普通写者在已有 Tag 和明确允许新建 Tag 的两条路径各发布一个合成草稿。按原 Release ID、Tag 名与完整 SHA 做写前及写后回读。新建 Tag 的路径在 PATCH 前另按完整 SHA 读取提交并核对返回 SHA，新增前检有本地回归。另用两个独立草稿验证已提交响应丢失与未转发两种真实超时，各用一次合成 PATCH，超时后仅按原 ID 与 Tag 发 GET。先导出脱敏结果，再清理本批。 [G22 隔离实测](../../../docs/records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 本地前检回归](../../../docs/records/2026-11-17-m0-release-target-preflight.md)
+普通写者在已有 Tag 和明确允许新建 Tag 的两条路径各发布一个合成草稿。按原 Release ID、Tag 名与完整 SHA 做写前及写后回读。新建 Tag 的路径在 PATCH 前另按完整 SHA 读取提交并核对返回 SHA。另用两个独立草稿验证已提交响应丢失与未转发两种真实超时，各用一次合成 PATCH，超时后仅按原 ID 与 Tag 发 GET。先导出脱敏结果，再清理本批。 [G22 隔离实测](../../../docs/records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 隔离复测](../../../docs/records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)
 
 ## 清理与未覆盖
 

@@ -1,6 +1,6 @@
 # 当前状态
 
-更新日期：2026-11-17（Asia/Shanghai；基础 Runner 准备及 OCI、G06、G19、G20、G22 隔离实测）。
+更新日期：2026-11-17（Asia/Shanghai；基础 Runner 准备及 OCI、G06、G19、G20、G22、G23 隔离实测）。
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
 
@@ -107,7 +107,7 @@ python3 -B -m unittest discover -s scripts/tests -v
 
 `RadishForge-Test` 权限复查已提交 `3111071`。暂不注册机器账号，普通写者和移除协作者后的访问继续待验证。组织仓库的 `Read` / `Write` 仍按私有组织条件补证。 [角色复查](../records/2026-11-17-m0-rest-evidence-review.md#个人仓库普通写者复查)
 
-G22 隔离实测已提交 `dc33663`。已有 Tag、新建 Tag、已提交后超时和未转发超时四个场景均按原 Release ID、Tag 名与完整 SHA 核对，资源已清理。接续 G23 已补目标提交可读的本地前检及零 PATCH 回归，新前检待固定版 Gitea 隔离复测。 [G22 隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 前检记录](../records/2026-11-17-m0-release-target-preflight.md)
+G22 隔离实测已提交 `dc33663`。已有 Tag、新建 Tag、已提交后超时和未转发超时四个场景均按原 Release ID、Tag 名与完整 SHA 核对。G23 前检已提交 `a37c21d`，隔离复测确认新建 Tag 前按完整 SHA 读回同一提交，再发送一次 PATCH。读取失败时零 PATCH 有本地模拟证据，两批资源均已清理。 [G22 隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 隔离复测](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)
 
 1. **承接 OCI 证据。** G24—G26 的[隔离证据](../records/2026-11-17-m0-oci-retention-validation.md)已覆盖固定版发布组织权限、实际清理与按原 Digest 恢复。保持所选 G27 撤销边界，后续组合沿用同一发布命名空间及独立读写凭据。
 2. **确认基础 Runner 的实际执行目标。** 在[操作单](../../tests/contracts/m0/compat/runner-runbook.md)回填专用 amd64 daemon、实际资源与配置 / 命令，按[恢复条件](../planning/m0-s01-baseline.md#runner-resumption)另获运行授权。基础批先验证无 Registry 写凭据的工作流；G26 / G27 与 GitHub 普通角色对照各按所需证据推进。
