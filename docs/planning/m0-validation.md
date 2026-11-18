@@ -163,9 +163,9 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 
 2026-11-17 已完成 G24—G26 隔离取证、G06 重启补证、G19 组织 team、G20 混合字段、G22 回查及 G23 正向前检，并复核 COMP-01 的既有测试仓库。沿用原 27 条差异、M0-04 和既有验收。 [11 月 9 日证据](../records/2026-11-09-day-review.md) · [11 月 17 日收工回顾](../records/2026-11-17-day-review.md)
 
-当前按单人、单台 Mac 安排工作，沿用本机 OrbStack 串行执行隔离用例。**下一批建议只补一次 G23 拒绝路径。** 在获准的新隔离批次中，用合成草稿验证目标提交按完整 SHA 查询返回 404 时，前检阶段只有 GET，发布 PATCH 为零。独立回读原 Release ID 仍为草稿、原 Tag 仍缺失，记录拒绝与清理结果。已有正向路径沿用已归档证据。 [G23 实测与模拟边界](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)
+下一次先决定一台 Mac 条件下可采用的基础 Runner 平台。满足[分步恢复条件](m0-s01-baseline.md#runner-resumption)后，按普通写者身份跑基础工作流，再串起源码 SHA、run / attempt、单镜像 Digest 和 Release。平台暂不可用时登记所缺资源与恢复条件，挂起执行。GitHub 普通角色继续等待独立协作者。 [M0 出口](acceptance.md#m0-exit)
 
-这轮之后，若没有影响首版的新增缺口，下一项决策集中在一台 Mac 下的 Runner 执行平台。选定可用且可隔离的候选并满足[分步恢复条件](m0-s01-baseline.md#runner-resumption)前，Runner / Actions 继续暂停。Linux amd64 候选的真实工作流及 SHA / run / Digest / Release 组合保持待验证。GitHub 普通角色继续等待独立协作者；当前使用现有个人账号及已保存的参考，暂缓补齐该项。 [M0 出口](acceptance.md#m0-exit)
+G23 拒绝路径沿用本机 OrbStack 单次隔离范围，可独立安排。按原计划验证目标提交的完整 SHA 返回 404 时仅有 GET、零发布 PATCH，再独立核对原 Release ID 仍为草稿、原 Tag 缺失及资源清理。正向证据复用；随后仅跟进会阻断所选交付链或首版权限承诺的差异。 [G23 实测与模拟边界](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)
 
 | 主题 | 证据 / 决定 | 剩余验收条件 |
 | --- | --- | --- |
