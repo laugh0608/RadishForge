@@ -48,6 +48,8 @@ Runner 5.x 文档要求 Gitea 1.21+、Git 2.34.1+，JavaScript Action 的 Node �
 
 所有者确认按基础运行、制品接续分步准备。本节只调整后续准入；当前 Runner / Actions 仍暂停，既有 Compose 和脚本仍要求 Actions 关闭，本次没有下载、注册、启用或运行授权，不可直接把现有身份 / API 操作单当成 Runner 操作单。
 
+2026-11-24 所有者确认本机 UTM 的专用 arm64 VM 用于 BASE-01 首轮功能取证。原生 amd64 继续作为正式工作流兼容对照目标。两条路径各自固定平台子 manifest 和 daemon，按各自的执行环境记录证据。 [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md) · [arm64 操作单](../../tests/contracts/m0/compat/runner-runbook.md#arm64-首条私有工作流)
+
 **基础运行的必要前提：**
 
 - 正式工作流对照沿[已固定样例](../../tests/contracts/m0/compat/README.md)的 Linux amd64 目标，先确认实际执行位置与资源。本机已有协议证据为 arm64，不外推 amd64；资源不可得时作一次明确的平台决定，不自动启动 VM、模拟或建设双平台矩阵。

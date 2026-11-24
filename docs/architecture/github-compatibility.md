@@ -14,7 +14,7 @@
 
 每条记录包含：GitHub 文档 / REST API version、Gitea 和 Runner 精确版本、Action 仓库及 commit、运行平台、原始样例、改动 diff、预期 / 实际、证据、限制与负责人。状态限定为：待验证、直接兼容、需配置、需适配、不支持。只有原始行为验证通过才能标“直接兼容”；仅替换 endpoint / Token 的情况标“需配置”。
 
-M0 固定首批样例，M3 完成首版验收。2026-11-09 核对官方仍支持 `2026-03-10` 与 `2022-11-28`。首批样例使用 `2026-03-10` 和 GitHub CLI `v2.96.0`，旧版保留独立 profile。四份原始工作流固定六个 Action 提交，执行输入与通过条件随样例保存。仓库、Issue 和 Release 已取得 GitHub 所有者与无凭据参考、所有者只读 PAT 的写入拒绝和删除后拒绝，以及 Gitea 同源普通角色对照。GitHub 普通角色、工作流执行和产品兼容验收仍待验证。 [首批对照样例](../../tests/contracts/m0/compat/README.md) · [GitHub 参考](../records/2026-11-09-m0-github-rest-reference.md) · [只读 PAT](../records/2026-11-09-m0-github-owner-pat.md) · [Gitea 对照](../records/2026-11-09-m0-gitea-rest-comparison.md) · [GitHub REST 版本](https://docs.github.com/en/rest/about-the-rest-api/api-versions#supported-api-versions)
+M0 固定首批样例，M3 完成首版验收。2026-11-09 核对官方仍支持 `2026-03-10` 与 `2022-11-28`。首批样例使用 `2026-03-10` 和 GitHub CLI `v2.96.0`，旧版保留独立 profile。四份原始工作流固定六个 Action 提交，执行输入与通过条件随样例保存。仓库、Issue 和 Release 已取得 GitHub 所有者与无凭据参考、所有者只读 PAT 的写入拒绝和删除后拒绝，以及 Gitea 同源普通角色对照。Gitea 已在 arm64 专用 VM 执行原样工具链工作流。顶层 `repository_id` 实测为 0，嵌套仓库 ID、全名及作用域路径可核对真实归属。GitHub 普通角色、原生 amd64 工作流对照及产品兼容验收仍待验证。 [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md) [首批对照样例](../../tests/contracts/m0/compat/README.md) · [GitHub 参考](../records/2026-11-09-m0-github-rest-reference.md) · [只读 PAT](../records/2026-11-09-m0-github-owner-pat.md) · [Gitea 对照](../records/2026-11-09-m0-gitea-rest-comparison.md) · [GitHub REST 版本](https://docs.github.com/en/rest/about-the-rest-api/api-versions#supported-api-versions)
 
 ## 首批工作流测试矩阵
 

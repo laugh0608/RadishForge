@@ -1,0 +1,197 @@
+{
+  "platform": "linux/arm64",
+  "fixture": {
+    "source": "19b79a17b2aeb649aa5df7d5ad6a3549a538e2c4",
+    "workflow": "m0-toolchain.yml",
+    "path": ".github/workflows/m0-toolchain.yml",
+    "repository_id": 1
+  },
+  "marker": "m0-toolchain-01",
+  "dispatch_http_run_id": 1,
+  "unique_runs": 1,
+  "run": {
+    "id": 1,
+    "head_branch": "main",
+    "head_sha": "19b79a17b2aeb649aa5df7d5ad6a3549a538e2c4",
+    "event": "workflow_dispatch",
+    "run_attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "repository_id": 0,
+    "created_at": "2026-11-24T12:08:54Z",
+    "completed_at": "2026-11-24T12:10:09Z",
+    "path": "m0-toolchain.yml@refs/heads/main"
+  },
+  "repository_readback": {
+    "id": 1,
+    "full_name": "owner/private-source",
+    "top_level_id_matches": false,
+    "attempt_repository_id_field": 0
+  },
+  "attempt": 1,
+  "actor": "writer",
+  "job": {
+    "id": 1,
+    "name": "toolchains",
+    "run_id": 1,
+    "run_attempt": 1,
+    "runner_id": 1,
+    "runner_name": "rf-arm64-private",
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "19b79a17b2aeb649aa5df7d5ad6a3549a538e2c4",
+    "labels": [
+      "ubuntu-24.04"
+    ]
+  },
+  "steps": [
+    {
+      "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+      "number": 0,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e",
+      "number": 1,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+      "number": 2,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Check source and versions",
+      "number": 3,
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "log": {
+    "reader_http": 200,
+    "bytes": 22658,
+    "sha256": "0bd5a4d925c299922fe3d0b4881890211c6da65e755fa66981ea540e276105fd",
+    "matched_output": "fixture=m0-toolchain-01 source_sha=19b79a17b2aeb649aa5df7d5ad6a3549a538e2c4",
+    "verified_lines": [
+      {
+        "timestamp": "2026-11-24T12:09:00.0214485Z",
+        "output": "19b79a17b2aeb649aa5df7d5ad6a3549a538e2c4"
+      },
+      {
+        "timestamp": "2026-11-24T12:09:00.0392665Z",
+        "output": "19b79a17b2aeb649aa5df7d5ad6a3549a538e2c4"
+      },
+      {
+        "timestamp": "2026-11-24T12:09:35.7606838Z",
+        "output": "go version go1.27.3 linux/arm64"
+      },
+      {
+        "timestamp": "2026-11-24T12:10:05.4988845Z",
+        "output": "node: v24.22.2"
+      },
+      {
+        "timestamp": "2026-11-24T12:10:05.4989958Z",
+        "output": "npm: 11.19.1"
+      },
+      {
+        "timestamp": "2026-11-24T12:10:05.9273952Z",
+        "output": "fixture=m0-toolchain-01 source_sha=19b79a17b2aeb649aa5df7d5ad6a3549a538e2c4"
+      }
+    ]
+  },
+  "outsider": {
+    "run": 404,
+    "attempt": 404,
+    "logs": 404
+  },
+  "runner_registration": {
+    "id": 1,
+    "name": "rf-arm64-private",
+    "labels": [
+      {
+        "id": 0,
+        "name": "ubuntu-24.04",
+        "type": "custom"
+      }
+    ],
+    "status": "online",
+    "control_repo_runners": 0
+  },
+  "workflow_sha256": "b23089bdfcd477055e324a323c4996bed422af0ae7b57e835a8b949ae4768894",
+  "guest": {
+    "arch": "aarch64",
+    "kernel": "6.12.118+deb13-arm64",
+    "processors": 4,
+    "docker": "26.1.5+dfsg1",
+    "server_api": "1.45",
+    "gitea": "gitea version 28.2.0 built with go1.27.2 : bindata, timetzdata,",
+    "postgres": "postgres (PostgreSQL) 18.6 (Debian 18.6-1.pgdg12+2)",
+    "runner": "gitea-runner version v5.2.4",
+    "image_ids": {
+      "forge": {
+        "ref": "gitea/gitea@sha256:c372a4b5059cae65d148e150eb633327bf0ce19450cead8ff8d7a21ca8b7db2e",
+        "id": "sha256:7d4bc30b5fcba430603fe4083076e2604f81acb80e01f8197851dfe45f785970"
+      },
+      "db": {
+        "ref": "postgres@sha256:a1ece8fa15f7b526a51ef47a22fb1f373d33de794dc26bf7bff99e61dcb52690",
+        "id": "sha256:bc41d72d6160c757a44aa5cd86af9a75e5235851410fe8d8fe43552c5e467856"
+      },
+      "runner": {
+        "ref": "gitea/runner@sha256:039b467de76f4d344f6de21e42e00271a776559d304dd30caaf49ffed3ffb351",
+        "id": "sha256:cf5908cf85768116cb46bdc016f5f785da03bd1267fafff0e202f481d90572af"
+      },
+      "job": {
+        "ref": "gitea/runner-images@sha256:a07569aee5d38d11492671e25ed64533a1f865c43454e9e4683e72d1a4592915",
+        "id": "sha256:fe9f828805093621b75f661c97d8e77b82298b386a7fba791e6f6b3b9e134dc4"
+      }
+    }
+  },
+  "job_container": [
+    {
+      "id": "b5945c628f17",
+      "image_id": "sha256:fe9f828805093621b75f661c97d8e77b82298b386a7fba791e6f6b3b9e134dc4",
+      "requested_ref": "docker.io/gitea/runner-images@sha256:a07569aee5d38d11492671e25ed64533a1f865c43454e9e4683e72d1a4592915",
+      "network": [
+        "rf-work"
+      ],
+      "privileged": false,
+      "mounts": [
+        {
+          "type": "bind",
+          "target": "/rf-ca.pem",
+          "rw": false
+        },
+        {
+          "type": "volume",
+          "target": "/workspace",
+          "rw": true
+        },
+        {
+          "type": "volume",
+          "target": "/var/run/act",
+          "rw": true
+        }
+      ]
+    }
+  ],
+  "effective_settings": {
+    "actions_enabled": true,
+    "default_actions_url": "github",
+    "gitea_config_sha256": "129736ff630f9d99a9dea19766adae5c646c4ec22decc66c113c6ea133500445",
+    "runner_config_sha256": "0212645ef9f71a763cdb574ca926f6f0df75ae195d8dc625d6b022eb82178f62",
+    "runner_capacity": 1,
+    "job_timeout": "8m",
+    "docker_host": "-",
+    "job_network_internal": true
+  },
+  "roles": {
+    "writer": "write",
+    "reader": "read"
+  },
+  "elapsed_seconds": 75,
+  "dispatch_requests": 1,
+  "guest_rx_bytes_before_cleanup": 1065574191
+}

@@ -1,6 +1,33 @@
 # M0 基础 Runner 操作单
 
-2026-11-17 静态准备。对应 M0-01、M0-03、M0-04，目标为 BASE-01 的 Actions 证据及 COMP-01 的固定样例行为记录。实际宿主待确认，Runner / Actions 暂停。启动前按[恢复条件](../../../../docs/planning/m0-s01-baseline.md#runner-resumption)回填实际环境和命令，取得本批运行授权。
+对应 M0-01、M0-03、M0-04。2026-11-24 所有者选定本机 UTM 专用 arm64 VM，授权执行第一条合成私有工作流。原生 amd64 的 COMP-01 对照单独保留。下表及完整生命周期步骤仍适用于该对照。
+
+## arm64 首条私有工作流
+
+UTM 4.7.5 使用 aarch64、硬件虚拟化和 UEFI，从官方 Debian 13 generic arm64 批次 `20261123-2671` 新建临时 VM。下载约 412 MiB 的 qcow2 后，按 SHA-512 `bf83391b5a7b0c6bb33312befe7b092286b719544dd25d62f4acda627841ad192ab252c32d4e756419c276f8ec6e72dae53c917234475bcc687fc7d6fa919e99` 校验，再扩展来宾磁盘。客体内安装 Debian trixie 的 docker.io 和 docker-cli，记录实际版本。 [Debian 官方校验单](https://cloud.debian.org/images/cloud/trixie/20261123-2671/SHA512SUMS)
+
+| 来宾内使用的仓库 | linux/arm64 子 manifest |
+| --- | --- |
+| `docker.io/gitea/gitea`（28.2.0-rootless） | `sha256:c372a4b5059cae65d148e150eb633327bf0ce19450cead8ff8d7a21ca8b7db2e` |
+| `docker.io/library/postgres`（18.6-bookworm） | `sha256:a1ece8fa15f7b526a51ef47a22fb1f373d33de794dc26bf7bff99e61dcb52690` |
+| `docker.io/gitea/runner`（5.2.4） | `sha256:039b467de76f4d344f6de21e42e00271a776559d304dd30caaf49ffed3ffb351` |
+| `docker.io/gitea/runner-images`（ubuntu-24.04） | `sha256:a07569aee5d38d11492671e25ed64533a1f865c43454e9e4683e72d1a4592915` |
+
+四个子 manifest 均按响应字节复算摘要，压缩层共 801,670,489 字节。按摘要拉取，读回容器平台及实际 job 镜像。沿用原始 `m0-toolchain.yml`、Action 提交及三个工具版本断言。
+
+- **资源上限**　4 vCPU、6 GiB 内存、12 GiB 来宾虚盘、2 GiB 外部下载、90 分钟窗口（预留 15 分钟清理）。容量 1，单 job 上限 8 分钟。所有 Docker 数据仅在新 VM 内。宿主临时镜像、seed 和任务密钥放在本批独立私密目录。
+- **隔离**　仅启用 ARM 硬件虚拟化。关闭宿主目录共享，管理 SSH 仅转发至 `127.0.0.1:28422`。Gitea HTTPS 仅在 VM 内使用，数据库使用独立网络。Runner 独占来宾 daemon，平台和 job 不挂 socket。只执行操作单中的首个手动派发样例。
+- **验收**　普通写者仅派发一次。回读私有仓库和 ref、run ID、attempt、job 与终态，按 job ID 下载日志，核对 marker、检出的 SHA、版本断言，保留普通读者与无权限账号的独立回读。只将实际观察到的 arm64 结果登记到 BASE-01。
+- **停止与清理**　记录新 VM UUID、批次路径和监听。成功或中断均先导出脱敏证据，对已派发请求按只读接口对账。若已注册则注销本批 Runner，再停止任务服务、关闭 VM。仅在 UUID 和名称匹配后移除该 UTM VM、其磁盘及本批临时文件，复查 UTM 清单和宿主端口。其他 VM 保持原状态。
+
+### 已实测的配置和回读顺序
+
+1. 将校验过的 qcow2 用 `qemu-img resize -f qcow2 <本批磁盘> 12G` 扩容。为新实例制作带 `CIDATA` 卷标的 NoCloud seed，包含专用公钥、主机身份、独立 instance ID 和按实际网卡 MAC 匹配的 DHCP 配置。将 seed 用 `qemu-img convert -f raw -O qcow2 <seed.iso> <seed.qcow2>` 转为独立数据盘。UTM 使用两个 VirtIO 盘，回读 boot 盘 ID、aarch64、hypervisor、内存、核心数、共享模式及回环转发后执行 `utmctl start <新 UUID>`。校验 SSH 主机密钥，读取 `uname -m`、`cloud-init status` 及根盘容量。本批首次使用可移动 seed 时 SSH 握手超时，以上 VirtIO 配置已实测成功。
+2. 来宾通过 Debian 签名源安装 Docker，记录 Engine 及 API 版本。逐一 `docker pull --platform linux/arm64 <仓库>@<上表摘要>` 并 inspect。为 Gitea / job 与数据库建两个 internal 网络，仅 Gitea 同时接入两网。为 `forge.m0.test` 签发任务证书，runner 和 job 均使用包含公共根和任务 CA 的只读证书文件。job 外部 HTTPS 经来宾内按域名限制的代理访问 GitHub、Go 和 Node 下载源及必要跳转。
+3. 以普通所有者建立两个私有仓库并启用 Actions，只向目标仓库授予普通写者与读者权限。写者按 Contents API 提交原始 YAML，读者按 `main` 回读 SHA，再按该 SHA 取回 YAML 校验摘要。以目标仓库注册 Token 文件执行 `gitea-runner register --no-interactive --instance https://forge.m0.test:3000 --token-file <任务文件> --config <本批配置> --name <本批名称>`。标签映射为 `ubuntu-24.04:docker://docker.io/gitea/runner-images@<arm64 子 manifest>`。配置 `runner.patch_actions: false`、`cache.enabled: false`、`container.docker_host: "-"`、`container.privileged: false`，仅允许任务 CA 的只读 bind mount。删除注册输入，启动 daemon，按两仓库 Runner 列表核对范围。
+4. 按下方第 1 个场景派发。以仓库专属路径、嵌套仓库 ID 和全名、完整 SHA、回执 ID、run / attempt 与日志输出核对归属。固定版顶层 `repository_id` 在本批返回 0，单独保存与真实 ID 的差异。运行中 `conclusion` 可缺失，等待实际终态。按 job ID 读取最终日志，核对 SHA / marker、版本输出和摘要，以仓库外身份独立回查同一路径。
+
+2026-11-24 已完成一次手动派发并清理专用 VM。后续批次按实际授权复用这些输入。 [arm64 实测](../../../../docs/records/2026-11-24-m0-runner-arm64.md)
 
 ## 固定输入与待回填项
 

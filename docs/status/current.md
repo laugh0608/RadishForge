@@ -1,6 +1,6 @@
 # 当前状态
 
-更新日期：2026-11-24（主线 CI 验收、本机 Runner 平台核实与 G23 拒绝实测）。
+更新日期：2026-11-24（主线 CI、G23 拒绝路径与专用 arm64 VM 的首条私有工作流）。
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
 
@@ -33,7 +33,7 @@ COMP-01 已复核双端 REST 证据，并只读确认 GitHub 个人私有测试�
 - 原有产品、架构与阶段规划之外，已补齐协作 / 安全 / 贡献规则、Git 基础文件、PR / Issue 模板、仓库设置、分阶段 Rulesets 模板及 ADR 0002。
 - 已专项复核五个兄弟项目的十份 AGENTS / CLAUDE，根协作入口由 88 行细化至 133 行，补齐通用执行条件和专题细则。当前两份入口逐字节一致。
 - 本地治理检查工具使用 Python 3.9+ 标准库，产品栈不变；检查器和故障回归结果见[治理记录](../records/2026-10-29-governance-foundation.md)。
-- M0-S01 已选择[首个候选组合](../planning/m0-s01-baseline.md)：Gitea 28.2.0-rootless、PostgreSQL 18.6-bookworm 已在本机原生 Linux arm64 镜像运行并取得部分真实证据；Runner 5.2.4 仅为后续候选，本批未下载 / 注册 / 启动。Go 1.27.3、Node 24.22.2 / npm 11.19.1、Engine 29.9.2 / Compose 5.6.1 的发行组合仍未最终冻结。
+- M0-S01 已选择[首个候选组合](../planning/m0-s01-baseline.md)：Gitea 28.2.0-rootless、PostgreSQL 18.6-bookworm 已在本机原生 Linux arm64 镜像运行并取得部分真实证据；后续 UTM 专用 VM 已用 Runner 5.2.4 跑通[首条 arm64 私有工作流](../records/2026-11-24-m0-runner-arm64.md)。Go 1.27.3、Node 24.22.2 / npm 11.19.1、Engine 29.9.2 / Compose 5.6.1 的发行组合仍未最终冻结。
 - 本机实际 context 为已运行的 OrbStack `orbstack`，daemon Engine 29.8.2 / Compose 5.5.0；保留现有版本，不改全局 context。已新增[M0 隔离配置与探针](../../tests/contracts/m0/README.md)，仅回环端口、独立项目 / 网络 / 卷、任务专用 CA，无 Runner / socket / privileged。不是专用 VM 或 amd64 / 发行组合通过证据。
 - [本机验证](../records/2026-11-01-m0-local-validation.md)已覆盖 TLS、PKCE / ID Token 签名与声明、普通用户私有资源、Issue 创建 / 评论 / 关闭 / 回读、只读 scope、跨用户隔离、资源撤权及删除 OAuth 应用后的 Token 拒绝。两发行方同邮箱身份输入可区分，但自有绑定 / 会话没有实现。
 - 原始三项 scope 差异仍保留，并在无 cookie 的 API 传输下回归复现：public-only 原组合 UserInfo 403，常见 OIDC / 未知 scope 均可读私有仓库。不能以受控客户端通过改写上游行为或标整项 IAM / BASE / COMP 通过。
@@ -94,7 +94,7 @@ Gitea 对照已由 `d6bd77a` 保存。GitHub 所有者只读 PAT 已实测读取
 
 2026-11-24 所有者授权将 GitHub 托管 CI 纳入 PR #1、验证后更新现有 master Ruleset，并以 merge commit 合入、回流推送 dev、手动验证 CI。随后授权补记验收结果并提交推送至 dev。 [CI 取证](../records/2026-11-24-candidate-quality.md)
 
-M0 后续保持“暂不写业务代码”的边界。当前范围不包含 Gitea Runner、安装 / 升级宿主工具、新 VM、全局设置 / 系统信任、正式项目的其他远端写入或设置变更、生产凭据、对外发行或部署。
+2026-11-24 所有者另行确认 arm64 专用 VM 路线，授权新建并启动一台 UTM VM、执行首条合成私有工作流及清理。该批已结束。后续按具体场景确认运行范围，原生 amd64 兼容验收单列。产品业务工程、宿主工具升级、生产凭据、发布与部署仍按原阶段安排。 [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md)
 
 ## 当前验证入口
 
@@ -113,11 +113,11 @@ python3 -B -m unittest discover -s scripts/tests -v
 
 G22 隔离实测已提交 `dc33663`。G23 继正向复测后，已在本机固定版 Gitea 验证目标提交 404 时前检仅发 GET、零发布 PATCH。独立普通账号回读原草稿保留、原 Tag 仍缺失，本批资源已清理。其他失败分支沿用本地模拟，原生无效 target 发布 500 的差异保留。 [G22 隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 正向](../records/2026-11-17-m0-release-target-preflight.md) · [G23 拒绝](../records/2026-11-24-m0-runner-platform-and-g23.md#g23-目标提交缺失)
 
-1. **基础 Runner 等待原生 Linux amd64 执行目标。** 11 月 24 日已核实这台 Mac 与可用的 OrbStack daemon 均为 arm64，现有 context 未提供任务独享的 amd64 daemon。取得符合条件的目标后，核对归属、资源与窗口、固定输入和隔离配置，落实本批运行授权，再由普通写者从私有检出和最小工作流开始。 [平台核实](../records/2026-11-24-m0-runner-platform-and-g23.md#本机-runner-平台) · [恢复条件](../planning/m0-s01-baseline.md#runner-resumption) · [基础操作单](../../tests/contracts/m0/compat/runner-runbook.md)
+1. **接续 arm64 基础 Runner 的触发和生命周期验证。** 专用 UTM VM 上的首条手动私有工作流已成功，源码 SHA、run / attempt、实际 job 和独立读者日志已对齐。顶层 `repository_id=0` 差异已记录。下一批沿已固定 arm64 输入验证分支 / Tag 触发、失败、取消 / 重跑和失联，再接制品。原生 Linux amd64 的 COMP-01 仍等待独立执行目标。本批资源已清理。 [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md) · [操作单](../../tests/contracts/m0/compat/runner-runbook.md)
 2. **按所选路线补证并组合。** 基础批通过后，获准接一个微型镜像和 Release，核对普通写者能从同一次提交追溯到真实 run / attempt、镜像 Digest 和 Release，沿用独立发布命名空间及读写凭据，以独立读凭据回拉。补首版实际组织权限与选中兼容样例，组合评审后冻结制品方案。候选变化只复验受影响链路。
 3. **评审 M0 出口并交接 M1。** 满足[唯一阶段出口](../planning/acceptance.md#m0-exit)才进入原定工程、身份与仓库基础；否则列具名阻塞和解除条件，不新增采用准备阶段。
 
-阻塞按作用范围区分：平台 / 输入 / 执行权限 / 授权阻塞基础 Runner；发布组织权限与 G26 隔离清理 / 恢复有证据，制品方案仍待真实组合链路评审；独立参考身份与双端条件阻塞相应兼容承诺；真实最小链路、关键权限和来源关联待补，M0 保持进行中。原 27 条差异基线继续适用。
+arm64 后续场景按具体运行授权推进。原生 amd64 对照仍缺执行平台；发布组织权限与 G26 隔离清理 / 恢复有证据，制品方案仍待真实组合链路评审；独立参考身份与双端条件阻塞相应兼容承诺；单镜像与 Release 的组合链路、关键权限及跨制品来源关联待补，M0 保持进行中。原 27 条差异基线继续适用。
 
 每个阻塞先安排一次有界取证；失败后定位并决定定向修正、改选或等待，不用扩展矩阵填补等待。五组件发布、生产 CD、完整安装 / 升级 / 恢复、更广平台 / IdP 与未入选兼容能力按原阶段后置；关键权限及首版承诺的保留 / 撤销保证不能直接后置。原 6—10 人日不作为剩余工期或自动追加预算。
 

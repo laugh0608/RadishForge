@@ -21,7 +21,7 @@ GitHub REST 主样例显式使用 `X-GitHub-Api-Version: 2026-03-10`。官方在
 
 四份 YAML、Action 提交、既定 amd64 目标与原始预期保持不变，本次未改机器输入或执行样例。后续按[Runner 分步恢复条件](../../../../docs/planning/m0-s01-baseline.md#runner-resumption)先固定实际位置与权限，先无 Registry 写凭据完成基础运行，再按获准路径接镜像与 Release。若为基础批准备不含推送的受控样例，单独记录 diff，不把其通过写成原始镜像样例兼容通过。
 
-正式工作流仍待原生 Linux amd64 实测。GitHub 普通角色与参考环境能力缺证约束相应兼容承诺。G26 / G27 的首版承诺及独立 OCI 取证见[操作单](oci-retention-runbook.md)。Runner / Actions 当前暂停，实际运行按恢复条件和本批授权执行。
+正式工作流仍待原生 Linux amd64 实测。GitHub 普通角色与参考环境能力缺证约束相应兼容承诺。G26 / G27 的首版承诺及独立 OCI 取证见[操作单](oci-retention-runbook.md)。2026-11-24 已在专用 UTM arm64 VM 跑通原始工具链样例，按独立平台记录结果。 [arm64 实测](../../../../docs/records/2026-11-24-m0-runner-arm64.md)
 
 首轮 Gitea 基础批的镜像候选、执行顺序与补充夹具见[基础 Runner 操作单](runner-runbook.md)。
 

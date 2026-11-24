@@ -58,7 +58,7 @@ Runner 暂停时没有真实 workflow run / attempt，证据须明确为缺失�
 
 ## 2026-11-10 M0 收口与产品交付分界
 
-按[四批收口](../planning/m0-validation.md#closeout-batches)，基础 Runner 先在获准隔离范围内验证无 Registry 写凭据的运行链；通过后再按获准测试路径接单镜像、独立读凭据固定 Digest 拉取与 Release 衔接，取得真实源码 / run / attempt / 制品关联。当前没有新增运行证据，Runner 仍暂停。
+按[四批收口](../planning/m0-validation.md#closeout-batches)，基础 Runner 先在获准隔离范围内验证无 Registry 写凭据的运行链；通过后再按获准测试路径接单镜像、独立读凭据固定 Digest 拉取与 Release 衔接，取得真实源码 / run / attempt / 制品关联。2026-11-24 已在 UTM arm64 来宾中核对私有源码 SHA、真实 run / attempt 和 job 日志，制品及 Release 关联待后续组合。 [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md)
 
 2026-11-17 已确认 G26 为 30 天受控保留，G27 为产品侧停用和删除 PAT 后拒绝该 PAT 交换。私有发布组织权限、真实清理与按原 Digest 恢复已[独立取证](../records/2026-11-17-m0-oci-retention-validation.md)。完成原生 Runner 与组合链路后再评审制品冻结。 [首版决定](../adr/0006-oci-authorization-and-digest-retention.md#first-release-oci-decisions)
 
