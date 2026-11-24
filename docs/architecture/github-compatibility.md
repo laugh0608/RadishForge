@@ -1,6 +1,6 @@
 # GitHub 兼容策略
 
-状态：目标与验收设计，当前没有任何已实测兼容项。以减少用户修改工作流和调用脚本为目标；每个承诺必须对应精确版本与行为证据。
+状态：目标与验收设计，尚无已通过 GitHub 等价验收的兼容项；已有 Gitea 原生身份 / Issue / Release / OCI 切片证据及下列 M0 差异基线。以减少用户修改工作流和调用脚本为目标；每个承诺必须对应精确版本与行为证据。
 
 ## 三个独立层面
 
@@ -14,7 +14,7 @@
 
 每条记录包含：GitHub 文档 / REST API version、Gitea 和 Runner 精确版本、Action 仓库及 commit、运行平台、原始样例、改动 diff、预期 / 实际、证据、限制与负责人。状态限定为：待验证、直接兼容、需配置、需适配、不支持。只有原始行为验证通过才能标“直接兼容”；仅替换 endpoint / Token 的情况标“需配置”。
 
-M0 固定首批样例清单，M3 完成首版验收。2026-10-29 官方文档列出 `2026-03-10` 与 `2022-11-28` 两个受支持 REST 版本；新契约优先以 `2026-03-10` 为候选，现有脚本按需要增加 `2022-11-28` profile，不混用两者响应预期。M0 再核对支持状态和客户端版本，当前未冻结长期 API 版本。资料入口见[来源核查](../references/source-review.md)。
+M0 固定首批样例，M3 完成首版验收。2026-11-09 核对官方仍支持 `2026-03-10` 与 `2022-11-28`。首批样例使用 `2026-03-10` 和 GitHub CLI `v2.96.0`，旧版保留独立 profile。四份原始工作流固定六个 Action 提交，执行输入与通过条件随样例保存。仓库、Issue 和 Release 已取得 GitHub 所有者与无凭据参考、所有者只读 PAT 的写入拒绝和删除后拒绝，以及 Gitea 同源普通角色对照。GitHub 普通角色、工作流执行和产品兼容验收仍待验证。 [首批对照样例](../../tests/contracts/m0/compat/README.md) · [GitHub 参考](../records/2026-11-09-m0-github-rest-reference.md) · [只读 PAT](../records/2026-11-09-m0-github-owner-pat.md) · [Gitea 对照](../records/2026-11-09-m0-gitea-rest-comparison.md) · [GitHub REST 版本](https://docs.github.com/en/rest/about-the-rest-api/api-versions#supported-api-versions)
 
 ## 首批工作流测试矩阵
 
@@ -46,6 +46,67 @@ Gitea 原生 API 是独立契约，不能直接把 `/api/v1` 重命名为 GitHub
 使用用户自己的 RadishForge 兼容 Token（设计候选）或经验证的授权映射；不能把任意 GitHub Token 当作 Gitea 凭据。Token 必须可撤销、限定 scope，并绑定真实上游用户权限。禁止把 Token 透传至任意用户提供的地址。
 
 Webhook 另验收 event 名、action、payload、投递 ID、HMAC、重放与重试。接收 Gitea webhook 和对外提供 GitHub 形状事件是不同通道，保留来源，不伪造为 github.com 发出的事件。
+
+## M0 现有差异基线
+
+本节是 M0-S04 的已取证输入，不是新的兼容状态矩阵或阶段放行。`M0-G01`—`M0-G27` 仅为差异引用编号，不增加任务 / 验收项；执行状态仍由 [tasks](../planning/tasks.md)维护。前三项 scope、两项生命周期、一个公开撤销接口缺口及十二项 Issue 差异的原始输入见[基线记录](../records/2026-11-04-m0-gap-and-delivery-preparation.md)；接续五项 Release 与四项 OCI 差异分别见[Release 记录](../records/2026-11-04-m0-release-validation.md)和[OCI 记录](../records/2026-11-04-m0-oci-validation.md)。原始来源和命名记录可定位，不按复现批次数重复计数；先前导出快照不回写。
+
+表中处理沿用 [ADR 0003](../adr/0003-gitea-authorization-profiles.md) / [ADR 0004](../adr/0004-issue-validation-and-reconciliation.md) / [ADR 0005](../adr/0005-release-authorization-and-reconciliation.md) / [ADR 0006](../adr/0006-oci-authorization-and-digest-retention.md)的 M0 约束和后续实现契约；没有新增自动远端撤销、生产幂等、强制制品保留或任意工作流兼容承诺，也未批准缩减关键权限要求。
+
+| 编号 | 已取证的原始行为 | 现有处理与仍须保留的边界 |
+| --- | --- | --- |
+| M0-G01 | public-only 原身份组合 UserInfo 403 | 使用显式 `read:user` 完整身份组合并复核私有资源仍拒绝；原组合不宣称可用 |
+| M0-G02 | 常见 OIDC scope 能读私有仓库 | 身份与资源客户端 / 凭据分离，校验完整组合；不保证任意第三方应用受限 |
+| M0-G03 | 未知 scope 被接受并能读私有仓库 | 联网前拒绝未知组合、回读实际 grant；不宣称上游已拒绝原始请求 |
+| M0-G04 | 旧配置过期 Token introspection 401 | 受控实例禁用查询 / 表单资源鉴权后 inactive；错误 secret 和原因未知的 401 仍拒绝，不伪造 inactive |
+| M0-G05 | 禁用账号仍可 refresh / active | 在线账号复核拒绝后停止使用；恢复账号不自动恢复已终止的本地授权，M1 尚须实现 |
+| M0-G06 | 固定公开 REST / Discovery 无单用户 grant 撤销端点，`DELETE /api/v1/token` 删除 PAT | 原生 UI 撤销与[重启持久性](../records/2026-11-17-m0-oauth-restart-validation.md)已实测。产品侧停用与上游状态分别报告，公开自动撤销缺口保留。见 [ADR 0003 撤销边界](../adr/0003-gitea-authorization-profiles.md#2026-11-09-单用户-grant-撤销边界) |
+| M0-G07 | 外仓库标签添加 200、无改变 | 当前目录前检 + 写后核对；原始接口仍忽略输入 |
+| M0-G08 | 不存在标签添加 200、无改变 | 明确拒绝失效 ID，不把 200 当作分类已完成 |
+| M0-G09 | 小数标签 ID 200 且 labels 改变 | 仅接受真正整数，拒绝小数 / 布尔 / 重复 ID；不沿用数值截断 |
+| M0-G10 | 外仓库里程碑编辑 500 | 核对当前仓库归属，错误后回读；不将其标为正确 4xx |
+| M0-G11 | 不存在里程碑编辑 500 | 前检及结果核对；删除竞态仍可能使前检过期 |
+| M0-G12 | 不存在负责人编辑 500 | 当前可分配目录校验，角色授权另查；不自动重试 |
+| M0-G13 | 复合编辑 500 后标题已变 | 回读并呈现部分完成、保留草稿；不承诺整个 PATCH 原子性 |
+| M0-G14 | 外仓库标签参与创建 201，分类丢失 | 前检及逐字段回读；Issue 已创建，不能因分类缺失再创建一条 |
+| M0-G15 | 外仓库里程碑参与创建 201，分类丢失 | 同上；不宣称整体请求成功或自动删除补偿 |
+| M0-G16 | 无效标签筛选 200，结果变宽 | 失效约束明确失败，不移除约束回退；没有证据证明跨用户泄漏 |
+| M0-G17 | 无效里程碑筛选 200，结果变宽 | 同上；目录前检不能替代结果 / 权限核对 |
+| M0-G18 | 仓库读者创建 Issue 201，分类字段被忽略 | 区分正文创建与分类权限；不能从 scope 或创建成功推导分类管理权 |
+| M0-G19 | 有 Release 单元写权限的用户持只读 scope，按 ID 查草稿为 404，按 Tag 查草稿和两路下载为 200。普通写者降权和撤权后，原凭据在这三个入口均为 404 | 产品统一要求 Release 写用途和当前单元写权限，原生差异保留。 [角色切换实测](../records/2026-11-09-m0-release-draft-role-transitions.md) · [ADR 0005 核查补充](../adr/0005-release-authorization-and-reconciliation.md#2026-11-09-草稿权限与字段清除核查) |
+| M0-G20 | Release PATCH 空 name / body 为 200，原值保留；原生页面可清空草稿说明，空标题返回 400 | 保留固定版公开自动清除缺口，可引导用户在原生页面手动清空草稿说明。 [原生编辑实测](../records/2026-11-09-m0-release-native-edit.md) · [ADR 0005 核查补充](../adr/0005-release-authorization-and-reconciliation.md#2026-11-09-草稿权限与字段清除核查) |
+| M0-G21 | Tag POST 文档 200，处理器 / 实测 201 | 精确版本接受 201 并保留声明 gap，不扩为任意 2xx |
+| M0-G22 | 已有 Tag 与 target 不同仍发布 200，Tag 指向原提交 | 发布前查精确 Tag / SHA，不符拒绝；发布后再查，不能宣称竞态已消除 |
+| M0-G23 | 无效 target 发布 500 | 新建 Tag 前按完整 SHA 读回原提交的正向路径已隔离复测，无法确认即零发布写入有本地模拟证据。已发送的请求遇到 500 时保留原错误，按实际草稿和 Tag 回读判断副作用。 [目标提交前检证据](../records/2026-11-17-m0-release-target-preflight.md) |
+| M0-G24 | 公开个人包关联私有仓库后其他用户仍可 pull | 直接拉取按包所有者、可见性及组织权限判定，link 仅保存关联。同组织内逐仓库隔离缺口保留。见 [包权限核查](../records/2026-11-09-m0-package-access-mechanisms.md#g24--所有者仓库关联与包权限) |
+| M0-G25 | Registry 请求 pull，但 write:package PAT 仍可上传 | 固定版签发保留原 scope，目标权限在数据请求判定。单镜像和操作级收窄缺口保留。见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-包可见性与-registry-scope-核查) |
+| M0-G26 | 覆盖最后一个 Tag 后原 Manifest Digest 404 | 固定版包保留规则只约束清理流程。按原 Digest 复核，缺失时阻断。强制保留缺口和取舍见 [ADR 0006 核查补充](../adr/0006-oci-authorization-and-digest-retention.md#2026-11-09-公开机制核查补充) |
+| M0-G27 | 删除 PAT 后原 PAT 交换 401，原 JWT 仍可读取、开启上传并换发可用后继 | 校验不回查签发 PAT，后继声明的到期时间晚于原 JWT。单凭据远端失效缺口保留。 [G27 换发实测](../records/2026-11-09-m0-registry-bearer-reissue.md) |
+
+已有正文 `content_version` 冲突 409、只读 / 越权 / 撤权拒绝、删除和响应丢失回查是相应原生切片证据。它们与上述 gap 一同保留，不把正确拒绝再计为差异，也不把正确主路径抵消失败。部分 REST 字段、分页 Link 与实际附件字节已对照。组织继承标签、自定义单元权限、产品会话 / 草稿 / 请求持久化，以及普通角色错误体与指定客户端的完整双端对照仍待验收。上方兼容矩阵保留待验证状态。
+
+Release / OCI 已取得相应原生切片证据。首批 Action 提交与 API 对照版本已固定为样例输入，运行时支持与等价行为仍待实测。M0-G06 的产品停用 / 原生撤销边界、M0-G19 / G20 的首版范围、G24—G27 的选定能力边界、关键权限 / 保留 / 未知结果处理及完整阶段出口未收口前，不放行 M1；不把尚未承诺的公开自动撤销作为默认前置。 [M0-S04 接续事项](../planning/m0-validation.md#接续事项)
+
+<a id="closeout-disposition"></a>
+
+## 2026-11-10 差异分组与收口归属
+
+所有者确认沿原 ADR 和任务编号收口。原始 gap、失败与已通过证据保留；具体执行顺序见[M0 四批计划](../planning/m0-validation.md#closeout-batches)。
+
+| 差异组 | M0 剩余与处理边界 | 后续产品归属 |
+| --- | --- | --- |
+| G01—G05 | 沿用已接受的授权组合、受控配置和在线账号复核；输入不变且无新失败时不重跑历史切片 | M1 实现会话、缓存、刷新协调和后台授权，并验收真实产品行为 |
+| G06 | 沿用产品侧停用与原生 UI 撤销引导；公开自动撤销缺口保留。剩余授权码 / 并发刷新若直接影响所承诺撤销安全，作一次定向补证，不封装私有接口 | M1 交付本地停用与迟到结果不复活；自动远端撤销仅在明确列为硬要求后另作底座决定 |
+| G07—G18、G21—G23 | 固定输入前检、结果回读、部分完成和未知结果合同，沿既有证据判断公开接口可行性 | M2 / M4 实现持久请求、界面、对账与恢复，不在 M0 预建产品适配层 |
+| G19 / G20 | G19 的[私有组织 / 单元权限](../records/2026-11-17-m0-release-org-role-transitions.md)已取证，对象存储直链按启用配置补验。G20 已[实测](../records/2026-11-17-m0-release-edit-fields.md)混合 PATCH 部分生效，产品须在转发前拒绝无法自动清空的整次编辑，保留原生手动入口 | 产品统一草稿权限与零上游写入的拒绝行为仍须实际验收 |
+| G24 / G25 | 已[验证](../records/2026-11-17-m0-oci-retention-validation.md)同一 Bearer 跨两个允许组织可读写、访问发布组织拒绝，以及独立只读 PAT；保留原生 scope 差异 | M3 按实际所有者 / 对象权限执行，关联不授予隐私或权限 |
+| G26 / G27 | 已确认 30 天受控保留、产品侧停用和原 PAT 交换拒绝；包权限、真实清理与原 Digest 恢复已[取证](../records/2026-11-17-m0-oci-retention-validation.md) | G26 的环境保留窗口与 G27 产品停用在产品阶段验收，已有原 PAT 拒绝和旧 Bearer 换发证据继续适用 |
+
+G27 已有后继换发证据。首版按[已确认的撤销边界](../adr/0006-oci-authorization-and-digest-retention.md#first-release-oci-decisions)推进，接受已复制 Bearer 继续访问及换发的风险。
+
+四份已固定工作流作为首批输入，实际执行按[Runner 分步条件](../planning/m0-s01-baseline.md#runner-resumption)推进。基础运行可先于 OCI 取舍及 GitHub 普通角色补证；这不把原样例标为兼容通过。GitHub 普通角色或参考环境能力不可得时，相关承诺保持待验证；M0 必需路径仍须真实证据，排除首批承诺须明确确认。完整首批兼容产品验收在 M3，不把上表广义能力矩阵全量展开为 M0 前置。
+
+缓存、LFS、submodule、通用 artifacts、复用工作流、工作负载 OIDC 和更广平台后置。选中路径的权限负例不能后置；静默忽略关键字段时，必须验证可强制执行的首版限制或明确排除相应能力，UI 提醒不关闭缺口。
 
 ## 缺口处理顺序与边界
 

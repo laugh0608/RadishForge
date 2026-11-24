@@ -1,0 +1,221 @@
+{
+  "date": "2026-10-29",
+  "host": "github.com",
+  "repository": "laugh0608/RadishForge",
+  "api_version": "2022-11-28",
+  "gh_version": "2.96.0",
+  "before": {
+    "settings": {
+      "full_name": "laugh0608/RadishForge",
+      "visibility": "public",
+      "default_branch": "main",
+      "allow_merge_commit": true,
+      "allow_rebase_merge": true,
+      "allow_squash_merge": true,
+      "allow_auto_merge": false,
+      "delete_branch_on_merge": false
+    },
+    "rulesets": [],
+    "branches": [],
+    "classic_branch_protection": {
+      "status": 404,
+      "message": "Branch not protected"
+    }
+  },
+  "settings_write": {
+    "default_branch": "master",
+    "allow_merge_commit": true,
+    "allow_rebase_merge": true,
+    "allow_squash_merge": false,
+    "allow_auto_merge": false,
+    "delete_branch_on_merge": false
+  },
+  "ruleset_id": 26129324,
+  "ruleset_url": "https://github.com/laugh0608/RadishForge/rules/26129324",
+  "submitted_ruleset": {
+    "name": "RadishForge master protection",
+    "target": "branch",
+    "enforcement": "active",
+    "bypass_actors": [],
+    "conditions": {
+      "ref_name": {
+        "include": [
+          "refs/heads/master"
+        ],
+        "exclude": []
+      }
+    },
+    "rules": [
+      {
+        "type": "deletion"
+      },
+      {
+        "type": "non_fast_forward"
+      },
+      {
+        "type": "pull_request",
+        "parameters": {
+          "allowed_merge_methods": [
+            "merge",
+            "rebase"
+          ],
+          "dismiss_stale_reviews_on_push": true,
+          "require_code_owner_review": false,
+          "require_last_push_approval": false,
+          "required_approving_review_count": 0,
+          "required_review_thread_resolution": true
+        }
+      }
+    ]
+  },
+  "ruleset_write_response": {
+    "id": 26129324,
+    "name": "RadishForge master protection",
+    "target": "branch",
+    "enforcement": "active",
+    "bypass_actors": [],
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "refs/heads/master"
+        ]
+      }
+    },
+    "rules": [
+      {
+        "type": "deletion"
+      },
+      {
+        "type": "non_fast_forward"
+      },
+      {
+        "type": "pull_request",
+        "parameters": {
+          "required_approving_review_count": 0,
+          "dismiss_stale_reviews_on_push": true,
+          "required_reviewers": [],
+          "require_code_owner_review": false,
+          "require_last_push_approval": false,
+          "required_review_thread_resolution": true,
+          "require_extra_approval_for_unattributed_changes": true,
+          "allowed_merge_methods": [
+            "merge",
+            "rebase"
+          ]
+        }
+      }
+    ]
+  },
+  "after": {
+    "settings": {
+      "full_name": "laugh0608/RadishForge",
+      "visibility": "public",
+      "default_branch": "master",
+      "allow_merge_commit": true,
+      "allow_rebase_merge": true,
+      "allow_squash_merge": false,
+      "allow_auto_merge": false,
+      "delete_branch_on_merge": false
+    },
+    "ruleset": {
+      "id": 26129324,
+      "name": "RadishForge master protection",
+      "target": "branch",
+      "enforcement": "active",
+      "bypass_actors": [],
+      "conditions": {
+        "ref_name": {
+          "exclude": [],
+          "include": [
+            "refs/heads/master"
+          ]
+        }
+      },
+      "rules": [
+        {
+          "type": "deletion"
+        },
+        {
+          "type": "non_fast_forward"
+        },
+        {
+          "type": "pull_request",
+          "parameters": {
+            "required_approving_review_count": 0,
+            "dismiss_stale_reviews_on_push": true,
+            "required_reviewers": [],
+            "require_code_owner_review": false,
+            "require_last_push_approval": false,
+            "required_review_thread_resolution": true,
+            "require_extra_approval_for_unattributed_changes": true,
+            "allowed_merge_methods": [
+              "merge",
+              "rebase"
+            ]
+          }
+        }
+      ]
+    },
+    "platform_added_pr_defaults": {
+      "required_reviewers": [],
+      "require_extra_approval_for_unattributed_changes": true
+    },
+    "effective_master_rules": [
+      {
+        "type": "deletion",
+        "ruleset_source_type": "Repository",
+        "ruleset_source": "laugh0608/RadishForge",
+        "ruleset_id": 26129324
+      },
+      {
+        "type": "non_fast_forward",
+        "ruleset_source_type": "Repository",
+        "ruleset_source": "laugh0608/RadishForge",
+        "ruleset_id": 26129324
+      },
+      {
+        "type": "pull_request",
+        "parameters": {
+          "required_approving_review_count": 0,
+          "dismiss_stale_reviews_on_push": true,
+          "required_reviewers": [],
+          "require_code_owner_review": false,
+          "require_last_push_approval": false,
+          "required_review_thread_resolution": true,
+          "require_extra_approval_for_unattributed_changes": true,
+          "allowed_merge_methods": [
+            "merge",
+            "rebase"
+          ]
+        },
+        "ruleset_source_type": "Repository",
+        "ruleset_source": "laugh0608/RadishForge",
+        "ruleset_id": 26129324
+      }
+    ],
+    "effective_dev_rules": [],
+    "initial_pushed_branches": [
+      {
+        "name": "dev",
+        "sha": "c2764aa278cbed9aab3faf6f43a0556e80e623f4",
+        "protected": false
+      },
+      {
+        "name": "master",
+        "sha": "c2764aa278cbed9aab3faf6f43a0556e80e623f4",
+        "protected": true
+      }
+    ]
+  },
+  "verification": {
+    "settings_readback": true,
+    "declared_ruleset_fields_match": true,
+    "platform_added_defaults_reviewed": true,
+    "effective_master_rules_match": true,
+    "effective_dev_rules_empty": true,
+    "pr_behavior_tested": false,
+    "destructive_negative_tests_run": false,
+    "ci_required_checks_enabled": false
+  }
+}

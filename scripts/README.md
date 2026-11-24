@@ -1,6 +1,6 @@
 # 本地治理检查
 
-本目录是仓库维护工具，不是业务服务。使用 Python 3.9+ 标准库，无第三方依赖，不安装包、不联网、不启动服务、不写 Git。产品技术栈仍为 Go + TypeScript + React。
+本目录包含仓库维护及 M0 上游验证工具，不是业务服务。Python 工具使用标准库，无第三方包依赖；产品技术栈仍为 Go + TypeScript + React。下列治理检查不安装包、不联网、不启动服务、不写 Git；M0 工具的 Docker / 网络副作用单列说明。
 
 ```bash
 python3 scripts/check-repo.py
@@ -23,4 +23,36 @@ Windows 可用 `py -3` 替代 `python3`，不额外维护仅转发命令的 shel
 
 ## 维护方式
 
-新增真实约束时同步治理专题与检查器，补充能揭露错误放行的负例。后续建立 CI 时复用这个入口，先运行成功和故障传播验收，再将真实 job 纳入 Candidate Quality；当前没有活动 workflow。
+新增真实约束时同步治理专题与检查器，补充能揭露错误放行的负例。[PR Checks](../.github/workflows/pr-checks.yml) 复用本页两条检查命令，并由 `Candidate Quality` 汇总结果。
+
+## M0 本机验证工具
+
+[m0_local.py](m0_local.py)管理明确归属的本机 Docker 验证批次，[m0_contracts.py](m0_contracts.py)验证真实 Gitea 的 OIDC / OAuth、普通用户权限、Issue、Release、OCI 与同源 REST 对照。这些探针按需运行。配置、命令、资源、退出码、秘密和清理边界见[M0 契约说明](../tests/contracts/m0/README.md)。
+
+`prepare` 生成本批私密文件，`pull` 下载固定镜像，`up` 初始化新卷并启动三个平台服务，协议探针写入合成账号 / 仓库 / Issue / OAuth 授权，`cleanup` 删除本批测试资源。仅在对应授权下执行，不因本地治理通过自动启动；当前配置没有 Runner，也不挂 Docker socket。
+
+授权组合配置位于 [gitea-auth-profile.json](../tests/contracts/m0/gitea-auth-profile.json)，[m0_scope.py](m0_scope.py)校验完整用途组合与 issuer；对应纯本地负例测试包含在现有 unittest 入口内。真实组合验证使用 `prepare --auth-profile` 和探针 `--mode profiles`；原始上游差异只能通过显式 `--mode discovery` 复现，不能以组合验证取代原始兼容结论。
+
+[m0_oauth.py](m0_oauth.py)由既有探针提取，统一 HTTP / 浏览器会话分离、授权码 / PKCE、凭据 metadata 与在线账号复核；[m0_lifecycle.py](m0_lifecycle.py)使用同一实现验证生命周期，没有新增产品会话或第二套 scope 规则。纯本地凭据拒绝测试也在 unittest 入口内，覆盖 HTML / 非对象 metadata、401 原因未归属、主体不符、账号拒绝、网络未知及不重试；不替代真实上游证据。
+
+`--mode lifecycle` 使用受控配置，含真实一小时 refresh token 到期和一次原生页面单用户撤销，需要单独预算长时窗口。`consent-ready` / `consent-revoked` 仅协调页面点击前后的取证时点，真实失效仍由 API 断言验证。历史两项差异使用新隔离批次 `prepare --auth-profile --legacy-query-auth` 与 `--mode lifecycle-baseline` 复现。步骤、浏览器秘密边界和清理要求见[M0 契约说明](../tests/contracts/m0/README.md)。
+
+`--mode issues` 调用 [m0_issues.py](m0_issues.py) 验证 Issue 列表 / 筛选 / 分页、正文版本与状态、元数据 / 分配、真实权限、非法输入和删除。[m0_response_loss.py](m0_response_loss.py)由原 Issue 注入模块提取，供 Issue / Release / OCI 共用；仅在超时用例中临时监听回环 18543，按明确操作固定合成路径 / 凭据 / 请求体，不是通用代理或产品服务。共享 HTTP 默认超时仍为 15 秒，故障用例单次显式 1 秒；网络错误记录 unknown，不自动重试。新增纯本地前检、分页、对账和传输负例同样从 unittest 入口运行；不启动 Docker 或监听端口。
+
+`--mode releases` 调用 [m0_releases.py](m0_releases.py)，使用第四种独立 `release_write` 用途，覆盖草稿 / 分页、编辑 / 发布、Tag SHA、raw / multipart 附件与字节摘要、角色 / 越权 / 撤权 / 删除及重复请求。字节响应为显式 `BinaryBody`，不经文本解码，最大读取 2 MB，附件用例限 64 KiB；只暴露白名单响应头。响应丢失测试包含 Release 创建、发布 PATCH、附件 POST 和真实半包断开，未知结果不重放。其余用途及默认 JSON / form 行为保持原边界；具体命令、资源及证据见契约入口。
+
+`--mode oci --regctl <task-binary>` 调用 [m0_oci.py](m0_oci.py)、[m0_registry.py](m0_registry.py) 与 [m0_oci_client.py](m0_oci_client.py)。独立 Registry 契约限定 package PAT、同源 challenge / Location、原始 Blob / Manifest bytes 和客户端资产摘要；原四种 OAuth 组合不变。私有组织 / team 与仓库关联权限分开验收，未知写入只读回查；共用故障监听新增固定 namespace 的 POST / PATCH / PUT。真实客户端为 Docker 无网络 scratch 构建、regctl task CA 推拉与 Docker load；Buildx / regctl 状态均在任务目录，不改用户配置或 daemon 信任，不全局 prune。工具不会自动下载 regctl，入口先核对二进制 SHA-256；资源与手工准备见契约说明。
+
+[m0_oci_retention.py](m0_oci_retention.py) 复用同一本机空批次、Registry 字节校验与 team 夹具，定向验证 G24—G26。执行真实组织权限验证、保存原生清理规则、触发本批清理并恢复合成制品。写入限本机隔离数据，要求本批运行授权。 [执行与清理](../tests/contracts/m0/compat/oci-retention-runbook.md)
+
+[m0_release_org.py](m0_release_org.py) 由 `--mode release-org` 调用，验证私有组织仓库的 Release team 权限变化，使用独立已发布对照及同一有效凭据。 [组织仓库契约](../tests/contracts/m0/README.md#g19-组织仓库-release-草稿权限)
+
+[m0_release_edit.py](m0_release_edit.py) 由 `--mode release-edit` 调用，验证 G20 草稿 PATCH 的省略、空值混合编辑与独立回读。 [Release 字段契约](../tests/contracts/m0/README.md#g20-release-草稿-patch-字段)
+
+`--mode release-publication` 调用 [m0_releases.py](m0_releases.py) 的定向探针。G22 按原 Release ID、Tag 名及完整 SHA 核对单次发布，超时后仅按原 ID 和 Tag 发 GET。G23 在新建 Tag 前按完整 SHA 回读目标仓库的提交，读取失败后的零 PATCH 目前有本地模拟证据。 [发布与超时回读入口](../tests/contracts/m0/README.md#g22-release-发布与超时回读)
+
+[m0_consent_restart.py](m0_consent_restart.py) 由 `--mode consent-restart` 调用，检查普通用户自助撤销在仅重启本批资源 Gitea 后的持久性及独立授权有效性。 [执行与清理](../tests/contracts/m0/README.md#g06-原生自助撤销重启补证)
+
+`--mode rest` 调用 [m0_rest.py](m0_rest.py)。在新的本机受控批次内核对合成 Git 夹具摘要、空私有仓库和三个 refs，再通过任务 CA 校验的 HTTPS 原子推送并读回。探针按普通角色验证仓库、Issue / PR 和 Release，记录 G19 / G20 差异并退出 2。 [同源 REST 执行入口](../tests/contracts/m0/README.md#m0-s04-同源-rest-对照)
+
+[m0_github_scope.py](m0_github_scope.py) 是独立的 GitHub 所有者只读 PAT 探针，固定目标为获授权的 `RadishForge-Test`。默认模式执行两项带唯一标记的合成写入负例并独立回读。`--preflight`、`--revocation-only` 和 `--check-revoked` 只发 GET。PAT 经交互式终端隐藏输入，删除由操作者在设置页完成。执行范围、回读条件和报告位置见手册。 [GitHub 单账号凭据对照](../tests/contracts/m0/compat/rest-runbook.md#github-单账号凭据对照)

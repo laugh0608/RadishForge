@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "provider": "gitea",
+  "provider_version": "28.2.0",
+  "origin": "https://localhost:18443",
+  "service": "container_registry",
+  "token_path": "/v2/token",
+  "pat_profiles": {
+    "read": ["read:package"],
+    "write": ["write:package"]
+  },
+  "client": {
+    "name": "regctl",
+    "version": "v0.11.7",
+    "platform": "darwin/arm64",
+    "sha256": "8ac077a1eeb834d3053714e86ccbd838d0da46567df8cd7c2695d1a19135bf60",
+    "license": "Apache-2.0"
+  }
+}

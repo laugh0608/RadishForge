@@ -1,0 +1,4017 @@
+{
+  "repository_head_at_execution": "22094d44b91bb21368e9dc7616e0fc92494a4fd2",
+  "image_indexes": {
+    "gitea": "sha256:94807314454f6525994a3b76286ba12bc7e7f8cd14f61d9e67431767f8103306",
+    "postgres": "sha256:5c4783a8cc3f0074912164f94dfa1be4e043438f0f707cf968d7af9a0d31a2c8"
+  },
+  "observed_image_platforms": {
+    "gitea": "linux/arm64",
+    "postgres": "linux/arm64"
+  },
+  "postgres_version": "18.6 (Debian 18.6-1.pgdg12+2)",
+  "interrupted_attempt_causes": {
+    "rf-m0-local-83145728": "Anonymous API version request returned 403 before account or data creation",
+    "rf-m0-local-860b4175": "Probe expected a legacy CSRF token, absent in the fixed server; cleanup rule had not been submitted"
+  },
+  "cleanup": {
+    "projects": {
+      "rf-m0-local-83145728": {
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0
+      },
+      "rf-m0-local-860b4175": {
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0
+      },
+      "rf-m0-local-09fe1c40": {
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0
+      }
+    },
+    "loopback_ports_available": [
+      18443,
+      19443
+    ],
+    "runtime_removed": true,
+    "shared_images_preserved": true
+  },
+  "attempts": [
+    {
+      "project": "rf-m0-local-83145728",
+      "context": "orbstack",
+      "server": {
+        "Version": "29.8.2",
+        "Os": "linux",
+        "Arch": "arm64",
+        "KernelVersion": "7.2.12-orbstack-00394-gbecdd6130068"
+      },
+      "source_sha256": {
+        "scripts/m0_oci_retention.py": "1a2d7cd6872aee6886d05d39b6a4cb99e9ee2709be1ee6670957ec4e027b51ed",
+        "scripts/m0_oci.py": "9635c762719ba856ddea9a620977e1fa011953d7bf619a89e91e76fb9ff3e9a6",
+        "scripts/m0_registry.py": "702190a79ebb41dab44630a6169156096d055d604daac27d4d041f339073bcb6",
+        "scripts/m0_oauth.py": "cbd6afc85e527879b1935fd6dbcf0b56026132a2fc4e6419dd1a085323af2b17",
+        "tests/contracts/m0/compose.yaml": "e31d0948c6e7d7dae36ce0014c9820f0096964e48bee0917be6aa22c82e5075d"
+      },
+      "provider_config_sha256": "fabdbd06388cc2c9de73873e553e98be0c3290b81ec9446010cc35ec4e0c1acf",
+      "runner_started": false,
+      "results": [
+        {
+          "name": "oci_retention_interrupted",
+          "status": "error",
+          "observed_at_utc": "2026-11-17T12:13:51.458770+00:00",
+          "error_type": "RuntimeError"
+        }
+      ],
+      "exit_code": 1,
+      "requests": [
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/version",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/version"
+        }
+      ]
+    },
+    {
+      "project": "rf-m0-local-860b4175",
+      "context": "orbstack",
+      "server": {
+        "Version": "29.8.2",
+        "Os": "linux",
+        "Arch": "arm64",
+        "KernelVersion": "7.2.12-orbstack-00394-gbecdd6130068"
+      },
+      "source_sha256": {
+        "scripts/m0_oci_retention.py": "8630ebb96ec467a1a1b6d55b2e94e1ae7c68c087948f6d009811e4eeffdb27b0",
+        "scripts/m0_oci.py": "9635c762719ba856ddea9a620977e1fa011953d7bf619a89e91e76fb9ff3e9a6",
+        "scripts/m0_registry.py": "702190a79ebb41dab44630a6169156096d055d604daac27d4d041f339073bcb6",
+        "scripts/m0_oauth.py": "cbd6afc85e527879b1935fd6dbcf0b56026132a2fc4e6419dd1a085323af2b17",
+        "tests/contracts/m0/compose.yaml": "e31d0948c6e7d7dae36ce0014c9820f0096964e48bee0917be6aa22c82e5075d"
+      },
+      "provider_config_sha256": "5f2e2a9420ca78a8bf8a9a2375a1e9938695ca7024774d8b3d18563a126265eb",
+      "runner_started": false,
+      "results": [
+        {
+          "name": "fixture_roles_and_source_repository",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:14:20.905669+00:00",
+          "organizations": {
+            "m0-private-org": {
+              "id": 6,
+              "visibility": "private",
+              "bob_team_units": {
+                "repo.packages": "write"
+              }
+            },
+            "m0-build-alt": {
+              "id": 7,
+              "visibility": "private",
+              "bob_team_units": {
+                "repo.packages": "write"
+              }
+            },
+            "m0-release-org": {
+              "id": 8,
+              "visibility": "private",
+              "carol_team_units": {
+                "repo.packages": "read"
+              },
+              "source_repo_id": 1,
+              "bob_source_read": 200,
+              "bob_organization_membership": 404
+            }
+          }
+        },
+        {
+          "name": "registry_challenge",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:14:20.909997+00:00",
+          "challenge": {
+            "status": 401,
+            "realm": "https://localhost:18443/v2/token",
+            "service": "container_registry",
+            "scope": "*"
+          }
+        },
+        {
+          "name": "issued_release_write",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:14:20.931686+00:00",
+          "requested_actions": "pull,push",
+          "metadata": {
+            "user_id": 2,
+            "scope": "write:package",
+            "declared_lifetime_seconds": 86400,
+            "claims_locally_signature_verified": false
+          }
+        },
+        {
+          "name": "issued_deploy_read",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:14:20.952207+00:00",
+          "requested_actions": "pull",
+          "metadata": {
+            "user_id": 4,
+            "scope": "read:package",
+            "declared_lifetime_seconds": 86400,
+            "claims_locally_signature_verified": false
+          }
+        },
+        {
+          "name": "issued_build_write",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:14:20.973245+00:00",
+          "requested_actions": "pull",
+          "metadata": {
+            "user_id": 3,
+            "scope": "write:package",
+            "declared_lifetime_seconds": 86400,
+            "claims_locally_signature_verified": false
+          }
+        },
+        {
+          "name": "issued_build_read",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:14:20.994594+00:00",
+          "requested_actions": "pull,push",
+          "metadata": {
+            "user_id": 3,
+            "scope": "read:package",
+            "declared_lifetime_seconds": 86400,
+            "claims_locally_signature_verified": false
+          }
+        },
+        {
+          "name": "issued_build_control_read",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:14:21.014417+00:00",
+          "requested_actions": "pull",
+          "metadata": {
+            "user_id": 5,
+            "scope": "read:package",
+            "declared_lifetime_seconds": 86400,
+            "claims_locally_signature_verified": false
+          }
+        },
+        {
+          "name": "same_build_bearer_allowed",
+          "status": "gap",
+          "observed_at_utc": "2026-11-17T12:14:21.228781+00:00",
+          "image": "m0-private-org/m0-probe",
+          "digest": "sha256:4ffdc3bb888d94112e368cb907031c110861e1caf7f404265afb838b4aff6b39",
+          "read_status": 200,
+          "upload_status": 202,
+          "upload_removed_status": 404,
+          "detail": "pull query preserved write scope; the same credential works at both allowed owners"
+        },
+        {
+          "name": "same_build_bearer_allowed",
+          "status": "gap",
+          "observed_at_utc": "2026-11-17T12:14:21.297213+00:00",
+          "image": "m0-build-alt/m0-probe",
+          "digest": "sha256:4ffdc3bb888d94112e368cb907031c110861e1caf7f404265afb838b4aff6b39",
+          "read_status": 200,
+          "upload_status": 202,
+          "upload_removed_status": 404,
+          "detail": "pull query preserved write scope; the same credential works at both allowed owners"
+        },
+        {
+          "name": "read_pat_cannot_upload_in_own_writer_namespace",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:14:21.313478+00:00",
+          "image": "m0-private-org/m0-probe",
+          "read_status": 200,
+          "upload_status": 401
+        },
+        {
+          "name": "release_fixture_a",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:14:21.516027+00:00",
+          "image": "m0-release-org/m0-probe",
+          "source_sha": "e48f4b54aec3ee0ca08acf3e0d201d2efaaab465",
+          "tag": "m0-retain-a",
+          "descriptors": {
+            "config": {
+              "digest": "sha256:8c1f830b562d1ccb70d39d4ca7b01395ae7383ce983eb24762a5852d8e352bce",
+              "size": 310
+            },
+            "layer": {
+              "digest": "sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+              "size": 147
+            },
+            "manifest": {
+              "digest": "sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be",
+              "size": 538
+            }
+          }
+        },
+        {
+          "name": "release_fixture_b",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:14:21.722061+00:00",
+          "image": "m0-release-org/m0-probe",
+          "source_sha": "bf5b30ed2632bed81a1c5583b751d6afe83c3707",
+          "tag": "m0-retain-b",
+          "descriptors": {
+            "config": {
+              "digest": "sha256:864e9ddbbd13ba79c35435bc97b0874ac1e0741d306e0363097ae3fb04b7a8d4",
+              "size": 310
+            },
+            "layer": {
+              "digest": "sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+              "size": 147
+            },
+            "manifest": {
+              "digest": "sha256:c297e78023e1df949b9752c880d08d15a328e63383379a05a3d4eb4ba9288bd6",
+              "size": 538
+            }
+          }
+        },
+        {
+          "name": "release_fixture_control",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:14:21.921675+00:00",
+          "image": "m0-release-org/m0-probe",
+          "source_sha": "2b0a23a10a06fb649ca874ebb97f3a348a7fab5d",
+          "tag": "m0-prune-control",
+          "descriptors": {
+            "config": {
+              "digest": "sha256:c5719ad09bcbe225d0cd76e95232d0b7a691be603576f88f9fa475ace07f86a9",
+              "size": 310
+            },
+            "layer": {
+              "digest": "sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+              "size": 147
+            },
+            "manifest": {
+              "digest": "sha256:bfff14d4a7a397acc3474bf4e36e78ad124c749fbd043b7b1406071b3e53b71c",
+              "size": 544
+            }
+          }
+        },
+        {
+          "name": "build_bearer_denied_in_private_release_owner",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:14:21.977507+00:00",
+          "image": "m0-release-org/m0-probe",
+          "known_digest": "sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be",
+          "prior_to_link": {
+            "manifest": 401,
+            "blob": 401
+          },
+          "paired_source_repository_id": 1,
+          "after_link": {
+            "manifest": 401,
+            "blob": 401
+          },
+          "upload_status": 401
+        },
+        {
+          "name": "anonymous_and_deployment_reader_boundaries",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:14:21.992508+00:00",
+          "image": "m0-release-org/m0-probe",
+          "anonymous": {
+            "manifest": 401,
+            "blob": 401
+          },
+          "deploy_read_status": 200,
+          "deploy_upload_status": 401,
+          "deploy_delete_status": 401
+        },
+        {
+          "name": "oci_retention_interrupted",
+          "status": "error",
+          "observed_at_utc": "2026-11-17T12:14:22.105149+00:00",
+          "error_type": "RuntimeError"
+        }
+      ],
+      "requests": [
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/healthz",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/healthz"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/version",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/version"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/orgs/m0-private-org",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-private-org"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/orgs/m0-build-alt",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-build-alt"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/orgs/m0-release-org",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-org"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs/m0-private-org/teams",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-private-org/teams"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/4",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/4"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/teams/4/members/bob",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/4/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/4/members/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/4/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs/m0-build-alt/teams",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-build-alt/teams"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/5",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/5"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/teams/5/members/bob",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/5/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/5/members/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/5/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs/m0-release-org/teams",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-org/teams"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/6",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/6"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/teams/6/members/carol",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/6/members/carol"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/6/members/carol",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/6/members/carol"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs/m0-release-org/repos",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-org/repos"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/collaborators/bob",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/collaborators/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/orgs/m0-release-org/members/bob",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-org/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/users/alice/tokens",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/users/alice/tokens"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/users/carol/tokens",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/users/carol/tokens"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/users/bob/tokens",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/users/bob/tokens"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/users/bob/tokens",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/users/bob/tokens"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/users/dave/tokens",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/users/dave/tokens"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-build-source.txt",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-build-source.txt"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/89881d554b0e631e2ee87c551c00b27a215fc45d",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/89881d554b0e631e2ee87c551c00b27a215fc45d"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-private-org/m0-probe/manifests/m0-build-check",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/manifests/m0-build-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/manifests/sha256:4ffdc3bb888d94112e368cb907031c110861e1caf7f404265afb838b4aff6b39",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/manifests/sha256:4ffdc3bb888d94112e368cb907031c110861e1caf7f404265afb838b4aff6b39"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/blobs/sha256:519dde9ad07e26acbf089bb7c446abf5a32212e9236a4e08c8738d56e58cc91d",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/sha256:519dde9ad07e26acbf089bb7c446abf5a32212e9236a4e08c8738d56e58cc91d"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/manifests/sha256:4ffdc3bb888d94112e368cb907031c110861e1caf7f404265afb838b4aff6b39",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/manifests/sha256:4ffdc3bb888d94112e368cb907031c110861e1caf7f404265afb838b4aff6b39"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/blobs/sha256:519dde9ad07e26acbf089bb7c446abf5a32212e9236a4e08c8738d56e58cc91d",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/sha256:519dde9ad07e26acbf089bb7c446abf5a32212e9236a4e08c8738d56e58cc91d"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "DELETE",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}",
+          "status": 204,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-build-alt/m0-probe/manifests/m0-build-check",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/manifests/m0-build-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-build-alt/m0-probe/manifests/sha256:4ffdc3bb888d94112e368cb907031c110861e1caf7f404265afb838b4aff6b39",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/manifests/sha256:4ffdc3bb888d94112e368cb907031c110861e1caf7f404265afb838b4aff6b39"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/sha256:519dde9ad07e26acbf089bb7c446abf5a32212e9236a4e08c8738d56e58cc91d",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/sha256:519dde9ad07e26acbf089bb7c446abf5a32212e9236a4e08c8738d56e58cc91d"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-build-alt/m0-probe/manifests/sha256:4ffdc3bb888d94112e368cb907031c110861e1caf7f404265afb838b4aff6b39",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/manifests/sha256:4ffdc3bb888d94112e368cb907031c110861e1caf7f404265afb838b4aff6b39"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/sha256:519dde9ad07e26acbf089bb7c446abf5a32212e9236a4e08c8738d56e58cc91d",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/sha256:519dde9ad07e26acbf089bb7c446abf5a32212e9236a4e08c8738d56e58cc91d"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "DELETE",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}",
+          "status": 204,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/manifests/sha256:4ffdc3bb888d94112e368cb907031c110861e1caf7f404265afb838b4aff6b39",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/manifests/sha256:4ffdc3bb888d94112e368cb907031c110861e1caf7f404265afb838b4aff6b39"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/blobs/sha256:519dde9ad07e26acbf089bb7c446abf5a32212e9236a4e08c8738d56e58cc91d",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/sha256:519dde9ad07e26acbf089bb7c446abf5a32212e9236a4e08c8738d56e58cc91d"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-release-a.txt",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-release-a.txt"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/e48f4b54aec3ee0ca08acf3e0d201d2efaaab465",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/e48f4b54aec3ee0ca08acf3e0d201d2efaaab465"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-a",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:8c1f830b562d1ccb70d39d4ca7b01395ae7383ce983eb24762a5852d8e352bce",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:8c1f830b562d1ccb70d39d4ca7b01395ae7383ce983eb24762a5852d8e352bce"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-a",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:8c1f830b562d1ccb70d39d4ca7b01395ae7383ce983eb24762a5852d8e352bce",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:8c1f830b562d1ccb70d39d4ca7b01395ae7383ce983eb24762a5852d8e352bce"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-release-b.txt",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-release-b.txt"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/bf5b30ed2632bed81a1c5583b751d6afe83c3707",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/bf5b30ed2632bed81a1c5583b751d6afe83c3707"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-b",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:c297e78023e1df949b9752c880d08d15a328e63383379a05a3d4eb4ba9288bd6",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:c297e78023e1df949b9752c880d08d15a328e63383379a05a3d4eb4ba9288bd6"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:864e9ddbbd13ba79c35435bc97b0874ac1e0741d306e0363097ae3fb04b7a8d4",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:864e9ddbbd13ba79c35435bc97b0874ac1e0741d306e0363097ae3fb04b7a8d4"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-b",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:864e9ddbbd13ba79c35435bc97b0874ac1e0741d306e0363097ae3fb04b7a8d4",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:864e9ddbbd13ba79c35435bc97b0874ac1e0741d306e0363097ae3fb04b7a8d4"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-release-control.txt",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-release-control.txt"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/2b0a23a10a06fb649ca874ebb97f3a348a7fab5d",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/2b0a23a10a06fb649ca874ebb97f3a348a7fab5d"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-prune-control",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-prune-control"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:bfff14d4a7a397acc3474bf4e36e78ad124c749fbd043b7b1406071b3e53b71c",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:bfff14d4a7a397acc3474bf4e36e78ad124c749fbd043b7b1406071b3e53b71c"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:c5719ad09bcbe225d0cd76e95232d0b7a691be603576f88f9fa475ace07f86a9",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:c5719ad09bcbe225d0cd76e95232d0b7a691be603576f88f9fa475ace07f86a9"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-prune-control",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-prune-control"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:c5719ad09bcbe225d0cd76e95232d0b7a691be603576f88f9fa475ace07f86a9",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:c5719ad09bcbe225d0cd76e95232d0b7a691be603576f88f9fa475ace07f86a9"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/packages/m0-release-org/container/m0-probe/-/link/m0-private-source",
+          "status": 201,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/packages/m0-release-org/container/m0-probe/-/link/m0-private-source"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/packages/m0-release-org/container/m0-probe/m0-retain-a",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/packages/m0-release-org/container/m0-probe/m0-retain-a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "DELETE",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:8c1f830b562d1ccb70d39d4ca7b01395ae7383ce983eb24762a5852d8e352bce",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:8c1f830b562d1ccb70d39d4ca7b01395ae7383ce983eb24762a5852d8e352bce"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-active",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-active"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-active",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-active"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:8c1f830b562d1ccb70d39d4ca7b01395ae7383ce983eb24762a5852d8e352bce",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:8c1f830b562d1ccb70d39d4ca7b01395ae7383ce983eb24762a5852d8e352bce"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-active",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-active"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-active",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-active"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:864e9ddbbd13ba79c35435bc97b0874ac1e0741d306e0363097ae3fb04b7a8d4",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:864e9ddbbd13ba79c35435bc97b0874ac1e0741d306e0363097ae3fb04b7a8d4"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:ea04fbad49b17ebb2c01c572cad08f537e70287d51590f98a93c455e8a9005be"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:8c1f830b562d1ccb70d39d4ca7b01395ae7383ce983eb24762a5852d8e352bce",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:8c1f830b562d1ccb70d39d4ca7b01395ae7383ce983eb24762a5852d8e352bce"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/org/m0-release-org/settings/packages/rules/add",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/org/m0-release-org/settings/packages/rules/add"
+        }
+      ],
+      "exit_code": 1
+    },
+    {
+      "project": "rf-m0-local-09fe1c40",
+      "context": "orbstack",
+      "server": {
+        "Version": "29.8.2",
+        "Os": "linux",
+        "Arch": "arm64",
+        "KernelVersion": "7.2.12-orbstack-00394-gbecdd6130068"
+      },
+      "source_sha256": {
+        "scripts/m0_oci_retention.py": "bf499a5bcc48ffd517fdc9ca675e7db5686561c9803bd0e6d1f3996d666174d9",
+        "scripts/m0_oci.py": "9635c762719ba856ddea9a620977e1fa011953d7bf619a89e91e76fb9ff3e9a6",
+        "scripts/m0_registry.py": "702190a79ebb41dab44630a6169156096d055d604daac27d4d041f339073bcb6",
+        "scripts/m0_oauth.py": "cbd6afc85e527879b1935fd6dbcf0b56026132a2fc4e6419dd1a085323af2b17",
+        "tests/contracts/m0/compose.yaml": "e31d0948c6e7d7dae36ce0014c9820f0096964e48bee0917be6aa22c82e5075d"
+      },
+      "provider_config_sha256": "d711726c2e6bee92429278492d353c60570ff788127a6e96297374a873dc1567",
+      "runner_started": false,
+      "results": [
+        {
+          "name": "fixture_roles_and_source_repository",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:32.232504+00:00",
+          "organizations": {
+            "m0-private-org": {
+              "id": 6,
+              "visibility": "private",
+              "bob_team_units": {
+                "repo.packages": "write"
+              }
+            },
+            "m0-build-alt": {
+              "id": 7,
+              "visibility": "private",
+              "bob_team_units": {
+                "repo.packages": "write"
+              }
+            },
+            "m0-release-org": {
+              "id": 8,
+              "visibility": "private",
+              "carol_team_units": {
+                "repo.packages": "read"
+              },
+              "source_repo_id": 1,
+              "bob_source_read": 200,
+              "bob_organization_membership": 404
+            }
+          }
+        },
+        {
+          "name": "registry_challenge",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:32.235883+00:00",
+          "challenge": {
+            "status": 401,
+            "realm": "https://localhost:18443/v2/token",
+            "service": "container_registry",
+            "scope": "*"
+          }
+        },
+        {
+          "name": "issued_release_write",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:32.258005+00:00",
+          "requested_actions": "pull,push",
+          "metadata": {
+            "user_id": 2,
+            "scope": "write:package",
+            "declared_lifetime_seconds": 86400,
+            "claims_locally_signature_verified": false
+          }
+        },
+        {
+          "name": "issued_deploy_read",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:32.278788+00:00",
+          "requested_actions": "pull",
+          "metadata": {
+            "user_id": 4,
+            "scope": "read:package",
+            "declared_lifetime_seconds": 86400,
+            "claims_locally_signature_verified": false
+          }
+        },
+        {
+          "name": "issued_build_write",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:32.301000+00:00",
+          "requested_actions": "pull",
+          "metadata": {
+            "user_id": 3,
+            "scope": "write:package",
+            "declared_lifetime_seconds": 86400,
+            "claims_locally_signature_verified": false
+          }
+        },
+        {
+          "name": "issued_build_read",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:32.333290+00:00",
+          "requested_actions": "pull,push",
+          "metadata": {
+            "user_id": 3,
+            "scope": "read:package",
+            "declared_lifetime_seconds": 86400,
+            "claims_locally_signature_verified": false
+          }
+        },
+        {
+          "name": "issued_build_control_read",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:32.355694+00:00",
+          "requested_actions": "pull",
+          "metadata": {
+            "user_id": 5,
+            "scope": "read:package",
+            "declared_lifetime_seconds": 86400,
+            "claims_locally_signature_verified": false
+          }
+        },
+        {
+          "name": "same_build_bearer_allowed",
+          "status": "gap",
+          "observed_at_utc": "2026-11-17T12:15:32.578335+00:00",
+          "image": "m0-private-org/m0-probe",
+          "digest": "sha256:7a20595af3aadc360584530e7aeea4b6ea1df9ff99866ac2f3b2083e7612a4b0",
+          "read_status": 200,
+          "upload_status": 202,
+          "upload_removed_status": 404,
+          "detail": "pull query preserved write scope; the same credential works at both allowed owners"
+        },
+        {
+          "name": "same_build_bearer_allowed",
+          "status": "gap",
+          "observed_at_utc": "2026-11-17T12:15:32.636719+00:00",
+          "image": "m0-build-alt/m0-probe",
+          "digest": "sha256:7a20595af3aadc360584530e7aeea4b6ea1df9ff99866ac2f3b2083e7612a4b0",
+          "read_status": 200,
+          "upload_status": 202,
+          "upload_removed_status": 404,
+          "detail": "pull query preserved write scope; the same credential works at both allowed owners"
+        },
+        {
+          "name": "read_pat_cannot_upload_in_own_writer_namespace",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:32.648808+00:00",
+          "image": "m0-private-org/m0-probe",
+          "read_status": 200,
+          "upload_status": 401
+        },
+        {
+          "name": "release_fixture_a",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:32.874572+00:00",
+          "image": "m0-release-org/m0-probe",
+          "source_sha": "05fd2e4ed3121ae6d4ac3f8d6a3db05f0716aa47",
+          "tag": "m0-retain-a",
+          "descriptors": {
+            "config": {
+              "digest": "sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699",
+              "size": 310
+            },
+            "layer": {
+              "digest": "sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+              "size": 147
+            },
+            "manifest": {
+              "digest": "sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+              "size": 538
+            }
+          }
+        },
+        {
+          "name": "release_fixture_b",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.071430+00:00",
+          "image": "m0-release-org/m0-probe",
+          "source_sha": "5800a5be4282fdc80f1d253777cae4ed1b2db88e",
+          "tag": "m0-retain-b",
+          "descriptors": {
+            "config": {
+              "digest": "sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b",
+              "size": 310
+            },
+            "layer": {
+              "digest": "sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+              "size": 147
+            },
+            "manifest": {
+              "digest": "sha256:877b8f0810bac3b9cd754588765761bdd04a604cff3dadfa01c0b2f73d26f24e",
+              "size": 538
+            }
+          }
+        },
+        {
+          "name": "release_fixture_control",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.267546+00:00",
+          "image": "m0-release-org/m0-probe",
+          "source_sha": "299c7ddf24270189686515b66cc7a14a5c8a4fb2",
+          "tag": "m0-prune-control",
+          "descriptors": {
+            "config": {
+              "digest": "sha256:0a7e546f91630e868f8b08ca7f04cd667cf01933481c695dee23083e75ec5304",
+              "size": 310
+            },
+            "layer": {
+              "digest": "sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+              "size": 147
+            },
+            "manifest": {
+              "digest": "sha256:b466b62565f0aafd211fd0df31526ee9e4286d938a83d86c13ba2448cb80dbab",
+              "size": 544
+            }
+          }
+        },
+        {
+          "name": "build_bearer_denied_in_private_release_owner",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.317300+00:00",
+          "image": "m0-release-org/m0-probe",
+          "known_digest": "sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+          "prior_to_link": {
+            "manifest": 401,
+            "blob": 401
+          },
+          "paired_source_repository_id": 1,
+          "after_link": {
+            "manifest": 401,
+            "blob": 401
+          },
+          "upload_status": 401
+        },
+        {
+          "name": "anonymous_and_deployment_reader_boundaries",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.326733+00:00",
+          "image": "m0-release-org/m0-probe",
+          "anonymous": {
+            "manifest": 401,
+            "blob": 401
+          },
+          "deploy_read_status": 200,
+          "deploy_upload_status": 401,
+          "deploy_delete_status": 401
+        },
+        {
+          "name": "native_cleanup_rule_saved_and_previewed",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.446133+00:00",
+          "rule_id": 1,
+          "values": {
+            "enabled": "true",
+            "type": "container",
+            "keep_count": "0",
+            "remove_days": "0",
+            "keep_pattern": "m0-retain-(a|b)",
+            "remove_pattern": "m0-retain-(a|b)|m0-prune-control"
+          },
+          "match_full_name": false,
+          "preview_delete_tag": "m0-prune-control",
+          "preview_retained_tags_excluded": true
+        },
+        {
+          "name": "real_cleanup_removes_control_tag_and_keeps_release_bytes",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.529856+00:00",
+          "trigger_status": 204,
+          "previous_execution_count": 1,
+          "execution_count": 2,
+          "prune_tag_status": 404,
+          "prune_digest_status": 404,
+          "prune_config_status": 404,
+          "prune_layer_status": 200,
+          "retained_a": {
+            "config": {
+              "digest": "sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699",
+              "size": 310
+            },
+            "layer": {
+              "digest": "sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+              "size": 147
+            },
+            "manifest": {
+              "digest": "sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+              "size": 538
+            }
+          },
+          "retained_b": {
+            "config": {
+              "digest": "sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b",
+              "size": 310
+            },
+            "layer": {
+              "digest": "sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+              "size": 147
+            },
+            "manifest": {
+              "digest": "sha256:877b8f0810bac3b9cd754588765761bdd04a604cff3dadfa01c0b2f73d26f24e",
+              "size": 538
+            }
+          }
+        },
+        {
+          "name": "registry_overwrite",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.750184+00:00",
+          "target": "m0-release-org/m0-delete-check",
+          "denied_status": 401,
+          "independent_read_status": 200
+        },
+        {
+          "name": "registry_manifest_delete",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.763447+00:00",
+          "target": "m0-release-org/m0-delete-check",
+          "denied_status": 401,
+          "independent_read_status": 200
+        },
+        {
+          "name": "registry_blob_delete",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.776860+00:00",
+          "target": "m0-release-org/m0-delete-check",
+          "denied_status": 401,
+          "independent_read_status": 200
+        },
+        {
+          "name": "rest_version_delete",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.790940+00:00",
+          "target": "m0-release-org/m0-delete-check",
+          "denied_status": 403,
+          "independent_read_status": 200
+        },
+        {
+          "name": "rest_package_delete",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.804460+00:00",
+          "target": "m0-release-org/m0-delete-check",
+          "denied_status": 403,
+          "independent_read_status": 200
+        },
+        {
+          "name": "native_deploy_reader_delete_denied",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.853845+00:00",
+          "target": "m0-release-org/m0-delete-check",
+          "denied_status": 404,
+          "independent_read_status": 200
+        },
+        {
+          "name": "admin_exception_delete_and_missing_digest_stop",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.886950+00:00",
+          "image": "m0-release-org/m0-probe",
+          "delete_status": 202,
+          "missing_status": 404,
+          "original_digest": "sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+          "healthy_release_digest": "sha256:877b8f0810bac3b9cd754588765761bdd04a604cff3dadfa01c0b2f73d26f24e"
+        },
+        {
+          "name": "original_digest_restored_and_independently_read",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.939121+00:00",
+          "image": "m0-release-org/m0-probe",
+          "tag": "m0-retain-a",
+          "descriptors": {
+            "config": {
+              "digest": "sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699",
+              "size": 310
+            },
+            "layer": {
+              "digest": "sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+              "size": 147
+            },
+            "manifest": {
+              "digest": "sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+              "size": 538
+            }
+          },
+          "independent_read_status": 200,
+          "product_rollback_executed": false
+        },
+        {
+          "name": "oci_retention_completed",
+          "status": "pass",
+          "observed_at_utc": "2026-11-17T12:15:33.939765+00:00",
+          "operated_days": 0,
+          "runtime_origin": "https://localhost:18443",
+          "original_gap_ids_preserved": [
+            "M0-G24",
+            "M0-G25"
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/healthz",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/healthz"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/users",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/admin/users"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/version",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/version"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/orgs/m0-private-org",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-private-org"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/orgs/m0-build-alt",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-build-alt"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/orgs/m0-release-org",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-org"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs/m0-private-org/teams",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-private-org/teams"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/4",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/4"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/teams/4/members/bob",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/4/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/4/members/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/4/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs/m0-build-alt/teams",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-build-alt/teams"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/5",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/5"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/teams/5/members/bob",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/5/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/5/members/bob",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/5/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs/m0-release-org/teams",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-org/teams"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/6",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/6"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/teams/6/members/carol",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/teams/6/members/carol"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/teams/6/members/carol",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/teams/6/members/carol"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/orgs/m0-release-org/repos",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-org/repos"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/collaborators/bob",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/collaborators/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/orgs/m0-release-org/members/bob",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/orgs/m0-release-org/members/bob"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/users/alice/tokens",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/users/alice/tokens"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/users/carol/tokens",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/users/carol/tokens"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/users/bob/tokens",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/users/bob/tokens"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/users/bob/tokens",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/users/bob/tokens"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/users/dave/tokens",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/users/dave/tokens"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/token",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/token"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-build-source.txt",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-build-source.txt"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/b37ac1bfafa7bab3dab0d1b15bcdcb8e3e0c52a4",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/b37ac1bfafa7bab3dab0d1b15bcdcb8e3e0c52a4"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-private-org/m0-probe/manifests/m0-build-check",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/manifests/m0-build-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/manifests/sha256:7a20595af3aadc360584530e7aeea4b6ea1df9ff99866ac2f3b2083e7612a4b0",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/manifests/sha256:7a20595af3aadc360584530e7aeea4b6ea1df9ff99866ac2f3b2083e7612a4b0"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/blobs/sha256:0fdba5daba59d68c671977642ffc78ce33a76aba75cc47412c757b1251fe6063",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/sha256:0fdba5daba59d68c671977642ffc78ce33a76aba75cc47412c757b1251fe6063"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/manifests/sha256:7a20595af3aadc360584530e7aeea4b6ea1df9ff99866ac2f3b2083e7612a4b0",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/manifests/sha256:7a20595af3aadc360584530e7aeea4b6ea1df9ff99866ac2f3b2083e7612a4b0"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/blobs/sha256:0fdba5daba59d68c671977642ffc78ce33a76aba75cc47412c757b1251fe6063",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/sha256:0fdba5daba59d68c671977642ffc78ce33a76aba75cc47412c757b1251fe6063"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "DELETE",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}",
+          "status": 204,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-build-alt/m0-probe/manifests/m0-build-check",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/manifests/m0-build-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-build-alt/m0-probe/manifests/sha256:7a20595af3aadc360584530e7aeea4b6ea1df9ff99866ac2f3b2083e7612a4b0",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/manifests/sha256:7a20595af3aadc360584530e7aeea4b6ea1df9ff99866ac2f3b2083e7612a4b0"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/sha256:0fdba5daba59d68c671977642ffc78ce33a76aba75cc47412c757b1251fe6063",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/sha256:0fdba5daba59d68c671977642ffc78ce33a76aba75cc47412c757b1251fe6063"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-build-alt/m0-probe/manifests/sha256:7a20595af3aadc360584530e7aeea4b6ea1df9ff99866ac2f3b2083e7612a4b0",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/manifests/sha256:7a20595af3aadc360584530e7aeea4b6ea1df9ff99866ac2f3b2083e7612a4b0"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/sha256:0fdba5daba59d68c671977642ffc78ce33a76aba75cc47412c757b1251fe6063",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/sha256:0fdba5daba59d68c671977642ffc78ce33a76aba75cc47412c757b1251fe6063"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "DELETE",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}",
+          "status": 204,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-build-alt/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/manifests/sha256:7a20595af3aadc360584530e7aeea4b6ea1df9ff99866ac2f3b2083e7612a4b0",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/manifests/sha256:7a20595af3aadc360584530e7aeea4b6ea1df9ff99866ac2f3b2083e7612a4b0"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/blobs/sha256:0fdba5daba59d68c671977642ffc78ce33a76aba75cc47412c757b1251fe6063",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/sha256:0fdba5daba59d68c671977642ffc78ce33a76aba75cc47412c757b1251fe6063"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-private-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-private-org/m0-probe/blobs/uploads/",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-private-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-release-a.txt",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-release-a.txt"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/05fd2e4ed3121ae6d4ac3f8d6a3db05f0716aa47",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/05fd2e4ed3121ae6d4ac3f8d6a3db05f0716aa47"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-a",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-a",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-release-b.txt",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-release-b.txt"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/5800a5be4282fdc80f1d253777cae4ed1b2db88e",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/5800a5be4282fdc80f1d253777cae4ed1b2db88e"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-b",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:877b8f0810bac3b9cd754588765761bdd04a604cff3dadfa01c0b2f73d26f24e",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:877b8f0810bac3b9cd754588765761bdd04a604cff3dadfa01c0b2f73d26f24e"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-b",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-release-control.txt",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-release-control.txt"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/299c7ddf24270189686515b66cc7a14a5c8a4fb2",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/299c7ddf24270189686515b66cc7a14a5c8a4fb2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-prune-control",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-prune-control"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:b466b62565f0aafd211fd0df31526ee9e4286d938a83d86c13ba2448cb80dbab",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:b466b62565f0aafd211fd0df31526ee9e4286d938a83d86c13ba2448cb80dbab"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0a7e546f91630e868f8b08ca7f04cd667cf01933481c695dee23083e75ec5304",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0a7e546f91630e868f8b08ca7f04cd667cf01933481c695dee23083e75ec5304"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-prune-control",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-prune-control"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0a7e546f91630e868f8b08ca7f04cd667cf01933481c695dee23083e75ec5304",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0a7e546f91630e868f8b08ca7f04cd667cf01933481c695dee23083e75ec5304"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/packages/m0-release-org/container/m0-probe/-/link/m0-private-source",
+          "status": 201,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/packages/m0-release-org/container/m0-probe/-/link/m0-private-source"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/packages/m0-release-org/container/m0-probe/m0-retain-a",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/packages/m0-release-org/container/m0-probe/m0-retain-a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 401,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "DELETE",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-active",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-active"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-active",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-active"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-active",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-active"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-active",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-active"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/org/m0-release-org/settings/packages/rules/add",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/org/m0-release-org/settings/packages/rules/add"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/org/m0-release-org/settings/packages/rules/add",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/org/m0-release-org/settings/packages/rules/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/org/m0-release-org/settings/packages",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/org/m0-release-org/settings/packages"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/org/m0-release-org/settings/packages/rules/1",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/org/m0-release-org/settings/packages/rules/1"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/org/m0-release-org/settings/packages/rules/1/preview",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/org/m0-release-org/settings/packages/rules/1/preview"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/admin/cron",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "list",
+          "final_path": "/api/v1/admin/cron"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/admin/cron/cleanup_packages",
+          "status": 204,
+          "content_type": "",
+          "body_type": "str",
+          "final_path": "/api/v1/admin/cron/cleanup_packages"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/admin/cron",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "list",
+          "final_path": "/api/v1/admin/cron"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-prune-control",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-prune-control"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-a",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-b",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:877b8f0810bac3b9cd754588765761bdd04a604cff3dadfa01c0b2f73d26f24e",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:877b8f0810bac3b9cd754588765761bdd04a604cff3dadfa01c0b2f73d26f24e"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:b466b62565f0aafd211fd0df31526ee9e4286d938a83d86c13ba2448cb80dbab",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:b466b62565f0aafd211fd0df31526ee9e4286d938a83d86c13ba2448cb80dbab"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0a7e546f91630e868f8b08ca7f04cd667cf01933481c695dee23083e75ec5304",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0a7e546f91630e868f8b08ca7f04cd667cf01933481c695dee23083e75ec5304"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-deletion-control.txt",
+          "status": 201,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/contents/m0-deletion-control.txt"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/e688839b775d2146f1d671dd25a68fb20bedc4a0",
+          "status": 200,
+          "content_type": "application/json",
+          "body_type": "dict",
+          "final_path": "/api/v1/repos/m0-release-org/m0-private-source/git/commits/e688839b775d2146f1d671dd25a68fb20bedc4a0"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-delete-check/manifests/m0-overwrite-control",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/manifests/m0-overwrite-control"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/manifests/m0-overwrite-control",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/manifests/m0-overwrite-control"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d134b96ff712768c27b4b2bb7631b3957d87f4ebc927d25a86ce6732521203a",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d134b96ff712768c27b4b2bb7631b3957d87f4ebc927d25a86ce6732521203a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "DELETE",
+          "path": "/v2/m0-release-org/m0-delete-check/manifests/sha256:a81afc5ea6a957521b6e769202819a1321d55248256bcebecbba6ef815b19072",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/manifests/sha256:a81afc5ea6a957521b6e769202819a1321d55248256bcebecbba6ef815b19072"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d134b96ff712768c27b4b2bb7631b3957d87f4ebc927d25a86ce6732521203a",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d134b96ff712768c27b4b2bb7631b3957d87f4ebc927d25a86ce6732521203a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "DELETE",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d134b96ff712768c27b4b2bb7631b3957d87f4ebc927d25a86ce6732521203a",
+          "status": 401,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d134b96ff712768c27b4b2bb7631b3957d87f4ebc927d25a86ce6732521203a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d134b96ff712768c27b4b2bb7631b3957d87f4ebc927d25a86ce6732521203a",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d134b96ff712768c27b4b2bb7631b3957d87f4ebc927d25a86ce6732521203a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "DELETE",
+          "path": "/api/v1/packages/m0-release-org/container/m0-delete-check/m0-deletion-check",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/packages/m0-release-org/container/m0-delete-check/m0-deletion-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d134b96ff712768c27b4b2bb7631b3957d87f4ebc927d25a86ce6732521203a",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d134b96ff712768c27b4b2bb7631b3957d87f4ebc927d25a86ce6732521203a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "DELETE",
+          "path": "/api/v1/packages/m0-release-org/container/m0-delete-check",
+          "status": 403,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/api/v1/packages/m0-release-org/container/m0-delete-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d134b96ff712768c27b4b2bb7631b3957d87f4ebc927d25a86ce6732521203a",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d134b96ff712768c27b4b2bb7631b3957d87f4ebc927d25a86ce6732521203a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/user/login"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/user/login",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/m0-release-org/-/packages/container/m0-delete-check/m0-deletion-check",
+          "status": 200,
+          "content_type": "text/html",
+          "body_type": "str",
+          "final_path": "/m0-release-org/-/packages/container/m0-delete-check/m0-deletion-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/m0-release-org/-/packages/container/m0-delete-check/m0-deletion-check",
+          "status": 404,
+          "content_type": "text/plain",
+          "body_type": "BinaryBody",
+          "final_path": "/m0-release-org/-/packages/container/m0-delete-check/m0-deletion-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/manifests/m0-deletion-check"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d134b96ff712768c27b4b2bb7631b3957d87f4ebc927d25a86ce6732521203a",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:2d134b96ff712768c27b4b2bb7631b3957d87f4ebc927d25a86ce6732521203a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-delete-check/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "DELETE",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+          "status": 404,
+          "content_type": "application/json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-b",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "POST",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/",
+          "status": 202,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/uploads/{id}"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "PUT",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-a",
+          "status": 201,
+          "content_type": "",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/sha256:6703fc0dffe93d284222713ec423e20037b5ffba4429e275668a5c02c925a469"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-a",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-a"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:afeb60deb88886c311a28a8375765a88f67aefaa65d08c59ba4aa3da44ac9699"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-b",
+          "status": 200,
+          "content_type": "application/vnd.oci.image.manifest.v1+json",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/manifests/m0-retain-b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:2d1897b8952c5223fb3d4e09e407a59a41341f86f04d8a2b1144cc1851268a6b"
+        },
+        {
+          "origin": "https://localhost:18443",
+          "method": "GET",
+          "path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2",
+          "status": 200,
+          "content_type": "application/octet-stream",
+          "body_type": "BinaryBody",
+          "final_path": "/v2/m0-release-org/m0-probe/blobs/sha256:0ab39834779f60d03eb9f8331e8dc07165df72b9ae527012b070a7884684d5c2"
+        }
+      ],
+      "exit_code": 2
+    }
+  ]
+}

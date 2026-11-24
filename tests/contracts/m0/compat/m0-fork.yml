@@ -1,0 +1,28 @@
+name: M0 fork pull request canary
+'on':
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  canary:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check secret availability without fetching fork code
+        shell: bash
+        env:
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          BASE_REPO: ${{ github.event.pull_request.base.repo.full_name }}
+          M0_CANARY: ${{ secrets.M0_FORK_CANARY }}
+        run: |
+          test -n "$HEAD_REPO"
+          test -n "$BASE_REPO"
+          if [[ "$HEAD_REPO" = "$BASE_REPO" ]]; then
+            test -n "$M0_CANARY"
+            printf 'same-repository-control\n'
+          else
+            test -z "$M0_CANARY"
+            printf 'fork-canary-withheld\n'
+          fi

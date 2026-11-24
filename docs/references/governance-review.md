@@ -37,7 +37,7 @@ RadishForge 专有边界已进入 PR 审查表和安全策略：独立 Gitea、�
 
 ## 根协作文件专项复核
 
-同日后续按用户要求完整复读五个项目的 AGENTS / CLAUDE，共十份文件；参考 HEAD 与上表相同，所读文件无工作树差异。Radish、RadishMind、RadishFlow、RadishAxiom 的两份文件全文一致；RadishCatalyst 仅首段的协作者名称不同，符合它允许首段差异的本地规则。本项目仍保持“仅首行标题可不同”，不放宽同步检查。
+同日后续按用户要求完整复读五个项目的 AGENTS / CLAUDE，共十份文件；参考 HEAD 与上表相同，所读文件无工作树差异。Radish、RadishMind、RadishFlow、RadishAxiom 的两份文件全文一致；RadishCatalyst 仅首段的协作者名称不同，符合它允许首段差异的本地规则。当时本项目的同步检查允许首行标题不同。现行规则见[文档治理](../governance/documentation.md)。
 
 本项目原入口 88 行，主要原则已有，但执行条件和维护细节过于压缩。本次扩展为 133 行，通用内容与本项目长期边界分开；没有增加 Gitea、OIDC 或技术栈专有要求。
 

@@ -1,6 +1,6 @@
 # GitHub Rulesets 模板
 
-正式政策见 [Rulesets 专题](../../docs/governance/rulesets.md)，分支与回流见[仓库治理](../../docs/governance/repository-governance.md)。本目录无部署副作用，当前未创建远端规则。
+正式政策见 [Rulesets 专题](../../docs/governance/rulesets.md)，分支与回流见[仓库治理](../../docs/governance/repository-governance.md)。远端已启用带必需 CI 检查的主线规则，模板仍保留 disabled。 [当前状态](../../docs/status/current.md) · [远端读回](../../docs/records/2026-11-24-candidate-quality.md)
 
 - [基础模板](master-protection.json)：无 required check，适用于真实 CI 尚未建立的初始保护。
 - [CI 模板](master-protection-ci.json)：在同一规则上增加 strict `Candidate Quality`；启用前须真实运行并绑定查得的 check App ID。

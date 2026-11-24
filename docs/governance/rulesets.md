@@ -1,6 +1,6 @@
 # Rulesets 与远端设置策略
 
-本页是 RadishForge 自身仓库的目标政策。当前无远端，所有 JSON 都是本地待启用模板；GitHub Rulesets 不是 Gitea 分支保护 API，也不代表产品已经实现 Rulesets 兼容。
+本页是 RadishForge 自身仓库的目标政策。JSON 保留为本地配置模板，实际启用状态以[current](../status/current.md)和对应读回记录为准；GitHub Rulesets 不是 Gitea 分支保护 API，也不代表产品已经实现 Rulesets 兼容。
 
 ## 两阶段配置
 

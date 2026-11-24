@@ -60,9 +60,11 @@ PR 使用[模板](../../.github/PULL_REQUEST_TEMPLATE.md)，说明最终问题�
 
 本地使用 `python3 scripts/check-repo.py`，仅覆盖治理文件；无 Git 时明确跳过 Git 检查。尚无真实业务实现时，不添加名为 Go / Web Build 的空成功 job。
 
-后续真实 CI 采用 PR 到 dev / master 与手动入口，普通 dev push 不自动触发。稳定聚合 job `Candidate Quality` 必须等待所有应执行组件，只有 success 才通过；失败、取消、缺失、意外跳过均阻断。聚合本身不得路径跳过；若以后做影响范围路由，先有可审查的适用性判定，不能把所有 skipped 算成功。
+[PR Checks](../../.github/workflows/pr-checks.yml) 在 PR 指向 dev / master 时自动执行，并提供手动入口。普通 dev push 仅在更新已有 PR 时触发。它在 GitHub 托管 Ubuntu 24.04 上运行两项检查：`Repository Governance` 按 PR 共同祖先检查源提交及文档，`Python Tests` 在 PR 合并候选树上运行现有本地测试入口。
 
-本地治理检查可成为首个真实组件，但不证明 Go 构建、权限或部署通过。业务落地后按风险加入 Go、TypeScript / React、真实底座契约与交付检查。required context 必须先真实运行，再配置远端要求。
+稳定聚合 job `Candidate Quality` 等待两项检查，只有所有结果为 success 才通过；失败、取消、缺失、意外跳过均阻断。聚合不做路径跳过；未来按影响范围路由时，先建立可审查的适用性判定。工作流只依赖镜像自带的 Python 3 与固定提交的 [actions/checkout v7.0.1](https://github.com/actions/checkout/releases/tag/v7.0.1)，该 Action 采用 [MIT 许可](https://github.com/actions/checkout/blob/3d3c42e5aac5ba805825da76410c181273ba90b1/LICENSE)。
+
+现阶段 CI 覆盖文档、治理与本地探针逻辑。业务落地后按风险加入 Go、TypeScript / React、真实底座契约与交付检查。required context 必须先真实运行，再配置远端要求。
 
 PR CI 默认只读源码；外部贡献不能接触生产秘密、CD Runner 或宿主 Docker socket，不用 pull_request_target 执行不可信代码。第三方 Action 固定可审查版本 / 提交并记录来源；PR 内容不直接拼进 shell 命令。发布与部署使用独立受控入口，按[版本规则](versioning.md)与[交付设计](../architecture/delivery-flow.md)另行实现。
 

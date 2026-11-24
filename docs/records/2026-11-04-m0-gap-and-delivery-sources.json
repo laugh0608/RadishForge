@@ -1,0 +1,2142 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-04",
+  "date_timezone": "Asia/Shanghai",
+  "repository_head": "a6eca0d7d10e8b6338b7581176c72becb086ecec",
+  "scope": "M0-S04 existing-gap inputs and M0-S03 Release/OCI static preparation only",
+  "existing_issue_batch_commit": "a6eca0d7d10e8b6338b7581176c72becb086ecec",
+  "gap_inputs": {
+    "docs/records/2026-11-01-m0-local-results.json": {
+      "sha256": "d369d6bd5895cd0d594c79485fb7c4afba4ebcea50232402e9362eb205eb4ea3",
+      "unchanged": true
+    },
+    "docs/records/2026-11-04-m0-lifecycle-results.json": {
+      "sha256": "06bd3c28e98b113b2617cc7a740e803d2b8e12b756a467e55c5098ee2a61e9cf",
+      "unchanged": true
+    },
+    "docs/records/2026-11-04-m0-issue-results.json": {
+      "sha256": "ff0a963e830d6d63fcc612ff1d0e90a4348ef03e3961f7b432e655d4a89877b2",
+      "unchanged": true
+    }
+  },
+  "gap_counting": {
+    "scope": 3,
+    "lifecycle": 2,
+    "public_revocation_interface": 1,
+    "issues": 12,
+    "total": 18,
+    "reproduced_runs_are_not_new_gaps": true
+  },
+  "gap_register": [
+    {
+      "id": "M0-G01",
+      "evidence_file": "docs/records/2026-11-01-m0-local-results.json",
+      "results_location": "results",
+      "record_name": "identity_only_scope_userinfo",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G02",
+      "evidence_file": "docs/records/2026-11-01-m0-local-results.json",
+      "results_location": "results",
+      "record_name": "oidc_only_scope_private_resource_access",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G03",
+      "evidence_file": "docs/records/2026-11-01-m0-local-results.json",
+      "results_location": "results",
+      "record_name": "unknown_scope_private_resource_access",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G04",
+      "evidence_file": "docs/records/2026-11-04-m0-lifecycle-results.json",
+      "results_location": "runs.baseline-final.results",
+      "record_name": "expired_access_introspection_diagnostic",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G05",
+      "evidence_file": "docs/records/2026-11-04-m0-lifecycle-results.json",
+      "results_location": "runs.baseline-final.results",
+      "record_name": "disabled_account_refresh_diagnostic",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G06",
+      "evidence_file": "docs/records/2026-11-04-m0-lifecycle-results.json",
+      "source_locations": [
+        "openapi_review",
+        "actual_discovery_review"
+      ],
+      "kind": "public_single_grant_revocation_interface_absent",
+      "note": "API/Discovery absence plus native UI evidence; not an invented gap result or proof against future versions"
+    },
+    {
+      "id": "M0-G07",
+      "evidence_file": "docs/records/2026-11-04-m0-issue-results.json",
+      "results_location": "runs.final_issues.results",
+      "record_name": "upstream_invalid_association_foreign_label",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G08",
+      "evidence_file": "docs/records/2026-11-04-m0-issue-results.json",
+      "results_location": "runs.final_issues.results",
+      "record_name": "upstream_invalid_association_missing_label",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G09",
+      "evidence_file": "docs/records/2026-11-04-m0-issue-results.json",
+      "results_location": "runs.final_issues.results",
+      "record_name": "upstream_invalid_association_fractional_label",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G10",
+      "evidence_file": "docs/records/2026-11-04-m0-issue-results.json",
+      "results_location": "runs.final_issues.results",
+      "record_name": "upstream_invalid_association_foreign_milestone",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G11",
+      "evidence_file": "docs/records/2026-11-04-m0-issue-results.json",
+      "results_location": "runs.final_issues.results",
+      "record_name": "upstream_invalid_association_missing_milestone",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G12",
+      "evidence_file": "docs/records/2026-11-04-m0-issue-results.json",
+      "results_location": "runs.final_issues.results",
+      "record_name": "upstream_invalid_association_missing_assignee",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G13",
+      "evidence_file": "docs/records/2026-11-04-m0-issue-results.json",
+      "results_location": "runs.final_issues.results",
+      "record_name": "upstream_compound_invalid_edit_readback",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G14",
+      "evidence_file": "docs/records/2026-11-04-m0-issue-results.json",
+      "results_location": "runs.final_issues.results",
+      "record_name": "upstream_invalid_create_foreign_label",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G15",
+      "evidence_file": "docs/records/2026-11-04-m0-issue-results.json",
+      "results_location": "runs.final_issues.results",
+      "record_name": "upstream_invalid_create_foreign_milestone",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G16",
+      "evidence_file": "docs/records/2026-11-04-m0-issue-results.json",
+      "results_location": "runs.final_issues.results",
+      "record_name": "upstream_unknown_filter_foreign_label",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G17",
+      "evidence_file": "docs/records/2026-11-04-m0-issue-results.json",
+      "results_location": "runs.final_issues.results",
+      "record_name": "upstream_unknown_filter_foreign_milestone",
+      "original_status": "gap"
+    },
+    {
+      "id": "M0-G18",
+      "evidence_file": "docs/records/2026-11-04-m0-issue-results.json",
+      "results_location": "runs.final_issues.results",
+      "record_name": "reader_create_metadata_permission_is_not_implied_by_scope",
+      "original_status": "gap"
+    }
+  ],
+  "gitea_source_commit": "829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1",
+  "sources": {
+    "templates/swagger/v1-openapi3.generated.json": {
+      "url": "https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/templates/swagger/v1-openapi3.generated.json",
+      "sha256": "c797dc2a94e070c19ea823cb4396829f234a745a7a8c90b4a686b91cbc4d278e",
+      "bytes": 1041091,
+      "status": 200
+    },
+    "routers/api/v1/repo/release.go": {
+      "url": "https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/api/v1/repo/release.go",
+      "sha256": "eef38f2176ff0a84921ce456d058947d94efe515ac30d1672f79d8290f618327",
+      "bytes": 12421,
+      "status": 200
+    },
+    "routers/api/v1/repo/release_attachment.go": {
+      "url": "https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/api/v1/repo/release_attachment.go",
+      "sha256": "568673784a598919ac1c8e39261239ec6e65f26115ae4240fc1c9520afcb97ae",
+      "bytes": 10955,
+      "status": 200
+    },
+    "routers/api/v1/api.go": {
+      "url": "https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/api/v1/api.go",
+      "sha256": "9ff970b8fb8095ce9c9aacd7a0c4de80149f4123d815a5519c0c1f3b8d366308",
+      "bytes": 77152,
+      "status": 200
+    },
+    "routers/api/packages/container/container.go": {
+      "url": "https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/api/packages/container/container.go",
+      "sha256": "25b5a5712262f65714ed9fe2c24d12c361a734b92c35d8a2614d9c77aa833b96",
+      "bytes": 25245,
+      "status": 200
+    },
+    "routers/api/packages/api.go": {
+      "url": "https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/api/packages/api.go",
+      "sha256": "69725f19af4388fd758f4da55d0c1131b42fe0616c5a3106679d494b79c809d9",
+      "bytes": 26909,
+      "status": 200
+    },
+    "models/auth/access_token_scope.go": {
+      "url": "https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/models/auth/access_token_scope.go",
+      "sha256": "084e065081ef91c0632897de9c1a5509de89f11affedd11b8ec7b516b0cd2acd",
+      "bytes": 15372,
+      "status": 200
+    },
+    "routers/api/packages/auth.go": {
+      "url": "https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/api/packages/auth.go",
+      "sha256": "d8e4f76fdb1b2e2647e5ac3bca5624e62dec8fd3f11e301f307d72b63e7f789c",
+      "bytes": 1427,
+      "status": 200
+    },
+    "services/context/package.go": {
+      "url": "https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/services/context/package.go",
+      "sha256": "12084b7dd4579c48be151fa8319ce16e3c99a9c964528834fd534f1ce194cac4",
+      "bytes": 5651,
+      "status": 200
+    },
+    "services/release/release.go": {
+      "url": "https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/services/release/release.go",
+      "sha256": "ba6bed820267efdc179bc4aa47b7c838a2d00b728246bd6e4be9f0532bae9350",
+      "bytes": 13242,
+      "status": 200
+    },
+    "services/attachment/attachment.go": {
+      "url": "https://raw.githubusercontent.com/go-gitea/gitea/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/services/attachment/attachment.go",
+      "sha256": "ca87b4517cc651037d5fa152770840aca771e4cbabf437e4e675575aeaf81cac",
+      "bytes": 3567,
+      "status": 200
+    },
+    "oci-ref.json": {
+      "url": "https://api.github.com/repos/opencontainers/distribution-spec/git/ref/tags/v1.1.1",
+      "sha256": "96473ea1fa08a37b51b95734a3d0bf43030528c8f016411bf8418956f402f188",
+      "bytes": 367,
+      "status": 200
+    },
+    "oci-tag.json": {
+      "url": "https://api.github.com/repos/opencontainers/distribution-spec/git/tags/b5c693e819628420cc04ba7d9263628276d8ca0f",
+      "sha256": "cafe3abc5e4b6cc290e6bd6bce1053665c8af6d6dc16a620f0c3045e2eec4d2f",
+      "bytes": 2536,
+      "status": 200
+    },
+    "oci-spec.md": {
+      "url": "https://raw.githubusercontent.com/opencontainers/distribution-spec/a139cc423184af6078077b9b7ee336eddbd03f8f/spec.md",
+      "sha256": "360b29820869bfaac5f73ebfa30669c9172c069ef619f8c6689acc3bcef6f719",
+      "bytes": 47162,
+      "status": 200,
+      "tag": "v1.1.1",
+      "commit": "a139cc423184af6078077b9b7ee336eddbd03f8f"
+    }
+  },
+  "source_access": {
+    "web_raw_gitea_cache_miss": true,
+    "fallback": "Read the identical official raw GitHub fixed commit using urllib; no version change"
+  },
+  "selected_openapi_operations": {
+    "/packages/{owner}": {
+      "get": {
+        "operationId": "listPackages",
+        "parameters": [
+          {
+            "description": "owner of the packages",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "page number of results to return (1-based)",
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "page size of results",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "package type filter",
+            "in": "query",
+            "name": "type",
+            "schema": {
+              "enum": [
+                "alpine",
+                "cargo",
+                "chef",
+                "composer",
+                "conan",
+                "conda",
+                "container",
+                "cran",
+                "debian",
+                "generic",
+                "go",
+                "helm",
+                "maven",
+                "npm",
+                "nuget",
+                "pub",
+                "pypi",
+                "rpm",
+                "rubygems",
+                "swift",
+                "terraform",
+                "vagrant"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "name filter",
+            "in": "query",
+            "name": "q",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/PackageList"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      }
+    },
+    "/packages/{owner}/{type}/{name}": {
+      "delete": {
+        "operationId": "deletePackage",
+        "parameters": [
+          {
+            "description": "owner of the package",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "type of the package",
+            "in": "path",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the package",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/empty"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      },
+      "get": {
+        "operationId": "listPackageVersions",
+        "parameters": [
+          {
+            "description": "owner of the package",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "type of the package",
+            "in": "path",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the package",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "page number of results to return (1-based)",
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "page size of results",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/PackageList"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      }
+    },
+    "/packages/{owner}/{type}/{name}/-/latest": {
+      "get": {
+        "operationId": "getLatestPackageVersion",
+        "parameters": [
+          {
+            "description": "owner of the package",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "type of the package",
+            "in": "path",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the package",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Package"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      }
+    },
+    "/packages/{owner}/{type}/{name}/-/link/{repo_name}": {
+      "post": {
+        "operationId": "linkPackage",
+        "parameters": [
+          {
+            "description": "owner of the package",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "type of the package",
+            "in": "path",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the package",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repository to link.",
+            "in": "path",
+            "name": "repo_name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/empty"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      }
+    },
+    "/packages/{owner}/{type}/{name}/-/unlink": {
+      "post": {
+        "operationId": "unlinkPackage",
+        "parameters": [
+          {
+            "description": "owner of the package",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "type of the package",
+            "in": "path",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the package",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/empty"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      }
+    },
+    "/packages/{owner}/{type}/{name}/{version}": {
+      "delete": {
+        "operationId": "deletePackageVersion",
+        "parameters": [
+          {
+            "description": "owner of the package",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "type of the package",
+            "in": "path",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the package",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "version of the package",
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/empty"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      },
+      "get": {
+        "operationId": "getPackage",
+        "parameters": [
+          {
+            "description": "owner of the package",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "type of the package",
+            "in": "path",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the package",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "version of the package",
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Package"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      }
+    },
+    "/packages/{owner}/{type}/{name}/{version}/files": {
+      "get": {
+        "operationId": "listPackageFiles",
+        "parameters": [
+          {
+            "description": "owner of the package",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "type of the package",
+            "in": "path",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the package",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "version of the package",
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/PackageFileList"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      }
+    },
+    "/repos/{owner}/{repo}/git/commits/{sha}": {
+      "get": {
+        "operationId": "repoGetSingleCommit",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "a git ref or commit sha",
+            "in": "path",
+            "name": "sha",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "include diff stats for every commit (disable for speedup, default 'true')",
+            "in": "query",
+            "name": "stat",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "include verification for every commit (disable for speedup, default 'true')",
+            "in": "query",
+            "name": "verification",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "include a list of affected files for every commit (disable for speedup, default 'true')",
+            "in": "query",
+            "name": "files",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Commit"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/validationError"
+          }
+        }
+      }
+    },
+    "/repos/{owner}/{repo}/releases": {
+      "get": {
+        "operationId": "repoListReleases",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "filter (exclude / include) drafts, if you don't have repo write access none will show",
+            "in": "query",
+            "name": "draft",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "filter (exclude / include) pre-releases",
+            "in": "query",
+            "name": "pre-release",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "filter releases by tag. supports \"*\" as a wildcard (for example: v1*, *beta, *rc*).",
+            "in": "query",
+            "name": "tag_filter",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "page number of results to return (1-based)",
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "page size of results",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ReleaseList"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      },
+      "post": {
+        "operationId": "repoCreateRelease",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Release"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/error"
+          },
+          "422": {
+            "$ref": "#/components/responses/validationError"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReleaseOption"
+              }
+            }
+          },
+          "x-originalParamName": "body"
+        }
+      }
+    },
+    "/repos/{owner}/{repo}/releases/latest": {
+      "get": {
+        "operationId": "repoGetLatestRelease",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Release"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      }
+    },
+    "/repos/{owner}/{repo}/releases/tags/{tag}": {
+      "delete": {
+        "operationId": "repoDeleteReleaseByTag",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "tag name of the release to delete",
+            "in": "path",
+            "name": "tag",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/empty"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/validationError"
+          }
+        }
+      },
+      "get": {
+        "operationId": "repoGetReleaseByTag",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "tag name of the release to get",
+            "in": "path",
+            "name": "tag",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Release"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      }
+    },
+    "/repos/{owner}/{repo}/releases/{id}": {
+      "delete": {
+        "operationId": "repoDeleteRelease",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "id of the release to delete",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/empty"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/validationError"
+          }
+        }
+      },
+      "get": {
+        "operationId": "repoGetRelease",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "id of the release to get",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Release"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "repoEditRelease",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "id of the release to edit",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Release"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditReleaseOption"
+              }
+            }
+          },
+          "x-originalParamName": "body"
+        }
+      }
+    },
+    "/repos/{owner}/{repo}/releases/{id}/assets": {
+      "get": {
+        "operationId": "repoListReleaseAttachments",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "id of the release",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AttachmentList"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      },
+      "post": {
+        "operationId": "repoCreateReleaseAttachment",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "id of the release",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "name of the attachment",
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Attachment"
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "413": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "properties": {
+                  "attachment": {
+                    "description": "attachment to upload",
+                    "format": "binary",
+                    "type": "string",
+                    "x-formData-name": "attachment"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "attachment": {
+                    "description": "attachment to upload",
+                    "format": "binary",
+                    "type": "string",
+                    "x-formData-name": "attachment"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/repos/{owner}/{repo}/releases/{id}/assets/{attachment_id}": {
+      "delete": {
+        "operationId": "repoDeleteReleaseAttachment",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "id of the release",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "id of the attachment to delete",
+            "in": "path",
+            "name": "attachment_id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/empty"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      },
+      "get": {
+        "operationId": "repoGetReleaseAttachment",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "id of the release",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "id of the attachment to get",
+            "in": "path",
+            "name": "attachment_id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Attachment"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "repoEditReleaseAttachment",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "id of the release",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "id of the attachment to edit",
+            "in": "path",
+            "name": "attachment_id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Attachment"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/validationError"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditAttachmentOptions"
+              }
+            }
+          },
+          "x-originalParamName": "body"
+        }
+      }
+    },
+    "/repos/{owner}/{repo}/tags": {
+      "get": {
+        "operationId": "repoListTags",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "page number of results to return (1-based)",
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "page size of results, default maximum page size is 50",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/TagList"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      },
+      "post": {
+        "operationId": "repoCreateTag",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Tag"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/empty"
+          },
+          "409": {
+            "$ref": "#/components/responses/conflict"
+          },
+          "422": {
+            "$ref": "#/components/responses/validationError"
+          },
+          "423": {
+            "$ref": "#/components/responses/repoArchivedError"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTagOption"
+              }
+            }
+          },
+          "x-originalParamName": "body"
+        }
+      }
+    },
+    "/repos/{owner}/{repo}/tags/{tag}": {
+      "delete": {
+        "operationId": "repoDeleteTag",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of tag to delete",
+            "in": "path",
+            "name": "tag",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/empty"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/empty"
+          },
+          "409": {
+            "$ref": "#/components/responses/conflict"
+          },
+          "422": {
+            "$ref": "#/components/responses/validationError"
+          },
+          "423": {
+            "$ref": "#/components/responses/repoArchivedError"
+          }
+        }
+      },
+      "get": {
+        "operationId": "repoGetTag",
+        "parameters": [
+          {
+            "description": "owner of the repo",
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of the repo",
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "name of tag",
+            "in": "path",
+            "name": "tag",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Tag"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      }
+    }
+  },
+  "selected_openapi_schemas": {
+    "CreateReleaseOption": {
+      "required": [
+        "tag_name"
+      ],
+      "properties": {
+        "body": {
+          "description": "The release notes or description",
+          "type": "string",
+          "x-go-name": "Note"
+        },
+        "draft": {
+          "description": "Whether to create the release as a draft",
+          "type": "boolean",
+          "x-go-name": "IsDraft"
+        },
+        "name": {
+          "description": "The display title of the release",
+          "type": "string",
+          "x-go-name": "Title"
+        },
+        "prerelease": {
+          "description": "Whether to mark the release as a prerelease",
+          "type": "boolean",
+          "x-go-name": "IsPrerelease"
+        },
+        "tag_message": {
+          "description": "The message for the git tag",
+          "type": "string",
+          "x-go-name": "TagMessage"
+        },
+        "tag_name": {
+          "type": "string",
+          "x-go-name": "TagName"
+        },
+        "target_commitish": {
+          "description": "The target commitish for the release",
+          "type": "string",
+          "x-go-name": "Target"
+        }
+      }
+    },
+    "EditReleaseOption": {
+      "required": [],
+      "properties": {
+        "body": {
+          "description": "The new release notes or description",
+          "type": "string",
+          "x-go-name": "Note"
+        },
+        "draft": {
+          "description": "Whether to change the draft status",
+          "type": "boolean",
+          "x-go-name": "IsDraft"
+        },
+        "name": {
+          "description": "The new display title of the release",
+          "type": "string",
+          "x-go-name": "Title"
+        },
+        "prerelease": {
+          "description": "Whether to change the prerelease status",
+          "type": "boolean",
+          "x-go-name": "IsPrerelease"
+        },
+        "tag_name": {
+          "description": "The new name of the git tag",
+          "type": "string",
+          "x-go-name": "TagName"
+        },
+        "target_commitish": {
+          "description": "The new target commitish for the release",
+          "type": "string",
+          "x-go-name": "Target"
+        }
+      }
+    },
+    "Release": {
+      "required": [],
+      "properties": {
+        "assets": {
+          "description": "The files attached to the release",
+          "items": {
+            "$ref": "#/components/schemas/Attachment"
+          },
+          "type": "array",
+          "x-go-name": "Attachments"
+        },
+        "author": {
+          "$ref": "#/components/schemas/User"
+        },
+        "body": {
+          "description": "The release notes or description",
+          "type": "string",
+          "x-go-name": "Note"
+        },
+        "created_at": {
+          "format": "date-time",
+          "type": "string",
+          "x-go-name": "CreatedAt"
+        },
+        "draft": {
+          "description": "Whether the release is a draft",
+          "type": "boolean",
+          "x-go-name": "IsDraft"
+        },
+        "html_url": {
+          "description": "The HTML URL to view the release",
+          "format": "uri",
+          "type": "string",
+          "x-go-name": "HTMLURL"
+        },
+        "id": {
+          "description": "The unique identifier of the release",
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "ID"
+        },
+        "name": {
+          "description": "The display title of the release",
+          "type": "string",
+          "x-go-name": "Title"
+        },
+        "prerelease": {
+          "description": "Whether the release is a prerelease",
+          "type": "boolean",
+          "x-go-name": "IsPrerelease"
+        },
+        "published_at": {
+          "format": "date-time",
+          "type": "string",
+          "x-go-name": "PublishedAt"
+        },
+        "tag_name": {
+          "description": "The name of the git tag associated with the release",
+          "type": "string",
+          "x-go-name": "TagName"
+        },
+        "tarball_url": {
+          "description": "The URL to download the tarball archive",
+          "format": "uri",
+          "type": "string",
+          "x-go-name": "TarURL"
+        },
+        "target_commitish": {
+          "description": "The target commitish for the release",
+          "type": "string",
+          "x-go-name": "Target"
+        },
+        "upload_url": {
+          "description": "The URL template for uploading release assets",
+          "format": "uri",
+          "type": "string",
+          "x-go-name": "UploadURL"
+        },
+        "url": {
+          "description": "The API URL of the release",
+          "format": "uri",
+          "type": "string",
+          "x-go-name": "URL"
+        },
+        "zipball_url": {
+          "description": "The URL to download the zip archive",
+          "format": "uri",
+          "type": "string",
+          "x-go-name": "ZipURL"
+        }
+      }
+    },
+    "Attachment": {
+      "required": [],
+      "properties": {
+        "browser_download_url": {
+          "description": "DownloadURL is the URL to download the attachment",
+          "format": "uri",
+          "type": "string",
+          "x-go-name": "DownloadURL"
+        },
+        "created_at": {
+          "description": "Created is the time when the attachment was uploaded",
+          "format": "date-time",
+          "type": "string",
+          "x-go-name": "Created"
+        },
+        "download_count": {
+          "description": "DownloadCount is the number of times the attachment has been downloaded",
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "DownloadCount"
+        },
+        "id": {
+          "description": "ID is the unique identifier for the attachment",
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "ID"
+        },
+        "name": {
+          "description": "Name is the filename of the attachment",
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "size": {
+          "description": "Size is the file size in bytes",
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "Size"
+        },
+        "uuid": {
+          "description": "UUID is the unique identifier for the attachment file",
+          "type": "string",
+          "x-go-name": "UUID"
+        }
+      }
+    },
+    "EditAttachmentOptions": {
+      "required": [],
+      "properties": {
+        "name": {
+          "description": "Name is the new filename for the attachment",
+          "type": "string",
+          "x-go-name": "Name"
+        }
+      }
+    },
+    "CreateTagOption": {
+      "required": [
+        "tag_name"
+      ],
+      "properties": {
+        "message": {
+          "description": "The message to associate with the tag",
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "tag_name": {
+          "description": "The name of the tag to create",
+          "type": "string",
+          "x-go-name": "TagName"
+        },
+        "target": {
+          "description": "The target commit SHA or branch name for the tag",
+          "type": "string",
+          "x-go-name": "Target"
+        }
+      }
+    },
+    "Tag": {
+      "required": [],
+      "properties": {
+        "commit": {
+          "$ref": "#/components/schemas/CommitMeta"
+        },
+        "id": {
+          "description": "The ID (SHA) of the tag",
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "message": {
+          "description": "The message associated with the tag",
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "name": {
+          "description": "The name of the tag",
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "tarball_url": {
+          "description": "The URL to download the tarball archive",
+          "format": "uri",
+          "type": "string",
+          "x-go-name": "TarballURL"
+        },
+        "zipball_url": {
+          "description": "The URL to download the zipball archive",
+          "format": "uri",
+          "type": "string",
+          "x-go-name": "ZipballURL"
+        }
+      }
+    },
+    "CommitMeta": {
+      "required": [],
+      "properties": {
+        "created": {
+          "description": "Created is the time when the commit was created",
+          "format": "date-time",
+          "type": "string",
+          "x-go-name": "Created"
+        },
+        "sha": {
+          "description": "SHA is the commit SHA hash",
+          "type": "string",
+          "x-go-name": "SHA"
+        },
+        "url": {
+          "description": "URL is the API URL for the commit",
+          "format": "uri",
+          "type": "string",
+          "x-go-name": "URL"
+        }
+      }
+    },
+    "Package": {
+      "required": [],
+      "properties": {
+        "created_at": {
+          "description": "The date and time when the package was created",
+          "format": "date-time",
+          "type": "string",
+          "x-go-name": "CreatedAt"
+        },
+        "creator": {
+          "$ref": "#/components/schemas/User"
+        },
+        "html_url": {
+          "description": "The HTML URL to view the package",
+          "format": "uri",
+          "type": "string",
+          "x-go-name": "HTMLURL"
+        },
+        "id": {
+          "description": "The unique identifier of the package",
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "ID"
+        },
+        "name": {
+          "description": "The name of the package",
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "owner": {
+          "$ref": "#/components/schemas/User"
+        },
+        "repository": {
+          "$ref": "#/components/schemas/Repository"
+        },
+        "type": {
+          "description": "The type of the package (e.g., npm, maven, docker)",
+          "type": "string",
+          "x-go-name": "Type"
+        },
+        "version": {
+          "description": "The version of the package",
+          "type": "string",
+          "x-go-name": "Version"
+        }
+      }
+    },
+    "PackageFile": {
+      "required": [],
+      "properties": {
+        "id": {
+          "description": "The unique identifier of the package file",
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "ID"
+        },
+        "md5": {
+          "description": "The MD5 hash of the package file",
+          "type": "string",
+          "x-go-name": "HashMD5"
+        },
+        "name": {
+          "description": "The name of the package file",
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "sha1": {
+          "description": "The SHA1 hash of the package file",
+          "type": "string",
+          "x-go-name": "HashSHA1"
+        },
+        "sha256": {
+          "description": "The SHA256 hash of the package file",
+          "type": "string",
+          "x-go-name": "HashSHA256"
+        },
+        "sha512": {
+          "description": "The SHA512 hash of the package file",
+          "type": "string",
+          "x-go-name": "HashSHA512"
+        },
+        "size": {
+          "description": "The size of the package file in bytes",
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "Size"
+        }
+      }
+    }
+  },
+  "static_observations": [
+    {
+      "topic": "release_draft_visibility",
+      "source": "routers/api/v1/repo/release.go",
+      "symbols": [
+        "canAccessReleaseDraft",
+        "ListReleases"
+      ],
+      "finding": "Release-unit write permission plus write:repository scope required for scoped credentials; ordinary read response cannot prove no draft exists",
+      "runtime_verified_this_batch": false
+    },
+    {
+      "topic": "tag_resolution",
+      "source": "services/release/release.go",
+      "symbols": [
+        "createTag"
+      ],
+      "finding": "Draft does not create tag; publishing can use existing tag; resolve Tag commit independently instead of trusting target_commitish",
+      "runtime_verified_this_batch": false
+    },
+    {
+      "topic": "empty_release_edit",
+      "source": "routers/api/v1/repo/release.go",
+      "symbols": [
+        "EditRelease"
+      ],
+      "finding": "Empty note/title is not assigned by handler; empty-body clearing needs a real negative case",
+      "runtime_verified_this_batch": false
+    },
+    {
+      "topic": "attachment_bytes",
+      "source": "routers/api/v1/repo/release_attachment.go",
+      "symbols": [
+        "CreateReleaseAttachment",
+        "checkReleaseMatchRepo"
+      ],
+      "finding": "Supports multipart and raw bytes; metadata endpoint returns no content digest; download bytes needed for SHA-256",
+      "runtime_verified_this_batch": false
+    },
+    {
+      "topic": "registry_auth",
+      "source": "routers/api/packages/api.go",
+      "symbols": [
+        "ContainerRoutes"
+      ],
+      "finding": "Separate Basic/packages Bearer chain and /v2/token, not ordinary OAuth Bearer middleware",
+      "runtime_verified_this_batch": false
+    },
+    {
+      "topic": "package_acl",
+      "source": "services/context/package.go",
+      "symbols": [
+        "determineAccessMode"
+      ],
+      "finding": "Owner visibility and organization/team package permissions are evaluated independently from a linked repository",
+      "runtime_verified_this_batch": false
+    },
+    {
+      "topic": "client_limit",
+      "source": "scripts/m0_oauth.py",
+      "finding": "Existing client accepts JSON/form and decodes non-JSON as text; raw bytes and allowed response headers needed before binary checks",
+      "runtime_verified_this_batch": false
+    }
+  ],
+  "auth_profiles_changed": false,
+  "release_oci_runtime_executed": false,
+  "runner_started": false,
+  "services_started": false,
+  "dependencies_installed": false,
+  "system_trust_changed": false,
+  "external_repository_written": false,
+  "pushed": false,
+  "next_batch_committed": false,
+  "temporary_source_directory_removed": true,
+  "generated_at_utc": "2026-11-04T13:01:01.290365+00:00",
+  "static_validation": {
+    "release_paths_verified_against_fixed_openapi": 9,
+    "gap_references_verified": 18,
+    "source_hashes_verified": 14,
+    "historical_evidence_unchanged": true
+  },
+  "local_governance": {
+    "command": "python3 -B scripts/check-repo.py",
+    "exit_code": 0,
+    "text_files": 84,
+    "local_file_links": 438,
+    "scope": "Local documentation/governance only; no new runtime tests"
+  },
+  "whitespace_check": {
+    "command": "git diff --check",
+    "exit_code": 0
+  }
+}

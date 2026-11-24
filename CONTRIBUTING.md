@@ -10,7 +10,7 @@
 - 后续 Git 初始化后，日常开发在 dev，稳定晋级到 master；具体规则见[仓库治理](docs/governance/repository-governance.md)。
 - 修复和功能提交说明最终行为、实际验证、未验证项及风险，不用占位测试或默认成功结果冒充验收。
 - 不向公开 Issue、日志、示例和提交中写入真实 token、客户数据、私有源码或生产配置。
-- 外部贡献接入前确认许可与贡献授权范围；不从兄弟项目整包搬入代码。
+- 提交贡献前确认自己有权提交。引用上游或第三方材料时记录来源、版本、许可与归属。
 
 ## 文档职责
 
@@ -22,6 +22,6 @@
 
 提交使用 Conventional Commits，例如 `docs(governance): 明确主线保护启用顺序`；类型、真实 merge 例外和精确暂存要求见[仓库治理](docs/governance/repository-governance.md)。普通贡献指向 dev，阶段晋级或 hotfix 指向 master；允许 merge / rebase、禁用 squash，合入主线后先回流 dev。
 
-使用仓库内 PR / Issue 模板，明确实际问题、证据和边界。未建立远端前这些是本地模板，不是假定已开放的贡献渠道。自有许可尚未确定；公开接收外部代码和正式分发前必须确定许可与贡献授权，不要求贡献者签署不存在的 CLA。
+使用仓库内 PR / Issue 模板，明确实际问题、证据和边界。提交的贡献按[根 LICENSE](LICENSE)第 4 节授权，另有书面约定的除外。
 
 遵守[行为约定](CODE_OF_CONDUCT.md)，安全问题按 [SECURITY.md](SECURITY.md) 私下处理。公开贡献入口启用前必须落实本项目自己的安全报告渠道。

@@ -1,0 +1,71 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches: [dev, master]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: pr-checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repo-governance:
+    name: Repository Governance
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout candidate history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check repository governance
+        shell: bash
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == pull_request ]]; then
+            merge_base=$(git merge-base "$PR_BASE_SHA" HEAD)
+            python3 -B scripts/check-repo.py --base-ref "$merge_base"
+          else
+            python3 -B scripts/check-repo.py
+          fi
+
+  local-tests:
+    name: Python Tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout candidate tree
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Run local test suite
+        run: python3 -B -m unittest discover -s scripts/tests -v
+
+  candidate-quality:
+    name: Candidate Quality
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    if: ${{ always() }}
+    needs: [repo-governance, local-tests]
+    steps:
+      - name: Require every component to succeed
+        shell: bash
+        env:
+          GOVERNANCE_RESULT: ${{ needs.repo-governance.result }}
+          TESTS_RESULT: ${{ needs.local-tests.result }}
+        run: |
+          printf 'Repository Governance: %s\nPython Tests: %s\n' "$GOVERNANCE_RESULT" "$TESTS_RESULT"
+          if [[ "$GOVERNANCE_RESULT" != success || "$TESTS_RESULT" != success ]]; then
+            echo "::error::All Candidate Quality components must succeed."
+            exit 1
+          fi
