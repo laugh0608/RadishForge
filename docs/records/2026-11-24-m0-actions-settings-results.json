@@ -1,0 +1,183 @@
+{
+  "platform": "linux/arm64",
+  "vm_uuid": "32A73D51-2096-4353-BCB8-D5134B3FE4FA",
+  "local_base": "6b15b670c91fd721bf7c18e8575ef07db06d5cc7",
+  "forge_manifest": "sha256:c372a4b5059cae65d148e150eb633327bf0ce19450cead8ff8d7a21ca8b7db2e",
+  "postgres_manifest": "sha256:a1ece8fa15f7b526a51ef47a22fb1f373d33de794dc26bf7bff99e61dcb52690",
+  "gitea": "28.2.0",
+  "database": "postgres (PostgreSQL) 18.6 (Debian 18.6-1.pgdg12+2)",
+  "engine": "linux/arm64 26.1.5+dfsg1",
+  "settings_readback": {
+    "initial": {
+      "owner": {
+        "default_mode": "Permissive",
+        "default_mode_value": "permissive",
+        "maximum_enabled": false,
+        "override_owner": null,
+        "displayed_units": {
+          "Code": "write",
+          "Issues": "write",
+          "Pull Requests": "write",
+          "Wiki": "write",
+          "Releases": "write",
+          "Projects": "write",
+          "Actions": "write"
+        }
+      },
+      "repository": {
+        "default_mode": "Permissive",
+        "default_mode_value": "permissive",
+        "maximum_enabled": false,
+        "override_owner": false,
+        "displayed_units": {
+          "Code": "write",
+          "Issues": "write",
+          "Pull Requests": "write",
+          "Wiki": "write",
+          "Releases": "write",
+          "Projects": "write",
+          "Actions": "write"
+        }
+      },
+      "runs": 0,
+      "runners": 0,
+      "issues": 0
+    },
+    "owner_save_http": 200,
+    "after_save": {
+      "owner": {
+        "default_mode": "Restricted",
+        "default_mode_value": "restricted",
+        "maximum_enabled": true,
+        "override_owner": null,
+        "displayed_units": {
+          "Code": "read",
+          "Issues": "read",
+          "Pull Requests": "none",
+          "Wiki": "none",
+          "Releases": "none",
+          "Projects": "none",
+          "Actions": "none"
+        }
+      },
+      "repository": {
+        "default_mode": "Restricted",
+        "default_mode_value": "restricted",
+        "maximum_enabled": true,
+        "override_owner": false,
+        "displayed_units": {
+          "Code": "read",
+          "Issues": "read",
+          "Pull Requests": "none",
+          "Wiki": "none",
+          "Releases": "none",
+          "Projects": "none",
+          "Actions": "none"
+        }
+      },
+      "runs": 0,
+      "runners": 0,
+      "issues": 0
+    },
+    "after_gitea_restart": {
+      "owner": {
+        "default_mode": "Restricted",
+        "default_mode_value": "restricted",
+        "maximum_enabled": true,
+        "override_owner": null,
+        "displayed_units": {
+          "Code": "read",
+          "Issues": "read",
+          "Pull Requests": "none",
+          "Wiki": "none",
+          "Releases": "none",
+          "Projects": "none",
+          "Actions": "none"
+        }
+      },
+      "repository": {
+        "default_mode": "Restricted",
+        "default_mode_value": "restricted",
+        "maximum_enabled": true,
+        "override_owner": false,
+        "displayed_units": {
+          "Code": "read",
+          "Issues": "read",
+          "Pull Requests": "none",
+          "Wiki": "none",
+          "Releases": "none",
+          "Projects": "none",
+          "Actions": "none"
+        }
+      },
+      "runs": 0,
+      "runners": 0,
+      "issues": 0
+    },
+    "before_restart_at": "2026-11-24T13:33:23.826120418Z",
+    "after_restart_at": "2026-11-24T13:33:39.554691732Z",
+    "database_started_at_before": "2026-11-24T13:32:38.482796216Z",
+    "database_started_at_after": "2026-11-24T13:32:38.482796216Z"
+  },
+  "dispatch_admission": {
+    "fixture": {
+      "sha": "1fad7729f7a6f6c4c296c53d079c536a5353fd7e",
+      "workflow_sha256": "fa3afe84c2371528634d96f45dd72bd8872343791c1f5f499325acc37b447ed6",
+      "initial_ids": [],
+      "writer_repository_role": "write",
+      "writer_site_admin": false,
+      "repository_private": true
+    },
+    "actions_enabled": {
+      "dispatch_http": 200,
+      "receipt_id": 1,
+      "run_id": 1,
+      "attempt": 1,
+      "before_cancel": {
+        "status": "queued",
+        "conclusion": null
+      },
+      "at_utc": "2026-11-24T13:34:44.268+00:00"
+    },
+    "cancelled": {
+      "cancel_http": 200,
+      "conclusion": "cancelled",
+      "job_id": 1,
+      "job_runner_id": 0,
+      "job_conclusion": "cancelled"
+    },
+    "actions_disabled": {
+      "dispatch_http": 403,
+      "before_ids": [
+        1
+      ],
+      "writer_repo_get_http": 200,
+      "actions_enabled": false,
+      "disabled_runs_get_http": 403,
+      "at_utc": "2026-11-24T13:34:44.464+00:00"
+    },
+    "reconciled": {
+      "after_ids": [
+        1
+      ],
+      "new_ids": [],
+      "prior_job_id": 1,
+      "prior_run_conclusion": "cancelled",
+      "repository_runners": 0,
+      "issues": 0,
+      "final_actions_enabled": false,
+      "at_utc": "2026-11-24T13:34:44.641+00:00"
+    }
+  },
+  "job_token_runtime_verified": false,
+  "cleanup": {
+    "running_guest_containers": 0,
+    "guest_rx_bytes": 305161786,
+    "debian_image_bytes": 431816704,
+    "registered_runners": 0,
+    "final_repository_actions_enabled": false,
+    "host_port_28422_bind_succeeded": true,
+    "baseline_stopped_vm_count": 5,
+    "vm_removed": true
+  }
+}

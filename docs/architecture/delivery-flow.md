@@ -54,13 +54,13 @@ G22 已隔离验证按原 Release ID、Tag 名及完整 SHA 核对发布，已�
 
 Manifest / config / layer Digest 固定内容身份。上轮实测覆盖最后一个 Tag 后旧 Manifest Digest 返回 404。Gitea 28.2.0 的包清理保留规则作用于清理任务，Registry 覆盖和显式删除按包权限处理。候选机制以私有发布组织、独立发布引用和清理规则实现受控保留，并以独立副本支持例外删除后的原字节恢复。发布、部署及回退均复核清单所需的原制品，缺失、摘要不符或不可复核时阻断并保留原因。 [首版留存决定](../adr/0006-oci-authorization-and-digest-retention.md#first-release-oci-decisions)
 
-Runner 暂停时没有真实 workflow run / attempt，证据须明确为缺失，不能填 0、占位 ID 或借最新 run 补齐；源码 SHA、制品 Digest 的原生协议证据可独立取得，完整源码 / run / 制品链路仍未通过。M0 的最小镜像样例不关闭五组件 ART / REL、部署或恢复验收。
+11 月 4 日 Runner 暂停时没有真实 workflow run / attempt，证据须明确为缺失，不能填 0、占位 ID 或借最新 run 补齐；源码 SHA、制品 Digest 的原生协议证据可独立取得，该批仅覆盖独立协议操作。M0 的最小镜像样例不关闭五组件 ART / REL、部署或恢复验收。
 
 ## 2026-11-10 M0 收口与产品交付分界
 
-按[四批收口](../planning/m0-validation.md#closeout-batches)，基础 Runner 先在获准隔离范围内验证无 Registry 写凭据的运行链；通过后再按获准测试路径接单镜像、独立读凭据固定 Digest 拉取与 Release 衔接，取得真实源码 / run / attempt / 制品关联。2026-11-24 已在 UTM arm64 来宾中核对私有源码 SHA、真实 run / attempt 和 job 日志，取消与重跑已可按 attempt 区分。下一批先固定 arm64 构建器、BuildKit 子 manifest、私有 Registry 路径及独立读写身份，再用一条真实运行关联镜像 Digest、镜像内的源码 SHA 与 Release。现有兼容样例指定 `linux/amd64` 和 `docker-container` 驱动；arm64 功能批需在专用构建环境中明确平台与 daemon 的访问范围。 [arm64 生命周期实测](../records/2026-11-24-m0-runner-lifecycle.md) · [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md)
+按[四批收口](../planning/m0-validation.md#closeout-batches)，基础 Runner 先在获准隔离范围内验证无 Registry 写凭据的运行链；通过后再按获准测试路径接单镜像、独立读凭据固定 Digest 拉取与 Release 衔接，取得真实源码 / run / attempt / 制品关联。2026-11-24 已在 UTM arm64 来宾中核对私有源码 SHA、真实 run / attempt 和 job 日志，取消与重跑已可按 attempt 区分。第三批通过独立 rootless BuildKit 构建 arm64 镜像，普通账号从构建命名空间按原 Digest 晋级到发布命名空间。独立读者核对镜像内源码 SHA 及对应 Release 的来源附件。 [arm64 单镜像与 Release 实测](../records/2026-11-24-m0-arm64-image-release.md) · [arm64 生命周期实测](../records/2026-11-24-m0-runner-lifecycle.md) · [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md)
 
-2026-11-17 已确认 G26 为 30 天受控保留，G27 为产品侧停用和删除 PAT 后拒绝该 PAT 交换。私有发布组织权限、真实清理与按原 Digest 恢复已[独立取证](../records/2026-11-17-m0-oci-retention-validation.md)。完成原生 Runner 与组合链路后再评审制品冻结。 [首版决定](../adr/0006-oci-authorization-and-digest-retention.md#first-release-oci-decisions)
+2026-11-17 已确认 G26 为 30 天受控保留，G27 为产品侧停用和删除 PAT 后拒绝该 PAT 交换。私有发布组织权限、真实清理与按原 Digest 恢复已[独立取证](../records/2026-11-17-m0-oci-retention-validation.md)。arm64 组合实测纳入制品冻结评审，正式支持范围仍按 M0 出口判定。 [首版决定](../adr/0006-oci-authorization-and-digest-retention.md#first-release-oci-decisions)
 
 下述完整链路继续按 M1—M6 实现。M0 不预建五组件发布器、生产请求持久化、部署或恢复平台；但首版已承诺的关键权限、保留 / 撤销和未知结果条件不能直接后置。候选变化只复验受影响路径，既有通过结果按原范围保留。
 

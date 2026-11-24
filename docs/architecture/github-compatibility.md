@@ -18,7 +18,18 @@ M0 固定首批样例，M3 完成首版验收。2026-11-09 核对官方仍支持
 
 ## 首批工作流测试矩阵
 
-| 能力 | 样例 / 必查结果 | 初始状态 |
+### M0-S04 四份原始样例的证据范围
+
+| 原件 | Gitea 28.2.0 / Runner 5.2.4 · Linux arm64 | COMP-01 尚缺的证据 |
+| --- | --- | --- |
+| `m0-toolchain.yml` | 原件通过私有 checkout、Go / Node / npm 版本断言和 marker 核对。Runner 标签绑定固定 arm64 job 镜像。 [运行记录](../records/2026-11-24-m0-runner-arm64.md) | 原生 amd64 及 GitHub 托管端的原件运行 |
+| `m0-image.yml` | 已验证 Git 检出、rootless BuildKit、按 Digest 晋级和独立读者下载。arm64 夹具用 Git / buildctl 替换原件的 Action 步骤。 [夹具与原件的差别](../records/2026-11-24-m0-arm64-image-release.md) | 在原生目标实测 checkout、login、setup-buildx 和 build-push 组合，双端核对 Digest 与源码 |
+| `m0-policy.yml` | job 权限验收失败。已核实仓库权限上限的继承与持久性，[关闭仓库 Actions 可拒绝手动派发](../records/2026-11-24-m0-actions-settings.md)。候选原生不支持环境审批。同组第二次派发自动取消活动 job 并成功结束。 [逐项结果](../records/2026-11-24-m0-arm64-actions-policy.md) | 原生 amd64、GitHub 普通身份和具备所选审批规则的参考环境 |
+| `m0-fork.yml` | 待验证。同仓 PR 与受控 fork PR 需要成对核对事件、审批设置及合成 canary 的可见性。 | 两端的私有仓库、获准的独立贡献者及配对 PR 记录 |
+
+### 按能力验收
+
+| 能力 | 样例 / 必查结果 | 验收状态 |
 | --- | --- | --- |
 | 文件发现 | `.github/workflows` 与 `.gitea/workflows` 的发现 / 优先级；避免双触发 | 待验证 |
 | 触发器 | push、tag、PR、schedule、workflow_dispatch 及输入类型、分支 / 路径过滤 | 待验证 |
@@ -30,7 +41,7 @@ M0 固定首批样例，M3 完成首版验收。2026-11-09 核对官方仍支持
 | 缓存 / 附件 | cache、upload-artifact、download-artifact 各版本协议、下载权限和保留期 | 待验证 |
 | 复用 | composite Action、reusable workflow、输入 / 秘密传递 | 待验证 |
 | 发布 | release 创建 / 更新 / 附件；常用 gh / Octokit 调用按指定命令验收 | 待验证 |
-| 权限语义 | permissions、environment、concurrency、fork PR 秘密与 Token 权限 | 待验证 |
+| 权限语义 | permissions、environment、concurrency、fork PR 秘密与 Token 权限 | 环境审批原生不支持。job 权限需处置，同组取消已有 arm64 实测。fork 及双端验收待验证。 |
 | 工作负载 OIDC | id-token 请求、issuer / audience / subject 与目标云信任 | 待验证，首版不默认承诺 |
 
 Action 的主版本标签仅用于发现，验收及发行锁定具体提交；分别记录 JavaScript、Docker、composite 的运行时条件。官方对照页可能随主线变化，不把旧文档中的“忽略字段”列表或新文档中的支持声明直接套到所有版本。

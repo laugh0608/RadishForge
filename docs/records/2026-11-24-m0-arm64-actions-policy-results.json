@@ -1,0 +1,278 @@
+{
+  "platform": "linux/arm64",
+  "vm_uuid": "FB82D6A9-AD9C-4E12-88F8-5DFC1357D4CB",
+  "local_base": "6b15b67",
+  "inputs": {
+    "source_sha": "3967a534f036cd9a1f9a5c1c63c867510f140696",
+    "repository": {
+      "id": 1,
+      "name": "owner/private-source",
+      "private": true
+    },
+    "M0_API_URL": "https://forge.m0.test:3000/api/v1",
+    "initial_runs": 0,
+    "repository_secrets": 0,
+    "repository_get_http": 200,
+    "environment_gets": {
+      "/environments": 404,
+      "/environments/m0-protected": 404
+    },
+    "versions": {
+      "gitea": "gitea version 28.2.0 built with go1.27.2 : bindata, timetzdata,",
+      "engine": "linux/arm64 26.1.5+dfsg1"
+    },
+    "refs": {
+      "forge": "gitea/gitea@sha256:c372a4b5059cae65d148e150eb633327bf0ce19450cead8ff8d7a21ca8b7db2e",
+      "db": "postgres@sha256:a1ece8fa15f7b526a51ef47a22fb1f373d33de794dc26bf7bff99e61dcb52690",
+      "runner": "gitea/runner@sha256:039b467de76f4d344f6de21e42e00271a776559d304dd30caaf49ffed3ffb351",
+      "job": "gitea/runner-images@sha256:a07569aee5d38d11492671e25ed64533a1f865c43454e9e4683e72d1a4592915"
+    },
+    "runner": {
+      "id": 1,
+      "name": "rf-arm64-private",
+      "labels": [
+        {
+          "id": 0,
+          "name": "ubuntu-24.04",
+          "type": "custom"
+        }
+      ],
+      "status": "online",
+      "control_repo_runners": 0
+    },
+    "runner_capacity": 1,
+    "job_network_internal": true,
+    "job_docker_host": "-",
+    "policy_yaml_sha256": "1692c74b21e64759d6abb9b8baf1dd2a3e8455daee678910ebc5fb3d899d9570"
+  },
+  "concurrency": {
+    "runs": {
+      "group1": {
+        "dispatch": {
+          "before_ids": [
+            1,
+            2
+          ],
+          "at": "2026-11-24T13:09:31.891+00:00",
+          "file": "m0-policy.yml",
+          "probe": "concurrency",
+          "http": 200,
+          "receipt_id": 3,
+          "returned_at": "2026-11-24T13:09:32.005+00:00",
+          "id": 3
+        },
+        "final": {
+          "sampled_at": "2026-11-24T13:09:45.463+00:00",
+          "run": 3,
+          "attempt": 1,
+          "source_sha": "3967a534f036cd9a1f9a5c1c63c867510f140696",
+          "actor": "writer",
+          "workflow_path": "m0-policy.yml@refs/heads/main",
+          "head_branch": "main",
+          "event": "workflow_dispatch",
+          "top_level_repository_id": 0,
+          "run_status": "completed",
+          "run_conclusion": "cancelled",
+          "attempt_status": "completed",
+          "attempt_conclusion": "cancelled",
+          "run_created_at": "2026-11-24T13:09:31Z",
+          "run_completed_at": "2026-11-24T13:09:44Z",
+          "target": {
+            "id": 9,
+            "name": "concurrency",
+            "status": "completed",
+            "conclusion": "cancelled",
+            "runner_id": 1,
+            "started_at": "2026-11-24T13:09:32Z",
+            "completed_at": "2026-11-24T13:09:44Z"
+          },
+          "other_jobs": [
+            {
+              "id": 7,
+              "name": "permissions",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "id": 8,
+              "name": "environment",
+              "status": "completed",
+              "conclusion": "skipped"
+            }
+          ],
+          "log": {
+            "http": 200,
+            "bytes": 2471,
+            "sha256": "584047355678067a869eac37cfea951e1c986cf36b3c83a01f35ba48822f0f28",
+            "markers": [
+              {
+                "at": "2026-11-24T13:09:33.0252542Z",
+                "output": "concurrency-start"
+              }
+            ]
+          }
+        },
+        "second_log_sha256": "584047355678067a869eac37cfea951e1c986cf36b3c83a01f35ba48822f0f28",
+        "outsider": {
+          "run": 404,
+          "attempt": 404,
+          "log": 404
+        }
+      },
+      "group2": {
+        "dispatch": {
+          "before_ids": [
+            1,
+            2,
+            3
+          ],
+          "at": "2026-11-24T13:09:36.614+00:00",
+          "file": "m0-policy.yml",
+          "probe": "concurrency",
+          "http": 200,
+          "receipt_id": 4,
+          "returned_at": "2026-11-24T13:09:36.704+00:00",
+          "id": 4
+        },
+        "final": {
+          "sampled_at": "2026-11-24T13:10:47.141+00:00",
+          "run": 4,
+          "attempt": 1,
+          "source_sha": "3967a534f036cd9a1f9a5c1c63c867510f140696",
+          "actor": "writer",
+          "workflow_path": "m0-policy.yml@refs/heads/main",
+          "head_branch": "main",
+          "event": "workflow_dispatch",
+          "top_level_repository_id": 0,
+          "run_status": "completed",
+          "run_conclusion": "success",
+          "attempt_status": "completed",
+          "attempt_conclusion": "success",
+          "run_created_at": "2026-11-24T13:09:36Z",
+          "run_completed_at": "2026-11-24T13:10:47Z",
+          "target": {
+            "id": 12,
+            "name": "concurrency",
+            "status": "completed",
+            "conclusion": "success",
+            "runner_id": 1,
+            "started_at": "2026-11-24T13:09:46Z",
+            "completed_at": "2026-11-24T13:10:47Z"
+          },
+          "other_jobs": [
+            {
+              "id": 10,
+              "name": "permissions",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "id": 11,
+              "name": "environment",
+              "status": "completed",
+              "conclusion": "skipped"
+            }
+          ],
+          "log": {
+            "http": 200,
+            "bytes": 2473,
+            "sha256": "33a4deda6f2d511ab7a5b7b1e335cc7d7e2505b0ff671c9bebf24bdb82a997f4",
+            "markers": [
+              {
+                "at": "2026-11-24T13:09:46.8672807Z",
+                "output": "concurrency-start"
+              },
+              {
+                "at": "2026-11-24T13:10:46.8727080Z",
+                "output": "concurrency-finish"
+              }
+            ]
+          }
+        },
+        "second_log_sha256": "33a4deda6f2d511ab7a5b7b1e335cc7d7e2505b0ff671c9bebf24bdb82a997f4",
+        "outsider": {
+          "run": 404,
+          "attempt": 404,
+          "log": 404
+        }
+      }
+    },
+    "first_run_before_second_dispatch": {
+      "sampled_at": "2026-11-24T13:09:36.576+00:00",
+      "run": 3,
+      "attempt": 1,
+      "source_sha": "3967a534f036cd9a1f9a5c1c63c867510f140696",
+      "actor": "writer",
+      "workflow_path": "m0-policy.yml@refs/heads/main",
+      "head_branch": "main",
+      "event": "workflow_dispatch",
+      "top_level_repository_id": 0,
+      "run_status": "in_progress",
+      "run_conclusion": null,
+      "attempt_status": "in_progress",
+      "attempt_conclusion": null,
+      "run_created_at": "2026-11-24T13:09:31Z",
+      "run_completed_at": "1970-01-01T00:00:00Z",
+      "target": {
+        "id": 9,
+        "name": "concurrency",
+        "status": "in_progress",
+        "conclusion": null,
+        "runner_id": 1,
+        "started_at": "2026-11-24T13:09:32Z",
+        "completed_at": "1970-01-01T00:00:00Z"
+      },
+      "other_jobs": [
+        {
+          "id": 7,
+          "name": "permissions",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 8,
+          "name": "environment",
+          "status": "completed",
+          "conclusion": "skipped"
+        }
+      ],
+      "log": {
+        "http": 200,
+        "bytes": 2311,
+        "sha256": "ce6d5796b5e0bf8ea6128c7657cb5c0217c2805130e3c92f89332559f9c0af28",
+        "markers": [
+          {
+            "at": "2026-11-24T13:09:33.0252542Z",
+            "output": "concurrency-start"
+          }
+        ]
+      }
+    },
+    "manual_cancel_requests": 0
+  },
+  "environment": {
+    "workflow_probe_dispatches": 0,
+    "approval_transition_measured": false,
+    "openapi_source_commit": "829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1",
+    "openapi_sha256": "c797dc2a94e070c19ea823cb4396829f234a745a7a8c90b4a686b91cbc4d278e"
+  },
+  "permission_acceptance": {
+    "status": "blocked",
+    "maintainer_evidence_sha256": "401d6b0e28d1c5222ccb37581acacf3a318207ff6f55dde5c303787f272ce01f"
+  },
+  "cleanup": {
+    "variable_delete_http": 204,
+    "variable_readback_http": 404,
+    "remaining_repo_variables": 0,
+    "remaining_repo_secrets": 0,
+    "runner_delete_http": 204,
+    "runner_detail_after_delete": 404,
+    "repository_runners_after_delete": 0,
+    "running_containers": 0,
+    "guest_rx_bytes": 929170959,
+    "debian_download_bytes": 431816704,
+    "vm_removed": true,
+    "baseline_stopped_vm_count": 5,
+    "loopback_port_28422_bind_succeeded": true
+  }
+}

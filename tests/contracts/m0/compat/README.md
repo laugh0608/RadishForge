@@ -1,6 +1,6 @@
 # M0-S04 首批 GitHub 对照样例
 
-2026-11-09 固定首批输入。REST 已取得 GitHub 所有者和匿名参考、所有者只读 PAT 对照，以及固定版 Gitea 同源普通角色结果。GitHub 普通角色、指定客户端的完整双端行为和工作流运行仍待验证。工作流取证时将原始 YAML 装入获授权的隔离仓库，记录文件摘要、安装路径和改动 diff。 [REST 取证手册](rest-runbook.md) · [GitHub 兼容策略](../../../../docs/architecture/github-compatibility.md)
+2026-11-09 固定首批输入。REST 已取得 GitHub 所有者和匿名参考、所有者只读 PAT 对照，以及固定版 Gitea 同源普通角色结果。GitHub 普通角色、指定客户端及原始工作流的完整双端行为仍待验证。工作流取证时将原始 YAML 装入获授权的隔离仓库，记录文件摘要、安装路径和改动 diff。 [REST 取证手册](rest-runbook.md) · [GitHub 兼容策略](../../../../docs/architecture/github-compatibility.md)
 
 ## 版本与准入
 
@@ -23,7 +23,9 @@ GitHub REST 主样例显式使用 `X-GitHub-Api-Version: 2026-03-10`。官方在
 
 正式工作流仍待原生 Linux amd64 实测。GitHub 普通角色与参考环境能力缺证约束相应兼容承诺。G26 / G27 的首版承诺及独立 OCI 取证见[操作单](oci-retention-runbook.md)。2026-11-24 已在专用 UTM arm64 VM 跑通原始工具链样例，按独立平台记录结果。 [arm64 实测](../../../../docs/records/2026-11-24-m0-runner-arm64.md)
 
-Gitea 基础批在独立私有仓库使用[生命周期夹具](m0-runner-lifecycle.yml)验证分支与 Tag、失败、取消 / 重跑及失联。镜像、角色、取证与清理见[基础 Runner 操作单](runner-runbook.md)。
+Gitea 基础批在独立私有仓库使用[生命周期夹具](m0-runner-lifecycle.yml)验证分支与 Tag、失败、取消 / 重跑及失联。制品批使用[arm64 单镜像夹具](m0-image-arm64.yml)和独立构建器，普通读者已核对相同 Digest、镜像内源码 SHA 与 Release 附件。 [制品批操作单](runner-runbook.md#arm64-单镜像与私有-release) · [实测](../../../../docs/records/2026-11-24-m0-arm64-image-release.md)
+
+arm64 策略批已在普通写者派发、独立读者回查下验证同组自动取消。job 权限验收失败，所需环境审批原生不支持。四份原件的已测范围和缺口见[兼容专题](../../../../docs/architecture/github-compatibility.md#m0-s04-四份原始样例的证据范围)与[策略实测](../../../../docs/records/2026-11-24-m0-arm64-actions-policy.md)。
 
 ## 工作流样例
 

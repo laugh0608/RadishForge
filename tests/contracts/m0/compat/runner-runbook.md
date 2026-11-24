@@ -29,6 +29,33 @@ UTM 4.7.5 使用 aarch64、硬件虚拟化和 UEFI，从官方 Debian 13 generic
 
 2026-11-24 首批已完成手动派发，续批在新 VM 实测场景 2—5。两批均已清理。失联样例中 job 容器退出后 Gitea 仍显示运行中，须按同一 attempt 等待上游终态。 [生命周期实测](../../../../docs/records/2026-11-24-m0-runner-lifecycle.md) · [arm64 实测](../../../../docs/records/2026-11-24-m0-runner-arm64.md)
 
+## arm64 单镜像与私有 Release
+
+复用上方 UTM、Debian 与四个 arm64 子 manifest，预算仍为 4 核、6 GiB、12 GiB 虚盘、2 GiB 下载及 90 分钟窗口。构建输入另加 `docker.io/moby/buildkit:v0.35.1`（Apache-2.0）。index 为 `sha256:baf6138eb8c37644800c7c913fba051e840ebb9ba13eaf92d92ef9a1712d0b4c`，arm64 子 manifest 为 `sha256:dcd3c9ec3a20b8a38ef81bd2cc09e7e89d47d48b6dc29145755e18cc2c9cca26`，config 为 `sha256:8e11cae448ccc48942e94449d6d440319bbe781cd134cde792c16ffdf7dc4e17`，压缩层 107,725,185 字节。按子 manifest 拉取并核对 config，取出同一镜像中的 `buildkitd` 和 `buildctl`。 [固定发行](https://github.com/moby/buildkit/releases/tag/v0.35.1) · [Rootless 运行方式](https://github.com/moby/buildkit/blob/v0.35.1/docs/rootless.md)
+
+1. 在来宾创建独立普通用户 `rfbuild`，以 RootlessKit 启动 BuildKit，使用 native snapshotter、单一 `linux/arm64` worker 和专用 Unix socket。服务由 systemd 限为 1.5 核、1250 MiB，网络仅允许本批 Gitea 地址，屏蔽来宾的 Docker / containerd socket 和平台私密目录。job 保持非 privileged，除只读 CA 外，只挂固定客户端和专用构建 socket。预检 `buildctl debug workers -v`、来宾架构、HTTPS 和 job 内 Docker socket 缺失。
+2. 在本批 Gitea 创建两个私有组织。构建账号 `builder` 仅有 `m0-build-org` 包写权限，job 只取得它的 `write:package` 测试 PAT。晋级账号 `publisher` 读构建组织、写 `m0-release-org`。独立读者有两侧包读取权限，使用 `read:package` PAT。源码仓库由普通写者推送和创建 Release，包写入与仓库发布分别使用其对应凭据。
+3. 将 [arm64 功能夹具](m0-image-arm64.yml)原样导入私有仓库的 `.github/workflows/m0-image-arm64.yml`，读回提交和 YAML。在空运行集合上由普通写者推送一次轻量 Tag `m0-oci-arm64-01`。按触发 ref、提交 SHA、唯一 run / attempt / job、检出输出及构建日志取得 `m0-build-org/m0-probe` 的 Digest。原样 [amd64 对照](m0-image.yml)继续在独立原生目标验收。
+4. 用独立读凭据按 Digest 拉取构建制品。用晋级账号执行 `skopeo copy --preserve-digests`，将原始字节复制到 `m0-release-org/m0-probe:m0-retain-arm64-01`，再以独立读凭据按 Digest 拉取发布副本。两侧均用下方命令核对 Manifest、config、layer、未压缩层摘要及镜像内的 `/source-sha`。核对私有制品存在时的匿名与非成员读取拒绝。 [字节校验器](../../../../scripts/m0_image_source.py)
+5. 普通写者按原 Tag 和 SHA 创建隔离草稿，附上含仓库、完整 ref、SHA、run / attempt / job、日志摘要和发布镜像坐标的 JSON。按现有 Release 前检确认草稿、附件及 Tag，再发布一次。独立读者按 ID 和 Tag 回读，验证附件字节。中断时优先读取已知对象并核对 SHA / Digest，禁止盲重发复制、Tag 或发布。导出后删除仓库 secret、撤销本批 PAT 并回读，注销 Runner、停构建器和来宾服务，按本批 UUID 删除 VM 并复查端口。
+
+```bash
+skopeo copy --preserve-digests --src-authfile "$reader_authfile" --src-cert-dir "$task_ca_dir" \
+  "docker://$release_image@$workflow_digest" "dir:$pulled_image_dir"
+python3 scripts/m0_image_source.py "$pulled_image_dir" "$workflow_digest" "$commit_sha"
+```
+
+2026-11-24 已实测整条 arm64 功能链并清理。[制品与 Release 记录](../../../../docs/records/2026-11-24-m0-arm64-image-release.md)
+
+## arm64 权限、环境与并发
+
+沿用基础批的 Debian、四个 arm64 镜像、资源上限和清理方式。job 只需连接隔离 Gitea 的 HTTPS 地址。使用普通写者派发、独立读者核对 Issue、run、attempt 和日志。把原始 [m0-policy.yml](m0-policy.yml) 装入私有仓库的 `.github/workflows`，按提交 SHA 回读字节。设置仓库变量 `M0_API_URL` 为本批原生 API 地址。
+
+1. 派发前，从原生设置页分别读回所有者和仓库的默认模式、自定义上限开关、逐项权限以及仓库覆盖开关，与工作流 SHA 同批归档。关闭 Actions 时，运行列表可能一并拒绝读取，须在可读取时对账派发前后的 run ID 集合。 [配置与停止条件实测](../../../../docs/records/2026-11-24-m0-actions-settings.md)
+2. 权限验收分别保留只读断言和显式授权写入的正向对照。由独立读者核对前后对象集合、job 终态和日志摘要。出现非预期写入时停止该路径，保留首次结果，按[安全策略](../../../../SECURITY.md)向维护者私下交接。
+3. 先确认底座可以配置 `m0-protected` 的独立审批者和环境级秘密。记录固定版本的公开契约及所有者对实际环境接口的读回。若保护入口缺失，登记阻塞，只有具备保护条件的环境才能验收批准前后的执行差异。
+4. 先派发一次 `probe=concurrency`，从活动 job 的日志读到 `concurrency-start`，再确认该 job 仍在运行并派发第二次。保留两次回执和各自的 run / attempt / job、时刻、终态、起止标记及日志摘要。两次派发期间保持同一组名，记录服务端自动取消结果。容量 1 的 Runner 只足以验证替换正在运行的 job，多执行槽的互斥需独立验证。
+
 ## 固定输入与待回填项
 
 | 输入 | 本批候选与核对方式 |

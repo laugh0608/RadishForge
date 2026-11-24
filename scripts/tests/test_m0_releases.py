@@ -110,6 +110,20 @@ class ReleaseDecisions(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             releases.asset_view(asset(browser_download_url=canonical), repo=org_repo)
 
+    def test_private_vm_attachment_stays_bound_to_client_origin(self):
+        origin = 'https://forge.m0.test:3000'
+        client = Mock(base=origin)
+        row = asset(browser_download_url=origin + '/attachments/' + UUID)
+        client.request.return_value = response(oauth.BinaryBody(b'abc', {}))
+        self.assertEqual(releases.download(client, 'synthetic', row, expected=b'abc')['bytes'], 3)
+        client.request.reset_mock()
+        with self.assertRaisesRegex(RuntimeError, 'outside'):
+            releases.download(client, 'synthetic', asset())
+        client.request.assert_not_called()
+        insecure = 'http://forge.m0.test:3000'
+        with self.assertRaisesRegex(RuntimeError, 'outside'):
+            releases.asset_view(asset(browser_download_url=insecure + '/attachments/' + UUID), origin=insecure)
+
     def test_tag_mismatch_or_disappearance_only_reads_and_stops_publication(self):
         for result in [response({}, 404), response({'commit': {'sha': 'b' * 40}})]:
             client = Mock(); client.request.return_value = result
@@ -236,13 +250,13 @@ class ReleaseDecisions(unittest.TestCase):
     def test_asset_zero_duplicate_and_wrong_bytes_never_trigger_another_write(self):
         for rows, data in [([], []), ([asset(), asset(id=2)], [b'abc', b'abc']), ([asset()], [b'abx'])]:
             replies = [response(rows)] + [response(oauth.BinaryBody(v, {})) for v in data]
-            client = Mock(); client.request.side_effect = replies
+            client = Mock(base=releases.ORIGIN); client.request.side_effect = replies
             result = releases.reconcile_asset(client, 'synthetic', 1, 'm0-fixture.bin', b'abc')
             self.assertEqual(result['state'], 'unknown')
             self.assertTrue(all(v.args[0] == 'GET' for v in client.request.call_args_list))
 
     def test_unique_asset_requires_exact_bytes_and_stable_metadata(self):
-        client = Mock(); client.request.side_effect = [response([asset()]), response(oauth.BinaryBody(b'abc', {})), response(asset())]
+        client = Mock(base=releases.ORIGIN); client.request.side_effect = [response([asset()]), response(oauth.BinaryBody(b'abc', {})), response(asset())]
         self.assertEqual(releases.reconcile_asset(client, 'synthetic', 1, 'm0-fixture.bin', b'abc')['state'], 'observed')
         client.request.side_effect = [response([asset()]), response(oauth.BinaryBody(b'abc', {})), response(asset(name='changed.bin'))]
         self.assertEqual(releases.reconcile_asset(client, 'synthetic', 1, 'm0-fixture.bin', b'abc')['state'], 'unknown')
@@ -252,7 +266,7 @@ class ReleaseDecisions(unittest.TestCase):
 
     def test_wrong_or_truncated_download_bytes_are_rejected(self):
         for data, headers in [(b'abx', {}), (b'ab', {}), (b'abc', {'Content-Length': '4'})]:
-            client = Mock(); client.request.return_value = response(oauth.BinaryBody(data, headers))
+            client = Mock(base=releases.ORIGIN); client.request.return_value = response(oauth.BinaryBody(data, headers))
             with self.subTest(data=data, headers=headers), self.assertRaises(RuntimeError):
                 releases.download(client, 'synthetic', asset(), expected=b'abc')
 

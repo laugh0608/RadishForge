@@ -1,6 +1,6 @@
 # 当前状态
 
-更新日期：2026-11-24（主线 CI、G23 拒绝路径与专用 arm64 VM 的私有工作流及生命周期）。
+更新日期：2026-11-24（主线 CI、G23 拒绝路径、arm64 工作流与单镜像 Release、M0-S04 权限及并发）。
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
 
@@ -103,21 +103,21 @@ python3 scripts/check-repo.py
 python3 -B -m unittest discover -s scripts/tests -v
 ```
 
-以上验证本地治理及 M0 scope、Issue / Release / OCI 输入 / 对账、客户端隔离、二进制和 HTTP 失败决策，当前共 70 项本地测试，无需启动服务。[PR Checks](../../.github/workflows/pr-checks.yml) 复用同一入口。上游协议通过 [M0 契约入口](../../tests/contracts/m0/README.md) 在获准隔离环境中另行取证，涉及 Docker、网络和合成数据写入。
+以上验证本地治理及 M0 scope、Issue / Release / OCI 输入 / 对账、客户端隔离、二进制和 HTTP 失败决策，当前共 73 项本地测试，无需启动服务。[PR Checks](../../.github/workflows/pr-checks.yml) 复用同一入口。上游协议通过 [M0 契约入口](../../tests/contracts/m0/README.md) 在获准隔离环境中另行取证，涉及 Docker、网络和合成数据写入。
 
 ## 下一步
 
-下一完整交付：在固定隔离目标上完成普通用户的源码检出、真实工作流、单镜像固定 Digest 与 Release 最小链路，追溯 SHA / run / attempt / 制品及关键失败结果，再冻结可进入 M1 的组合与首版支持范围。执行细节统一见[M0 四批收口](../planning/m0-validation.md#closeout-batches)。
+专用 arm64 VM 已跑通普通写者提交 → run / attempt → 私有镜像 Digest → Release / 附件，独立读者已按 Digest 拉取并核对镜像及附件字节。生命周期批已提交 `6b15b67`，制品批资源已清理。M0-S04 已按四份原件梳理取证范围。同组自动取消通过，job 权限验收失败，候选原生不支持所需环境审批。新仓库继承的权限上限已通过重启读回，停用 Actions 时普通写者手动派发为 403、零新增 run。 [权限配置与手动派发停止条件](../records/2026-11-24-m0-actions-settings.md) · [arm64 权限与并发实测](../records/2026-11-24-m0-arm64-actions-policy.md) · [四份原始样例的证据范围](../architecture/github-compatibility.md#m0-s04-四份原始样例的证据范围) · [arm64 单镜像与 Release 实测](../records/2026-11-24-m0-arm64-image-release.md)
 
 `RadishForge-Test` 权限复查已提交 `3111071`。暂不注册机器账号，普通写者和移除协作者后的访问继续待验证。组织仓库的 `Read` / `Write` 仍按私有组织条件补证。 [角色复查](../records/2026-11-17-m0-rest-evidence-review.md#个人仓库普通写者复查)
 
 G22 隔离实测已提交 `dc33663`。G23 继正向复测后，已在本机固定版 Gitea 验证目标提交 404 时前检仅发 GET、零发布 PATCH。独立普通账号回读原草稿保留、原 Tag 仍缺失，本批资源已清理。其他失败分支沿用本地模拟，原生无效 target 发布 500 的差异保留。 [G22 隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 正向](../records/2026-11-17-m0-release-target-preflight.md) · [G23 拒绝](../records/2026-11-24-m0-runner-platform-and-g23.md#g23-目标提交缺失)
 
-1. **固定 arm64 制品批的构建环境。** 两批专用 VM 已取得私有检出、工具链、分支 / Tag 触发、失败、取消 / 重跑与失联证据。接续时固定专用构建器、BuildKit 平台摘要、私有 Registry 命名空间、独立读写测试身份及撤权 / 清理方式。现有原样镜像工作流指定 `linux/amd64`，原生 COMP-01 对照继续等待独立执行目标。 [arm64 生命周期实测](../records/2026-11-24-m0-runner-lifecycle.md) · [交付专题](../architecture/delivery-flow.md)
-2. **用一次真实运行打通单镜像与 Release。** 核对普通写者提交的 SHA、run / attempt、Registry 实收 Digest 与 Release，以独立读凭据按 Digest 拉取并核对镜像内的源码 SHA。补首版实际组织权限与选中兼容样例，组合评审后冻结制品方案。
+1. **先收口 job 权限和环境审批。** 配置继承和持久性已核实，上批失败实例的实际设置无法追溯。下一步针对有明确修正的候选或可强制执行的替代控制，验证运行中的只读 job 写入被拒、对象零新增、获准写者仍能写入。环境审批需要可强制执行且经验收的方案，调整首版承诺须由所有者明确决定。权限边界明确后再做同仓与 fork PR 的合成 canary 对照。 [首批样例](../../tests/contracts/m0/compat/README.md)
+2. **收口对应权限与平台条件。** GitHub 普通写者及撤权需要独立测试身份与获准仓库；原生 amd64 工作流需要独享的 Linux amd64 目标。条件具备后做对应实测，调整首版承诺须由所有者明确决定。 [差异分组](../architecture/github-compatibility.md#closeout-disposition)
 3. **评审 M0 出口并交接 M1。** 满足[唯一阶段出口](../planning/acceptance.md#m0-exit)才进入原定工程、身份与仓库基础；否则列具名阻塞和解除条件，不新增采用准备阶段。
 
-arm64 制品批接续时固定专用构建环境、Registry 范围、读写身份和清理归属。原生 amd64 对照仍缺执行平台；发布组织权限与 G26 隔离清理 / 恢复有证据，制品方案仍待真实组合链路评审；独立参考身份与双端条件阻塞相应兼容承诺；单镜像与 Release 的组合链路、关键权限及跨制品来源关联待补，M0 保持进行中。原 27 条差异基线继续适用。
+M0 保持进行中。单镜像和 Release 组合证据已取得，正式支持组合、关键权限承诺及阶段交接仍待评审。原 27 条差异基线继续适用。
 
 每个阻塞先安排一次有界取证；失败后定位并决定定向修正、改选或等待，不用扩展矩阵填补等待。五组件发布、生产 CD、完整安装 / 升级 / 恢复、更广平台 / IdP 与未入选兼容能力按原阶段后置；关键权限及首版承诺的保留 / 撤销保证不能直接后置。原 6—10 人日不作为剩余工期或自动追加预算。
 

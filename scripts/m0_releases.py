@@ -18,7 +18,7 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def release_view(row, *, repo=REPO):
+def release_view(row, *, repo=REPO, origin=ORIGIN):
     keys = {'id', 'tag_name', 'name', 'body', 'draft', 'prerelease', 'target_commitish', 'author', 'assets'}
     if (not isinstance(row, dict) or not keys.issubset(row)
             or type(row['id']) is not int or row['id'] <= 0
@@ -27,14 +27,14 @@ def release_view(row, *, repo=REPO):
             or not isinstance(row['author'], dict) or type(row['author'].get('id')) is not int
             or row['author']['id'] <= 0 or not isinstance(row['assets'], list)):
         raise RuntimeError('Invalid Release response identity, state or fields')
-    assets = [asset_view(v, tag=row['tag_name'], repo=repo)['id'] for v in row['assets']]
+    assets = [asset_view(v, tag=row['tag_name'], repo=repo, origin=origin)['id'] for v in row['assets']]
     if len(set(assets)) != len(assets):
         raise RuntimeError('Duplicate attachment identity in Release')
     return {**{k: row[k] for k in ('id', 'tag_name', 'name', 'body', 'draft', 'prerelease', 'target_commitish')},
             'author_id': row['author']['id'], 'assets': sorted(assets)}
 
 
-def asset_view(row, *, tag=None, repo=REPO):
+def asset_view(row, *, tag=None, repo=REPO, origin=ORIGIN):
     if (not isinstance(row, dict) or type(row.get('id')) is not int or row['id'] <= 0
             or type(row.get('size')) is not int or row['size'] < 0
             or not isinstance(row.get('name'), str) or not row['name']
@@ -46,7 +46,8 @@ def asset_view(row, *, tag=None, repo=REPO):
     canonical = re.fullmatch(repo_path + r'/releases/download/(m0-[a-z0-9-]+)/([^/]+)', url.path)
     canonical = (canonical is not None and urllib.parse.unquote(canonical[2]) == row['name']
                  and (tag is None or canonical[1] == tag))
-    if (f'{url.scheme}://{url.netloc}' != ORIGIN or url.query or url.fragment
+    if (url.scheme != 'https' or url.username is not None or url.password is not None
+            or f'{url.scheme}://{url.netloc}' != origin or url.query or url.fragment
             or not (url.path == '/attachments/' + row['uuid'] or canonical)):
         raise RuntimeError('Attachment download URL is outside its exact task UUID or Release/name endpoint')
     return {k: row[k] for k in ('id', 'uuid', 'name', 'size', 'browser_download_url')}
@@ -59,7 +60,7 @@ def asset_path(release_id, asset_id=None, *, repo=REPO):
 
 def read_release(client, token, release_id, *, repo=REPO):
     return release_view(expect(client.request('GET', repo + '/releases/' + str(release_id), token=token),
-                               {200}, 'Release readback'), repo=repo)
+                               {200}, 'Release readback'), repo=repo, origin=client.base)
 
 
 def payload(tag, sha, **changes):
@@ -221,7 +222,7 @@ def assets(client, token, release_id):
 
 
 def download(client, token, asset, *, expected=None, repo=REPO):
-    asset = asset_view(asset, repo=repo)
+    asset = asset_view(asset, repo=repo, origin=client.base)
     body = expect(client.request('GET', asset['browser_download_url'], token=token,
                                  binary=True, max_bytes=65536), {200}, 'download exact attachment bytes')
     if not isinstance(body, BinaryBody) or len(body.data) != asset['size']:
@@ -235,7 +236,7 @@ def download(client, token, asset, *, expected=None, repo=REPO):
 
 
 def upload(client, token, release_id, name, data=BYTES, *, multipart=False, repo=REPO):
-    if not re.fullmatch(r'm0-[a-z0-9-]+\.bin', name):
+    if not re.fullmatch(r'm0-[a-z0-9-]+\.(?:bin|json)', name):
         raise ValueError('Only synthetic attachment names are allowed')
     path = asset_path(release_id, repo=repo) + '?' + urllib.parse.urlencode({'name': name})
     raw, content_type = data, 'application/octet-stream'
@@ -245,7 +246,7 @@ def upload(client, token, release_id, name, data=BYTES, *, multipart=False, repo
         content_type = 'multipart/form-data; boundary=m0-release-boundary'
     row = expect(client.request('POST', path, token=token, raw=raw, content_type=content_type), {201}, 'upload synthetic attachment')
     current = asset_view(expect(client.request('GET', asset_path(release_id, row['id'], repo=repo), token=token),
-                                {200}, 'attachment metadata readback'), repo=repo)
+                                {200}, 'attachment metadata readback'), repo=repo, origin=client.base)
     if current['name'] != name or current['size'] != len(data):
         raise RuntimeError('Attachment upload metadata differs')
     download(client, token, current, expected=data, repo=repo)

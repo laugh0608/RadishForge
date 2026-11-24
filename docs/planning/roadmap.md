@@ -4,7 +4,7 @@ P0 规划与治理基础及 G0-01 本地 Git 初始化已完成。M0-S01 已有�
 
 M0-S04 已固定首批 REST、CLI 与工作流输入。REST 已取得 GitHub 所有者与匿名参考、所有者只读 PAT 对照、固定版 Gitea 同源普通角色结果。OCI 首版承诺已定，发布包权限、清理与原 Digest 恢复已[短测取证](../records/2026-11-17-m0-oci-retention-validation.md)。GitHub 普通角色与正式 amd64 工作流对照仍待取证。 [M0-S04 接续事项](m0-validation.md#接续事项) · [27 条差异基线](../architecture/github-compatibility.md#m0-现有差异基线)
 
-M0 已取得 Gitea Runner 在专用 arm64 VM 上的首条私有工作流证据。分支和 Tag 触发、主动失败、取消 / 重跑及 Runner 失联均有独立运行记录。下一批接单镜像 Digest 与 Release，M1—M6 待阶段出口评审。 [arm64 生命周期实测](../records/2026-11-24-m0-runner-lifecycle.md) · [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md)
+M0 已取得 Gitea Runner 在专用 arm64 VM 上的首条私有工作流证据。分支和 Tag 触发、主动失败、取消 / 重跑及 Runner 失联均有独立运行记录。单镜像 Digest 与 Release 已由普通读者独立核对，四份兼容样例已按原件梳理。同组取消已验证，job 权限和环境审批仍约束 M0 出口。M1—M6 待阶段评审。 [arm64 策略实测](../records/2026-11-24-m0-arm64-actions-policy.md) · [arm64 单镜像与 Release 实测](../records/2026-11-24-m0-arm64-image-release.md) · [arm64 生命周期实测](../records/2026-11-24-m0-runner-lifecycle.md) · [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md)
 
 G0 已启用 GitHub 主线必需检查，并完成合入、回流及手动 CI 验收。 [验收记录](../records/2026-11-24-candidate-quality.md)
 
@@ -35,7 +35,7 @@ G0-02 / G0-03 治理收尾与 M0 是不同推进线，前者不替代产品可�
 
 保留 M0-S01—S04 与首版范围，按[四批收口](m0-validation.md#closeout-batches)推进：关键取舍 → 最小 Runner 链路 → 定向补证与组合 → 阶段评审。基础 Runner 的准备可独立于 G26 / G27 和 GitHub 普通角色补证；实际运行仍按[分步恢复条件](m0-s01-baseline.md#runner-resumption)核对每批范围。
 
-2026-11-17 已确认 G26 / G27 的[首版承诺](../adr/0006-oci-authorization-and-digest-retention.md#first-release-oci-decisions)。独立 OCI 短测已完成，原生 Runner 与组合证据仍需完成。达到[阶段出口](acceptance.md#m0-exit)后接原定 M1。已完成切片只在输入变化或相关失败时复验。
+2026-11-17 已确认 G26 / G27 的[首版承诺](../adr/0006-oci-authorization-and-digest-retention.md#first-release-oci-decisions)。独立 OCI 短测和 arm64 单镜像组合取证已完成。原生 amd64 对照待独立执行目标。达到[阶段出口](acceptance.md#m0-exit)后接原定 M1。已完成切片只在输入变化或相关失败时复验。
 
 ## 工作量预算
 

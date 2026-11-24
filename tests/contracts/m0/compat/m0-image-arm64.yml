@@ -1,0 +1,78 @@
+name: M0 arm64 private image
+'on':
+  push:
+    tags: [m0-oci-arm64-01]
+
+permissions:
+  contents: read
+
+jobs:
+  image:
+    runs-on: ubuntu-24.04
+    env:
+      REGISTRY: forge.m0.test:3000
+      IMAGE: forge.m0.test:3000/m0-build-org/m0-probe
+      BUILDKIT_HOST: unix:///run/rf-build.sock
+    steps:
+      - name: Check out the triggering private tag
+        shell: bash
+        env:
+          CHECKOUT_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          [[ "$GITHUB_SERVER_URL" == "https://$REGISTRY" && "$GITHUB_REPOSITORY" == owner/private-source ]]
+          [[ "$GITHUB_REF" == refs/tags/m0-oci-arm64-01 && "$GITHUB_SHA" =~ ^[0-9a-f]{40}$ ]]
+          umask 077
+          askpass=$(mktemp)
+          trap 'rm -f -- "$askpass"' EXIT
+          cat > "$askpass" <<'ASKPASS'
+          #!/bin/sh
+          case "$1" in
+            *Username*) printf '%s\n' x-access-token ;;
+            *Password*) printf '%s\n' "$CHECKOUT_TOKEN" ;;
+            *) exit 1 ;;
+          esac
+          ASKPASS
+          chmod 700 "$askpass"
+          git init -q
+          GIT_TERMINAL_PROMPT=0 GIT_ASKPASS="$askpass" git -c credential.helper= fetch -q --depth=1 \
+            "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" "$GITHUB_REF"
+          git checkout -q --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          printf 'checkout_sha=%s ref=%s\n' "$(git rev-parse HEAD)" "$GITHUB_REF"
+      - name: Build and push to the private build namespace
+        shell: bash
+        env:
+          BUILD_PAT: ${{ secrets.M0_BUILD_PACKAGE_PAT }}
+        run: |
+          set -euo pipefail
+          test "$(uname -m)" = aarch64
+          test ! -S /var/run/docker.sock
+          test -S /run/rf-build.sock
+          [[ "$GITHUB_RUN_ID" =~ ^[1-9][0-9]*$ && "$GITHUB_RUN_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
+          umask 077
+          work=$(mktemp -d)
+          trap 'rm -rf -- "$work"' EXIT
+          mkdir "$work/context" "$work/auth"
+          export DOCKER_CONFIG="$work/auth"
+          python3 - <<'PY'
+          import base64, json, os
+          from pathlib import Path
+          pat = os.environ['BUILD_PAT']
+          if not pat:
+              raise ValueError('Missing build package credential')
+          auth = base64.b64encode(('builder:' + pat).encode()).decode()
+          path = Path(os.environ['DOCKER_CONFIG']) / 'config.json'
+          path.write_text(json.dumps({'auths': {os.environ['REGISTRY']: {'auth': auth}}}))
+          PY
+          unset BUILD_PAT
+          git rev-parse HEAD > "$work/context/source-sha"
+          printf 'FROM scratch\nCOPY source-sha /source-sha\n' > "$work/context/Dockerfile"
+          buildctl build --frontend dockerfile.v0 --opt platform=linux/arm64 \
+            --local "context=$work/context" --local "dockerfile=$work/context" \
+            --output "type=image,name=$IMAGE:$GITHUB_REF_NAME,push=true,oci-mediatypes=true" \
+            --metadata-file "$work/result.json"
+          digest=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["containerimage.digest"])' "$work/result.json")
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+          printf 'source_sha=%s run=%s attempt=%s image=%s@%s\n' \
+            "$GITHUB_SHA" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" "$IMAGE" "$digest"

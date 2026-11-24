@@ -1,0 +1,282 @@
+{
+  "platform": "linux/arm64",
+  "vm_uuid": "B73EFDDC-777E-4469-8260-EDF7A753346D",
+  "baseline": "6b15b67",
+  "environment": {
+    "daemon": "linux/arm64 26.1.5+dfsg1",
+    "refs": {
+      "forge": "gitea/gitea@sha256:c372a4b5059cae65d148e150eb633327bf0ce19450cead8ff8d7a21ca8b7db2e",
+      "db": "postgres@sha256:a1ece8fa15f7b526a51ef47a22fb1f373d33de794dc26bf7bff99e61dcb52690",
+      "runner": "gitea/runner@sha256:039b467de76f4d344f6de21e42e00271a776559d304dd30caaf49ffed3ffb351",
+      "job": "gitea/runner-images@sha256:a07569aee5d38d11492671e25ed64533a1f865c43454e9e4683e72d1a4592915",
+      "buildkit": "moby/buildkit@sha256:dcd3c9ec3a20b8a38ef81bd2cc09e7e89d47d48b6dc29145755e18cc2c9cca26"
+    },
+    "builder_config_id": "sha256:8e11cae448ccc48942e94449d6d440319bbe781cd134cde792c16ffdf7dc4e17",
+    "builder_limits": [
+      "CPUQuotaPerSecUSec=1.500000s",
+      "MemoryMax=1310720000",
+      "IPAddressAllow=172.28.50.10/32",
+      "IPAddressDeny=::/0 0.0.0.0/0",
+      "User=rfbuild",
+      "InaccessiblePaths=/var/lib/rf-m0 /run/docker.sock /run/containerd /var/lib/docker"
+    ],
+    "builder_identity": "uid=1001(rfbuild) gid=1001(rfbuild) groups=1001(rfbuild)",
+    "buildkit_version": "buildctl github.com/moby/buildkit v0.35.1 412cc86ad3c4252b82e929f9b1b1ad167376ded8",
+    "registration": {
+      "id": 1,
+      "name": "rf-arm64-private",
+      "labels": [
+        {
+          "id": 0,
+          "name": "ubuntu-24.04",
+          "type": "custom"
+        }
+      ],
+      "status": "online",
+      "control_repo_runners": 0
+    },
+    "job_network": "internal rf-work",
+    "job_docker_socket": false,
+    "skopeo": "skopeo version 1.18.0",
+    "worker": {
+      "id": "53dojr63pgd7ao8euqeigtoa4",
+      "platforms": "linux/arm64",
+      "buildkit": "github.com/moby/buildkit v0.35.1 412cc86ad3c4252b82e929f9b1b1ad167376ded8",
+      "dockerfile": "1.29.0",
+      "executor": "oci",
+      "snapshotter": "native",
+      "process_mode": "sandbox",
+      "network": "host"
+    }
+  },
+  "fixture": {
+    "sha": "eb7b90db4f93fb9e1820856847052d466f23aa3d",
+    "path": ".github/workflows/m0-image-arm64.yml",
+    "yaml_sha256": "277e480f3a819e3dcc58279711fa97c1adcc2010ebdcf88870f171f7e4e77ed6",
+    "tag": "m0-oci-arm64-01",
+    "repository_id": 1,
+    "before_run_ids": []
+  },
+  "roles": {
+    "organizations": {
+      "m0-build-org": 7,
+      "m0-release-org": 8
+    },
+    "teams": [
+      {
+        "org": "m0-build-org",
+        "role": "write",
+        "users": [
+          "builder"
+        ]
+      },
+      {
+        "org": "m0-build-org",
+        "role": "read",
+        "users": [
+          "reader",
+          "publisher"
+        ]
+      },
+      {
+        "org": "m0-release-org",
+        "role": "read",
+        "users": [
+          "reader"
+        ]
+      }
+    ],
+    "build_writer_in_release_org": false,
+    "repository_secret_put": 201,
+    "PAT_scopes": {
+      "builder": "write:package",
+      "reader": "read:package",
+      "publisher": "write:package"
+    },
+    "source_roles": {
+      "writer": "write",
+      "reader": "read"
+    }
+  },
+  "run": {
+    "id": 1,
+    "attempt": 1,
+    "job": 1,
+    "sha": "eb7b90db4f93fb9e1820856847052d466f23aa3d",
+    "ref": "refs/tags/m0-oci-arm64-01",
+    "run_status": "success",
+    "attempt_status": "success",
+    "job_status": "success",
+    "actor": "writer",
+    "created_at": "2026-11-24T12:52:26Z",
+    "completed_at": "2026-11-24T12:52:31Z",
+    "repository_id": 1,
+    "repository_id_field": 0,
+    "runner_id": 1,
+    "log_sha256": "48dfafedf22f5d961a37462617f1cbc5ad1abd0893265f5c6665383077e08ea5",
+    "log_bytes": 8148,
+    "checkout_output": "checkout_sha=eb7b90db4f93fb9e1820856847052d466f23aa3d ref=refs/tags/m0-oci-arm64-01",
+    "digest": "sha256:88ca004767ce4e2202d5be275fa5abc9eb165d95afde806c789ee1d7ee8e3e20",
+    "steps": [
+      {
+        "name": "Check out the triggering private tag",
+        "conclusion": "success"
+      },
+      {
+        "name": "Build and push to the private build namespace",
+        "conclusion": "success"
+      }
+    ],
+    "outsider": {
+      "run": 404,
+      "attempt": 404,
+      "job_logs": 404
+    }
+  },
+  "job_container": {
+    "id": "843cde269b0cfd8788eca9c8151284df1eaaa68536843d2b0aa75a1a460923d5",
+    "image_id": "sha256:fe9f828805093621b75f661c97d8e77b82298b386a7fba791e6f6b3b9e134dc4",
+    "privileged": false,
+    "network": "rf-work",
+    "mounts": [
+      {
+        "type": "bind",
+        "target": "/rf-ca.pem",
+        "writable": false
+      },
+      {
+        "type": "bind",
+        "target": "/usr/local/bin/buildctl",
+        "writable": false
+      },
+      {
+        "type": "bind",
+        "target": "/run/rf-build.sock",
+        "writable": false
+      },
+      {
+        "type": "volume",
+        "target": "/var/run/act",
+        "writable": true
+      },
+      {
+        "type": "volume",
+        "target": "/workspace",
+        "writable": true
+      }
+    ]
+  },
+  "promotion": {
+    "build": "forge.m0.test:3000/m0-build-org/m0-probe",
+    "release": "forge.m0.test:3000/m0-release-org/m0-probe",
+    "retention_tag": "m0-retain-arm64-01",
+    "build_reader_pull": {
+      "manifest": "sha256:88ca004767ce4e2202d5be275fa5abc9eb165d95afde806c789ee1d7ee8e3e20",
+      "config": "sha256:0e739b47e87b45f42ed6f202bb2d7aa1b4f2e6999d343327f5bb3905e325f1b7",
+      "layer": "sha256:ff0b4fb086f8dfbd6dff797de395f00f3106213edf52b985a2177580e42aba7d",
+      "diff_id": "sha256:b89510e3a2efea239d09180c05853a9103a301a17b2ee5666c8e94a26a637709",
+      "platform": "linux/arm64",
+      "source_sha": "eb7b90db4f93fb9e1820856847052d466f23aa3d"
+    },
+    "release_reader_pull": {
+      "manifest": "sha256:88ca004767ce4e2202d5be275fa5abc9eb165d95afde806c789ee1d7ee8e3e20",
+      "config": "sha256:0e739b47e87b45f42ed6f202bb2d7aa1b4f2e6999d343327f5bb3905e325f1b7",
+      "layer": "sha256:ff0b4fb086f8dfbd6dff797de395f00f3106213edf52b985a2177580e42aba7d",
+      "diff_id": "sha256:b89510e3a2efea239d09180c05853a9103a301a17b2ee5666c8e94a26a637709",
+      "platform": "linux/arm64",
+      "source_sha": "eb7b90db4f93fb9e1820856847052d466f23aa3d"
+    },
+    "registry_digest_header": "sha256:88ca004767ce4e2202d5be275fa5abc9eb165d95afde806c789ee1d7ee8e3e20",
+    "anonymous_release_read": 401,
+    "builder_release_read": 401,
+    "release_manifest_bytes": 476,
+    "private_ref": "forge.m0.test:3000/m0-release-org/m0-probe@sha256:88ca004767ce4e2202d5be275fa5abc9eb165d95afde806c789ee1d7ee8e3e20",
+    "release_upload_denials": {
+      "reader": {
+        "http": 401,
+        "location_present": false
+      },
+      "builder": {
+        "http": 401,
+        "location_present": false
+      }
+    }
+  },
+  "release": {
+    "id": 1,
+    "draft": false,
+    "tag": "m0-oci-arm64-01",
+    "sha": "eb7b90db4f93fb9e1820856847052d466f23aa3d",
+    "author": "writer",
+    "readback": "reader",
+    "reader_scope": "read:repository",
+    "writer_scope": "write:repository",
+    "asset": {
+      "id": 1,
+      "name": "m0-provenance.json",
+      "bytes": 463,
+      "sha256": "144de19d575914dd4596ba856cd11aaea888065b1f2b636441bd9dcb13dba7b1"
+    },
+    "outsider_release": 404,
+    "attachment_payload": {
+      "repository": "owner/private-source",
+      "source_sha": "eb7b90db4f93fb9e1820856847052d466f23aa3d",
+      "source_ref": "refs/tags/m0-oci-arm64-01",
+      "run_id": 1,
+      "run_attempt": 1,
+      "job_id": 1,
+      "job_log_sha256": "48dfafedf22f5d961a37462617f1cbc5ad1abd0893265f5c6665383077e08ea5",
+      "platform": "linux/arm64",
+      "image": "forge.m0.test:3000/m0-release-org/m0-probe@sha256:88ca004767ce4e2202d5be275fa5abc9eb165d95afde806c789ee1d7ee8e3e20",
+      "release_id": 1
+    }
+  },
+  "guest_rx_at_export": 1066482816,
+  "debian_download_bytes": 431816704,
+  "cleanup": {
+    "repository_secrets_remaining": 0,
+    "revocations": [
+      {
+        "user": "builder",
+        "scope": "write:package",
+        "delete_http": 204,
+        "id_absent": true,
+        "original_credential_http": 401
+      },
+      {
+        "user": "reader",
+        "scope": "read:package",
+        "delete_http": 204,
+        "id_absent": true,
+        "original_credential_http": 401
+      },
+      {
+        "user": "publisher",
+        "scope": "write:package",
+        "delete_http": 204,
+        "id_absent": true,
+        "original_credential_http": 401
+      },
+      {
+        "user": "writer",
+        "scope": "write:repository",
+        "delete_http": 204,
+        "id_absent": true,
+        "original_credential_http": 401
+      },
+      {
+        "user": "reader",
+        "scope": "read:repository",
+        "delete_http": 204,
+        "id_absent": true,
+        "original_credential_http": 401
+      }
+    ],
+    "runner_delete_http": 204,
+    "runner_list_size": 0,
+    "runner_detail_http": 404,
+    "running_containers": 0,
+    "builder_active": false,
+    "guest_rx_bytes": 1066493448
+  }
+}

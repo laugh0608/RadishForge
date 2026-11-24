@@ -60,7 +60,7 @@ Runner 5.x 文档要求 Gitea 1.21+、Git 2.34.1+，JavaScript Action 的 Node �
 
 **基础批交付：** 注册、私有检出、工具链、push / Tag / 手动触发与唯一 run / attempt 关联、日志、失败、取消 / 重跑及失联观察。可以先用不含镜像推送步骤的受控样例，记录与原始兼容样例的差异；此结果只覆盖实际运行的样例。2026-11-17 已整理[操作单](../../tests/contracts/m0/compat/runner-runbook.md)并核对候选 job 镜像的 amd64 Digest；原生 amd64 执行位置和配置待确认。arm64 已取得分支、Tag、主动失败、取消 / 重跑与失联的上游观测。OCI 短测与 GitHub 普通角色对照各自取证。 [arm64 生命周期实测](../records/2026-11-24-m0-runner-lifecycle.md)
 
-**制品接续：** 基础批通过后，固定获准的测试 Registry 路径、私有命名空间、独立读写测试凭据与清理 / 撤权方式，再接一个微型镜像及 Release。核对 SHA → run / attempt → Digest，以独立读凭据拉取原制品。独立的发布包权限、留存及恢复证据可先按 [OCI 操作单](../../tests/contracts/m0/compat/oci-retention-runbook.md)取得。Registry 或运行候选改变时复验受影响链路。
+**制品接续：** 基础批通过后，固定获准的测试 Registry 路径、私有命名空间、独立读写测试凭据与清理 / 撤权方式，再接一个微型镜像及 Release。核对 SHA → run / attempt → Digest，以独立读凭据拉取原制品。独立的发布包权限、留存及恢复证据可先按 [OCI 操作单](../../tests/contracts/m0/compat/oci-retention-runbook.md)取得。2026-11-24 已在专用 arm64 VM 用 BuildKit v0.35.1 验证上述组合。Registry 或运行候选改变时复验受影响链路。 [arm64 单镜像与 Release 实测](../records/2026-11-24-m0-arm64-image-release.md)
 
 最终是否晋级按[M0 出口](acceptance.md#m0-exit)评审；具体运行前仍核对当时输入、可用环境和授权。
 
