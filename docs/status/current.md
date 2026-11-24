@@ -1,6 +1,6 @@
 # 当前状态
 
-更新日期：2026-11-18（基础 Runner 平台决定）。
+更新日期：2026-11-24（GitHub 主线 CI 门禁）。
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
 
@@ -51,11 +51,11 @@ COMP-01 已复核双端 REST 证据，并只读确认 GitHub 个人私有测试�
 - [M0-S04 差异基线](../architecture/github-compatibility.md#m0-现有差异基线)现汇总 3 条 scope、2 条生命周期、1 条公开单用户撤销接口缺口、12 条 Issue、5 条 Release 及 4 条 OCI 差异，共 27 条；26 条定位到原始 gap，接口缺口单列，复现不重复计数。沿用 ADR 0003—0006，尚未冻结完整 GitHub 兼容范围或批准阶段晋级；早先快照不回写。
 - 固定版包清理规则约束计划清理，直接覆盖和显式删除另走包写权限。Registry JWT 校验不回查来源 PAT，实测原 Bearer 换出的后继保留用户和 `write:package` scope，`nbf` / `exp` 均晚 3 秒。真实到期、原 JWT 到期后后继的实际可用性及连续换发待验，总体远端失效窗口仍无可承诺上限。后续交付按已确认的 G26 受控保留及 G27 产品侧停用方案推进。 [ADR 0006 首版承诺](../adr/0006-oci-authorization-and-digest-retention.md#first-release-oci-decisions)
 - G27 已静态核查 Harbor 项目机器人与逐请求撤销。若未来要求有界远端失效，再验证停用后无法取得有权后继、已签 Bearer 的实际窗口，以及逐请求方案对全部访问路径的控制。 [G27 方案核查](../records/2026-11-09-m0-registry-revocation-options.md)
-- 11 月 1 日及 11 月 4 日任务资源均已清理；先前生命周期 / Issue / Release 各批和本批 OCI / 共享回归七批的容器 / 网络 / 卷读回均为 0，本批任务镜像标签 / 镜像读回为 0。`.local/m0` 凭据 / 证书 / 客户端 / Buildx 状态已移除，18443 / 19443 / 18543 已释放，无本任务运行服务。共享镜像与 BuildKit 缓存保留，未触碰其他项目资源。尚无自有业务工程、产品依赖、自有数据库、产品容器发行配置或活动 CI。
+- 11 月 1 日及 11 月 4 日任务资源均已清理；先前生命周期 / Issue / Release 各批和本批 OCI / 共享回归七批的容器 / 网络 / 卷读回均为 0，本批任务镜像标签 / 镜像读回为 0。`.local/m0` 凭据 / 证书 / 客户端 / Buildx 状态已移除，18443 / 19443 / 18543 已释放，无本任务运行服务。共享镜像与 BuildKit 缓存保留，未触碰其他项目资源。尚无自有业务工程、产品依赖、自有数据库或产品容器发行配置。
 - 本地初始共同基线为 `c2764aa278cbed9aab3faf6f43a0556e80e623f4`，已推送 master / dev；当前在 dev，后续远端配置记录提交沿 dev 推进，master 保持初始基线。见[初始化记录](../records/2026-10-29-local-git-bootstrap.md)与[远端记录](../records/2026-10-29-remote-governance.md)。
-- origin 为 `https://github.com/laugh0608/RadishForge.git`，保持用户创建的 public 可见性；本地 master / dev 分别跟踪 origin/master / origin/dev。没有 PR、Tag、镜像或 Release，候选域名未配置。
-- 远端默认分支为 master，基础 Ruleset `26129324` 已 active 并读回：只保护 master，禁止删除 / force push、要求 PR 与会话解决、0 个额外审批、无 bypass；允许 merge / rebase、禁 squash，关闭自动合并和自动删源分支。dev 无有效 Ruleset。
-- 两份本地 Ruleset JSON 仍为 disabled 模板，与远端 active 的差异已记录。当前不要求 Candidate Quality，真实 CI 与来源绑定未建立；未进行 PR 阻断或破坏性负向行为验收。
+- origin 为 `https://github.com/laugh0608/RadishForge.git`，保持用户创建的 public 可见性。本地 master / dev 分别跟踪 origin/master / origin/dev。[PR #1](https://github.com/laugh0608/RadishForge/pull/1) 由 dev 指向 master，待审查合入。暂无 Tag、镜像或 Release，候选域名待配置。
+- 远端默认分支为 master，Ruleset `26129324` 已启用 strict `Candidate Quality`，来源为 GitHub Actions App `15368`。原删除、非快进、PR 和会话解决要求均保留，仍为 0 个额外审批、无 bypass。允许 merge / rebase，禁用 squash，关闭自动合并和自动删源分支。dev 无有效 Ruleset。
+- 两份本地 Ruleset JSON 仍为 disabled 模板。GitHub 托管 CI 已验证主 PR 通过以及临时草稿的失败、跳过和取消传播，读回确认主 PR 的检查为必需。 [CI 与规则读回](../records/2026-11-24-candidate-quality.md)
 - 五个指定兄弟项目仅只读参考，未修改其文件；差异提炼见[治理来源](../references/governance-review.md)。
 
 ## 已确认方向与本地规则
@@ -92,7 +92,9 @@ COMP-01 已复核双端 REST 证据，并只读确认 GitHub 个人私有测试�
 
 Gitea 对照已由 `d6bd77a` 保存。GitHub 所有者只读 PAT 已实测读取成功，创建 Issue 和草稿 Release 均为 403，独立回读未出现对应对象。用户手动删除测试 PAT，列表和安全日志均已确认。删除后同一 PAT 读取仓库为 401，既有所有者凭据对照为 200。普通协作者授权及撤权仍需独立身份。 [单账号实测](../records/2026-11-09-m0-github-owner-pat.md)
 
-保持“暂不写业务代码”的边界。当前范围不包含 Runner、安装 / 升级宿主工具、新 VM、全局设置 / 系统信任、正式项目的远端写入或设置变更、生产凭据、对外发行或部署。
+2026-11-24 所有者授权将 GitHub 托管 CI 纳入 PR #1，并在成功及故障传播验证后更新现有 master Ruleset。工作流和取证进入 dev，合入与回流待后续执行。 [CI 取证](../records/2026-11-24-candidate-quality.md)
+
+M0 后续保持“暂不写业务代码”的边界。当前范围不包含 Gitea Runner、安装 / 升级宿主工具、新 VM、全局设置 / 系统信任、正式项目的其他远端写入或设置变更、生产凭据、对外发行或部署。
 
 ## 当前验证入口
 
@@ -101,7 +103,7 @@ python3 scripts/check-repo.py
 python3 -B -m unittest discover -s scripts/tests -v
 ```
 
-以上验证本地治理及 M0 scope、Issue / Release / OCI 输入 / 对账、客户端隔离、二进制和 HTTP 失败决策，当前共 70 项本地测试，包含工作树 / 暂存区空白检查，不启动服务；上游协议另用[M0 契约入口](../../tests/contracts/m0/README.md)，有 Docker / 网络 / 合成数据写入副作用，仅在对应授权下执行。结果层级不能混用。
+以上验证本地治理及 M0 scope、Issue / Release / OCI 输入 / 对账、客户端隔离、二进制和 HTTP 失败决策，当前共 70 项本地测试，无需启动服务。[PR Checks](../../.github/workflows/pr-checks.yml) 复用同一入口。上游协议通过 [M0 契约入口](../../tests/contracts/m0/README.md) 在获准隔离环境中另行取证，涉及 Docker、网络和合成数据写入。
 
 ## 下一步
 
@@ -122,7 +124,7 @@ G22 隔离实测已提交 `dc33663`。G23 已提交写前校验 `a37c21d` 与正
 
 原创内容的使用和贡献授权见[项目许可证](../../LICENSE)，上游与发行产物按[许可专题](../governance/upstream-and-licensing.md#许可)分别核对。
 
-治理线：G0-01 已完成；G0-02 的推送、配套设置和基础 Ruleset 已完成配置读回，安全报告渠道与独立权限 / PR 行为验收待补，不能关闭完整 GOV-02。G0-03 尚未开始，按 G0-02 依赖推进，真实 CI 经过成功与故障传播验证后再升级同一规则。治理收尾不替代 M0 产品证据，也不阻塞 M0 只读准备。
+治理线：G0-01 已完成。G0-02 的推送、配套设置和基础 Ruleset 已完成配置读回，安全报告渠道与独立权限 / PR 行为验收待补。G0-03 已实测并启用主线必需检查，待 PR #1 合入后核对回流。M0 仍按产品验收证据推进。 [CI 取证](../records/2026-11-24-candidate-quality.md)
 
 仍待决定 / 取证：候选组合其余能力与最终支持冻结、发行目标平台验收、job 镜像及首批 Action / API 范围、安全报告渠道、真实域名和发行渠道。本机 arm64 的部分运行证据已经取得，不外推发行支持。不以这些未定项阻止本地治理交付。
 
