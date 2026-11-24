@@ -44,7 +44,7 @@ arm64 功能批已在专用 VM 完成私有检出、真实工作流、单镜像�
 
 | 阻塞对象 | 必要条件 / 解除方式 |
 | --- | --- |
-| 基础 Runner | 实际执行平台 / 位置、job 镜像与运行时、daemon / socket 权限、合成输入与具体运行授权固定；现有 arm64 协议证据不外推 amd64 工作流 |
+| 原生 amd64 工作流对照 | arm64 私有工作流及单镜像交付已在专用 VM 实测。amd64 对照待取得独享的原生 Linux amd64 目标，再核对该平台镜像 Digest、运行时、daemon 权限和清理方式 |
 | 制品方案冻结 | G26 / G27 的首版承诺已确认。G24—G26 的独立机制证据已取得；G27 沿用原 PAT 拒绝和后继换发证据。arm64 组合已取得，待首版支持和剩余权限评审 |
 | 相应兼容承诺 | 独立 GitHub 普通角色、参考环境能力和双端行为有实际对照。缺证不阻塞本地基础 Runner，但相关项保持待验证；从首批承诺中排除须明确确认，不能静默降级 |
 | M0 晋级 | 最小真实链路成立，关键权限不存在未处置的可绕过路径，来源关联可信；未决底座补丁 / 新基础设施依赖有明确决定，全部[出口条件](acceptance.md#m0-exit)满足 |
@@ -163,9 +163,13 @@ arm64 功能批已在专用 VM 完成私有检出、真实工作流、单镜像�
 
 2026-11-17 已完成 G24—G26 隔离取证、G06 重启补证、G19 组织 team、G20 混合字段、G22 回查及 G23 正向前检，并复核 COMP-01 的既有测试仓库。沿用原 27 条差异、M0-04 和既有验收。 [11 月 9 日证据](../records/2026-11-09-day-review.md) · [11 月 17 日收工回顾](../records/2026-11-17-day-review.md)
 
-11 月 24 日已按所有者决定，在 Mac 上新建并清理 UTM arm64 专用 VM，取得手动派发、私有检出和日志的真实证据。第二批已实测分支 / Tag 触发、主动失败、取消 / 重跑和执行中失联。第三批已完成 arm64 构建、按 Digest 晋级与私有 Release 关联，第四批完成同组取消实测，job 权限验收失败，环境审批缺少原生保护入口。后续[权限配置与手动派发停止条件](../records/2026-11-24-m0-actions-settings.md)已验证仓库继承经重启保留，关闭 Actions 后普通写者手动派发收到 403 且零新增 run。固定模板经独立入口读取成功，写入被拒且零新增。是否采纳该范围、模板调度准入与环境审批继续待定。 [固定模板只读入口实测](../records/2026-11-24-m0-arm64-readgate.md)。恢复条件和 fork PR 待验范围见[arm64 权限与并发实测](../records/2026-11-24-m0-arm64-actions-policy.md)与[四份原始样例的证据范围](../architecture/github-compatibility.md#m0-s04-四份原始样例的证据范围)。独立原生 amd64 目标及 GitHub 普通角色继续等待相应环境和身份。 [arm64 单镜像与 Release 实测](../records/2026-11-24-m0-arm64-image-release.md) · [arm64 生命周期实测](../records/2026-11-24-m0-runner-lifecycle.md) · [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md) · [M0 出口](acceptance.md#m0-exit)
+**下次先决定 M0-S04 的首版只读范围。** 建议所有者先评审是否接受“需适配”的固定模板。原始工作流的 job 权限验收失败。固定模板则已用真实 job 取得私有 Issue 列表 200、写入在独立入口返回 403、上游零新增及普通写者 201 的对照。这个候选范围限于已测的单一列表入口。 [固定模板实测](../records/2026-11-24-m0-arm64-readgate.md) · [四份原始样例的证据范围](../architecture/github-compatibility.md#m0-s04-四份原始样例的证据范围)
 
-G23 的目标提交 404 拒绝路径已在本机 OrbStack 单批完成，证据见下方 Release 小节。后续仅跟进会阻断所选交付链或首版权限承诺的差异。
+1. 若接受受控模板，下一批只验证调度前的准入。由普通写者在同一隔离仓库分别触发获准模板和变更后的模板，按首版开放的触发入口核对结果。获准模板须能关联到完整提交 SHA、已审阅的模板内容、固定 Runner 配置及实际 run / attempt。更换模板或选择未获准的执行配置时，须能读回拒绝原因，并由独立读者确认该次请求没有启动 job。约束必须独立于写者可以修改的工作流。
+2. 若首版要求原样 YAML 的权限语义，保留原生权限阻塞。出现可定位的上游修正或有效配置后，在对应固定版本复测只读拒绝、零新增及授权写入对照。 [原件权限实测](../records/2026-11-24-m0-arm64-actions-policy.md) · [候选版本核查](../records/2026-11-24-m0-arm64-readgate.md#候选版本)
+3. 单独验收环境审批。在具备保护条件的目标上，确认批准前 job 等待且无法取得环境级 canary，拒绝后无执行，批准后才执行并能读取 canary。固定版 Gitea 缺少所需原生审批入口，此项仍阻塞。原生 Linux amd64 对照、GitHub 普通写者及撤权对照分别等待独享目标和获准的独立身份。本机只使用 arm64。 [环境审批证据](../records/2026-11-24-m0-arm64-actions-policy.md#受保护环境) · [M0 出口](acceptance.md#m0-exit)
+
+11 月 24 日已取得 arm64 私有检出、触发与生命周期、同组自动取消及单镜像到 Release 的来源证据。新仓库权限上限在重启后保留，停用 Actions 后新手动派发为 403，新增 run 为零。OrbStack 已取得 G23 目标提交 404 的拒绝证据。各批清理、已测输入及未覆盖项见[当日收工回顾](../records/2026-11-24-day-review.md)。
 
 | 主题 | 证据 / 决定 | 剩余验收条件 |
 | --- | --- | --- |
@@ -174,11 +178,11 @@ G23 的目标提交 404 拒绝路径已在本机 OrbStack 单批完成，证据�
 | M0-G06 | 原生单用户撤销及[重启持久性](../records/2026-11-17-m0-oauth-restart-validation.md)已有实测，固定版公开自动撤销缺口保留。已区分产品侧停用、原生 UI 与自动化支持边界 | 按 [单用户 grant 撤销补证条件](#单用户-grant-撤销补证条件)分层验收。若首版必须自动远端撤销，先确认公开方案，再进行隔离取证 |
 | M0-G19 / G20 | 普通写者用只读凭据按 Tag 可读同一草稿。降权和撤权后，原凭据按 Tag 查草稿及两路下载均为 404。REST PATCH 空正文保留原值，原生页面可手动清空草稿说明。 [角色切换实测](../records/2026-11-09-m0-release-draft-role-transitions.md) · [同源 REST](../records/2026-11-09-m0-gitea-rest-comparison.md) · [原生编辑实测](../records/2026-11-09-m0-release-native-edit.md) | G19 已补[私有组织普通 team 权限](../records/2026-11-17-m0-release-org-role-transitions.md)，对象存储直链按启用配置另验。G20 已补[省略、混合更新与 null 的字段证据](../records/2026-11-17-m0-release-edit-fields.md)，产品整次拒绝与公开自动清除缺口分别保留 |
 | M0-G24 / G25 | 已定位包所有者权限、仓库 link 和 Registry 签发规则。逐仓库隔离、请求 scope 收窄缺口保留 | 已[验证](../records/2026-11-17-m0-oci-retention-validation.md)跨组织数据权限与独立读 PAT；后续产品按对象和用途控制 |
-| COMP-01 首批样例 | 已固定 GitHub REST `2026-03-10`、gh `v2.96.0`、四份原始工作流及六个 Action 提交。仓库 / Issue / Release 已取得 GitHub 所有者及匿名参考、所有者只读 PAT 及删除后拒绝，以及 Gitea 同源普通角色对照。 [GitHub 参考](../records/2026-11-09-m0-github-rest-reference.md) · [只读 PAT](../records/2026-11-09-m0-github-owner-pat.md) · [Gitea 对照](../records/2026-11-09-m0-gitea-rest-comparison.md) | 确认独立测试身份与授权后补齐 GitHub 普通角色的正向读写、越权和撤权。工作流执行前另固定 Gitea job 镜像、BuildKit 和运行时。 [首批对照样例](../../tests/contracts/m0/compat/README.md) · [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) |
+| COMP-01 首批样例 | 已固定 GitHub REST `2026-03-10`、gh `v2.96.0`、四份原始工作流及六个 Action 提交。仓库 / Issue / Release 已取得 GitHub 所有者及匿名参考、所有者只读 PAT 及删除后拒绝，以及 Gitea 同源普通角色对照。 [GitHub 参考](../records/2026-11-09-m0-github-rest-reference.md) · [只读 PAT](../records/2026-11-09-m0-github-owner-pat.md) · [Gitea 对照](../records/2026-11-09-m0-gitea-rest-comparison.md) | 确认独立测试身份与授权后补齐 GitHub 普通角色的正向读写、越权和撤权。arm64 的 job 镜像、BuildKit 及运行时已有记录，原生 amd64 由对应平台单独固定与实测。 [首批对照样例](../../tests/contracts/m0/compat/README.md) · [REST 取证手册](../../tests/contracts/m0/compat/rest-runbook.md) |
 
 G24 / G25 的跨命名空间与独立只读凭据对照已并入 G26 短测。真实清理、原 Digest 恢复及负例见[实测记录](../records/2026-11-17-m0-oci-retention-validation.md)。
 
-GitHub 个人测试仓库已通过只读预检，协作者列表只有所有者。暂不注册机器账号，普通写者与移除协作者后的访问继续待验证。原生 Runner 继续按[分步恢复条件](m0-s01-baseline.md#runner-resumption)确认平台与运行授权。 [REST 证据复核](../records/2026-11-17-m0-rest-evidence-review.md) · [普通角色取证手册](../../tests/contracts/m0/compat/rest-runbook.md#普通角色取证的目标选择)
+GitHub 个人测试仓库已通过只读预检，协作者列表只有所有者。暂不注册机器账号，普通写者与移除协作者后的访问继续待验证。原生 amd64 Runner 按[分步恢复条件](m0-s01-baseline.md#runner-resumption)确认平台与运行授权。 [REST 证据复核](../records/2026-11-17-m0-rest-evidence-review.md) · [普通角色取证手册](../../tests/contracts/m0/compat/rest-runbook.md#普通角色取证的目标选择)
 
 ### 单用户 grant 撤销补证条件
 
@@ -225,7 +229,7 @@ G23 已在固定版 Gitea 验证两条新建 Tag 前检路径。提交返回同�
 
 ## 阶段出口与交接
 
-唯一阶段通过条件见[验收矩阵的 M0 出口](acceptance.md#m0-exit)。M0-01—M0-04 保持各自任务状态。G26 / G27 的首版承诺已确认，OCI 机制短测已完成，真实 Runner 与必要组合证据待完成。
+M0 继续进行。G26 / G27 的首版承诺已确认，OCI 机制短测、真实 arm64 Runner 生命周期和源码 SHA → run / attempt → 镜像 Digest → Release 附件的独立读回已有证据。阶段评审仍须确定 job 权限与环境审批的可执行边界，列明首批兼容范围并冻结实际支持的组合。 [接续事项](#接续事项) · [唯一阶段出口](acceptance.md#m0-exit)
 
 达到出口后更新 tasks、current、相关设计与 records，说明 M1 可开始的工程、身份与仓库基础及其仍待实现 / 验证的合同，不再建立采用准备阶段。结束默认停止并清理本任务资源；需保留时明确目录、端口、数据、秘密保管与停止责任。
 

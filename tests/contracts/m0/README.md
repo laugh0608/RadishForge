@@ -2,7 +2,7 @@
 
 这是 Gitea / PostgreSQL 的隔离验证环境，不是 RadishForge 业务应用或发行部署配置。当前平台为 macOS / arm64 + OrbStack 的 Linux arm64 daemon；使用已核对的镜像 Digest，不升级本机 Docker / Compose。方案与边界见[M0-S01](../../../docs/planning/m0-s01-baseline.md)。
 
-M0-S04 的首批 REST、GitHub CLI 与工作流输入另存于 [GitHub 对照样例](compat/README.md)。实际执行须按其中的双端环境准入条件另行取证。
+本页命令用于 OrbStack 协议探针。私有工作流、单镜像构建与 Release 附件的 arm64 实测使用独立 UTM 来宾，资源上限和清理步骤见 [Runner 操作单](compat/runner-runbook.md)。M0-S04 首批 REST、GitHub CLI 与工作流的对照范围见 [GitHub 对照样例](compat/README.md)。
 
 ## 资源与授权
 
@@ -100,6 +100,8 @@ python3 -u -B scripts/m0_contracts.py --mode releases
 
 模式覆盖草稿 / 分页、编辑 / 清空原始差异、发布与 Tag 实际 SHA、raw / multipart 上传、字节摘要 / 改名、跨对象关联、重复 tag / 同名附件、删除与回读。所有 Release / Tag / 附件只在本机隔离 Gitea，绝不写当前 GitHub 仓库。`Client.request` 的显式 binary 模式保留原始 bytes 和白名单头；请求 / 响应均有上限，附件场景限 64 KiB，测试内容含非 UTF-8 字节。默认 JSON / form 调用不改为二进制。
 
+共用的附件上传入口接受 `m0-*.bin` 和 `m0-*.json` 合成名，中间部分限小写 ASCII 字母、数字和连字符。下载前按客户端的 HTTPS origin 核验附件 UUID 路径或对应仓库的 Release 下载路径。独立读者在 UTM 批次用同一下载函数核对 `m0-provenance.json` 的原始字节。 [附件边界实现](../../../scripts/m0_releases.py) · [arm64 来源附件实测](../../../docs/records/2026-11-24-m0-arm64-image-release.md)
+
 共用故障监听按 `release_create` / `release_publish` / `release_asset` 分别限制固定仓库的 POST / PATCH；精确凭据、路径与 body 只能处理一次。创建 / 发布 / 附件分别注入已提交响应丢失和未转发，另在 TLS 上游发送完整 Content-Length 但仅发送附件前缀后断开；每次 caller 真实超时、监听随后停止。回查仅发 GET。创建按 Tag / 标记 / 作者，发布按原 Release ID、Tag 名、draft 及实际 Tag SHA，附件按 ID / UUID / 名称 / size / 字节摘要。两种合法附件 URL 可表示同一对象。零匹配、多匹配或内容不符保持 unknown，自动重试为 0。
 
 窗口沿用约 15–25 分钟和现有 2.75 GiB / 回环资源，结束按同一入口保存脱敏证据、`status`、`cleanup`；不能删开始标记重放。最终源码的 48 项本地测试及 Release / Issue / profiles 实测分别记录，见[Release 证据](../../../docs/records/2026-11-04-m0-release-validation.md)和[ADR 0005](../../../docs/adr/0005-release-authorization-and-reconciliation.md)。
@@ -188,6 +190,6 @@ python3 -u -B scripts/m0_contracts.py --mode release-missing-target
 
 ## 清理与未覆盖
 
-无论探针成功、发现缺口或中断，交接前执行 `cleanup`。它按归属删除本批容器 / 网络 / 六个卷和 `.local/m0` 凭据，不触碰其他项目资源；下载镜像保留在共享缓存，不全局 prune。需要保留运行环境时先有用户明确要求，再交接项目名、容器 ID、端口和停止命令。
+以下范围针对本页的 OrbStack 协议批次。无论探针成功、发现缺口或中断，交接前执行 `cleanup`。它按归属删除本批容器 / 网络 / 六个卷和 `.local/m0` 凭据，不触碰其他项目资源；下载镜像保留在共享缓存，不全局 prune。需要保留运行环境时先有用户明确要求，再交接项目名、容器 ID、端口和停止命令。
 
 完整产品会话 / 账号绑定 / 加密存储、浏览器 Cookie / CSRF、产品解绑与后台任务停止、Issue 工作台 / 草稿 / XSS、生产请求关联、组织继承标签 / 任意自定义权限策略、其他 IdP / 版本、Actions / Runner、五组件构建与发布冻结、强制 Digest 保留、即时 Registry JWT 撤销 / 24 小时真实到期、任意客户端故障恢复、amd64 安装 / 恢复和生产仍未覆盖。Release / OCI 仅为合成上游切片，不关闭整个 REL / ART / BASE。刷新到期 / 并发与原生撤销按实际批次记录，不从本地测试或模式存在推导通过。首轮结果见[本机记录](../../../docs/records/2026-11-01-m0-local-validation.md)，历史组合见[授权组合记录](../../../docs/records/2026-11-01-m0-auth-profile-validation.md)，当日结果见[生命周期记录](../../../docs/records/2026-11-04-m0-lifecycle-validation.md)、[Issue 记录](../../../docs/records/2026-11-04-m0-issue-validation.md)、[Release 记录](../../../docs/records/2026-11-04-m0-release-validation.md)与[OCI 记录](../../../docs/records/2026-11-04-m0-oci-validation.md)。

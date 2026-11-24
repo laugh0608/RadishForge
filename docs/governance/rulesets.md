@@ -18,7 +18,7 @@
 
 两份模板表示**同一条规则的前后版本**，部署时选择一个、更新原 ID，不能同时创建。基础版先建立 PR 与历史保护；CI 版只在真实检查通过正反向验收后替换，不借“无 CI”长期免除已有功能检查。
 
-模板中的 disabled 防止把未验收配置误称为已启用；实际启用时在审阅的请求副本中改为 active 并读回确认。未来远端 active、本地模板 disabled 是有意区分，比较时记录这一预期差异，其他字段逐项比对。
+本地模板保留 `disabled`。11 月 24 日已读回远端主线规则 `26129324` 为 `active`，仅作用于 `master`。其 strict 必需检查为 `Candidate Quality`，来源绑定实际 check run 的 GitHub Actions App `15368`。PR #1 的必需检查通过，草稿 PR #2 的失败、跳过和取消用例均使聚合失败。 [绑定与合入证据](../records/2026-11-24-candidate-quality.md)
 
 不预设组织、用户或 App ID。CI 模板暂未绑定 `integration_id`；启用前从真实 check run 查明产生者，在请求中绑定对应 GitHub App 并记录 ID，避免同名状态由任意来源冒充。平台能力或账号计划不支持时记录缺口，不能视为同等保护。CI 版 `do_not_enforce_on_create: false`；已有共同基线后再启用，不依靠创建分支豁免门禁。
 

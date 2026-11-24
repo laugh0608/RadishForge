@@ -4,6 +4,8 @@
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
 
+11 月 24 日收工。主线 CI 门禁已验收，G23 目标缺失时零发布 PATCH，专用 arm64 VM 上的私有工作流已贯通至单镜像和 Release 附件。`162d0e7` 记录了固定模板的只读入口。M0 继续进行，下次先评审首版是否接受受控模板。 [当日提交与证据复核](../records/2026-11-24-day-review.md) · [接续事项与验收条件](../planning/m0-validation.md#接续事项)
+
 2026-11-17 收工前已保存 12 个提交，完成基础 Runner 操作单、OCI 与 Release 定向取证、G06 自助撤销重启复测及 GitHub 参考权限复查。70 项本地测试通过，OrbStack 本批资源已清理。 [提交回顾与收工交接](../records/2026-11-17-day-review.md)
 
 2026-11-09 收工时，M0-S04 已取得固定版 Gitea 同源 REST、GitHub 所有者和匿名参考及所有者只读 PAT 证据。G19 补证确认普通写者降权和撤权后，原凭据按 Tag 查草稿及两路下载均为 404。G20 确认原生页面可清空草稿说明。G27 确认删除来源 PAT 后仍能换发可用后继，撤销候选已完成静态核查。OCI 两项取舍和 GitHub 普通角色验收继续保留，Runner 和 Actions 持续暂停，阶段保持 M0。 [当日提交与收工交接](../records/2026-11-09-day-review.md)
@@ -113,7 +115,7 @@ python3 -B -m unittest discover -s scripts/tests -v
 
 G22 隔离实测已提交 `dc33663`。G23 继正向复测后，已在本机固定版 Gitea 验证目标提交 404 时前检仅发 GET、零发布 PATCH。独立普通账号回读原草稿保留、原 Tag 仍缺失，本批资源已清理。其他失败分支沿用本地模拟，原生无效 target 发布 500 的差异保留。 [G22 隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 正向](../records/2026-11-17-m0-release-target-preflight.md) · [G23 拒绝](../records/2026-11-24-m0-runner-platform-and-g23.md#g23-目标提交缺失)
 
-1. **决定首版是否接受受控模板，并单独收口环境审批。** Gitea 至 28.4.0 的发行说明尚未明确覆盖原生只读断言。固定模板经独立入口读取成功，写入在入口被拒、上游零新增，普通写者随后成功写入。若采纳这条适配路径，下一次验收应证明只有获准模板和固定 Runner 配置可以调度；若保留原样 YAML 要求，继续等待明确的上游修正。两种范围均须单独验证审批前阻止执行、获准后才可访问环境秘密。 [固定模板只读入口实测](../records/2026-11-24-m0-arm64-readgate.md) · [首批样例](../../tests/contracts/m0/compat/README.md)
+1. **先评审首版是否接受受控模板。** 建议沿固定模板取得的只读证据评估这条适配路径。若采纳，下一批验证获准模板能在固定 Runner 配置上执行，变更模板或配置时在执行前被拒。若要求原样 YAML，等待可验证的上游修正或有效配置。环境审批单独保留。 [接续事项与验收条件](../planning/m0-validation.md#接续事项) · [固定模板实测](../records/2026-11-24-m0-arm64-readgate.md)
 2. **收口对应权限与平台条件。** GitHub 普通写者及撤权需要独立测试身份与获准仓库；原生 amd64 工作流需要独享的 Linux amd64 目标。条件具备后做对应实测，调整首版承诺须由所有者明确决定。 [差异分组](../architecture/github-compatibility.md#closeout-disposition)
 3. **评审 M0 出口并交接 M1。** 满足[唯一阶段出口](../planning/acceptance.md#m0-exit)才进入原定工程、身份与仓库基础；否则列具名阻塞和解除条件，不新增采用准备阶段。
 

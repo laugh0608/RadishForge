@@ -12,7 +12,7 @@ Windows 可用 `py -3` 替代 `python3`，不额外维护仅转发命令的 shel
 ## 检查范围
 
 - 必需治理文件、UTF-8 无 BOM、LF、末尾换行与尾随空白（Markdown 两空格换行允许）。
-- JSON 解析、Markdown 行内链接的本地文件目标、AGENTS / CLAUDE 除标题一致、根入口 250 行上限。
+- JSON 解析、Markdown 行内链接的本地文件目标、AGENTS.md / CLAUDE.md 全文一致、根入口 250 行上限。
 - 仓库设置、基础 / CI Ruleset 的目标分支、合并、审批、bypass、disabled 模板状态及阶段差异。
 - 已初始化 Git 时，检查工作树 / 暂存区的 diff 空白；文件清单含已跟踪与未忽略的未跟踪文件。
 - 无 Git 时遍历源码目录并排除明确的本地产物目录，显式输出 Git 检查未运行，不声称工作树干净。
@@ -44,6 +44,8 @@ Windows 可用 `py -3` 替代 `python3`，不额外维护仅转发命令的 shel
 `--mode oci --regctl <task-binary>` 调用 [m0_oci.py](m0_oci.py)、[m0_registry.py](m0_registry.py) 与 [m0_oci_client.py](m0_oci_client.py)。独立 Registry 契约限定 package PAT、同源 challenge / Location、原始 Blob / Manifest bytes 和客户端资产摘要；原四种 OAuth 组合不变。私有组织 / team 与仓库关联权限分开验收，未知写入只读回查；共用故障监听新增固定 namespace 的 POST / PATCH / PUT。真实客户端为 Docker 无网络 scratch 构建、regctl task CA 推拉与 Docker load；Buildx / regctl 状态均在任务目录，不改用户配置或 daemon 信任，不全局 prune。工具不会自动下载 regctl，入口先核对二进制 SHA-256；资源与手工准备见契约说明。
 
 [m0_oci_retention.py](m0_oci_retention.py) 复用同一本机空批次、Registry 字节校验与 team 夹具，定向验证 G24—G26。执行真实组织权限验证、保存原生清理规则、触发本批清理并恢复合成制品。写入限本机隔离数据，要求本批运行授权。 [执行与清理](../tests/contracts/m0/compat/oci-retention-runbook.md)
+
+[m0_image_source.py](m0_image_source.py) 离线核对 arm64 单层 scratch 夹具。输入为 Skopeo 按 Digest 拉取的 `dir:` 目录、工作流输出的 Manifest Digest 和触发提交的完整 SHA。它验证 Manifest 原始字节、config 和 layer 的大小及摘要、解压层的 diff ID，并核对镜像中唯一文件 `/source-sha` 的内容。构建与发布位置各取一份，由独立读者分别校验。 [完整命令与实测边界](../tests/contracts/m0/compat/runner-runbook.md#arm64-单镜像与私有-release)
 
 [m0_release_org.py](m0_release_org.py) 由 `--mode release-org` 调用，验证私有组织仓库的 Release team 权限变化，使用独立已发布对照及同一有效凭据。 [组织仓库契约](../tests/contracts/m0/README.md#g19-组织仓库-release-草稿权限)
 
