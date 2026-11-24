@@ -1,6 +1,6 @@
 # 验收矩阵
 
-DOC-01、GOV-01 与 GOV-04 已有本地文档 / 治理 / Git 证据。GOV-02 已有远端配置读回，行为验收未完成。GOV-03 已验证真实 CI 与主线绑定，主线合入和回流待验。业务项按各自标准验收。 [CI 取证](../records/2026-11-24-candidate-quality.md) · [产品规划](../product-plan.md) · [专题索引](topics.md)
+DOC-01、GOV-01 与 GOV-04 已有本地文档 / 治理 / Git 证据。GOV-02 已有远端配置读回，行为验收未完成。GOV-03 已通过，主线必需检查、PR #1 合入、dev 回流和手动 CI 均已验证。业务项按各自标准验收。 [验收记录](../records/2026-11-24-candidate-quality.md) · [产品规划](../product-plan.md) · [专题索引](topics.md)
 
 | ID | 输入 / 操作 | 通过标准与失败边界 | 证据层级 |
 | --- | --- | --- | --- |

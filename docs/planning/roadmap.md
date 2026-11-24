@@ -4,12 +4,12 @@ P0 规划与治理基础及 G0-01 本地 Git 初始化已完成。M0-S01 已有�
 
 M0-S04 已固定首批 REST、CLI 与工作流输入。REST 已取得 GitHub 所有者与匿名参考、所有者只读 PAT 对照、固定版 Gitea 同源普通角色结果。OCI 首版承诺已定，发布包权限、清理与原 Digest 恢复已[短测取证](../records/2026-11-17-m0-oci-retention-validation.md)。GitHub 普通角色和工作流执行仍待取证。 [M0-S04 接续事项](m0-validation.md#接续事项) · [27 条差异基线](../architecture/github-compatibility.md#m0-现有差异基线)
 
-M0 的 Gitea Runner / Actions 继续暂停，M0 尚未通过出口，M1—M6 未开始。G0 已启用 GitHub 主线必需检查，剩余行为验收与回流见[治理取证](../records/2026-11-24-candidate-quality.md)。
+M0 的 Gitea Runner / Actions 继续暂停，M0 尚未通过出口，M1—M6 未开始。G0 已启用 GitHub 主线必需检查，并完成合入、回流及手动 CI 验收。 [验收记录](../records/2026-11-24-candidate-quality.md)
 
 | 阶段 | 目标与可展示结果 | 依赖 / 出口 |
 | --- | --- | --- |
 | P0 | 建立规划、治理文件、模板与本地检查 | 已完成本地验收，不代表产品或远端可用 |
-| G0 | Git、远端保护与真实 CI 分阶段启用 | 本地 GOV-04 已完成；GOV-02 已取得配置读回证据，行为验证待补；GOV-03 已启用必需检查，合入后核对回流 |
+| G0 | Git、远端保护与真实 CI 分阶段启用 | GOV-04、GOV-03 已完成。GOV-02 已取得配置读回证据，行为验证待补 |
 | M0 | 冻结底座与 Runner 组合，验证 OIDC / OAuth、Issue、Actions、镜像、Release 的最小样例 | 得到可行性证据与 GitHub 兼容差异；关键缺口先决策 |
 | M1 | Go / React 工程基础、会话、身份绑定、私有权限、项目关联、仓库只读 | M0 接口与授权可行；能登录并正确隔离资源 |
 | M2 | Issue 主路径与工作台基础交互 | M1；用户可完成首版 Issue 操作并处理失败 |
