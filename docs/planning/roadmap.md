@@ -4,7 +4,7 @@ P0 规划与治理基础及 G0-01 本地 Git 初始化已完成。M0-S01 已有�
 
 M0-S04 已固定首批 REST、CLI 与工作流输入。REST 已取得 GitHub 所有者与匿名参考、所有者只读 PAT 对照、固定版 Gitea 同源普通角色结果。OCI 首版承诺已定，发布包权限、清理与原 Digest 恢复已[短测取证](../records/2026-11-17-m0-oci-retention-validation.md)。GitHub 普通角色与正式 amd64 工作流对照仍待取证。 [M0-S04 接续事项](m0-validation.md#接续事项) · [27 条差异基线](../architecture/github-compatibility.md#m0-现有差异基线)
 
-M0 已取得 Gitea Runner 在专用 arm64 VM 上的首条私有工作流证据。生命周期场景及制品关联仍待验，M1—M6 未开始。 [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md)
+M0 已取得 Gitea Runner 在专用 arm64 VM 上的首条私有工作流证据。分支和 Tag 触发、主动失败、取消 / 重跑及 Runner 失联均有独立运行记录。下一批接单镜像 Digest 与 Release，M1—M6 待阶段出口评审。 [arm64 生命周期实测](../records/2026-11-24-m0-runner-lifecycle.md) · [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md)
 
 G0 已启用 GitHub 主线必需检查，并完成合入、回流及手动 CI 验收。 [验收记录](../records/2026-11-24-candidate-quality.md)
 

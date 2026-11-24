@@ -1,0 +1,50 @@
+name: M0 base runner lifecycle
+'on':
+  push:
+    branches: [m0-base-push]
+    tags: [m0-base-tag]
+  workflow_dispatch:
+    inputs:
+      marker:
+        type: string
+        required: true
+      mode:
+        type: string
+        required: true
+permissions:
+  contents: read
+jobs:
+  observe:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Report ref and exercise result
+        shell: bash
+        env:
+          EVENT: ${{ github.event_name }}
+          SOURCE_REF: ${{ github.ref }}
+          SOURCE_SHA: ${{ github.sha }}
+          MARKER: ${{ inputs.marker }}
+          MODE: ${{ inputs.mode }}
+        run: |
+          case "$EVENT" in
+            push)
+              case "$SOURCE_REF" in
+                refs/heads/m0-base-push|refs/tags/m0-base-tag) ;;
+                *) exit 2 ;;
+              esac
+              MARKER="m0-base-push-event"
+              MODE=pass
+              ;;
+            workflow_dispatch)
+              [[ "$MARKER" =~ ^m0-base-[a-z0-9-]+$ ]] || exit 2
+              ;;
+            *) exit 2 ;;
+          esac
+          [[ "$SOURCE_SHA" =~ ^[a-f0-9]{40}$ ]] || exit 2
+          printf 'fixture=%s ref=%s source_sha=%s mode=%s\n' "$MARKER" "$SOURCE_REF" "$SOURCE_SHA" "$MODE"
+          case "$MODE" in
+            pass) ;;
+            fail) exit 17 ;;
+            hold) sleep 150 ;;
+            *) exit 2 ;;
+          esac

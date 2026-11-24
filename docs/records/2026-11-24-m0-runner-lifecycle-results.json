@@ -1,0 +1,639 @@
+{
+  "platform": "linux/arm64",
+  "vm_uuid": "E8B0203E-C280-44D0-8CE0-7E74EE6E5523",
+  "baseline_commit": "2151b93",
+  "environment": {
+    "refs": {
+      "forge": "gitea/gitea@sha256:c372a4b5059cae65d148e150eb633327bf0ce19450cead8ff8d7a21ca8b7db2e",
+      "db": "postgres@sha256:a1ece8fa15f7b526a51ef47a22fb1f373d33de794dc26bf7bff99e61dcb52690",
+      "runner": "gitea/runner@sha256:039b467de76f4d344f6de21e42e00271a776559d304dd30caaf49ffed3ffb351",
+      "job": "gitea/runner-images@sha256:a07569aee5d38d11492671e25ed64533a1f865c43454e9e4683e72d1a4592915"
+    },
+    "images": {
+      "forge": "linux/arm64 sha256:7d4bc30b5fcba430603fe4083076e2604f81acb80e01f8197851dfe45f785970",
+      "db": "linux/arm64 sha256:bc41d72d6160c757a44aa5cd86af9a75e5235851410fe8d8fe43552c5e467856",
+      "runner": "linux/arm64 sha256:cf5908cf85768116cb46bdc016f5f785da03bd1267fafff0e202f481d90572af",
+      "job": "linux/arm64 sha256:fe9f828805093621b75f661c97d8e77b82298b386a7fba791e6f6b3b9e134dc4"
+    },
+    "private_runner": {
+      "id": 1,
+      "name": "rf-arm64-private",
+      "labels": [
+        {
+          "id": 0,
+          "name": "ubuntu-24.04",
+          "type": "custom"
+        }
+      ],
+      "status": "online",
+      "control_repo_runners": 0
+    },
+    "daemon": "linux/arm64 26.1.5+dfsg1",
+    "zombie_timeout": "10m",
+    "zombie_schedule": "@every 5m",
+    "gitea": "gitea version 28.2.0 built with go1.27.2 : bindata, timetzdata,",
+    "job_tls_health": "pass",
+    "test_job_socket_absent": true
+  },
+  "main": {
+    "sha": "5e5509cf2d2a249e51184fdca1cd0776a5c1f7c7",
+    "ref": "refs/heads/main",
+    "before_ids": [],
+    "yaml_sha256": "0890edfacb32a7580337f07a995fdbeb53e8e0351d0dbbfb4aa9387b74ac6c96",
+    "git_object_type": "commit"
+  },
+  "workflow": ".github/workflows/m0-runner-lifecycle.yml",
+  "source_repository": {
+    "full_name": "owner/private-source",
+    "id": 1
+  },
+  "refs": {
+    "branch": {
+      "sha": "d84c7c229313353fe509a7cd5dcad264ade8e5da",
+      "ref": "refs/heads/m0-base-push",
+      "before_ids": [],
+      "yaml_sha256": "0890edfacb32a7580337f07a995fdbeb53e8e0351d0dbbfb4aa9387b74ac6c96",
+      "git_object_type": "commit"
+    },
+    "tag": {
+      "sha": "513eebb9e903434455141b2680c1c9fddc5520cb",
+      "ref": "refs/tags/m0-base-tag",
+      "before_ids": [
+        1
+      ],
+      "yaml_sha256": "0890edfacb32a7580337f07a995fdbeb53e8e0351d0dbbfb4aa9387b74ac6c96",
+      "git_object_type": "commit"
+    }
+  },
+  "scenarios": {
+    "branch": {
+      "attempts": [
+        {
+          "run_id": 1,
+          "attempt": 1,
+          "job_id": 1,
+          "head_sha": "d84c7c229313353fe509a7cd5dcad264ade8e5da",
+          "ref": "refs/heads/m0-base-push",
+          "head_branch_present": true,
+          "head_branch": "m0-base-push",
+          "event": "push",
+          "actor": "writer",
+          "path": "m0-runner-lifecycle.yml@refs/heads/m0-base-push",
+          "repository_id_field": 0,
+          "nested_repository": {
+            "id": 1,
+            "full_name": "owner/private-source"
+          },
+          "runner_id": 1,
+          "status": "completed",
+          "run_conclusion_at_observation": "success",
+          "attempt_conclusion": "success",
+          "job_conclusion": "success",
+          "started_at": "2026-11-24T12:24:58Z",
+          "run_updated_at": "2026-11-24T12:24:58Z",
+          "job_updated_at_present": false,
+          "created_at": "2026-11-24T12:24:54Z",
+          "completed_at": "2026-11-24T12:24:58Z",
+          "read_only_check_at": "2026-11-24T12:25:01+00:00",
+          "log": {
+            "http": 200,
+            "bytes": 3663,
+            "sha256": "525b616d8a4a257c94e79bd3aaeb532bd9b91088d43caff049404b4e0253320d",
+            "marker_output": "fixture=m0-base-push-event ref=refs/heads/m0-base-push source_sha=d84c7c229313353fe509a7cd5dcad264ade8e5da mode=pass",
+            "marker_time": "2026-11-24T12:24:58.4637204Z",
+            "exit_17_reported": false
+          },
+          "final_log_sha256": "525b616d8a4a257c94e79bd3aaeb532bd9b91088d43caff049404b4e0253320d",
+          "outsider": {
+            "run": 404,
+            "attempt": 404,
+            "logs": 404
+          }
+        }
+      ]
+    },
+    "tag": {
+      "attempts": [
+        {
+          "run_id": 2,
+          "attempt": 1,
+          "job_id": 2,
+          "head_sha": "513eebb9e903434455141b2680c1c9fddc5520cb",
+          "ref": "refs/tags/m0-base-tag",
+          "head_branch_present": false,
+          "event": "push",
+          "actor": "writer",
+          "path": "m0-runner-lifecycle.yml@refs/tags/m0-base-tag",
+          "repository_id_field": 0,
+          "nested_repository": {
+            "id": 1,
+            "full_name": "owner/private-source"
+          },
+          "runner_id": 1,
+          "status": "completed",
+          "run_conclusion_at_observation": "success",
+          "attempt_conclusion": "success",
+          "job_conclusion": "success",
+          "started_at": "2026-11-24T12:25:05Z",
+          "run_updated_at": "2026-11-24T12:25:05Z",
+          "job_updated_at_present": false,
+          "created_at": "2026-11-24T12:25:02Z",
+          "completed_at": "2026-11-24T12:25:05Z",
+          "read_only_check_at": "2026-11-24T12:25:09+00:00",
+          "log": {
+            "http": 200,
+            "bytes": 3659,
+            "sha256": "ec29378dfd2a649639d1d419502c621f8a88c84d9b55c752d4f3f75ff292da12",
+            "marker_output": "fixture=m0-base-push-event ref=refs/tags/m0-base-tag source_sha=513eebb9e903434455141b2680c1c9fddc5520cb mode=pass",
+            "marker_time": "2026-11-24T12:25:05.8224894Z",
+            "exit_17_reported": false
+          },
+          "final_log_sha256": "ec29378dfd2a649639d1d419502c621f8a88c84d9b55c752d4f3f75ff292da12",
+          "outsider": {
+            "run": 404,
+            "attempt": 404,
+            "logs": 404
+          }
+        }
+      ]
+    },
+    "fail": {
+      "dispatch": {
+        "http": 200,
+        "run": 3,
+        "time": "2026-11-24T12:25:09+00:00"
+      },
+      "attempts": [
+        {
+          "run_id": 3,
+          "attempt": 1,
+          "job_id": 3,
+          "head_sha": "5e5509cf2d2a249e51184fdca1cd0776a5c1f7c7",
+          "ref": "refs/heads/main",
+          "head_branch_present": true,
+          "head_branch": "main",
+          "event": "workflow_dispatch",
+          "actor": "writer",
+          "path": "m0-runner-lifecycle.yml@refs/heads/main",
+          "repository_id_field": 0,
+          "nested_repository": {
+            "id": 1,
+            "full_name": "owner/private-source"
+          },
+          "runner_id": 1,
+          "status": "completed",
+          "run_conclusion_at_observation": "failure",
+          "attempt_conclusion": "failure",
+          "job_conclusion": "failure",
+          "started_at": "2026-11-24T12:25:12Z",
+          "run_updated_at": "2026-11-24T12:25:12Z",
+          "job_updated_at_present": false,
+          "created_at": "2026-11-24T12:25:09Z",
+          "completed_at": "2026-11-24T12:25:12Z",
+          "read_only_check_at": "2026-11-24T12:25:15+00:00",
+          "log": {
+            "http": 200,
+            "bytes": 3982,
+            "sha256": "b75461d01a7f29810defdfaceb45e5bea1a85959467adeea84af70c336cafb88",
+            "marker_output": "fixture=m0-base-fail ref=refs/heads/main source_sha=5e5509cf2d2a249e51184fdca1cd0776a5c1f7c7 mode=fail",
+            "marker_time": "2026-11-24T12:25:12.4531208Z",
+            "exit_17_reported": true
+          },
+          "final_log_sha256": "b75461d01a7f29810defdfaceb45e5bea1a85959467adeea84af70c336cafb88",
+          "outsider": {
+            "run": 404,
+            "attempt": 404,
+            "logs": 404
+          }
+        }
+      ],
+      "exit_log_line": "2026-11-24T12:25:12.4633041Z ##[error]Process completed with exit code 17."
+    },
+    "cancel": {
+      "dispatch": {
+        "http": 200,
+        "run": 4,
+        "time": "2026-11-24T12:25:20+00:00"
+      },
+      "attempts": [
+        {
+          "run_id": 4,
+          "attempt": 1,
+          "job_id": 4,
+          "head_sha": "5e5509cf2d2a249e51184fdca1cd0776a5c1f7c7",
+          "ref": "refs/heads/main",
+          "head_branch_present": true,
+          "head_branch": "main",
+          "event": "workflow_dispatch",
+          "actor": "writer",
+          "path": "m0-runner-lifecycle.yml@refs/heads/main",
+          "repository_id_field": 0,
+          "nested_repository": {
+            "id": 1,
+            "full_name": "owner/private-source"
+          },
+          "runner_id": 1,
+          "status": "completed",
+          "run_conclusion_at_observation": "cancelled",
+          "attempt_conclusion": "cancelled",
+          "job_conclusion": "cancelled",
+          "started_at": "2026-11-24T12:25:23Z",
+          "run_updated_at": "2026-11-24T12:25:35Z",
+          "job_updated_at_present": false,
+          "created_at": "2026-11-24T12:25:20Z",
+          "completed_at": "2026-11-24T12:25:35Z",
+          "read_only_check_at": "2026-11-24T12:25:39+00:00",
+          "log": {
+            "http": 200,
+            "bytes": 3912,
+            "sha256": "1a5fa46f5adfe169a70f4fe62e653d9fedfc08591fa960bb5ecdeeb1b76f24c7",
+            "marker_output": "fixture=m0-base-cancel ref=refs/heads/main source_sha=5e5509cf2d2a249e51184fdca1cd0776a5c1f7c7 mode=hold",
+            "marker_time": "2026-11-24T12:25:23.5953036Z",
+            "exit_17_reported": false
+          },
+          "final_log_sha256": "1a5fa46f5adfe169a70f4fe62e653d9fedfc08591fa960bb5ecdeeb1b76f24c7",
+          "outsider": {
+            "run": 404,
+            "attempt": 404,
+            "logs": 404
+          }
+        },
+        {
+          "run_id": 4,
+          "attempt": 2,
+          "job_id": 5,
+          "head_sha": "5e5509cf2d2a249e51184fdca1cd0776a5c1f7c7",
+          "ref": "refs/heads/main",
+          "head_branch_present": true,
+          "head_branch": "main",
+          "event": "workflow_dispatch",
+          "actor": "writer",
+          "path": "m0-runner-lifecycle.yml@refs/heads/main",
+          "repository_id_field": 0,
+          "nested_repository": {
+            "id": 1,
+            "full_name": "owner/private-source"
+          },
+          "runner_id": 1,
+          "status": "completed",
+          "run_conclusion_at_observation": "success",
+          "attempt_conclusion": "success",
+          "job_conclusion": "success",
+          "started_at": "2026-11-24T12:25:40Z",
+          "run_updated_at": "2026-11-24T12:28:11Z",
+          "job_updated_at_present": false,
+          "created_at": "2026-11-24T12:25:20Z",
+          "completed_at": "2026-11-24T12:28:11Z",
+          "read_only_check_at": "2026-11-24T12:28:14+00:00",
+          "log": {
+            "http": 200,
+            "bytes": 3866,
+            "sha256": "847dd549bc2933e62fd2ae5598cafa2ccd349cf41bee1b417800e1bc2dd465a8",
+            "marker_output": "fixture=m0-base-cancel ref=refs/heads/main source_sha=5e5509cf2d2a249e51184fdca1cd0776a5c1f7c7 mode=hold",
+            "marker_time": "2026-11-24T12:25:41.0823845Z",
+            "exit_17_reported": false
+          },
+          "final_log_sha256": "847dd549bc2933e62fd2ae5598cafa2ccd349cf41bee1b417800e1bc2dd465a8",
+          "outsider": {
+            "run": 404,
+            "attempt": 404,
+            "logs": 404
+          }
+        }
+      ],
+      "before_intervention": {
+        "time": "2026-11-24T12:25:28+00:00",
+        "job": 4,
+        "run_status": "in_progress",
+        "job_status": "in_progress",
+        "runner": {
+          "id": 1,
+          "name": "rf-arm64-private",
+          "status": "online",
+          "busy": true
+        },
+        "log": {
+          "http": 200,
+          "bytes": 3756,
+          "sha256": "5f5f3c21768bd48a599f77d4b9346dbdcd94d4236671c72b4cee537aecffefc4",
+          "marker_output": "fixture=m0-base-cancel ref=refs/heads/main source_sha=5e5509cf2d2a249e51184fdca1cd0776a5c1f7c7 mode=hold",
+          "marker_time": "2026-11-24T12:25:23.5953036Z",
+          "exit_17_reported": false
+        },
+        "container": {
+          "id": "6303b56bcb43632dcafa4b2b566bf65cf2e8c54fc5be9835fc13c6ce68687509",
+          "image_id": "sha256:fe9f828805093621b75f661c97d8e77b82298b386a7fba791e6f6b3b9e134dc4",
+          "network": "rf-work",
+          "privileged": false,
+          "mounts": [
+            {
+              "type": "volume",
+              "target": "/var/run/act",
+              "writable": true
+            },
+            {
+              "type": "bind",
+              "target": "/rf-ca.pem",
+              "writable": false
+            },
+            {
+              "type": "volume",
+              "target": "/workspace",
+              "writable": true
+            }
+          ],
+          "socket_absent": true
+        }
+      },
+      "cancel": {
+        "http": 200,
+        "time": "2026-11-24T12:25:28+00:00",
+        "run": 4
+      },
+      "rerun": {
+        "time": "2026-11-24T12:25:39+00:00",
+        "http": 201,
+        "id": 4,
+        "head_sha": "5e5509cf2d2a249e51184fdca1cd0776a5c1f7c7",
+        "run_attempt": 2,
+        "status": "queued"
+      },
+      "retained": {
+        "job": 4,
+        "conclusion": "cancelled",
+        "log": {
+          "http": 200,
+          "bytes": 3912,
+          "sha256": "1a5fa46f5adfe169a70f4fe62e653d9fedfc08591fa960bb5ecdeeb1b76f24c7",
+          "marker_output": "fixture=m0-base-cancel ref=refs/heads/main source_sha=5e5509cf2d2a249e51184fdca1cd0776a5c1f7c7 mode=hold",
+          "marker_time": "2026-11-24T12:25:23.5953036Z",
+          "exit_17_reported": false
+        },
+        "same_digest": true
+      }
+    },
+    "lost": {
+      "dispatch": {
+        "http": 200,
+        "run": 5,
+        "time": "2026-11-24T12:28:18+00:00"
+      },
+      "attempts": [
+        {
+          "run_id": 5,
+          "attempt": 1,
+          "job_id": 6,
+          "head_sha": "5e5509cf2d2a249e51184fdca1cd0776a5c1f7c7",
+          "ref": "refs/heads/main",
+          "head_branch_present": true,
+          "head_branch": "main",
+          "event": "workflow_dispatch",
+          "actor": "writer",
+          "path": "m0-runner-lifecycle.yml@refs/heads/main",
+          "repository_id_field": 0,
+          "nested_repository": {
+            "id": 1,
+            "full_name": "owner/private-source"
+          },
+          "runner_id": 1,
+          "status": "completed",
+          "run_conclusion_at_observation": "failure",
+          "attempt_conclusion": "failure",
+          "job_conclusion": "failure",
+          "started_at": "2026-11-24T12:28:23Z",
+          "run_updated_at": "2026-11-24T12:39:43Z",
+          "job_updated_at_present": false,
+          "created_at": "2026-11-24T12:28:17Z",
+          "completed_at": "2026-11-24T12:39:43Z",
+          "read_only_check_at": "2026-11-24T12:39:55+00:00",
+          "log": {
+            "http": 200,
+            "bytes": 3750,
+            "sha256": "d054c8434b8c3b2fd978797783f70c2a5fdb0c0426577f78f48fc5075eb18678",
+            "marker_output": "fixture=m0-base-lost ref=refs/heads/main source_sha=5e5509cf2d2a249e51184fdca1cd0776a5c1f7c7 mode=hold",
+            "marker_time": "2026-11-24T12:28:23.7773690Z",
+            "exit_17_reported": false
+          },
+          "final_log_sha256": "d054c8434b8c3b2fd978797783f70c2a5fdb0c0426577f78f48fc5075eb18678",
+          "outsider": {
+            "run": 404,
+            "attempt": 404,
+            "logs": 404
+          }
+        }
+      ],
+      "before_intervention": {
+        "time": "2026-11-24T12:28:28+00:00",
+        "job": 6,
+        "run_status": "in_progress",
+        "job_status": "in_progress",
+        "runner": {
+          "id": 1,
+          "name": "rf-arm64-private",
+          "status": "online",
+          "busy": true
+        },
+        "log": {
+          "http": 200,
+          "bytes": 3750,
+          "sha256": "d054c8434b8c3b2fd978797783f70c2a5fdb0c0426577f78f48fc5075eb18678",
+          "marker_output": "fixture=m0-base-lost ref=refs/heads/main source_sha=5e5509cf2d2a249e51184fdca1cd0776a5c1f7c7 mode=hold",
+          "marker_time": "2026-11-24T12:28:23.7773690Z",
+          "exit_17_reported": false
+        },
+        "container": {
+          "id": "f3fbb73581a39eec2b690f5ad81269509d4d7672c0b1b899f12c021b12e86dc1",
+          "image_id": "sha256:fe9f828805093621b75f661c97d8e77b82298b386a7fba791e6f6b3b9e134dc4",
+          "network": "rf-work",
+          "privileged": false,
+          "mounts": [
+            {
+              "type": "volume",
+              "target": "/workspace",
+              "writable": true
+            },
+            {
+              "type": "bind",
+              "target": "/rf-ca.pem",
+              "writable": false
+            },
+            {
+              "type": "volume",
+              "target": "/var/run/act",
+              "writable": true
+            }
+          ],
+          "socket_absent": true
+        }
+      },
+      "kill": {
+        "time": "2026-11-24T12:28:29+00:00",
+        "container_id": "ff2f09d023972c007a670a5757c2f28ce711e94092f28642f72db24bbb3ff609",
+        "finished_at": "2026-11-24T12:28:29.036161432Z",
+        "exit_code": 137
+      },
+      "observations": [
+        {
+          "time": "2026-11-24T12:28:34+00:00",
+          "run": {
+            "id": 5,
+            "status": "in_progress",
+            "updated_at": "2026-11-24T12:28:23Z",
+            "completed_at": "1970-01-01T00:00:00Z"
+          },
+          "attempt": {
+            "run_attempt": 1,
+            "status": "in_progress",
+            "updated_at": "2026-11-24T12:28:23Z",
+            "completed_at": "1970-01-01T00:00:00Z"
+          },
+          "job": {
+            "id": 6,
+            "status": "in_progress",
+            "completed_at": "1970-01-01T00:00:00Z"
+          },
+          "runner": {
+            "id": 1,
+            "name": "rf-arm64-private",
+            "status": "online",
+            "busy": false
+          },
+          "job_container": {
+            "state": "running",
+            "processes": [
+              "bash",
+              "sleep",
+              "sleep"
+            ]
+          }
+        },
+        {
+          "time": "2026-11-24T12:29:35+00:00",
+          "run": {
+            "id": 5,
+            "status": "in_progress",
+            "updated_at": "2026-11-24T12:28:23Z",
+            "completed_at": "1970-01-01T00:00:00Z"
+          },
+          "attempt": {
+            "run_attempt": 1,
+            "status": "in_progress",
+            "updated_at": "2026-11-24T12:28:23Z",
+            "completed_at": "1970-01-01T00:00:00Z"
+          },
+          "job": {
+            "id": 6,
+            "status": "in_progress",
+            "completed_at": "1970-01-01T00:00:00Z"
+          },
+          "runner": {
+            "id": 1,
+            "name": "rf-arm64-private",
+            "status": "offline",
+            "busy": false
+          },
+          "job_container": {
+            "state": "running",
+            "processes": [
+              "bash",
+              "sleep",
+              "sleep"
+            ]
+          }
+        },
+        {
+          "time": "2026-11-24T12:36:24+00:00",
+          "run": {
+            "id": 5,
+            "status": "in_progress",
+            "updated_at": "2026-11-24T12:28:23Z",
+            "completed_at": "1970-01-01T00:00:00Z"
+          },
+          "attempt": {
+            "run_attempt": 1,
+            "status": "in_progress",
+            "updated_at": "2026-11-24T12:28:23Z",
+            "completed_at": "1970-01-01T00:00:00Z"
+          },
+          "job": {
+            "id": 6,
+            "status": "in_progress",
+            "completed_at": "1970-01-01T00:00:00Z"
+          },
+          "runner": {
+            "id": 1,
+            "name": "rf-arm64-private",
+            "status": "offline",
+            "busy": false
+          },
+          "job_container": {
+            "state": "removed"
+          }
+        },
+        {
+          "time": "2026-11-24T12:39:55+00:00",
+          "run": {
+            "id": 5,
+            "status": "completed",
+            "conclusion": "failure",
+            "updated_at": "2026-11-24T12:39:43Z",
+            "completed_at": "2026-11-24T12:39:43Z"
+          },
+          "attempt": {
+            "run_attempt": 1,
+            "status": "completed",
+            "conclusion": "failure",
+            "updated_at": "2026-11-24T12:39:43Z",
+            "completed_at": "2026-11-24T12:39:43Z"
+          },
+          "job": {
+            "id": 6,
+            "status": "completed",
+            "conclusion": "failure",
+            "completed_at": "2026-11-24T12:39:43Z"
+          },
+          "runner": {
+            "id": 1,
+            "name": "rf-arm64-private",
+            "status": "offline",
+            "busy": false
+          },
+          "job_container": {
+            "state": "removed"
+          }
+        }
+      ],
+      "sample_count": 46,
+      "observation_seconds": 687,
+      "job_container_after_observation": {
+        "state": "removed"
+      },
+      "job_container_end_events": [
+        {
+          "time_unix": 1795523783,
+          "event": "die",
+          "exit_code": "0"
+        },
+        {
+          "time_unix": 1795523783,
+          "event": "destroy",
+          "exit_code": null
+        }
+      ]
+    }
+  },
+  "unique_runs": 5,
+  "guest_rx_bytes": 929307903,
+  "debian_download_bytes": 431816704,
+  "roles": {
+    "writer": "write",
+    "reader": "read"
+  },
+  "guest_cleanup": {
+    "unregister_http": 204,
+    "runner_list_size": 0,
+    "runner_detail_http": 404,
+    "guest_running_containers": 0,
+    "guest_rx_bytes": 929313957
+  }
+}

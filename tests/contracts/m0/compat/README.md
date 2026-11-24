@@ -23,7 +23,7 @@ GitHub REST 主样例显式使用 `X-GitHub-Api-Version: 2026-03-10`。官方在
 
 正式工作流仍待原生 Linux amd64 实测。GitHub 普通角色与参考环境能力缺证约束相应兼容承诺。G26 / G27 的首版承诺及独立 OCI 取证见[操作单](oci-retention-runbook.md)。2026-11-24 已在专用 UTM arm64 VM 跑通原始工具链样例，按独立平台记录结果。 [arm64 实测](../../../../docs/records/2026-11-24-m0-runner-arm64.md)
 
-首轮 Gitea 基础批的镜像候选、执行顺序与补充夹具见[基础 Runner 操作单](runner-runbook.md)。
+Gitea 基础批在独立私有仓库使用[生命周期夹具](m0-runner-lifecycle.yml)验证分支与 Tag、失败、取消 / 重跑及失联。镜像、角色、取证与清理见[基础 Runner 操作单](runner-runbook.md)。
 
 ## 工作流样例
 

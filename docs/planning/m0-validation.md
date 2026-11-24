@@ -1,6 +1,6 @@
 # M0 底座可行性子专题计划
 
-状态：近期执行范围已细化；M0-S01 已取得官方来源证据并形成[本机 Docker 优先方案](m0-s01-baseline.md)，M0-S02 / S03 已取得身份生命周期、Issue、Release 与 OCI 的受控切片证据，见[当日回顾](../records/2026-11-04-day-review.md)。接续重点为 M0-S04 的支持范围与关键缺口决定，Actions 已取得首条 [arm64 手动工作流](../records/2026-11-24-m0-runner-arm64.md)证据，完整生命周期及 amd64 对照待验。任务状态见[tasks](tasks.md)，当前授权见[current](../status/current.md)。候选不是已支持组合，本计划本身不构成环境或远端动作授权。
+状态：近期执行范围已细化；M0-S01 已取得官方来源证据并形成[本机 Docker 优先方案](m0-s01-baseline.md)，M0-S02 / S03 已取得身份生命周期、Issue、Release 与 OCI 的受控切片证据，见[当日回顾](../records/2026-11-04-day-review.md)。接续重点为 M0-S04 的支持范围与关键缺口决定，Actions 已取得首条 [arm64 手动工作流](../records/2026-11-24-m0-runner-arm64.md)证据，触发、失败、取消 / 重跑和失联另见[arm64 生命周期实测](../records/2026-11-24-m0-runner-lifecycle.md)，原生 amd64 对照待验。任务状态见[tasks](tasks.md)，当前授权见[current](../status/current.md)。候选不是已支持组合，本计划本身不构成环境或远端动作授权。
 
 目标：在 Go / React 工程初始化前，取得独立 Gitea 与 Runner 公开接口、身份授权和最小交付能力的证据，明确首批 GitHub 兼容范围。阶段预算沿用[路线图](roadmap.md)的 6—10 人日，不把整个 M0 作为一天的承诺。
 
@@ -36,7 +36,7 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 | 定向补证与组合 / S02、S03、S04 | 所选 OCI 方案、权限负例、单镜像来源关联、Release 衔接与选中兼容样例 | 所承诺路径有证据；关键缺口已解决或存在获批且不破坏关键权限 / 数据正确性的范围调整 |
 | 阶段评审 / S01—S04 | 汇总证据、冻结实际组合与支持边界、交接 M1 | 按[阶段出口](acceptance.md#m0-exit)判断进入 M1 或列具名阻塞；不再增加一层采用准备阶段 |
 
-本机独立权限、清理与恢复短测已[完成取证](../records/2026-11-17-m0-oci-retention-validation.md)。源码 / run / Digest / Release 组合仍依赖基础 Runner 及所选机制的实际证据。首条 arm64 工作流已实测，后续批次按[分步运行条件](m0-s01-baseline.md#runner-resumption)推进。 [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md)
+本机独立权限、清理与恢复短测已[完成取证](../records/2026-11-17-m0-oci-retention-validation.md)。源码 / run / Digest / Release 组合仍依赖基础 Runner 及所选机制的实际证据。arm64 手动工具链与基础生命周期已实测，制品批按[分步运行条件](m0-s01-baseline.md#runner-resumption)推进。 [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md)
 
 <a id="closeout-blockers"></a>
 
@@ -163,7 +163,7 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 
 2026-11-17 已完成 G24—G26 隔离取证、G06 重启补证、G19 组织 team、G20 混合字段、G22 回查及 G23 正向前检，并复核 COMP-01 的既有测试仓库。沿用原 27 条差异、M0-04 和既有验收。 [11 月 9 日证据](../records/2026-11-09-day-review.md) · [11 月 17 日收工回顾](../records/2026-11-17-day-review.md)
 
-11 月 24 日已按所有者决定，在 Mac 上新建并清理 UTM arm64 专用 VM，取得手动派发、私有检出和日志的真实证据。后续按操作单补触发、失败、取消 / 重跑与失联，再接单镜像 Digest 和 Release。独立原生 amd64 目标及 GitHub 普通角色继续等待相应环境和身份。 [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md) · [M0 出口](acceptance.md#m0-exit)
+11 月 24 日已按所有者决定，在 Mac 上新建并清理 UTM arm64 专用 VM，取得手动派发、私有检出和日志的真实证据。第二批已实测分支 / Tag 触发、主动失败、取消 / 重跑和执行中失联。下一批固定隔离构建器、arm64 BuildKit 摘要和测试 Registry 权限，再接单镜像 Digest 与 Release。独立原生 amd64 目标及 GitHub 普通角色继续等待相应环境和身份。 [arm64 生命周期实测](../records/2026-11-24-m0-runner-lifecycle.md) · [arm64 首条私有工作流](../records/2026-11-24-m0-runner-arm64.md) · [M0 出口](acceptance.md#m0-exit)
 
 G23 的目标提交 404 拒绝路径已在本机 OrbStack 单批完成，证据见下方 Release 小节。后续仅跟进会阻断所选交付链或首版权限承诺的差异。
 

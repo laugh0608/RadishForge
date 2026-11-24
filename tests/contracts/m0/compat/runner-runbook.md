@@ -1,6 +1,6 @@
 # M0 基础 Runner 操作单
 
-对应 M0-01、M0-03、M0-04。2026-11-24 所有者选定本机 UTM 专用 arm64 VM，授权执行第一条合成私有工作流。原生 amd64 的 COMP-01 对照单独保留。下表及完整生命周期步骤仍适用于该对照。
+对应 M0-01、M0-03、M0-04。2026-11-24 所有者选定本机 UTM 专用 arm64 VM，授权执行第一条合成私有工作流。原生 amd64 的 COMP-01 对照单独保留。后续 arm64 生命周期批沿用同一组固定输入。原生 amd64 对照按下方候选表另行验收。
 
 ## arm64 首条私有工作流
 
@@ -27,7 +27,7 @@ UTM 4.7.5 使用 aarch64、硬件虚拟化和 UEFI，从官方 Debian 13 generic
 3. 以普通所有者建立两个私有仓库并启用 Actions，只向目标仓库授予普通写者与读者权限。写者按 Contents API 提交原始 YAML，读者按 `main` 回读 SHA，再按该 SHA 取回 YAML 校验摘要。以目标仓库注册 Token 文件执行 `gitea-runner register --no-interactive --instance https://forge.m0.test:3000 --token-file <任务文件> --config <本批配置> --name <本批名称>`。标签映射为 `ubuntu-24.04:docker://docker.io/gitea/runner-images@<arm64 子 manifest>`。配置 `runner.patch_actions: false`、`cache.enabled: false`、`container.docker_host: "-"`、`container.privileged: false`，仅允许任务 CA 的只读 bind mount。删除注册输入，启动 daemon，按两仓库 Runner 列表核对范围。
 4. 按下方第 1 个场景派发。以仓库专属路径、嵌套仓库 ID 和全名、完整 SHA、回执 ID、run / attempt 与日志输出核对归属。固定版顶层 `repository_id` 在本批返回 0，单独保存与真实 ID 的差异。运行中 `conclusion` 可缺失，等待实际终态。按 job ID 读取最终日志，核对 SHA / marker、版本输出和摘要，以仓库外身份独立回查同一路径。
 
-2026-11-24 已完成一次手动派发并清理专用 VM。后续批次按实际授权复用这些输入。 [arm64 实测](../../../../docs/records/2026-11-24-m0-runner-arm64.md)
+2026-11-24 首批已完成手动派发，续批在新 VM 实测场景 2—5。两批均已清理。失联样例中 job 容器退出后 Gitea 仍显示运行中，须按同一 attempt 等待上游终态。 [生命周期实测](../../../../docs/records/2026-11-24-m0-runner-lifecycle.md) · [arm64 实测](../../../../docs/records/2026-11-24-m0-runner-arm64.md)
 
 ## 固定输入与待回填项
 
@@ -55,69 +55,16 @@ job 镜像来源为 Gitea 官方镜像。Docker Hub 返回的 index 为 `sha256:
 | 顺序 | 操作 | 通过条件与要留的证据 |
 | --- | --- | --- |
 | 1 · 私有检出与工具链 | 普通写者调用 `POST /workflows/{workflow_id}/dispatches?return_run_details=true`，`ref=main`，`inputs.marker=m0-toolchain-01`。 | 只有一条可归因的 run。按 ID 查 run、attempt 和 jobs，核对 event、ref、完整 SHA、实际 job、Runner 及终态；下载日志核对 marker、检出的 HEAD 和版本断言。留独立读取者的正向结果及仓库外用户的拒绝。 |
-| 2 · push 与 Tag | 导入下方补充夹具后，普通写者分别推送一个新分支 `m0-base-push` 和一个轻量 Tag `m0-base-tag`。按事件分别单次推送、独立回读实际远端 ref。 | 两次 push 事件各有唯一 run；分支和 Tag 的具体 ref、SHA、run、attempt 与日志逐一对应。记录 Gitea 原始字段，保存两类 ref 的区分证据。 |
+| 2 · push 与 Tag | 导入[生命周期夹具](m0-runner-lifecycle.yml)后，普通写者分别推送一个新分支 `m0-base-push` 和一个轻量 Tag `m0-base-tag`。按事件分别单次推送，以普通读者从 `GET /repos/{owner}/{repo}/git/refs/{ref}` 返回的列表精确匹配完整 ref 和提交 SHA。 | 两次 push 事件各有唯一 run；分支和 Tag 的具体 ref、SHA、run、attempt 与日志逐一对应。记录 Gitea 原始字段，保存两类 ref 的区分证据。 |
 | 3 · 失败 | 手动派发补充夹具，`mode=fail`、`marker=m0-base-fail`。 | 日志先有标记，再有主动非零退出；检查 job 与 run 的实际终态。 |
 | 4 · 取消与重跑 | 派发 `mode=hold`、`marker=m0-base-cancel`。同一 run 的 job 正在运行且日志有标记时，发送一次 `POST /runs/{run}/cancel`。读到取消终态后，对同一 run 调用一次 `POST /runs/{run}/rerun`。 | 分别记录取消回执与真实终态。重跑保留原 run ID、ref、SHA，出现可定位的新 attempt，检查新 job 日志与成功终态，并保留原 attempt 的取消证据。 |
-| 5 · 执行中失联 | 另派发 `mode=hold`、`marker=m0-base-lost`。日志出现标记后，仅终止本批 Runner 容器，保持 Gitea 在线。 | 记录进程终止、Runner 在线状态、同一 run 与 job 最后更新时间及实际终态。由目标配置回读的 zombie timeout 加上调度观测窗口决定何时结束，最多 15 分钟；仍无可信终态时登记失联 / 结果未知。 |
+| 5 · 执行中失联 | 另派发 `mode=hold`、`marker=m0-base-lost`。日志出现标记后，仅终止本批 Runner 容器，保持 Gitea 在线。 | 记录进程终止、Runner 在线状态、同一 run 与 job 最后更新时间及实际终态。由目标配置回读的 zombie timeout 加上调度观测窗口决定何时结束，最多 15 分钟。仍无可信终态时登记失联 / 结果未知。按介入前保存的 job 容器 ID 独立检查残留进程，记录后再清理。 |
 
 回读使用 `GET /runs/{run}`、`GET /runs/{run}/attempts/{attempt}` 和 `GET /runs/{run}/attempts/{attempt}/jobs`。以返回的 job ID 通过 `GET /jobs/{job_id}/logs` 轮询标记，取消和失联只在同一 job 仍运行时触发。若在等待窗口内未观察到标记，记录该用例未达触发条件。`GET /runs/{run}/logs` 打包当前最新 attempt 的日志，重跑前先保存原 attempt 的日志与摘要。派发收到 204、网络超时或回执与实际不符时，按工作流、事件、ref、SHA、时间窗与 marker 对账。零匹配、多匹配、日志不可得且关联尚未成立时记录未知，零自动重试。取消和重跑超时时只查既有 run / attempt，观察期内保留原有结果。 [固定版日志实现](https://github.com/go-gitea/gitea/blob/829b49c1ae96015e345f9d2a0eb1ea7acd5f31e1/routers/common/actions.go)
 
 ### 补充工作流夹具
 
-另存为隔离仓库的 `.github/workflows/m0-runner-lifecycle.yml`。记录导入后的 YAML 摘要、工作流路径和实际 Git 提交，回读 `m0-toolchain.yml` 的原始摘要。本夹具只定义触发和状态取证。
-
-```yaml
-name: M0 base runner lifecycle
-'on':
-  push:
-    branches: [m0-base-push]
-    tags: [m0-base-tag]
-  workflow_dispatch:
-    inputs:
-      marker:
-        type: string
-        required: true
-      mode:
-        type: string
-        required: true
-permissions:
-  contents: read
-jobs:
-  observe:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Report ref and exercise result
-        shell: bash
-        env:
-          EVENT: ${{ github.event_name }}
-          SOURCE_REF: ${{ github.ref }}
-          SOURCE_SHA: ${{ github.sha }}
-          MARKER: ${{ inputs.marker }}
-          MODE: ${{ inputs.mode }}
-        run: |
-          case "$EVENT" in
-            push)
-              case "$SOURCE_REF" in
-                refs/heads/m0-base-push|refs/tags/m0-base-tag) ;;
-                *) exit 2 ;;
-              esac
-              MARKER="m0-base-push-event"
-              MODE=pass
-              ;;
-            workflow_dispatch)
-              [[ "$MARKER" =~ ^m0-base-[a-z0-9-]+$ ]] || exit 2
-              ;;
-            *) exit 2 ;;
-          esac
-          [[ "$SOURCE_SHA" =~ ^[a-f0-9]{40}$ ]] || exit 2
-          printf 'fixture=%s ref=%s source_sha=%s mode=%s\n' "$MARKER" "$SOURCE_REF" "$SOURCE_SHA" "$MODE"
-          case "$MODE" in
-            pass) ;;
-            fail) exit 17 ;;
-            hold) sleep 150 ;;
-            *) exit 2 ;;
-          esac
-```
+将[生命周期夹具](m0-runner-lifecycle.yml)原样导入隔离仓库的 `.github/workflows/m0-runner-lifecycle.yml`，独立读者按提交 SHA 核对该文件与原工具链工作流的摘要。arm64 续批按场景 2—5 逐一执行，沿用首批镜像、配额与清理步骤。夹具仅使用 shell，各 job 只连接 VM 内的 Gitea。
 
 ## 证据和清理
 
