@@ -23,7 +23,7 @@ Windows 可用 `py -3` 替代 `python3`，不额外维护仅转发命令的 shel
 
 ## 维护方式
 
-新增真实约束时同步治理专题与检查器，补充能揭露错误放行的负例。后续建立 CI 时复用这个入口，先运行成功和故障传播验收，再将真实 job 纳入 Candidate Quality；当前没有活动 workflow。
+新增真实约束时同步治理专题与检查器，补充能揭露错误放行的负例。[PR Checks](../.github/workflows/pr-checks.yml) 复用本页两条检查命令，并由 `Candidate Quality` 汇总结果。
 
 ## M0 本机验证工具
 
