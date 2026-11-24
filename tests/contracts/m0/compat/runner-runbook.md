@@ -56,6 +56,12 @@ python3 scripts/m0_image_source.py "$pulled_image_dir" "$workflow_digest" "$comm
 3. 先确认底座可以配置 `m0-protected` 的独立审批者和环境级秘密。记录固定版本的公开契约及所有者对实际环境接口的读回。若保护入口缺失，登记阻塞，只有具备保护条件的环境才能验收批准前后的执行差异。
 4. 先派发一次 `probe=concurrency`，从活动 job 的日志读到 `concurrency-start`，再确认该 job 仍在运行并派发第二次。保留两次回执和各自的 run / attempt / job、时刻、终态、起止标记及日志摘要。两次派发期间保持同一组名，记录服务端自动取消结果。容量 1 的 Runner 只足以验证替换正在运行的 job，多执行槽的互斥需独立验证。
 
+### 固定模板的只读 Issue 列表
+
+1. 在本批 arm64 VM 内建立 control、job、db 三张 internal 网。Runner 仅接 control 网，Gitea 接 control 与 db 网，job 仅接 job 网。将 `read.m0.test` 映射到 job 网的来宾入口 `172.29.53.1`。来宾在 job 网只接受该地址的 TCP 3000，并丢弃来自 job 网的转发。入口与 Gitea 分别持有任务 CA 签发的对应域名证书。
+2. 用[固定配置](arm64-readgate.conf)启动临时入口，核验配置摘要、上游 TLS、匿名读取和方法拒绝。按[实测记录](../../../../docs/records/2026-11-24-m0-arm64-readgate.md)固定 nginx 包。为本仓库注册单槽 Runner，标签 `rf-readonly-arm64` 绑定本操作单的 arm64 job 镜像；job 禁用 Docker socket，丢弃全部 capabilities，启用 no-new-privileges。唯一 bind mount 为只读任务 CA。
+3. 普通写者将[工作流](m0-readgate-arm64.yml)装入合成私有仓库，创建种子 Issue；独立读者核对源码与初始对象。写者派发一次。读者在终态核对 SHA、run / attempt / job、日志和对象集合。按派发前日志偏移核对入口仅转发一次 GET；拒绝的 POST 应无上游状态，写者从控制网提交同一合成内容后才出现第二条 Issue。导出摘要并按本操作单注销 Runner、停止入口、移除 VM。
+
 ## 固定输入与待回填项
 
 | 输入 | 本批候选与核对方式 |

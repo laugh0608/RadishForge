@@ -27,6 +27,8 @@ Gitea 基础批在独立私有仓库使用[生命周期夹具](m0-runner-lifecyc
 
 arm64 策略批已在普通写者派发、独立读者回查下验证同组自动取消。job 权限验收失败，所需环境审批原生不支持。四份原件的已测范围和缺口见[兼容专题](../../../../docs/architecture/github-compatibility.md#m0-s04-四份原始样例的证据范围)与[策略实测](../../../../docs/records/2026-11-24-m0-arm64-actions-policy.md)。
 
+[arm64 只读入口夹具](m0-readgate-arm64.yml)单独检验受控模板的私有 Issue 列表读取。只读入口的拒绝、零新增与写者对照已取得[实测记录](../../../../docs/records/2026-11-24-m0-arm64-readgate.md)。四份原始样例的范围沿用下表。
+
 ## 工作流样例
 
 两端分别准备合成私有仓库，导入相同源码提交，默认分支 `main`。先以 `.github/workflows` 的原始布局验证发现与触发。验证 Gitea 的另一发现目录或文件优先级时，使用独立夹具，记录真实触发数量和 diff。分支、Tag、制品和凭据均限定在各自隔离环境。

@@ -1,0 +1,38 @@
+name: M0 arm64 read-only Issue list
+'on': workflow_dispatch
+permissions:
+  contents: read
+  issues: read
+jobs:
+  read-list:
+    runs-on: rf-readonly-arm64
+    steps:
+      - name: Verify the isolated Issue list
+        shell: bash
+        env:
+          JOB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$(uname -m)" = aarch64
+          test ! -S /var/run/docker.sock
+          test -n "$JOB_TOKEN"
+          test "$GITHUB_REPOSITORY" = owner/private-source
+          umask 077
+          response=$(mktemp)
+          trap 'rm -f -- "$response"' EXIT
+          url=https://read.m0.test:3000/m0/issue-list
+          request() {
+            printf 'Authorization: Bearer %s\n' "$JOB_TOKEN" |
+              curl --silent --show-error --noproxy '*' --max-time 10 --cacert /rf-ca.pem \
+                --header @- --output "$response" --write-out '%{http_code}' "$@" "$url"
+          }
+          test "$(request)" = 200
+          python3 - "$response" <<'PY'
+          import json, sys
+          with open(sys.argv[1]) as source:
+              assert [row['title'] for row in json.load(source)] == ['m0-readgate-seed']
+          PY
+          test "$(request --header 'Content-Type: application/json' --data '{"title":"m0-readgate-control"}')" = 403
+          test "$(cat "$response")" = rf-readgate-method-denied
+          printf 'readgate-read-200-local-deny-403\n'
+          sleep 12

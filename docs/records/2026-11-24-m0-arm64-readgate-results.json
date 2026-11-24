@@ -1,0 +1,152 @@
+{
+  "platform": "linux/arm64",
+  "vm_uuid": "343D8E30-090C-4A77-8831-10B89504138F",
+  "local_base": "f4ea207",
+  "refs": {
+    "forge": "gitea/gitea@sha256:c372a4b5059cae65d148e150eb633327bf0ce19450cead8ff8d7a21ca8b7db2e",
+    "db": "postgres@sha256:a1ece8fa15f7b526a51ef47a22fb1f373d33de794dc26bf7bff99e61dcb52690",
+    "runner": "gitea/runner@sha256:039b467de76f4d344f6de21e42e00271a776559d304dd30caaf49ffed3ffb351",
+    "job": "gitea/runner-images@sha256:a07569aee5d38d11492671e25ed64533a1f865c43454e9e4683e72d1a4592915"
+  },
+  "forge_version": "28.2.0",
+  "engine": "linux/arm64 26.1.5+dfsg1",
+  "db_version": "postgres (PostgreSQL) 18.6 (Debian 18.6-1.pgdg12+2)",
+  "fixture": {
+    "source_sha": "b2d5425d5192612c3b39d7c94825e6f8d436172e",
+    "yaml_sha256": "7d92ba457009cf5df81ca446b3d23705c7e65eaf9097c5b77a6b483907b11b3a",
+    "repo_id": 1,
+    "initial_issues": [
+      [
+        1,
+        "m0-readgate-seed"
+      ]
+    ],
+    "initial_runs": 0
+  },
+  "gate": {
+    "config_sha256": "3d849801e85a1bd7a0a609b40d9dfcb1601d3ea668141f2fb945a0b12546ad72",
+    "nginx_version": "1.26.3-3+deb13u11",
+    "nginx_deb_sha256": "4a2153ccbc440727f31743d4a2e0e59578641e7984625ef19a938291d995133f",
+    "probe_status": {
+      "options": 403,
+      "query": 403,
+      "anonymous_get": 403
+    },
+    "internal_networks": [
+      "control",
+      "db",
+      "job"
+    ],
+    "guest_input": "job bridge accepts only gateway TCP 3000; other input dropped",
+    "forwarding_from_job_bridge": "DROP",
+    "ipv6_on_job_network": false
+  },
+  "registration": {
+    "id": 1,
+    "name": "rf-readonly-arm64",
+    "status": "online",
+    "other_repository_runners": 0
+  },
+  "receipt": {
+    "id": 1,
+    "status": 200,
+    "log_offset": 81
+  },
+  "job": {
+    "id": 1,
+    "attempt": 1,
+    "job_id": 1,
+    "runner_id": 1,
+    "source_sha": "b2d5425d5192612c3b39d7c94825e6f8d436172e",
+    "path": "m0-readgate-arm64.yml@refs/heads/main",
+    "actor": "writer",
+    "event": "workflow_dispatch",
+    "run_conclusion": "success",
+    "attempt_conclusion": "success",
+    "job_conclusion": "success",
+    "log_bytes": 3822,
+    "log_sha256": "76748770d30fb9581da7b7d1f817f8c601c48f484f6926b15282bfaa2e128a4b",
+    "second_read_matches": true,
+    "marker_times": [
+      "2026-11-24T13:50:33.1455558Z"
+    ],
+    "outsider": {
+      "run": 404,
+      "attempt": 404,
+      "log": 404
+    },
+    "after_job": [
+      [
+        1,
+        "m0-readgate-seed"
+      ]
+    ],
+    "gateway_log": [
+      [
+        "1795528233.126",
+        "GET",
+        "200",
+        "200"
+      ],
+      [
+        "1795528233.144",
+        "POST",
+        "403",
+        "-"
+      ]
+    ]
+  },
+  "isolation": {
+    "direct_backend_tcp": "ENETUNREACH",
+    "backend_control_read_http": 200,
+    "job_image": "sha256:fe9f828805093621b75f661c97d8e77b82298b386a7fba791e6f6b3b9e134dc4",
+    "network": [
+      "rf-job"
+    ],
+    "ip": "172.29.53.2",
+    "bind_mounts": [
+      {
+        "target": "/rf-ca.pem",
+        "read_only": true
+      }
+    ],
+    "cap_drop": [
+      "ALL"
+    ],
+    "privileged": false,
+    "security_opt": [
+      "no-new-privileges"
+    ],
+    "extra_hosts": [
+      "read.m0.test:172.29.53.1"
+    ]
+  },
+  "positive": {
+    "writer_http": 201,
+    "writer": "writer",
+    "issued_number": 2,
+    "independent_reader_after": [
+      [
+        2,
+        "m0-readgate-control"
+      ],
+      [
+        1,
+        "m0-readgate-seed"
+      ]
+    ]
+  },
+  "cleanup": {
+    "runner_delete_http": 204,
+    "runner_detail_after": 404,
+    "remaining_runners": 0,
+    "repository_secrets": 0,
+    "running_containers": 0,
+    "gateway_listener_stopped": true,
+    "guest_rx_bytes": 910129557,
+    "debian_image_bytes": 431816704,
+    "vm_removed": true,
+    "baseline_stopped_vms": 5,
+    "loopback_port_28422_released": true
+  }
+}
