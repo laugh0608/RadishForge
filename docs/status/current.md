@@ -1,6 +1,6 @@
 # 当前状态
 
-更新日期：2026-11-24（主线合入、回流与 CI 验收）。
+更新日期：2026-11-24（主线 CI 验收、本机 Runner 平台核实与 G23 拒绝实测）。
 
 规划阅读链：[整体范围](../product-plan.md) / [阶段路线图](../planning/roadmap.md) → [大专题与子专题](../planning/topics.md) → [任务状态](../planning/tasks.md) / [验收标准](../planning/acceptance.md)。本文汇总当前重点，任务状态不在此另建副本；规则统一及本批验证见[记录](../records/2026-11-01-planning-rules-alignment.md)。
 
@@ -111,12 +111,11 @@ python3 -B -m unittest discover -s scripts/tests -v
 
 `RadishForge-Test` 权限复查已提交 `3111071`。暂不注册机器账号，普通写者和移除协作者后的访问继续待验证。组织仓库的 `Read` / `Write` 仍按私有组织条件补证。 [角色复查](../records/2026-11-17-m0-rest-evidence-review.md#个人仓库普通写者复查)
 
-G22 隔离实测已提交 `dc33663`。G23 已提交写前校验 `a37c21d` 与正向隔离复测 `6d0465a`，读取失败时零 PATCH 有本地模拟证据。 [G22 隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 隔离复测](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)
+G22 隔离实测已提交 `dc33663`。G23 继正向复测后，已在本机固定版 Gitea 验证目标提交 404 时前检仅发 GET、零发布 PATCH。独立普通账号回读原草稿保留、原 Tag 仍缺失，本批资源已清理。其他失败分支沿用本地模拟，原生无效 target 发布 500 的差异保留。 [G22 隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 正向](../records/2026-11-17-m0-release-target-preflight.md) · [G23 拒绝](../records/2026-11-24-m0-runner-platform-and-g23.md#g23-目标提交缺失)
 
-1. **先决定基础 Runner 的执行平台。** 系列下一轮首个技术决策窗口先处理此项。对照现有单台 Mac 与已选 job 镜像，确认能否提供可隔离的 Linux amd64 执行环境及执行窗口。条件齐备后由普通用户从真实检出和最小工作流开始；缺平台、权限或输入时记清恢复条件，暂停 Runner 线。 [恢复条件](../planning/m0-s01-baseline.md#runner-resumption) · [基础操作单](../../tests/contracts/m0/compat/runner-runbook.md)
-2. **G23 保留一次独立拒绝验证。** 按原范围核对目标提交查询 404 后没有发布 PATCH，再读回原草稿和 Tag。该项报告发布前检行为，可独立收尾；平台决定无需等待其结果。 [接续事项](../planning/m0-validation.md#接续事项)
-3. **按所选路线补证并组合。** 基础批通过后，获准接一个微型镜像和 Release，核对普通写者能从同一次提交追溯到真实 run / attempt、镜像 Digest 和 Release，沿用独立发布命名空间及读写凭据，以独立读凭据回拉。补首版实际组织权限与选中兼容样例，组合评审后冻结制品方案。候选变化只复验受影响链路。
-4. **评审 M0 出口并交接 M1。** 满足[唯一阶段出口](../planning/acceptance.md#m0-exit)才进入原定工程、身份与仓库基础；否则列具名阻塞和解除条件，不新增采用准备阶段。
+1. **基础 Runner 等待原生 Linux amd64 执行目标。** 11 月 24 日已核实这台 Mac 与可用的 OrbStack daemon 均为 arm64，现有 context 未提供任务独享的 amd64 daemon。取得符合条件的目标后，核对归属、资源与窗口、固定输入和隔离配置，落实本批运行授权，再由普通写者从私有检出和最小工作流开始。 [平台核实](../records/2026-11-24-m0-runner-platform-and-g23.md#本机-runner-平台) · [恢复条件](../planning/m0-s01-baseline.md#runner-resumption) · [基础操作单](../../tests/contracts/m0/compat/runner-runbook.md)
+2. **按所选路线补证并组合。** 基础批通过后，获准接一个微型镜像和 Release，核对普通写者能从同一次提交追溯到真实 run / attempt、镜像 Digest 和 Release，沿用独立发布命名空间及读写凭据，以独立读凭据回拉。补首版实际组织权限与选中兼容样例，组合评审后冻结制品方案。候选变化只复验受影响链路。
+3. **评审 M0 出口并交接 M1。** 满足[唯一阶段出口](../planning/acceptance.md#m0-exit)才进入原定工程、身份与仓库基础；否则列具名阻塞和解除条件，不新增采用准备阶段。
 
 阻塞按作用范围区分：平台 / 输入 / 执行权限 / 授权阻塞基础 Runner；发布组织权限与 G26 隔离清理 / 恢复有证据，制品方案仍待真实组合链路评审；独立参考身份与双端条件阻塞相应兼容承诺；真实最小链路、关键权限和来源关联待补，M0 保持进行中。原 27 条差异基线继续适用。
 

@@ -49,7 +49,7 @@ Windows 可用 `py -3` 替代 `python3`，不额外维护仅转发命令的 shel
 
 [m0_release_edit.py](m0_release_edit.py) 由 `--mode release-edit` 调用，验证 G20 草稿 PATCH 的省略、空值混合编辑与独立回读。 [Release 字段契约](../tests/contracts/m0/README.md#g20-release-草稿-patch-字段)
 
-`--mode release-publication` 调用 [m0_releases.py](m0_releases.py) 的定向探针。G22 按原 Release ID、Tag 名及完整 SHA 核对单次发布，超时后仅按原 ID 和 Tag 发 GET。G23 在新建 Tag 前按完整 SHA 回读目标仓库的提交，读取失败后的零 PATCH 目前有本地模拟证据。 [发布与超时回读入口](../tests/contracts/m0/README.md#g22-release-发布与超时回读)
+`--mode release-publication` 验证 G22 单次发布和超时回读，并覆盖 G23 新建 Tag 的正向前检。`--mode release-missing-target` 在独立批次仅验证 G23 目标提交 404 后的零 PATCH 与草稿、Tag 回读。二者共用普通写者和发布前检。 [发布与超时回读入口](../tests/contracts/m0/README.md#g22-release-发布与超时回读) · [目标缺失入口](../tests/contracts/m0/README.md#g23-目标提交缺失)
 
 [m0_consent_restart.py](m0_consent_restart.py) 由 `--mode consent-restart` 调用，检查普通用户自助撤销在仅重启本批资源 Gitea 后的持久性及独立授权有效性。 [执行与清理](../tests/contracts/m0/README.md#g06-原生自助撤销重启补证)
 

@@ -163,9 +163,9 @@ M0-02 / M0-03 依赖 M0-01 的候选与隔离准备部分，不要求先完成�
 
 2026-11-17 已完成 G24—G26 隔离取证、G06 重启补证、G19 组织 team、G20 混合字段、G22 回查及 G23 正向前检，并复核 COMP-01 的既有测试仓库。沿用原 27 条差异、M0-04 和既有验收。 [11 月 9 日证据](../records/2026-11-09-day-review.md) · [11 月 17 日收工回顾](../records/2026-11-17-day-review.md)
 
-下一次先决定一台 Mac 条件下可采用的基础 Runner 平台。满足[分步恢复条件](m0-s01-baseline.md#runner-resumption)后，按普通写者身份跑基础工作流，再串起源码 SHA、run / attempt、单镜像 Digest 和 Release。平台暂不可用时登记所缺资源与恢复条件，挂起执行。GitHub 普通角色继续等待独立协作者。 [M0 出口](acceptance.md#m0-exit)
+11 月 24 日已核实本机可用 daemon 为 Linux arm64，基础 Runner 挂起。取得任务独享的原生 Linux amd64 daemon 并满足[分步恢复条件](m0-s01-baseline.md#runner-resumption)后，由普通写者运行基础工作流，再串起源码 SHA、run / attempt、单镜像 Digest 和 Release。GitHub 普通角色继续等待独立协作者。 [本机平台结论](../records/2026-11-24-m0-runner-platform-and-g23.md#本机-runner-平台) · [M0 出口](acceptance.md#m0-exit)
 
-G23 拒绝路径沿用本机 OrbStack 单次隔离范围，可独立安排。按原计划验证目标提交的完整 SHA 返回 404 时仅有 GET、零发布 PATCH，再独立核对原 Release ID 仍为草稿、原 Tag 缺失及资源清理。正向证据复用；随后仅跟进会阻断所选交付链或首版权限承诺的差异。 [G23 实测与模拟边界](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)
+G23 的目标提交 404 拒绝路径已在本机 OrbStack 单批完成，证据见下方 Release 小节。后续仅跟进会阻断所选交付链或首版权限承诺的差异。
 
 | 主题 | 证据 / 决定 | 剩余验收条件 |
 | --- | --- | --- |
@@ -204,7 +204,7 @@ G19 的私有组织仓库 team 矩阵已补证。普通写者从 Release 单元�
 
 G22 已在固定版 Gitea 隔离验证正常发布和两种超时回查。探针按原 Release ID、Tag 名与完整 SHA 核对，超时后仅发 GET，保留 `observed` / `unknown`。原生 G21—G23 差异、产品实现及实际交付组合各沿既有验收。 [G22 隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测)
 
-G23 已在固定版 Gitea 复测新建 Tag 前的精确提交回读，确认同一完整 SHA 后仅发送一次 PATCH。无法核实目标时零 PATCH 的证据为本地模拟，原生 500 差异保留。 [G23 隔离复测](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)
+G23 已在固定版 Gitea 验证两条新建 Tag 前检路径。提交返回同一完整 SHA 时仅发送一次 PATCH。目标提交返回 404 时仅有三次 GET，普通所有者独立回读原草稿保留、原 Tag 缺失。其他读取失败由本地模拟覆盖，原生发布 500 差异保留。 [G23 正向](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测) · [G23 拒绝](../records/2026-11-24-m0-runner-platform-and-g23.md#g23-目标提交缺失)
 
 1. **G19 原生权限。** 同一所有者分别使用 `resource_read` 和 `release_write`，以无 cookie 请求比较列表、按 ID 与按 Tag 详情、REST 附件列表 / 单项元数据、UUID 与 Tag / 文件名下载。重点验证只读用途按 Tag 是否返回草稿及哪些字段。用普通写者、降权后的读者、已撤权用户、外部用户和匿名请求对照，记录拒绝或跳转的原始状态。已发布对照应保持各角色应有的读取能力。下载成功核对实收字节及摘要，路径错配和失权请求检查是否返回任何字节。涉及组织单元或对象存储直链时按启用配置另行验证。
 2. **G20 原生字段语义。** 在独立草稿或已发布夹具上比较省略、显式空、非空及适用的 `null` 输入，逐字段记录请求与回读，混合更新同时核实其他字段是否已修改。验证手动清空说明时，由普通写者进入原生编辑页，草稿选择保存草稿。按原 ID 回读 `body == ""`，核对标题、状态、附件身份和 Tag / SHA 保持预期；另验证空标题的拒绝及原值保留。若发现新公开方案，使用同一套回读条件，按原 Release ID 验收真实清空。

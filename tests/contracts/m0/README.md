@@ -176,6 +176,16 @@ python3 -u -B scripts/m0_contracts.py --mode release-publication
 
 普通写者在已有 Tag 和明确允许新建 Tag 的两条路径各发布一个合成草稿。按原 Release ID、Tag 名与完整 SHA 做写前及写后回读。新建 Tag 的路径在 PATCH 前另按完整 SHA 读取提交并核对返回 SHA。另用两个独立草稿验证已提交响应丢失与未转发两种真实超时，各用一次合成 PATCH，超时后仅按原 ID 与 Tag 发 GET。先导出脱敏结果，再清理本批。 [G22 隔离实测](../../../docs/records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 隔离复测](../../../docs/records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)
 
+### G23 目标提交缺失
+
+固定镜像已缓存时，在新的本机隔离批次执行 `prepare --context orbstack --auth-profile` 和 `up`，然后运行：
+
+```bash
+python3 -u -B scripts/m0_contracts.py --mode release-missing-target
+```
+
+普通写者用同一凭据先读取已知提交，再创建指向缺失完整 SHA 的草稿，调用允许新建 Tag 的发布前检。预期顺序为原草稿 200、原 Tag 404、目标提交 404，三次 GET 后停止。普通所有者用独立凭据读取原草稿和 Tag，核对草稿字段及 Tag 缺失。导出脱敏结果后执行 `cleanup`。 [G23 拒绝实测](../../../docs/records/2026-11-24-m0-runner-platform-and-g23.md#g23-目标提交缺失)
+
 ## 清理与未覆盖
 
 无论探针成功、发现缺口或中断，交接前执行 `cleanup`。它按归属删除本批容器 / 网络 / 六个卷和 `.local/m0` 凭据，不触碰其他项目资源；下载镜像保留在共享缓存，不全局 prune。需要保留运行环境时先有用户明确要求，再交接项目名、容器 ID、端口和停止命令。

@@ -34,7 +34,7 @@
 
 G19 已实测私有组织 team 的写者降权与移除，并分别读回草稿、附件及独立已发布对照。G20 已实测原生页面手动清空说明和 REST 混合字段只写入非空值。后续产品统一验证草稿用途、权限和对象归属。使用固定版 REST 时，含清空意图的请求在写前拒绝整次编辑。 [ADR 0005 核查补充](../adr/0005-release-authorization-and-reconciliation.md#2026-11-09-草稿权限与字段清除核查)
 
-G22 已隔离验证按原 Release ID、Tag 名及完整 SHA 核对发布，已提交响应丢失及未转发两例均只读回查。G23 已验证允许新建 Tag 时先按完整 SHA 回读提交再发送一次 PATCH。目标提交查询失败后的零 PATCH 仍以本地模拟为证，固定版原生差异继续保留。 [G22 实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 复测](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)
+G22 已隔离验证按原 Release ID、Tag 名及完整 SHA 核对发布，已提交响应丢失及未转发两例均只读回查。G23 已实测允许新建 Tag 时先按完整 SHA 回读提交。匹配后发送一次 PATCH，目标提交返回 404 时零 PATCH，独立回读仍为原草稿且 Tag 缺失。其他读取失败由本地模拟覆盖。 [G22 实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测) · [G23 正向](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测) · [G23 拒绝](../records/2026-11-24-m0-runner-platform-and-g23.md#g23-目标提交缺失)
 
 ### OCI 最小执行切片
 

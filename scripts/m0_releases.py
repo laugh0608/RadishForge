@@ -119,15 +119,21 @@ def publish(client, token, release_id, expected_sha, *, expected_tag, allow_tag_
     return after
 
 
-def publication_checks(client, users, repo, record):
+def assign_publication_writer(client, users, repo):
     if repo.get('private') is not True or repo.get('full_name') != 'alice/private-fixture':
-        raise RuntimeError('G22 requires the exact isolated private repository')
-    alice, bob = users['alice'], users['bob']
+        raise RuntimeError('Publication probe requires the exact isolated private repository')
+    alice = users['alice']
     member = REPO + '/collaborators/bob'
-    expect(client.request('PUT', member, basic=alice, payload={'permission': 'write'}), {204}, 'assign G22 ordinary writer')
+    expect(client.request('PUT', member, basic=alice, payload={'permission': 'write'}), {204}, 'assign ordinary writer')
     role = expect(client.request('GET', member + '/permission', basic=alice), {200}, 'verify ordinary writer')['permission']
     if role != 'write':
-        raise RuntimeError('G22 writer role did not take effect')
+        raise RuntimeError('Publication writer role did not take effect')
+    return role
+
+
+def publication_checks(client, users, repo, record):
+    role = assign_publication_writer(client, users, repo)
+    alice, bob = users['alice'], users['bob']
     commit_path = REPO + '/git/commits/' + urllib.parse.quote(repo['default_branch'], safe='')
     source = expect(client.request('GET', commit_path, basic=alice), {200}, 'resolve G22 source')['sha']
     app, grant, claims, _ = authorize('release_write', client, bob, 'm0-g22-publication')
@@ -161,6 +167,47 @@ def publication_checks(client, users, repo, record):
     for forward in (True, False):
         grant = renew(client, 'release_write', app, grant)
         timeout_publish(client, grant['access_token'], source, forward, record)
+
+
+def missing_target_checks(client, users, repo, record):
+    role = assign_publication_writer(client, users, repo)
+    _, grant, claims, _ = authorize('release_write', client, users['bob'], 'm0-g23-missing-target')
+    token = grant['access_token']
+    commits = REPO + '/git/commits/'
+    branch = urllib.parse.quote(repo['default_branch'], safe='')
+    source = expect(client.request('GET', commits + branch, token=token), {200}, 'resolve G23 control commit')['sha']
+    missing_sha = 'f' * 40
+    if not re.fullmatch(r'[a-f0-9]{40}', source) or source == missing_sha:
+        raise RuntimeError('G23 control commit must be a distinct full SHA')
+    control = expect(client.request('GET', commits + source, token=token), {200}, 'read G23 control by SHA')
+    if control.get('sha') != source:
+        raise RuntimeError('G23 writer could not confirm the control commit')
+
+    tag = 'm0-g23-missing-target'
+    draft = create_release(client, token, payload(tag, missing_sha))
+    if str(draft['author_id']) != claims['sub']:
+        raise RuntimeError('G23 draft author differs from the ordinary writer')
+    release_path = REPO + '/releases/' + str(draft['id'])
+    tag_path = REPO + '/tags/' + tag
+    start = len(REQUESTS)
+    try:
+        publish(client, token, draft['id'], missing_sha, expected_tag=tag, allow_tag_creation=True)
+    except RuntimeError:
+        calls = [(r['method'], r['path'], r['status']) for r in REQUESTS[start:]]
+        if calls != [('GET', release_path, 200), ('GET', tag_path, 404), ('GET', commits + missing_sha, 404)]:
+            raise
+    else:
+        raise RuntimeError('G23 publication accepted a missing target commit')
+
+    owner = users['alice']
+    after = release_view(expect(client.request('GET', release_path, basic=owner), {200}, 'owner reads G23 draft'))
+    expect(client.request('GET', tag_path, basic=owner), {404}, 'owner confirms G23 Tag is absent')
+    if after != draft:
+        raise RuntimeError('G23 draft changed after the missing commit rejection')
+    record('release_missing_target_rejected_before_patch', writer_role=role, control_sha=source,
+           missing_sha=missing_sha, release_id=after['id'], tag=tag, preflight_statuses=[r[2] for r in calls],
+           publish_patches=sum(method == 'PATCH' for method, _, _ in calls),
+           owner_readback={'draft': after['draft'], 'target_commitish': after['target_commitish'], 'tag_status': 404})
 
 
 def assets(client, token, release_id):

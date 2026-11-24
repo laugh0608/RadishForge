@@ -48,7 +48,7 @@
 
 - M0-01：固定实际工作流平台、job 输入与运行权限，再依据全阶段证据最终冻结；候选表与 arm64 协议验证不代替 amd64 工作流。
 - M0-02：沿既有授权与原生撤销证据，按选定承诺补直接影响安全的缺口；产品会话 / 停用仍归 M1。
-- M0-03：已整理[基础 Runner 操作单](../../tests/contracts/m0/compat/runner-runbook.md)，现待确认 amd64 执行位置、实际配置和运行授权。基础批无 Registry 写凭据，通过后按获准路径接单镜像、来源关联和 Release。
-- M0-04：已完成 [G24—G26 隔离取证](../records/2026-11-17-m0-oci-retention-validation.md)，G27 复用已取得的原 PAT 交换拒绝与旧 Bearer 换发证据。COMP-01 已通过 [GitHub 测试仓库只读预检](../records/2026-11-17-m0-rest-evidence-review.md)，普通写者与移除协作者后的访问待验证。G22 已完成 [发布和超时回读隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测)，G23 已完成[目标提交前检的正向隔离复测](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)。其余项目按[差异分组](../architecture/github-compatibility.md#closeout-disposition)推进。
+- M0-03：本机仅有可用的 arm64 daemon。基础 Runner 等待原生 Linux amd64 目标、任务独享的 daemon 及具体执行窗口和授权。基础批通过后按获准路径接单镜像、来源关联和 Release。 [本机核实与恢复条件](../records/2026-11-24-m0-runner-platform-and-g23.md#本机-runner-平台) · [基础 Runner 操作单](../../tests/contracts/m0/compat/runner-runbook.md)
+- M0-04：已完成 [G24—G26 隔离取证](../records/2026-11-17-m0-oci-retention-validation.md)，G27 复用已取得的原 PAT 交换拒绝与旧 Bearer 换发证据。COMP-01 已通过 [GitHub 测试仓库只读预检](../records/2026-11-17-m0-rest-evidence-review.md)，普通写者与移除协作者后的访问待验证。G22 已完成 [发布和超时回读隔离实测](../records/2026-11-17-m0-release-publication-readback.md#固定版-gitea-隔离实测)。G23 已完成[正向前检](../records/2026-11-17-m0-release-target-preflight.md#固定版-gitea-隔离复测)和[目标 404 时零 PATCH 的隔离实测](../records/2026-11-24-m0-runner-platform-and-g23.md#g23-目标提交缺失)。其余项目按[差异分组](../architecture/github-compatibility.md#closeout-disposition)推进。
 
 当前按单人、单台 Mac 安排 M0，下一批建议见[接续事项](m0-validation.md#接续事项)。Runner / Actions 仍暂停、不进入 M1。每批保留资源上限、失败去向与实际证据；满足阶段出口后交接原 M1，未满足则登记具名阻塞，不新增采用准备任务。
