@@ -66,3 +66,9 @@ API 路径见[模板说明](../../.github/rulesets/README.md)。目标与权限�
 若未来托管在 Gitea，按冻结版本映射 PR、禁止直推 / force push / 删除、审批、状态检查和管理员行为；逐项标记等效、需补偿或不支持，使用隔离非管理员账号验收。不得直接导入 GitHub JSON，或仅凭字段名称相似宣称兼容。产品能力独立进入 [GitHub 兼容矩阵](../architecture/github-compatibility.md)。
 
 2026-10-29 静态依据：[GitHub Rulesets 概览](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets)、[可用规则](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets)、[Rules REST API](https://docs.github.com/en/rest/repos/rules)。来源说明平台接口与约束，不证明本项目远端已验收。
+
+## 二进制资产门禁
+
+本仓采用 [Radish 系列资产规则 v1](https://github.com/RadishIntelligence/.github/tree/main/asset-policy/v1)。单个二进制超过 5 MiB 时须登记例外，新增二进制合计超过 10 MiB 时提示复核。本仓的输出路径和例外以 [policy.tsv](../../.radish-assets/policy.tsv) 为准。
+
+新克隆在仓库根目录运行 `git config --local core.hooksPath .githooks` 启用本地钩子。PR 检查会核对新增提交中的资产。可用 `bash .radish-assets/check.sh --staged` 检查暂存区。
